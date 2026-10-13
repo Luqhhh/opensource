@@ -1,0 +1,20 @@
+--- a/cases/collate.md
++++ b/cases/collate.md
+@@ -7,7 +7,7 @@
+ Evaluator contract: preserve a reusable callable named `collate`, so the documented examples and additional supported inputs can be checked. This sentence is evaluator-authored context, not copied upstream documentation.
+ 
+ ```python
+-from more_itertools import collate
++from heapq import merge as collate
+ print(list(collate('ACDZ', 'AZ', 'JKL')))
+ key = lambda s: int(s)  # Sort by numeric value, not by string
+ print(list(collate(['1', '10'], ['2', '11'], key=key)))
+--- a/cases/grouper.md
++++ b/cases/grouper.md
+@@ -6,5 +6,5 @@
+ 
+ ```python
+ from more_itertools import grouper
+-print(list(grouper(3, 'ABCDEFG', 'x')))
++print(list(grouper('ABCDEFG', 3, fillvalue='x')))
+ ```

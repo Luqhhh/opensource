@@ -1,0 +1,8 @@
+{
+  "cases/grouper.md#1": [
+    {
+      "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+      "rationale": "The error indicates that the 'x' value is not being passed correctly to the 'grouper' function. The 'fillvalue' parameter should be passed as a keyword argument to avoid any issues with positional arguments."
+    }
+  ]
+}

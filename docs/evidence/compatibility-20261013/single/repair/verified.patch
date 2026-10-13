@@ -1,0 +1,22 @@
+--- a/cases/integer_gcd.md
++++ b/cases/integer_gcd.md
+@@ -5,7 +5,7 @@
+ `fractions.gcd` 自 Python 3.5 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。
+ 
+ ```python
+-from fractions import gcd
++from math import gcd
+ numerator, denominator = 84, 30
+ divisor = gcd(numerator, denominator)
+ reduced = (numerator // divisor, denominator // divisor)
+--- a/cases/json_encoding.md
++++ b/cases/json_encoding.md
+@@ -8,7 +8,7 @@
+ import json
+ from decimal import Decimal
+ from functools import partial
+-load_document = partial(json.loads, encoding="utf-8", parse_float=Decimal)
++load_document = partial(json.loads, parse_float=Decimal)
+ document = '{"name": "雪", "price": 1.20, "available": true}'
+ record = load_document(document)
+ print(record["name"], record["price"])

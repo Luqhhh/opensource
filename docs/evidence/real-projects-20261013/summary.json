@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "missing_or_incomplete": [],
+  "run_status": {
+    "status": "complete",
+    "metadata": {
+      "server": {
+        "version": "0.40.3"
+      },
+      "model": {
+        "name": "qwen2.5-coder:7b",
+        "model": "qwen2.5-coder:7b",
+        "modified_at": "2026-10-13T12:53:16.487315423+08:00",
+        "size": 4683087561,
+        "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 32768,
+          "embedding_length": 3584,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "insert"
+        ]
+      }
+    },
+    "finished_at": "2026-10-13T05:52:57.021959+00:00"
+  },
+  "protocol_sha256": "3f04390bca570862d412c4318be85be4b002ebba3facdc1297f4c7419d0ec7a4",
+  "groups": {
+    "direct": {
+      "case_runs": 15,
+      "first_try_passed": 4,
+      "budget_passed": 7,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 35,
+      "input_tokens": 24926,
+      "output_tokens": 4513,
+      "inference_seconds": 139.9696,
+      "wall_seconds": 148.7099,
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "id": "cases/safe_string.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 29,
+          "id": "cases/safe_string.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "verified_repair": 7,
+        "repair_failed": 27,
+        "rejected": 1
+      },
+      "cells": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "arm": "direct",
+          "path": "runs/17/direct/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "arm": "direct",
+          "path": "runs/17/direct/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "arm": "direct",
+          "path": "runs/17/direct/markupsafe/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "arm": "direct",
+          "path": "runs/29/direct/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "arm": "direct",
+          "path": "runs/29/direct/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 29,
+          "arm": "direct",
+          "path": "runs/29/direct/markupsafe/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "arm": "direct",
+          "path": "runs/43/direct/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "arm": "direct",
+          "path": "runs/43/direct/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 43,
+          "arm": "direct",
+          "path": "runs/43/direct/markupsafe/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.26666666666666666,
+      "budget_rate": 0.4666666666666667
+    },
+    "source": {
+      "case_runs": 15,
+      "first_try_passed": 8,
+      "budget_passed": 9,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 28,
+      "input_tokens": 129525,
+      "output_tokens": 4177,
+      "inference_seconds": 145.1755,
+      "wall_seconds": 153.8261,
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 19,
+        "verified_repair": 9
+      },
+      "cells": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "arm": "source",
+          "path": "runs/17/source/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "arm": "source",
+          "path": "runs/17/source/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "arm": "source",
+          "path": "runs/17/source/markupsafe/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "arm": "source",
+          "path": "runs/29/source/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "arm": "source",
+          "path": "runs/29/source/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 29,
+          "arm": "source",
+          "path": "runs/29/source/markupsafe/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "arm": "source",
+          "path": "runs/43/source/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "arm": "source",
+          "path": "runs/43/source/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 43,
+          "arm": "source",
+          "path": "runs/43/source/markupsafe/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.5333333333333333,
+      "budget_rate": 0.6
+    },
+    "source_feedback": {
+      "case_runs": 15,
+      "first_try_passed": 8,
+      "budget_passed": 8,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 29,
+      "input_tokens": 140668,
+      "output_tokens": 4669,
+      "inference_seconds": 150.153,
+      "wall_seconds": 159.0571,
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 20,
+        "verified_repair": 8,
+        "rejected": 1
+      },
+      "cells": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "arm": "source_feedback",
+          "path": "runs/17/source_feedback/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "arm": "source_feedback",
+          "path": "runs/17/source_feedback/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "arm": "source_feedback",
+          "path": "runs/17/source_feedback/markupsafe/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "arm": "source_feedback",
+          "path": "runs/29/source_feedback/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "arm": "source_feedback",
+          "path": "runs/29/source_feedback/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 29,
+          "arm": "source_feedback",
+          "path": "runs/29/source_feedback/markupsafe/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "arm": "source_feedback",
+          "path": "runs/43/source_feedback/tinydb/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "arm": "source_feedback",
+          "path": "runs/43/source_feedback/more_itertools/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 43,
+          "arm": "source_feedback",
+          "path": "runs/43/source_feedback/markupsafe/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.5333333333333333,
+      "budget_rate": 0.5333333333333333
+    }
+  },
+  "interpretation": "Case-runs repeat the same cases under paired seeds, not additional independent defects. Small purposively selected migration set; no population success-rate inference."
+}

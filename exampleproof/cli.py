@@ -26,11 +26,12 @@ def main(argv=None):
     commands = parser.add_subparsers(dest="command", required=True)
     scan = commands.add_parser("scan", help="只提取示例，不执行")
     scan.add_argument("project", type=Path)
-    for name in ("check", "repair"):
-        command = commands.add_parser(name, help="隔离执行示例" if name == "check" else "提出并复验修复")
+    for name in ("check", "repair", "benchmark"):
+        command = commands.add_parser(name, help={"check": "隔离执行示例", "repair": "提出并复验修复",
+                                                  "benchmark": "按 metadata.json 评测并在临时副本应用补丁复查"}[name])
         command.add_argument("project", type=Path)
         command.add_argument("--output", type=Path, required=True)
-        if name == "repair":
+        if name in {"repair", "benchmark"}:
             group = command.add_mutually_exclusive_group(required=True)
             group.add_argument("--proposals", type=Path, help="导入候选补丁 JSON；非实时模型推理")
             group.add_argument("--model", help="本机 Ollama 中已安装的模型名称")
@@ -47,6 +48,14 @@ def main(argv=None):
             return 0
         root = args.project.resolve()
         output = args.output.resolve()
+        if args.command == "benchmark":
+            from .benchmark import run_benchmark
+            provider = FileProvider(args.proposals) if args.proposals else OllamaProvider(
+                args.model, args.endpoint, timeout=args.model_timeout)
+            summary, code = run_benchmark(root, output, provider, max_attempts=args.max_attempts)
+            print(json.dumps(summary["metrics"], ensure_ascii=False))
+            print(f"评测证据：{output / 'benchmark.json'}")
+            return code
         # Outputs must not overwrite selected input files. Report directories
         # are otherwise allowed within the project for ordinary CI usage.
         config, _, _, _ = read_project(root)

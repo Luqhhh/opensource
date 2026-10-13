@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "suite_id": "more-itertools-real-project-v1",
+  "generated_at": "2026-10-13T05:47:16.363569+00:00",
+  "mode": "recorded_candidates",
+  "model": null,
+  "max_attempts": 1,
+  "manifest_sha256": "92c255e537e7b758d33cab3334c8849b3ac59959acc74dc266992faf8961d3e1",
+  "manifest": {
+    "schema_version": 1,
+    "suite_id": "more-itertools-real-project-v1",
+    "description": "Two verbatim-origin official 5.0.0 docstring examples migrated to unmodified 9.0.0 source, plus one healthy control. These are documented version migrations, not current upstream bugs.",
+    "classification": "real_project_version_migration",
+    "project": {
+      "name": "more-itertools",
+      "repository": "https://github.com/more-itertools/more-itertools",
+      "documentation_version": "5.0.0",
+      "documentation_commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "target_version": "9.0.0",
+      "target_commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "license": "MIT"
+    },
+    "target_runtime": {
+      "implementation": "CPython",
+      "minimum_version": "3.10",
+      "runner": "SandboxRunner / Bubblewrap",
+      "third_party_installs": false
+    },
+    "evaluation": {
+      "external_checks_authorship": "AI-assisted and frozen before model evaluation; independent of model-added assertions",
+      "reference_candidates": "proposals.json; engineering replay only, withheld from model input",
+      "live_model_evaluation": false,
+      "held_out_from_prior_prompt_development": true,
+      "historical_positive_control": {
+        "library_version": "5.0.0",
+        "dependency": "six 1.16.0",
+        "status": "3 checked",
+        "same_documents_and_checks": true,
+        "evidence": "evidence/old-version-control/validation.json"
+      }
+    },
+    "limitations": [
+      "Examples are intentionally evaluated against a newer library version; no claim that 5.0.0 documentation was broken on 5.0.0.",
+      "Two migration failures and one healthy control cannot establish project-wide reliability or model generalization.",
+      "Public upstream examples may be present in model pretraining; held out refers to this local evaluation and prompt-development history only.",
+      "Doctest conversion adds an import and print wrappers; original statements, values and expected outputs are separately retained.",
+      "External behavior checks share an interpreter with candidate code and are not a complete adversarial security boundary."
+    ],
+    "cases": [
+      {
+        "id": "cases/collate.md#1",
+        "title": "Sorted merge: removed collate",
+        "category": "version_migration",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "behavior": "Merge sorted inputs, preserve duplicates, honor numeric key and reverse ordering.",
+        "oracle": "configured_behavior_checks",
+        "upstream_bug_claim": false
+      },
+      {
+        "id": "cases/grouper.md#1",
+        "title": "Grouped items: changed argument order",
+        "category": "version_migration",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "behavior": "Fixed-size groups in source order, preserve the last item, pad the final group with x.",
+        "oracle": "configured_behavior_checks",
+        "upstream_bug_claim": false
+      },
+      {
+        "id": "cases/healthy_chunked.md#1",
+        "title": "Healthy incomplete final chunk",
+        "category": "healthy_control",
+        "expected_before": "checked",
+        "expected_repair": "checked",
+        "behavior": "Groups into lists; the last chunk remains shorter and is not padded.",
+        "oracle": "configured_behavior_checks",
+        "upstream_bug_claim": false
+      }
+    ]
+  },
+  "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",
+  "patch_application": "passed",
+  "stage": "complete",
+  "implementation_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "0242ef64b3adc9b928da1471aba758346fe611ce3f98d893701489caff9ec0ba",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "3db338d749267635c3ed9f2f146c8f27dd4ac43c014b6ffda711e0ae3b1ef22f",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "5f73f13949fa35af358145217feeee51c8e23d464b769ffb92c727b8f49e2bc8",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "6b63fc7fd1b77aaddc3c4886cd2f44c19ec6e4fbdc2c9702da27b2920c4922bc",
+    "study.py": "3f4e5ff144fa6dfabb304dba234a42e50a72e7cbc2f044e27aeac40bc76a6273"
+  },
+  "candidate_snapshot_sha256": "b02d882b69597264cd4959230b3734a4060640eb5cef28ae74715ca126f02064",
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 1,
+    "proposals": 1,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0.0
+  },
+  "metrics": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 1,
+    "patch_confirmed_repairs": 1,
+    "repair_rate": 0.5,
+    "healthy_preserved": 1,
+    "all_passed": false,
+    "cases": [
+      {
+        "id": "cases/collate.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "failed",
+        "patched_status": "failed",
+        "attempts": 0
+      },
+      {
+        "id": "cases/grouper.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/healthy_chunked.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "duration_seconds": 0.705,
+  "exit_code": 1
+}

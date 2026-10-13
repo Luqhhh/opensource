@@ -129,7 +129,9 @@ def run_project(root: Path, provider=None, runner=None, max_attempts=1):
                 replacement += "\n"
             opening_index = result.example.start_line - 2
             opening = lines[opening_index]
-            fence = re.match(r"( {0,3})(`{3,}|~{3,})", opening)
+            bom = "\ufeff" if opening_index == 0 and opening.startswith("\ufeff") else ""
+            opening_text = opening[len(bom):]
+            fence = re.match(r"( {0,3})(`{3,}|~{3,})", opening_text)
             indent, delimiter = fence.groups()
             # A Python multiline string may contain a Markdown closing fence.
             # Widen the surrounding fences to keep the repaired document valid.
@@ -138,7 +140,7 @@ def run_project(root: Path, provider=None, runner=None, max_attempts=1):
             width = max([len(delimiter)] + [len(run) + 1 for run in closing_runs])
             if width > len(delimiter):
                 widened = delimiter[0] * width
-                lines[opening_index] = indent + widened + opening[fence.end():]
+                lines[opening_index] = bom + indent + widened + opening_text[fence.end():]
                 lines[result.example.end_line] = re.sub(
                     re.escape(delimiter[0]) + r"{3,}", widened, lines[result.example.end_line], count=1)
             replacement = "".join(indent + line for line in replacement.splitlines(keepends=True))

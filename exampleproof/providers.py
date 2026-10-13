@@ -17,10 +17,16 @@ Return the complete corrected code block, not just the changed lines.
 Only Python's standard library and the selected project sources are available.
 For standard-library compatibility errors, use known supported standard-library
 APIs; their definitions do not need to appear in the selected project sources.
+Changing standard-library imports and callable aliases is a normal repair.
+If you identify a supported replacement, implement it in the code field instead
+of only describing it in the rationale. An empty sources object does not prevent
+standard-library repairs. Check that the replacement preserves the documented
+types, transformations, side effects, and output formatting, not just execution.
 Preserve its intended behavior, original assertions, and data processing steps.
 Do not remove assertions, swallow errors, hardcode expected outputs, change tests,
 or change source files. Use only straight-line imports, assignments, expressions,
-and assertions. If a reliable repair is not possible, return empty code and explain.
+and assertions. Return empty code only when you cannot identify a reliable repair;
+otherwise return the complete executable code and briefly explain the change.
 When previous attempts are supplied, use their execution or integrity feedback
 to refine the repair without repeating an unsuccessful candidate.
 """
@@ -107,7 +113,8 @@ def _read_response(response, inference):
 
 
 class OllamaProvider:
-    def __init__(self, model: str, endpoint: str = "http://127.0.0.1:11434", timeout: float = 60):
+    def __init__(self, model: str, endpoint: str = "http://127.0.0.1:11434", timeout: float = 60,
+                 *, options: dict | None = None):
         if not isinstance(endpoint, str) or any(character.isspace() or ord(character) < 32 for character in endpoint):
             raise ValueError("v0.1 Ollama endpoint must be a loopback HTTP(S) address")
         parsed = urlparse(endpoint)
@@ -126,6 +133,20 @@ class OllamaProvider:
                 or not math.isfinite(timeout) or timeout <= 0):
             raise ValueError("Ollama timeout must be a finite positive number")
         self.model, self.endpoint, self.timeout = model, endpoint.rstrip("/"), timeout
+        self.options = {"temperature": 0}
+        if options is not None:
+            if not isinstance(options, dict) or set(options) - {"temperature", "seed", "num_ctx", "num_predict"}:
+                raise ValueError("Unsupported Ollama generation options")
+            for key, value in options.items():
+                if key == "temperature":
+                    valid = type(value) in {int, float} and math.isfinite(value) and 0 <= value <= 2
+                elif key == "seed":
+                    valid = type(value) is int and 0 <= value < 2**31
+                else:
+                    valid = type(value) is int and 1 <= value <= 32768
+                if not valid:
+                    raise ValueError(f"Invalid Ollama generation option: {key}")
+            self.options.update(options)
 
     def propose(self, example, before, sources, *, history=()):
         # No evaluator checks or expected outputs are included in the prompt.
@@ -143,7 +164,7 @@ class OllamaProvider:
             ]
         payload = {"model": self.model, "stream": False, "format": "json",
                    "system": SYSTEM, "prompt": json.dumps(evidence, ensure_ascii=False),
-                   "options": {"temperature": 0}}
+                   "options": dict(self.options)}
         inference = InferenceEvidence(request=payload,
                                       started_at=datetime.now(timezone.utc).isoformat(),
                                       timeout_seconds=self.timeout)

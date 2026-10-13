@@ -1,0 +1,6 @@
+{
+  "cases/safe_string.md#1": {
+    "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+    "rationale": "The error indicates that 'soft_unicode' is not defined. The correct function to use is 'escape' itself, as it handles the conversion and escaping correctly. The code has been updated to use 'escape' consistently."
+  }
+}

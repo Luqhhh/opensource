@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "suite_id": "cpython-compatibility-v1",
+  "description": "Six AI-assisted self-authored historical CPython compatibility reproductions plus two healthy controls; not mined third-party repository bugs or a held-out model evaluation.",
+  "classification": "historical_compatibility_reproductions_with_healthy_controls",
+  "target_runtime": {
+    "implementation": "CPython",
+    "minimum_version": "3.10",
+    "verified_interpreter": "/usr/bin/python3",
+    "verified_version": "3.10.12"
+  },
+  "provenance": {
+    "created_at": "2026-10-13",
+    "authorship": "AI-assisted construction during repository development; team review required before contest submission",
+    "upstream_code_copied": false,
+    "documentation_basis": "Official CPython release notes and library API documentation; links and original summaries only",
+    "documentation_license": "Python Software Foundation License Version 2",
+    "case_license": "MIT, subject to repository ownership and team review",
+    "candidate_mode": "recorded_candidate_replay",
+    "live_model_evaluation": false,
+    "held_out": false
+  },
+  "limitations": [
+    "Only eight small standard-library examples; no cross-project coverage claim.",
+    "Candidates and checks were prepared together and are public, so replay success is not model generalization evidence.",
+    "The baseline failure and repair checks run on current CPython; previous Python releases are documented, not executed.",
+    "The elapsed-clock case selects elapsed-time intent; old clock behavior differed by platform.",
+    "Checks constrain stated behavior but are not a proof against adversarial manipulation in the shared snippet/check interpreter."
+  ],
+  "cases": [
+    {
+      "id": "cases/base64_mime.md#1",
+      "title": "MIME Base64 encoding and decoding aliases",
+      "category": "historical_compatibility",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "deprecated_since": "3.1",
+      "removed_in": "3.9",
+      "removed_api": "base64.encodestring / base64.decodestring",
+      "behavior": "MIME line wrapping, trailing newline, binary round trip and empty input",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.9 removal notes",
+          "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+        },
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/base64.html#base64.encodebytes"
+        }
+      ]
+    },
+    {
+      "id": "cases/elapsed_clock.md#1",
+      "title": "Elapsed timer includes sleep",
+      "category": "historical_compatibility",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "deprecated_since": "3.3",
+      "removed_in": "3.8",
+      "removed_api": "time.clock",
+      "behavior": "Elapsed seconds include sleeping; process CPU time is not accepted",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.8 removal notes",
+          "url": "https://docs.python.org/3.10/whatsnew/3.8.html#api-and-feature-removals"
+        },
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/time.html#time.perf_counter"
+        }
+      ]
+    },
+    {
+      "id": "cases/array_bytes.md#1",
+      "title": "Array binary append and serialization aliases",
+      "category": "historical_compatibility",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "deprecated_since": "3.2",
+      "removed_in": "3.9",
+      "removed_api": "array.array.tostring / array.array.fromstring",
+      "behavior": "Bytes serialization, unsigned-byte values and append rather than replacement",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.9 removal notes",
+          "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+        },
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/array.html#array.array.frombytes"
+        }
+      ]
+    },
+    {
+      "id": "cases/html_unescape.md#1",
+      "title": "HTML character-reference decoding",
+      "category": "historical_compatibility",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "deprecated_since": "3.4",
+      "removed_in": "3.9",
+      "removed_api": "html.parser.HTMLParser.unescape",
+      "behavior": "Named, decimal and hexadecimal references; unknown references and single-pass decoding",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.9 removal notes",
+          "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+        },
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/html.html#html.unescape"
+        }
+      ]
+    },
+    {
+      "id": "cases/integer_gcd.md#1",
+      "title": "Nonnegative integer fraction reduction",
+      "category": "historical_compatibility",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "deprecated_since": "3.5",
+      "removed_in": "3.9",
+      "removed_api": "fractions.gcd",
+      "behavior": "Nonnegative integer GCD, zero inputs and exact integer reduction",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.9 removal notes",
+          "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+        },
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/math.html#math.gcd"
+        }
+      ]
+    },
+    {
+      "id": "cases/json_encoding.md#1",
+      "title": "JSON keyword removal preserves Decimal parsing",
+      "category": "historical_compatibility",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "deprecated_since": "3.1",
+      "removed_in": "3.9",
+      "removed_api": "json.loads(encoding=...)",
+      "behavior": "Unicode text, Decimal precision, null/boolean/integer values and supported byte input",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.9 removal notes",
+          "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+        },
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/json.html#json.loads"
+        }
+      ]
+    },
+    {
+      "id": "cases/healthy_query.md#1",
+      "title": "Healthy repeated and blank query parameters",
+      "category": "healthy_control",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "deprecated_since": null,
+      "removed_in": null,
+      "removed_api": null,
+      "behavior": "Repeated keys, blank values, percent decoding and doseq round trip",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/urllib.parse.html#urllib.parse.parse_qs"
+        }
+      ]
+    },
+    {
+      "id": "cases/healthy_escape.md#1",
+      "title": "Healthy HTML escaping round trip",
+      "category": "healthy_control",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "deprecated_since": null,
+      "removed_in": null,
+      "removed_api": null,
+      "behavior": "Quote escaping, Unicode text and single-pass unescaping",
+      "oracle": "configured_behavior_checks",
+      "sources": [
+        {
+          "title": "CPython 3.10 API semantics",
+          "url": "https://docs.python.org/3.10/library/html.html#html.escape"
+        }
+      ]
+    }
+  ]
+}

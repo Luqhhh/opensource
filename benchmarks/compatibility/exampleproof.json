@@ -1,0 +1,48 @@
+{
+  "documents": [
+    "cases/base64_mime.md",
+    "cases/elapsed_clock.md",
+    "cases/array_bytes.md",
+    "cases/html_unescape.md",
+    "cases/integer_gcd.md",
+    "cases/json_encoding.md",
+    "cases/healthy_query.md",
+    "cases/healthy_escape.md"
+  ],
+  "source_files": [],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/base64_mime.md#1": {
+      "expected_stdout": "60 2 True\n",
+      "checks": "assert payload == b\"abc\" * 20\nassert type(encoded) is bytes\nassert encoded == b\"YWJj\" * 19 + b\"\\nYWJj\\n\"\nassert decoded == payload\nassert encode_payload(b\"\\x00\\xff\") == b\"AP8=\\n\"\nassert decode_payload(b\"AP8=\\n\") == b\"\\x00\\xff\"\nassert encode_payload(b\"\") == b\"\"\nassert decode_payload(b\"\") == b\"\"\n"
+    },
+    "cases/elapsed_clock.md#1": {
+      "expected_stdout": "True\n",
+      "checks": "import math as _math\nimport time as _reference_time\nassert type(started) is float and type(elapsed) is float\nassert _math.isfinite(elapsed) and elapsed >= 0.01\n_probe_start = timer()\n_reference_time.sleep(0.02)\n_probe_elapsed = timer() - _probe_start\nassert _math.isfinite(_probe_elapsed) and _probe_elapsed >= 0.01\n"
+    },
+    "cases/array_bytes.md#1": {
+      "expected_stdout": "[42, 0, 127, 255]\n",
+      "checks": "from array import array as _array\nassert type(encoded) is bytes and encoded == b\"\\x00\\x7f\\xff\"\nassert values.typecode == \"B\" and values.tolist() == [0, 127, 255]\nassert restored.typecode == \"B\" and restored.tolist() == [42, 0, 127, 255]\nassert serialize(_array(\"B\", [])) == b\"\"\nassert serialize(_array(\"B\", [255, 1])) == b\"\\xff\\x01\"\n_probe = _array(\"B\", [9])\nassert append_bytes(_probe, b\"\\x00\\xff\") is None\nassert _probe.tolist() == [9, 0, 255]\nappend_bytes(_probe, b\"\")\nassert _probe.tolist() == [9, 0, 255]\n"
+    },
+    "cases/html_unescape.md#1": {
+      "expected_stdout": "Tom & Jerry <3 ☃\n",
+      "checks": "assert decoded == \"Tom & Jerry <3 ☃\"\nassert decode_entities(\"&quot;雪&#x1f600;&#65;&unknown;\") == '\"雪😀A&unknown;'\nassert decode_entities(\"&amp;lt;\") == \"&lt;\"\nassert decode_entities(\"plain text\") == \"plain text\"\nassert decode_entities(\"\") == \"\"\n"
+    },
+    "cases/integer_gcd.md#1": {
+      "expected_stdout": "(14, 5)\n",
+      "checks": "assert (numerator, denominator) == (84, 30)\nassert divisor == 6 and reduced == (14, 5)\nassert all(type(item) is int for item in reduced)\nassert gcd(35, 64) == 1\nassert gcd(0, 9) == 9\nassert gcd(9, 0) == 9\nassert gcd(0, 0) == 0\nassert gcd(48, 18) == 6\n"
+    },
+    "cases/json_encoding.md#1": {
+      "expected_stdout": "雪 1.20\n",
+      "checks": "from decimal import Decimal as _Decimal\nassert record == {\"name\": \"雪\", \"price\": _Decimal(\"1.20\"), \"available\": True}\nassert type(record[\"price\"]) is _Decimal\nassert record[\"price\"].as_tuple().exponent == -2\n_probe = load_document('{\"price\": 0.100000000000000001, \"items\": [null, false, 7]}')\nassert _probe[\"price\"] == _Decimal(\"0.100000000000000001\")\nassert type(_probe[\"price\"]) is _Decimal\nassert _probe[\"items\"] == [None, False, 7]\nassert load_document(b'{\"count\": 3}') == {\"count\": 3}\n"
+    },
+    "cases/healthy_query.md#1": {
+      "expected_stdout": "['ai', 'open source'] [''] ['雪']\n",
+      "checks": "assert parsed == {\"tag\": [\"ai\", \"open source\"], \"empty\": [\"\"], \"name\": [\"雪\"]}\nassert parse_qs(rebuilt, keep_blank_values=True) == parsed\nassert parse_qs(\"x=1&x=2&z=\", keep_blank_values=True) == {\"x\": [\"1\", \"2\"], \"z\": [\"\"]}\nassert parse_qs(\"q=A%2BB+C\") == {\"q\": [\"A+B C\"]}\nassert urlencode({\"x\": [\"a\", \"b\"]}, doseq=True) == \"x=a&x=b\"\n"
+    },
+    "cases/healthy_escape.md#1": {
+      "expected_stdout": "&lt;a title=&quot;A&amp;B&quot;&gt;雪&lt;/a&gt;\n",
+      "checks": "assert escaped == \"&lt;a title=&quot;A&amp;B&quot;&gt;雪&lt;/a&gt;\"\nassert restored == text == '<a title=\"A&B\">雪</a>'\nassert escape(\"'&\\\"\", quote=True) == \"&#x27;&amp;&quot;\"\nassert escape('\"<&', quote=False) == '\"&lt;&amp;'\nassert unescape(\"&amp;lt;\") == \"&lt;\"\nassert escape(\"\") == \"\"\n"
+    }
+  }
+}

@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "suite_id": "cpython-compatibility-v1",
+  "generated_at": "2026-10-13T05:18:33.983049+00:00",
+  "mode": "live_model",
+  "model": "qwen2.5-coder:7b",
+  "max_attempts": 3,
+  "manifest_sha256": "97c6c1fd9d02eb1ab980df3e3c39015a2894460ada47ea28cebcbaabc246291c",
+  "manifest": {
+    "schema_version": 1,
+    "suite_id": "cpython-compatibility-v1",
+    "description": "Six AI-assisted self-authored historical CPython compatibility reproductions plus two healthy controls; not mined third-party repository bugs or a held-out model evaluation.",
+    "classification": "historical_compatibility_reproductions_with_healthy_controls",
+    "target_runtime": {
+      "implementation": "CPython",
+      "minimum_version": "3.10",
+      "verified_interpreter": "/usr/bin/python3",
+      "verified_version": "3.10.12"
+    },
+    "provenance": {
+      "created_at": "2026-10-13",
+      "authorship": "AI-assisted construction during repository development; team review required before contest submission",
+      "upstream_code_copied": false,
+      "documentation_basis": "Official CPython release notes and library API documentation; links and original summaries only",
+      "documentation_license": "Python Software Foundation License Version 2",
+      "case_license": "MIT, subject to repository ownership and team review",
+      "candidate_mode": "recorded_candidate_replay",
+      "live_model_evaluation": false,
+      "held_out": false
+    },
+    "limitations": [
+      "Only eight small standard-library examples; no cross-project coverage claim.",
+      "Candidates and checks were prepared together and are public, so replay success is not model generalization evidence.",
+      "The baseline failure and repair checks run on current CPython; previous Python releases are documented, not executed.",
+      "The elapsed-clock case selects elapsed-time intent; old clock behavior differed by platform.",
+      "Checks constrain stated behavior but are not a proof against adversarial manipulation in the shared snippet/check interpreter."
+    ],
+    "cases": [
+      {
+        "id": "cases/base64_mime.md#1",
+        "title": "MIME Base64 encoding and decoding aliases",
+        "category": "historical_compatibility",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "deprecated_since": "3.1",
+        "removed_in": "3.9",
+        "removed_api": "base64.encodestring / base64.decodestring",
+        "behavior": "MIME line wrapping, trailing newline, binary round trip and empty input",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.9 removal notes",
+            "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+          },
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/base64.html#base64.encodebytes"
+          }
+        ]
+      },
+      {
+        "id": "cases/elapsed_clock.md#1",
+        "title": "Elapsed timer includes sleep",
+        "category": "historical_compatibility",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "deprecated_since": "3.3",
+        "removed_in": "3.8",
+        "removed_api": "time.clock",
+        "behavior": "Elapsed seconds include sleeping; process CPU time is not accepted",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.8 removal notes",
+            "url": "https://docs.python.org/3.10/whatsnew/3.8.html#api-and-feature-removals"
+          },
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/time.html#time.perf_counter"
+          }
+        ]
+      },
+      {
+        "id": "cases/array_bytes.md#1",
+        "title": "Array binary append and serialization aliases",
+        "category": "historical_compatibility",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "deprecated_since": "3.2",
+        "removed_in": "3.9",
+        "removed_api": "array.array.tostring / array.array.fromstring",
+        "behavior": "Bytes serialization, unsigned-byte values and append rather than replacement",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.9 removal notes",
+            "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+          },
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/array.html#array.array.frombytes"
+          }
+        ]
+      },
+      {
+        "id": "cases/html_unescape.md#1",
+        "title": "HTML character-reference decoding",
+        "category": "historical_compatibility",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "deprecated_since": "3.4",
+        "removed_in": "3.9",
+        "removed_api": "html.parser.HTMLParser.unescape",
+        "behavior": "Named, decimal and hexadecimal references; unknown references and single-pass decoding",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.9 removal notes",
+            "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+          },
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/html.html#html.unescape"
+          }
+        ]
+      },
+      {
+        "id": "cases/integer_gcd.md#1",
+        "title": "Nonnegative integer fraction reduction",
+        "category": "historical_compatibility",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "deprecated_since": "3.5",
+        "removed_in": "3.9",
+        "removed_api": "fractions.gcd",
+        "behavior": "Nonnegative integer GCD, zero inputs and exact integer reduction",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.9 removal notes",
+            "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+          },
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/math.html#math.gcd"
+          }
+        ]
+      },
+      {
+        "id": "cases/json_encoding.md#1",
+        "title": "JSON keyword removal preserves Decimal parsing",
+        "category": "historical_compatibility",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "deprecated_since": "3.1",
+        "removed_in": "3.9",
+        "removed_api": "json.loads(encoding=...)",
+        "behavior": "Unicode text, Decimal precision, null/boolean/integer values and supported byte input",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.9 removal notes",
+            "url": "https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+          },
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/json.html#json.loads"
+          }
+        ]
+      },
+      {
+        "id": "cases/healthy_query.md#1",
+        "title": "Healthy repeated and blank query parameters",
+        "category": "healthy_control",
+        "expected_before": "checked",
+        "expected_repair": "checked",
+        "deprecated_since": null,
+        "removed_in": null,
+        "removed_api": null,
+        "behavior": "Repeated keys, blank values, percent decoding and doseq round trip",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/urllib.parse.html#urllib.parse.parse_qs"
+          }
+        ]
+      },
+      {
+        "id": "cases/healthy_escape.md#1",
+        "title": "Healthy HTML escaping round trip",
+        "category": "healthy_control",
+        "expected_before": "checked",
+        "expected_repair": "checked",
+        "deprecated_since": null,
+        "removed_in": null,
+        "removed_api": null,
+        "behavior": "Quote escaping, Unicode text and single-pass unescaping",
+        "oracle": "configured_behavior_checks",
+        "sources": [
+          {
+            "title": "CPython 3.10 API semantics",
+            "url": "https://docs.python.org/3.10/library/html.html#html.escape"
+          }
+        ]
+      }
+    ]
+  },
+  "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",
+  "patch_application": "passed",
+  "stage": "complete",
+  "implementation_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "0242ef64b3adc9b928da1471aba758346fe611ce3f98d893701489caff9ec0ba",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "3db338d749267635c3ed9f2f146c8f27dd4ac43c014b6ffda711e0ae3b1ef22f",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "c4e1b25b3cd1375ca2af2e86dfed36076831f338e95501070758f68d2ceef685",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "6b63fc7fd1b77aaddc3c4886cd2f44c19ec6e4fbdc2c9702da27b2920c4922bc"
+  },
+  "repair": {
+    "max_attempts": 3,
+    "attempts": 6,
+    "proposals": 6,
+    "input_tokens": 3758,
+    "output_tokens": 568,
+    "inference_requests": 6,
+    "inference_duration_seconds": 16.6398,
+    "proposal_duration_seconds": 16.6398
+  },
+  "metrics": {
+    "baseline_valid": true,
+    "total": 8,
+    "expected_failures": 6,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 6,
+    "healthy_controls": 2,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 2,
+    "patch_confirmed_repairs": 2,
+    "repair_rate": 0.3333333333333333,
+    "healthy_preserved": 2,
+    "all_passed": false,
+    "cases": [
+      {
+        "id": "cases/base64_mime.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "declined",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/elapsed_clock.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "declined",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/array_bytes.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "declined",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/html_unescape.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "declined",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/integer_gcd.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/json_encoding.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/healthy_query.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      },
+      {
+        "id": "cases/healthy_escape.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "duration_seconds": 17.9656,
+  "exit_code": 1
+}

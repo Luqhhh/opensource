@@ -1,0 +1,242 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T05:17:50.328333+00:00",
+  "project_name": "compatibility",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/base64_mime.md": "4b5d207e85d28fd9cae12b7d95b5c5bbd181848f7f5e08fc74b9dc329cf09daa",
+      "cases/elapsed_clock.md": "7c59e086ef8930cd42850758a3fb6f15d22939201bd10ed2bce0ab04cccac4bb",
+      "cases/array_bytes.md": "163d3c3b31846e09b2d9879236fb21018de60bccccf4c026081b6cfbea75aa4f",
+      "cases/html_unescape.md": "bda0a6e25cccc87a213fb06d8bc29a8aeacbd24e07c2ef4d375e9e9e45c500fa",
+      "cases/integer_gcd.md": "8b330028a4615f39dd60ad1e9382fc23140e8b1dda74b0f811118e6113394406",
+      "cases/json_encoding.md": "b70a29f9383d42355643dd72c98ba2884808dc877545580efe7e7851558b6158",
+      "cases/healthy_query.md": "7cbedc843599f63960d15e6965da3ee16d1f457d3102f7265fb4fc664f403d3e",
+      "cases/healthy_escape.md": "c87a73af19002454749f94a5e5f923fded9df9fa4a0da9973d242cafff62885b"
+    },
+    "sources": {},
+    "configuration_sha256": "05ff64981a7fa760fa0b12a0a3e569ff9e00868ffde6214276382255dab84b75"
+  },
+  "summary": {
+    "total": 8,
+    "counts": {
+      "failed": 6,
+      "checked": 2
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/base64_mime.md#1",
+        "path": "cases/base64_mime.md",
+        "start_line": 8,
+        "end_line": 14,
+        "code": "import base64\nencode_payload = base64.encodestring\ndecode_payload = base64.decodestring\npayload = b\"abc\" * 20\nencoded = encode_payload(payload)\ndecoded = decode_payload(encoded)\nprint(len(decoded), len(encoded.splitlines()), decoded == payload)\n",
+        "context": "# 保留 MIME 换行的 Base64 往返\n这是依据真实 API 移除事件自编的最小重现，非第三方仓库缺陷。这里需要 MIME 风格的 76 字符换行与末尾换行，不能用无换行编码替代。编码器和解码器还应支持其他二进制输入。\n\n`base64.encodestring` / `decodestring` 自 Python 3.1 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。"
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    encode_payload = base64.encodestring\nAttributeError: module 'base64' has no attribute 'encodestring'\n",
+        "duration_seconds": 0.0362,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/elapsed_clock.md#1",
+        "path": "cases/elapsed_clock.md",
+        "start_line": 8,
+        "end_line": 13,
+        "code": "import time\ntimer = time.clock\nstarted = timer()\ntime.sleep(0.02)\nelapsed = timer() - started\nprint(elapsed >= 0.01)\n",
+        "context": "# 包含等待时间的短时计时\n这是依据真实 API 移除事件自编的最小重现。计时目标是包含睡眠的经过时间，单位为秒；不能换成排除睡眠的 CPU 时间。旧 `clock` 的行为依赖平台，本例不声称它在所有旧平台上满足这项需求。\n\n`time.clock` 自 Python 3.3 弃用，Python 3.8 移除。官方来源与版本记录见基准元数据。"
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    timer = time.clock\nAttributeError: module 'time' has no attribute 'clock'\n",
+        "duration_seconds": 0.0361,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/array_bytes.md#1",
+        "path": "cases/array_bytes.md",
+        "start_line": 8,
+        "end_line": 15,
+        "code": "from array import array\nserialize = array.tostring\nappend_bytes = array.fromstring\nvalues = array(\"B\", [0, 127, 255])\nencoded = serialize(values)\nrestored = array(\"B\", [42])\nappend_bytes(restored, encoded)\nprint(restored.tolist())\n",
+        "context": "# 数组的二进制序列化与追加\n这是依据真实 API 移除事件自编的最小重现。将无符号单字节数组序列化为 `bytes`，再追加到已有数组。使用 `B` 类型避免机器字节序影响。解码必须追加，不能覆盖已有元素。\n\n`array.array.tostring` / `fromstring` 自 Python 3.2 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。"
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    serialize = array.tostring\nAttributeError: type object 'array.array' has no attribute 'tostring'\n",
+        "duration_seconds": 0.0358,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/html_unescape.md#1",
+        "path": "cases/html_unescape.md",
+        "start_line": 8,
+        "end_line": 12,
+        "code": "from html.parser import HTMLParser\ndecode_entities = HTMLParser().unescape\ntext = \"Tom &amp; Jerry &#60;3 &#x2603;\"\ndecoded = decode_entities(text)\nprint(decoded)\n",
+        "context": "# 将 HTML 字符引用还原为文本\n这是依据真实 API 移除事件自编的最小重现。需要同时处理命名、十进制、十六进制字符引用，并保留未知引用；这不是删除 HTML 标签的接口。\n\n`HTMLParser.unescape` 自 Python 3.4 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。"
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    decode_entities = HTMLParser().unescape\nAttributeError: 'HTMLParser' object has no attribute 'unescape'\n",
+        "duration_seconds": 0.036,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/integer_gcd.md#1",
+        "path": "cases/integer_gcd.md",
+        "start_line": 8,
+        "end_line": 12,
+        "code": "from fractions import gcd\nnumerator, denominator = 84, 30\ndivisor = gcd(numerator, denominator)\nreduced = (numerator // divisor, denominator // divisor)\nprint(reduced)\n",
+        "context": "# 使用最大公约数约分\n这是依据真实 API 移除事件自编的最小重现。约分数据为非负整数，分母大于零。外部检查覆盖互质数和含零输入；不扩展到旧接口与当前接口符号行为可能不同的负数域。\n\n`fractions.gcd` 自 Python 3.5 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。"
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from fractions import gcd\nImportError: cannot import name 'gcd' from 'fractions' (/usr/lib/python3.10/fractions.py)\n",
+        "duration_seconds": 0.0366,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/json_encoding.md#1",
+        "path": "cases/json_encoding.md",
+        "start_line": 8,
+        "end_line": 14,
+        "code": "import json\nfrom decimal import Decimal\nfrom functools import partial\nload_document = partial(json.loads, encoding=\"utf-8\", parse_float=Decimal)\ndocument = '{\"name\": \"雪\", \"price\": 1.20, \"available\": true}'\nrecord = load_document(document)\nprint(record[\"name\"], record[\"price\"])\n",
+        "context": "# 保留 Decimal 精度的 JSON 读取\n这是依据真实 API 移除事件自编的最小重现。输入为 Unicode JSON 文本，保留中文名称，并通过 `parse_float=Decimal` 保留小数精度。移除废弃参数时不能连带删除有效的解析选项。\n\n`json.loads` 的 `encoding` 参数自 Python 3.1 弃用并被忽略，Python 3.8 起产生弃用警告，Python 3.9 移除。官方来源与版本记录见基准元数据。"
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 6, in <module>\n    record = load_document(document)\n  File \"/usr/lib/python3.10/json/__init__.py\", line 359, in loads\n    return cls(**kw).decode(s)\nTypeError: JSONDecoder.__init__() got an unexpected keyword argument 'encoding'\n",
+        "duration_seconds": 0.0709,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_query.md#1",
+        "path": "cases/healthy_query.md",
+        "start_line": 6,
+        "end_line": 10,
+        "code": "from urllib.parse import parse_qs, urlencode\nquery = \"tag=ai&tag=open+source&empty=&name=%E9%9B%AA\"\nparsed = parse_qs(query, keep_blank_values=True)\nrebuilt = urlencode(parsed, doseq=True)\nprint(parsed[\"tag\"], parsed[\"empty\"], parsed[\"name\"])\n",
+        "context": "# 正常对照：保留查询参数的重复值和空值\n# 正常对照：保留查询参数的重复值和空值\n\n当前支持的 `urllib.parse` 接口。所有外部检查通过时应直接标记 `checked`，不能请求修复候选。该对照没有历史移除事件，也不是一个待修复缺陷。[官方查询解析接口](https://docs.python.org/3.10/library/urllib.parse.html#urllib.parse.parse_qs)。"
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "['ai', 'open source'] [''] ['雪']\n",
+        "stderr": "",
+        "duration_seconds": 0.0357,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_escape.md#1",
+        "path": "cases/healthy_escape.md",
+        "start_line": 6,
+        "end_line": 10,
+        "code": "from html import escape, unescape\ntext = '<a title=\"A&B\">雪</a>'\nescaped = escape(text, quote=True)\nrestored = unescape(escaped)\nprint(escaped)\n",
+        "context": "# 正常对照：HTML 转义与还原\n# 正常对照：HTML 转义与还原\n\n当前支持的 `html.escape` / `html.unescape` 接口。默认转义引号、尖括号与和号，并保持可逆。所有外部检查通过时应直接标记 `checked`，不能请求修复候选。该对照没有历史移除事件。[官方 HTML 接口](https://docs.python.org/3.10/library/html.html#html.escape)。"
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "&lt;a title=&quot;A&amp;B&quot;&gt;雪&lt;/a&gt;\n",
+        "stderr": "",
+        "duration_seconds": 0.0354,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

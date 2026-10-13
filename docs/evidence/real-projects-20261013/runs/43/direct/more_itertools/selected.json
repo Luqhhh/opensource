@@ -1,0 +1,6 @@
+{
+  "cases/grouper.md#1": {
+    "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+    "rationale": "The error indicates that the second argument should be the iterable, and the third argument should be the fillvalue. The original code had the arguments in the wrong order."
+  }
+}

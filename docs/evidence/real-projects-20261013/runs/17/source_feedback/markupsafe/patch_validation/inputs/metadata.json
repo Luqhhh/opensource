@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "suite_id": "markupsafe-official-docs-migration-v1",
+  "description": "An unmodified-API example from official MarkupSafe 1.1.1 API documentation evaluated against pinned 2.1.5 source, plus a healthy control. A declared historical version migration, not a bug in current upstream documentation.",
+  "classification": "real_upstream_documentation_version_migration",
+  "target_runtime": {
+    "implementation": "CPython",
+    "verified_interpreter": "/usr/bin/python3",
+    "minimum_version": "3.10",
+    "project_version": "2.1.5",
+    "project_commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+    "implementation_variant": "bundled native Python fallback; no compiled extension"
+  },
+  "provenance": {
+    "created_at": "2026-10-13",
+    "upstream_repository": "https://github.com/pallets/markupsafe",
+    "upstream_code_copied": true,
+    "license": "BSD-3-Clause",
+    "documentation_version": "1.1.1",
+    "documentation_commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+    "live_model_evaluation": false,
+    "candidate_mode": "recorded_candidate_replay",
+    "case_selection": "Newly mined from official upstream documentation for this evaluation; no live model has been run during case preparation. Final freeze and cross-condition execution are recorded separately.",
+    "historical_positive_control": "Both original cases passed on pinned 1.1.1 native Python source in Bubblewrap; evidence/old-version-control/check/report.json."
+  },
+  "limitations": [
+    "One selected removed-API migration is not representative of arbitrary MarkupSafe defects.",
+    "The old documentation is paired intentionally with a newer library; no claim that current upstream documentation is broken.",
+    "Sphinx docstring examples require public module scope; setup supplies that scope.",
+    "Doctest expression display is mechanically translated into print(repr(...)) because the tool only accepts fenced Python.",
+    "Finite checks and doctest output do not prove general semantic equivalence."
+  ],
+  "cases": [
+    {
+      "id": "cases/safe_string.md#1",
+      "title": "Preserve safe text on string conversion",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "document_version": "1.1.1",
+      "runtime_version": "2.1.5",
+      "upstream_document": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py#L54-L66",
+      "oracle": "upstream_doctest_output_plus_configured_behavior_checks",
+      "removed_api": "markupsafe.soft_unicode",
+      "removed_in": "2.1.0",
+      "expected_failure": "NameError: soft_unicode is absent from the documented public module namespace in MarkupSafe 2.1.5."
+    },
+    {
+      "id": "cases/optional_values.md#1",
+      "title": "Escape optional values",
+      "category": "healthy_control",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "document_version": "1.1.1",
+      "runtime_version": "2.1.5",
+      "upstream_document": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py#L39-L47",
+      "oracle": "upstream_doctest_output_plus_configured_behavior_checks"
+    }
+  ]
+}

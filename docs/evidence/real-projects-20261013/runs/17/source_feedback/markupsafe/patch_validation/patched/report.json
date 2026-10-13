@@ -1,0 +1,88 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T05:47:43.519144+00:00",
+  "project_name": "markupsafe",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/safe_string.md": "e0bbde0c0c38182bc6f1051aba6759d303618c02cb25700b8e71053375729d47",
+      "cases/optional_values.md": "4990c1118def93ebba2621f092f44e75491406b5587fcb3dea3e0dccf0691f40"
+    },
+    "sources": {
+      "markupsafe/__init__.py": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "markupsafe/_native.py": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb"
+    },
+    "configuration_sha256": "1f46bea590db0385e1a3911cff9f245708695c5c8a5b5157ef98a2047a60942d"
+  },
+  "summary": {
+    "total": 2,
+    "counts": {
+      "checked": 2
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/safe_string.md#1",
+        "path": "cases/safe_string.md",
+        "start_line": 7,
+        "end_line": 12,
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "context": "# Preserve safe text on string conversion\nConvert an object to text while preserving Markup so it is not escaped twice.\nThe harness imports the public `markupsafe` namespace, matching the documented module context."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('&lt;User 1&gt;')\nMarkup('&amp;lt;User 1&amp;gt;')\nMarkup('&lt;User 1&gt;')\n",
+        "stderr": "",
+        "duration_seconds": 0.036,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/optional_values.md#1",
+        "path": "cases/optional_values.md",
+        "start_line": 7,
+        "end_line": 8,
+        "code": "print(repr(escape(None)))\nprint(repr(escape_silent(None)))\n",
+        "context": "# Escape optional values\nTreat optional None values as empty strings while escaping ordinary values.\nThe harness imports the public `markupsafe` namespace, matching the documented module context."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('None')\nMarkup('')\n",
+        "stderr": "",
+        "duration_seconds": 0.0686,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

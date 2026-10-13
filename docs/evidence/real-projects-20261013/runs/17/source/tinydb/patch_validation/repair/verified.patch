@@ -1,0 +1,9 @@
+--- a/cases/purge_named_table.md
++++ b/cases/purge_named_table.md
+@@ -11,5 +11,5 @@
+ table = db.table('table_name')
+ table.insert({'value': True})
+ table.all()
+-db.purge_table('table_name')
++db.drop_table('table_name')
+ ```

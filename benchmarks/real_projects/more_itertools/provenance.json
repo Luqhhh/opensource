@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "collected_at_utc": "2026-10-13T05:35:23.587071+00:00",
+  "project": "https://github.com/more-itertools/more-itertools",
+  "license_files": [
+    "upstream/5.0.0/LICENSE",
+    "upstream/9.0.0/LICENSE",
+    "upstream/six-1.16.0/LICENSE",
+    "upstream/cpython-3.7.0/LICENSE"
+  ],
+  "source_execution": "Only the three selected unmodified 9.0.0 Python source files are provided to SandboxRunner. Downloaded code is never imported on the host.",
+  "source_total_bytes": 156459,
+  "files": [
+    {
+      "upstream_path": "more_itertools/more.py",
+      "local_path": "upstream/5.0.0/more_itertools/more.py",
+      "version": "5.0.0",
+      "commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "url": "https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/more.py",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/more.py",
+      "sha256": "d236ae66621a7f170fcaa8b69c4f44b39496c6e3ad4201a2f356710dd024c497",
+      "size_bytes": 74126,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "more_itertools/recipes.py",
+      "local_path": "upstream/5.0.0/more_itertools/recipes.py",
+      "version": "5.0.0",
+      "commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "url": "https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/recipes.py",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/recipes.py",
+      "sha256": "7d1b6291e9d0f3425e3d33b069a81825474eb0e38a30a22abfad9bd3e8033387",
+      "size_bytes": 15474,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "LICENSE",
+      "local_path": "upstream/5.0.0/LICENSE",
+      "version": "5.0.0",
+      "commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "url": "https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/LICENSE",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/53c2c692d3175e4487235213465afb14a211ec3c/LICENSE",
+      "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46",
+      "size_bytes": 1053,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "docs/api.rst",
+      "local_path": "upstream/5.0.0/docs/api.rst",
+      "version": "5.0.0",
+      "commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "url": "https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/docs/api.rst",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/53c2c692d3175e4487235213465afb14a211ec3c/docs/api.rst",
+      "sha256": "978e2646a0df39c5f96570180f091772d20f8be93a19d3275729aad39877bdd9",
+      "size_bytes": 4195,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "more_itertools/__init__.py",
+      "local_path": "more_itertools/__init__.py",
+      "version": "9.0.0",
+      "commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "url": "https://github.com/more-itertools/more-itertools/blob/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/more_itertools/__init__.py",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/more_itertools/__init__.py",
+      "sha256": "e4f350329cb8d34b39181de3716c338ded110b0f24d1bbd4f56fc2e3d5747ddd",
+      "size_bytes": 148,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "more_itertools/more.py",
+      "local_path": "more_itertools/more.py",
+      "version": "9.0.0",
+      "commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "url": "https://github.com/more-itertools/more-itertools/blob/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/more_itertools/more.py",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/more_itertools/more.py",
+      "sha256": "1669ad913fa3ebda882e4c4410b939651a192bc4add5583f7ce196d2c4c577b8",
+      "size_bytes": 133336,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "more_itertools/recipes.py",
+      "local_path": "more_itertools/recipes.py",
+      "version": "9.0.0",
+      "commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "url": "https://github.com/more-itertools/more-itertools/blob/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/more_itertools/recipes.py",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/more_itertools/recipes.py",
+      "sha256": "657e3ed887db64a94f2156832131f66ee5ff7cfb8c0ded4455ce9ed974ac0b3f",
+      "size_bytes": 22975,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "LICENSE",
+      "local_path": "upstream/9.0.0/LICENSE",
+      "version": "9.0.0",
+      "commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "url": "https://github.com/more-itertools/more-itertools/blob/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/LICENSE",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/LICENSE",
+      "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46",
+      "size_bytes": 1053,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "docs/versions.rst",
+      "local_path": "upstream/9.0.0/docs/versions.rst",
+      "version": "9.0.0",
+      "commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "url": "https://github.com/more-itertools/more-itertools/blob/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/docs/versions.rst",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/docs/versions.rst",
+      "sha256": "c2a6cf54620677f0489ded5b3571e4c6134b47c0f66080629e83b91118531e9d",
+      "size_bytes": 22215,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "docs/api.rst",
+      "local_path": "upstream/9.0.0/docs/api.rst",
+      "version": "9.0.0",
+      "commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+      "url": "https://github.com/more-itertools/more-itertools/blob/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/docs/api.rst",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587/docs/api.rst",
+      "sha256": "512d7eabfb54650236d74a8a199da39b2c13d95eb24acbb9083f62f5ef60a173",
+      "size_bytes": 6133,
+      "license": "MIT (upstream LICENSE); recipes.py retains attribution to Python itertools documentation",
+      "modified": false
+    },
+    {
+      "upstream_path": "more_itertools/__init__.py",
+      "local_path": "upstream/5.0.0/more_itertools/__init__.py",
+      "version": "5.0.0",
+      "commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "url": "https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/__init__.py",
+      "raw_url": "https://raw.githubusercontent.com/more-itertools/more-itertools/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/__init__.py",
+      "sha256": "4be9fa4bd37752996a537a7eec057ed599e5eb2270b97b09b6aae512af6d394c",
+      "size_bytes": 87,
+      "license": "MIT",
+      "modified": false,
+      "usage": "historical positive control only"
+    },
+    {
+      "upstream_path": "six.py",
+      "local_path": "upstream/six-1.16.0/six.py",
+      "version": "1.16.0",
+      "commit": "65486e4383f9f411da95937451205d3c7b61b9e1",
+      "url": "https://github.com/benjaminp/six/blob/65486e4383f9f411da95937451205d3c7b61b9e1/six.py",
+      "raw_url": "https://raw.githubusercontent.com/benjaminp/six/65486e4383f9f411da95937451205d3c7b61b9e1/six.py",
+      "sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3",
+      "size_bytes": 34549,
+      "license": "MIT",
+      "modified": false,
+      "usage": "historical positive control only"
+    },
+    {
+      "upstream_path": "LICENSE",
+      "local_path": "upstream/six-1.16.0/LICENSE",
+      "version": "1.16.0",
+      "commit": "65486e4383f9f411da95937451205d3c7b61b9e1",
+      "url": "https://github.com/benjaminp/six/blob/65486e4383f9f411da95937451205d3c7b61b9e1/LICENSE",
+      "raw_url": "https://raw.githubusercontent.com/benjaminp/six/65486e4383f9f411da95937451205d3c7b61b9e1/LICENSE",
+      "sha256": "8bb850c565aa389fdc16f3a46965ad23d82adff60f2393fc2762b63185e8e6c9",
+      "size_bytes": 1066,
+      "license": "MIT",
+      "modified": false,
+      "usage": "historical positive control only"
+    },
+    {
+      "upstream_path": "LICENSE",
+      "local_path": "upstream/cpython-3.7.0/LICENSE",
+      "version": "3.7.0",
+      "commit": "1bf9cc509326bc42cd8cb1650eb9bf64550d817e",
+      "url": "https://github.com/python/cpython/blob/1bf9cc509326bc42cd8cb1650eb9bf64550d817e/LICENSE",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/1bf9cc509326bc42cd8cb1650eb9bf64550d817e/LICENSE",
+      "sha256": "b9a6d9320b8f2693e8d41e496ce56caadacaddcca9be2a64a61749278f425cf2",
+      "size_bytes": 12763,
+      "license": "PSF License Version 2 and historic Python license notices retained in full",
+      "modified": false,
+      "usage": "Python-derived recipes attribution/license preservation; not a claim that recipes.py was entirely copied from this release"
+    }
+  ],
+  "cases": [
+    {
+      "id": "cases/collate.md#1",
+      "classification": "version_migration",
+      "documentation_version": "5.0.0",
+      "documentation_commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "documentation_path": "more_itertools/more.py",
+      "line_ranges": [
+        [
+          363,
+          364
+        ],
+        [
+          373,
+          375
+        ],
+        [
+          381,
+          382
+        ]
+      ],
+      "documentation_file_sha256": "d236ae66621a7f170fcaa8b69c4f44b39496c6e3ad4201a2f356710dd024c497",
+      "original_excerpt_path": "original/collate.doctest",
+      "original_excerpt_sha256": "ae6da58c8cc113b9b79c541afa4cdae126979b9b6b1d43829137db8940872ffb",
+      "document_path": "cases/collate.md",
+      "document_sha256": "1e59615d7c1a3e192f4498946dd66ce1288140e271619afcb4d428ea0a001b02",
+      "transformation": [
+        "Copy listed original lines byte-for-byte into .doctest excerpt (a blank separator is appended between groups).",
+        "Remove leading indentation and >>> prompt; keep each original statement and call arguments.",
+        "Add from more_itertools import collate to restore the documented implicit module namespace.",
+        "Wrap bare expressions in print(...) to reproduce the interactive repr output for these list results.",
+        "Place executable statements in a Markdown python fence; put doctest expected result lines into external expected_stdout.",
+        "Add an explicit evaluator-authored callable-name contract in the document context; do not change the upstream code or reveal a replacement API."
+      ],
+      "expected_output_source": "Unmodified values from the listed original doctest expected result lines."
+    },
+    {
+      "id": "cases/grouper.md#1",
+      "classification": "version_migration",
+      "documentation_version": "5.0.0",
+      "documentation_commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "documentation_path": "more_itertools/recipes.py",
+      "line_ranges": [
+        [
+          291,
+          292
+        ]
+      ],
+      "documentation_file_sha256": "7d1b6291e9d0f3425e3d33b069a81825474eb0e38a30a22abfad9bd3e8033387",
+      "original_excerpt_path": "original/grouper.doctest",
+      "original_excerpt_sha256": "b61f6b77acffa0a6806518533ff7f4b1717178cdd8415d6e76d8d56d1aef3d1a",
+      "document_path": "cases/grouper.md",
+      "document_sha256": "b6c39787b5bfe9ae993e81291ab5a4d56efbb5566d13534dd20a13bedbbab687",
+      "transformation": [
+        "Copy listed original lines byte-for-byte into .doctest excerpt (a blank separator is appended between groups).",
+        "Remove leading indentation and >>> prompt; keep each original statement and call arguments.",
+        "Add from more_itertools import grouper to restore the documented implicit module namespace.",
+        "Wrap bare expressions in print(...) to reproduce the interactive repr output for these list results.",
+        "Place executable statements in a Markdown python fence; put doctest expected result lines into external expected_stdout."
+      ],
+      "expected_output_source": "Unmodified values from the listed original doctest expected result lines."
+    },
+    {
+      "id": "cases/healthy_chunked.md#1",
+      "classification": "healthy_control",
+      "documentation_version": "5.0.0",
+      "documentation_commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+      "documentation_path": "more_itertools/more.py",
+      "line_ranges": [
+        [
+          101,
+          102
+        ]
+      ],
+      "documentation_file_sha256": "d236ae66621a7f170fcaa8b69c4f44b39496c6e3ad4201a2f356710dd024c497",
+      "original_excerpt_path": "original/healthy_chunked.doctest",
+      "original_excerpt_sha256": "168615585965d1d7ce45f724c8f85654c1b5423d542829e902088b2e298586c9",
+      "document_path": "cases/healthy_chunked.md",
+      "document_sha256": "83fe25f93b726c80fb89ac93a546852649a57b6d7ca65b0c30428e15cfe275af",
+      "transformation": [
+        "Copy listed original lines byte-for-byte into .doctest excerpt (a blank separator is appended between groups).",
+        "Remove leading indentation and >>> prompt; keep each original statement and call arguments.",
+        "Add from more_itertools import chunked to restore the documented implicit module namespace.",
+        "Wrap bare expressions in print(...) to reproduce the interactive repr output for these list results.",
+        "Place executable statements in a Markdown python fence; put doctest expected result lines into external expected_stdout."
+      ],
+      "expected_output_source": "Unmodified values from the listed original doctest expected result lines."
+    }
+  ],
+  "historical_positive_control": {
+    "library_version": "5.0.0",
+    "dependency": {
+      "name": "six",
+      "version": "1.16.0",
+      "commit": "65486e4383f9f411da95937451205d3c7b61b9e1",
+      "license": "MIT"
+    },
+    "source_mapping": {
+      "more_itertools/__init__.py": "upstream/5.0.0/more_itertools/__init__.py",
+      "more_itertools/more.py": "upstream/5.0.0/more_itertools/more.py",
+      "more_itertools/recipes.py": "upstream/5.0.0/more_itertools/recipes.py",
+      "six.py": "upstream/six-1.16.0/six.py"
+    },
+    "execution": "SandboxRunner only; same documents, setup, checks, expected_stdout; no host import or package installation."
+  },
+  "recipes_license_note": "more_itertools/recipes.py attributes functions to the Python itertools documentation. Retain upstream attribution and a full PSF License Version 2/historical-notices text from CPython 3.7.0, a pre-2020 version. Individual recipe source ancestry has not been fully traced; no claim that every recipe is 0BSD or was copied specifically from 3.7.0."
+}

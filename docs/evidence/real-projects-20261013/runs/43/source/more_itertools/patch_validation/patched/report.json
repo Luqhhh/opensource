@@ -1,0 +1,116 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T05:52:17.409341+00:00",
+  "project_name": "more_itertools",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/collate.md": "1e59615d7c1a3e192f4498946dd66ce1288140e271619afcb4d428ea0a001b02",
+      "cases/grouper.md": "81891124a6a991dec6f9a7233189d30cb472c0f7cc166c2307459d2848fe5333",
+      "cases/healthy_chunked.md": "83fe25f93b726c80fb89ac93a546852649a57b6d7ca65b0c30428e15cfe275af"
+    },
+    "sources": {
+      "more_itertools/__init__.py": "e4f350329cb8d34b39181de3716c338ded110b0f24d1bbd4f56fc2e3d5747ddd",
+      "more_itertools/more.py": "1669ad913fa3ebda882e4c4410b939651a192bc4add5583f7ce196d2c4c577b8",
+      "more_itertools/recipes.py": "657e3ed887db64a94f2156832131f66ee5ff7cfb8c0ded4455ce9ed974ac0b3f"
+    },
+    "configuration_sha256": "48f1393413ff8b67b3d496596d721eaa7fae73cb2168c17f9369c487fd2ad909"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "failed": 1,
+      "checked": 2
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/collate.md#1",
+        "path": "cases/collate.md",
+        "start_line": 10,
+        "end_line": 14,
+        "code": "from more_itertools import collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+        "context": "# Sorted merge: removed collate\nThe original doctest statements and expected results are stored in `../original/collate.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged.\n\nEvaluator contract: preserve a reusable callable named `collate`, so the documented examples and additional supported inputs can be checked. This sentence is evaluator-authored context, not copied upstream documentation."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from more_itertools import collate\nImportError: cannot import name 'collate' from 'more_itertools' (/workspace/more_itertools/__init__.py)\n",
+        "duration_seconds": 0.0675,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/grouper.md#1",
+        "path": "cases/grouper.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "context": "# Grouped items: changed argument order\nOfficial more-itertools 5.0.0 docstring: [L291–L292](https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/recipes.py#L291-L292). Target source: 9.0.0 (ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587).\n\nThe original doctest statements and expected results are stored in `../original/grouper.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]\n",
+        "stderr": "",
+        "duration_seconds": 0.0687,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_chunked.md#1",
+        "path": "cases/healthy_chunked.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from more_itertools import chunked\nprint(list(chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)))\n",
+        "context": "# Healthy incomplete final chunk\nOfficial more-itertools 5.0.0 docstring: [L101–L102](https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/more.py#L101-L102). Target source: 9.0.0 (ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587).\n\nThe original doctest statements and expected results are stored in `../original/healthy_chunked.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[[1, 2, 3], [4, 5, 6], [7, 8]]\n",
+        "stderr": "",
+        "duration_seconds": 0.0677,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

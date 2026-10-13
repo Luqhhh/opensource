@@ -1,0 +1,6 @@
+{
+  "cases/grouper.md#1": {
+    "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+    "rationale": "The error indicates that the iterable should be the first argument, and the number of groups should be the second argument. The fillvalue is an optional third argument. The original code had the arguments in the wrong order, causing a TypeError."
+  }
+}

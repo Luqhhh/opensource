@@ -1,0 +1,23 @@
+{
+  "documents": [
+    "cases/safe_string.md",
+    "cases/optional_values.md"
+  ],
+  "source_files": [
+    "markupsafe/__init__.py",
+    "markupsafe/_native.py"
+  ],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/safe_string.md#1": {
+      "setup": "from markupsafe import *\n",
+      "expected_stdout": "Markup('&lt;User 1&gt;')\nMarkup('&amp;lt;User 1&amp;gt;')\nMarkup('&lt;User 1&gt;')\n",
+      "checks": "from markupsafe import Markup as _Markup\nassert type(value) is _Markup\nassert str(value) == '&lt;User 1&gt;'\nassert escape(value) == value\nassert escape(str(value)) != value\n"
+    },
+    "cases/optional_values.md#1": {
+      "setup": "from markupsafe import *\n",
+      "expected_stdout": "Markup('None')\nMarkup('')\n",
+      "checks": "from markupsafe import Markup as _Markup\nassert type(escape_silent(None)) is _Markup\nassert escape_silent(None) == ''\nassert escape_silent('<tag>') == '&lt;tag&gt;'\nassert escape_silent(0) == '0'\n"
+    }
+  }
+}

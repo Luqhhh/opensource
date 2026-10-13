@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "suite_id": "markupsafe-official-docs-migration-v1",
+  "generated_at": "2026-10-13T05:52:52.524841+00:00",
+  "mode": "recorded_candidates",
+  "model": null,
+  "max_attempts": 1,
+  "manifest_sha256": "1d305570e0b6a119167b663695fbb41634d044fa9faa38cde929f1c356f894c4",
+  "manifest": {
+    "schema_version": 1,
+    "suite_id": "markupsafe-official-docs-migration-v1",
+    "description": "An unmodified-API example from official MarkupSafe 1.1.1 API documentation evaluated against pinned 2.1.5 source, plus a healthy control. A declared historical version migration, not a bug in current upstream documentation.",
+    "classification": "real_upstream_documentation_version_migration",
+    "target_runtime": {
+      "implementation": "CPython",
+      "verified_interpreter": "/usr/bin/python3",
+      "minimum_version": "3.10",
+      "project_version": "2.1.5",
+      "project_commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "implementation_variant": "bundled native Python fallback; no compiled extension"
+    },
+    "provenance": {
+      "created_at": "2026-10-13",
+      "upstream_repository": "https://github.com/pallets/markupsafe",
+      "upstream_code_copied": true,
+      "license": "BSD-3-Clause",
+      "documentation_version": "1.1.1",
+      "documentation_commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "live_model_evaluation": false,
+      "candidate_mode": "recorded_candidate_replay",
+      "case_selection": "Newly mined from official upstream documentation for this evaluation; no live model has been run during case preparation. Final freeze and cross-condition execution are recorded separately.",
+      "historical_positive_control": "Both original cases passed on pinned 1.1.1 native Python source in Bubblewrap; evidence/old-version-control/check/report.json."
+    },
+    "limitations": [
+      "One selected removed-API migration is not representative of arbitrary MarkupSafe defects.",
+      "The old documentation is paired intentionally with a newer library; no claim that current upstream documentation is broken.",
+      "Sphinx docstring examples require public module scope; setup supplies that scope.",
+      "Doctest expression display is mechanically translated into print(repr(...)) because the tool only accepts fenced Python.",
+      "Finite checks and doctest output do not prove general semantic equivalence."
+    ],
+    "cases": [
+      {
+        "id": "cases/safe_string.md#1",
+        "title": "Preserve safe text on string conversion",
+        "category": "version_migration",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "document_version": "1.1.1",
+        "runtime_version": "2.1.5",
+        "upstream_document": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py#L54-L66",
+        "oracle": "upstream_doctest_output_plus_configured_behavior_checks",
+        "removed_api": "markupsafe.soft_unicode",
+        "removed_in": "2.1.0",
+        "expected_failure": "NameError: soft_unicode is absent from the documented public module namespace in MarkupSafe 2.1.5."
+      },
+      {
+        "id": "cases/optional_values.md#1",
+        "title": "Escape optional values",
+        "category": "healthy_control",
+        "expected_before": "checked",
+        "expected_repair": "checked",
+        "document_version": "1.1.1",
+        "runtime_version": "2.1.5",
+        "upstream_document": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py#L39-L47",
+        "oracle": "upstream_doctest_output_plus_configured_behavior_checks"
+      }
+    ]
+  },
+  "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",
+  "patch_application": "passed",
+  "stage": "complete",
+  "implementation_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "0242ef64b3adc9b928da1471aba758346fe611ce3f98d893701489caff9ec0ba",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "3db338d749267635c3ed9f2f146c8f27dd4ac43c014b6ffda711e0ae3b1ef22f",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "5f73f13949fa35af358145217feeee51c8e23d464b769ffb92c727b8f49e2bc8",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "6b63fc7fd1b77aaddc3c4886cd2f44c19ec6e4fbdc2c9702da27b2920c4922bc",
+    "study.py": "3f4e5ff144fa6dfabb304dba234a42e50a72e7cbc2f044e27aeac40bc76a6273"
+  },
+  "candidate_snapshot_sha256": "7baa6a492adc27c67c69690fc7a41995f4ad3b9d9141b71eb36db6011d792946",
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 1,
+    "proposals": 1,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0.0
+  },
+  "metrics": {
+    "baseline_valid": true,
+    "total": 2,
+    "expected_failures": 1,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 1,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 1,
+    "patch_confirmed_repairs": 1,
+    "repair_rate": 1.0,
+    "healthy_preserved": 1,
+    "all_passed": true,
+    "cases": [
+      {
+        "id": "cases/safe_string.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/optional_values.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "duration_seconds": 0.4407,
+  "exit_code": 0
+}

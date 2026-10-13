@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "suite_id": "more-itertools-real-project-v1",
+  "description": "Two verbatim-origin official 5.0.0 docstring examples migrated to unmodified 9.0.0 source, plus one healthy control. These are documented version migrations, not current upstream bugs.",
+  "classification": "real_project_version_migration",
+  "project": {
+    "name": "more-itertools",
+    "repository": "https://github.com/more-itertools/more-itertools",
+    "documentation_version": "5.0.0",
+    "documentation_commit": "53c2c692d3175e4487235213465afb14a211ec3c",
+    "target_version": "9.0.0",
+    "target_commit": "ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587",
+    "license": "MIT"
+  },
+  "target_runtime": {
+    "implementation": "CPython",
+    "minimum_version": "3.10",
+    "runner": "SandboxRunner / Bubblewrap",
+    "third_party_installs": false
+  },
+  "evaluation": {
+    "external_checks_authorship": "AI-assisted and frozen before model evaluation; independent of model-added assertions",
+    "reference_candidates": "proposals.json; engineering replay only, withheld from model input",
+    "live_model_evaluation": false,
+    "held_out_from_prior_prompt_development": true,
+    "historical_positive_control": {
+      "library_version": "5.0.0",
+      "dependency": "six 1.16.0",
+      "status": "3 checked",
+      "same_documents_and_checks": true,
+      "evidence": "evidence/old-version-control/validation.json"
+    }
+  },
+  "limitations": [
+    "Examples are intentionally evaluated against a newer library version; no claim that 5.0.0 documentation was broken on 5.0.0.",
+    "Two migration failures and one healthy control cannot establish project-wide reliability or model generalization.",
+    "Public upstream examples may be present in model pretraining; held out refers to this local evaluation and prompt-development history only.",
+    "Doctest conversion adds an import and print wrappers; original statements, values and expected outputs are separately retained.",
+    "External behavior checks share an interpreter with candidate code and are not a complete adversarial security boundary."
+  ],
+  "cases": [
+    {
+      "id": "cases/collate.md#1",
+      "title": "Sorted merge: removed collate",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "behavior": "Merge sorted inputs, preserve duplicates, honor numeric key and reverse ordering.",
+      "oracle": "configured_behavior_checks",
+      "upstream_bug_claim": false
+    },
+    {
+      "id": "cases/grouper.md#1",
+      "title": "Grouped items: changed argument order",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "behavior": "Fixed-size groups in source order, preserve the last item, pad the final group with x.",
+      "oracle": "configured_behavior_checks",
+      "upstream_bug_claim": false
+    },
+    {
+      "id": "cases/healthy_chunked.md#1",
+      "title": "Healthy incomplete final chunk",
+      "category": "healthy_control",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "behavior": "Groups into lists; the last chunk remains shorter and is not padded.",
+      "oracle": "configured_behavior_checks",
+      "upstream_bug_claim": false
+    }
+  ]
+}

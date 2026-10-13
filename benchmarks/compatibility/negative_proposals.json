@@ -1,0 +1,18 @@
+{
+  "cases/base64_mime.md#1": {
+    "code": "import base64\nencode_payload = base64.b64encode\ndecode_payload = base64.decodebytes\npayload = b\"abc\" * 20\nencoded = encode_payload(payload)\ndecoded = decode_payload(encoded)\nprint(len(decoded), len(encoded.splitlines()), decoded == payload)\n",
+    "rationale": "Deliberately incorrect AI-assisted recorded probe, not model output. Incorrect alternative: loses MIME line wrapping and trailing newline."
+  },
+  "cases/elapsed_clock.md#1": {
+    "code": "import time\ntimer = time.process_time\nstarted = timer()\ntime.sleep(0.02)\nelapsed = timer() - started\nprint(elapsed >= 0.01)\n",
+    "rationale": "Deliberately incorrect AI-assisted recorded probe, not model output. Incorrect alternative: CPU time excludes the required sleep duration."
+  },
+  "cases/json_encoding.md#1": {
+    "code": "import json\nfrom decimal import Decimal\nfrom functools import partial\nload_document = partial(json.loads)\ndocument = '{\"name\": \"雪\", \"price\": 1.20, \"available\": true}'\nrecord = load_document(document)\nprint(record[\"name\"], record[\"price\"])\n",
+    "rationale": "Deliberately incorrect AI-assisted recorded probe, not model output. Incorrect alternative: dropping parse_float loses Decimal precision."
+  },
+  "cases/array_bytes.md#1": {
+    "code": "from array import array\nserialize = array.tobytes\nappend_bytes = array.frombytes\nvalues = array(\"B\", [0, 127, 255])\nencoded = serialize(values)\nrestored = array(\"B\", encoded)\nprint(restored.tolist())\n",
+    "rationale": "Deliberately incorrect AI-assisted recorded probe, not model output. Incorrect alternative: reconstructing the array loses existing elements instead of appending."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "project": "MarkupSafe",
+  "repository_url": "https://github.com/pallets/markupsafe",
+  "classification": "version_migration",
+  "document_release": {
+    "version": "1.1.1",
+    "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd"
+  },
+  "runtime_release": {
+    "version": "2.1.5",
+    "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65"
+  },
+  "documentation_binding": {
+    "path": "docs/escaping.rst",
+    "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+    "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/docs/escaping.rst#L1-L21",
+    "explanation": "The official Sphinx docs declare the markupsafe module and render escape_silent and soft_unicode with autofunction, using these function docstrings."
+  },
+  "license": {
+    "spdx": "BSD-3-Clause",
+    "source_urls": [
+      "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/LICENSE.rst",
+      "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/LICENSE.rst"
+    ],
+    "local_paths": [
+      "upstream/1.1.1/LICENSE.rst",
+      "upstream/2.1.5/LICENSE.rst"
+    ]
+  },
+  "upstream_change_evidence": {
+    "local_path": "upstream/2.1.5/CHANGES.rst",
+    "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/CHANGES.rst#L43-L56",
+    "explanation": "Version 2.1.0 removes soft_unicode and explicitly recommends soft_str."
+  },
+  "files": [
+    {
+      "local_path": "upstream/1.1.1/src/markupsafe/_native.py",
+      "upstream_path": "src/markupsafe/_native.py",
+      "version": "1.1.1",
+      "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py",
+      "sha256": "77ef12ff3cd8b76cb9d76c5872e4b1ab435e1b60d452f1bcd3055d4e7fb8288f",
+      "line_range": [
+        1,
+        69
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "upstream/1.1.1/docs/escaping.rst",
+      "upstream_path": "docs/escaping.rst",
+      "version": "1.1.1",
+      "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/docs/escaping.rst",
+      "sha256": "2585821d4b93004207ce488388958569b4333799dbeeaf0cf994ca95aba81b3f",
+      "line_range": [
+        1,
+        21
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "upstream/1.1.1/LICENSE.rst",
+      "upstream_path": "LICENSE.rst",
+      "version": "1.1.1",
+      "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/LICENSE.rst",
+      "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea",
+      "line_range": [
+        1,
+        28
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "upstream/2.1.5/src/markupsafe/__init__.py",
+      "upstream_path": "src/markupsafe/__init__.py",
+      "version": "2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/src/markupsafe/__init__.py",
+      "sha256": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "line_range": [
+        1,
+        332
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "upstream/2.1.5/src/markupsafe/_native.py",
+      "upstream_path": "src/markupsafe/_native.py",
+      "version": "2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/src/markupsafe/_native.py",
+      "sha256": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb",
+      "line_range": [
+        1,
+        63
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "upstream/2.1.5/CHANGES.rst",
+      "upstream_path": "CHANGES.rst",
+      "version": "2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/CHANGES.rst",
+      "sha256": "0dd84d23fe91fa51c4672563b858acc50f50836f1ec7f7dadc4c9c7d2020615d",
+      "line_range": [
+        1,
+        170
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "upstream/2.1.5/LICENSE.rst",
+      "upstream_path": "LICENSE.rst",
+      "version": "2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/LICENSE.rst",
+      "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea",
+      "line_range": [
+        1,
+        28
+      ],
+      "license": "BSD-3-Clause"
+    },
+    {
+      "local_path": "markupsafe/__init__.py",
+      "upstream_path": "src/markupsafe/__init__.py",
+      "version": "2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/src/markupsafe/__init__.py",
+      "sha256": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "line_range": [
+        1,
+        332
+      ],
+      "license": "BSD-3-Clause",
+      "mapping": "Removed only the src/ path prefix; bytes unchanged; Python native fallback used without C speedups."
+    },
+    {
+      "local_path": "markupsafe/_native.py",
+      "upstream_path": "src/markupsafe/_native.py",
+      "version": "2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/src/markupsafe/_native.py",
+      "sha256": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb",
+      "line_range": [
+        1,
+        63
+      ],
+      "license": "BSD-3-Clause",
+      "mapping": "Removed only the src/ path prefix; bytes unchanged; Python native fallback used without C speedups."
+    },
+    {
+      "local_path": "upstream/1.1.1/src/markupsafe/__init__.py",
+      "upstream_path": "src/markupsafe/__init__.py",
+      "version": "1.1.1",
+      "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/__init__.py",
+      "sha256": "a136e53b97fd28533ea6f9eaf5b0741e01259ea909caa1e714dd4dc76348be76",
+      "line_range": [
+        1,
+        327
+      ],
+      "license": "BSD-3-Clause",
+      "purpose": "Old-release positive control; not provided to the live target-version model."
+    },
+    {
+      "local_path": "upstream/1.1.1/src/markupsafe/_compat.py",
+      "upstream_path": "src/markupsafe/_compat.py",
+      "version": "1.1.1",
+      "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_compat.py",
+      "sha256": "b845b5c9bc448dfc488ae4db451689a47b0f15fe3241430c29a3e06040b95db5",
+      "line_range": [
+        1,
+        33
+      ],
+      "license": "BSD-3-Clause",
+      "purpose": "Old-release positive control; not provided to the live target-version model."
+    },
+    {
+      "local_path": "upstream/1.1.1/src/markupsafe/_constants.py",
+      "upstream_path": "src/markupsafe/_constants.py",
+      "version": "1.1.1",
+      "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_constants.py",
+      "sha256": "ce8d9a8df49c1be97549bff9d843f73250c2a8eed8d415475175ca46c54344d9",
+      "line_range": [
+        1,
+        264
+      ],
+      "license": "BSD-3-Clause",
+      "purpose": "Old-release positive control; not provided to the live target-version model."
+    }
+  ],
+  "extractions": [
+    {
+      "case_id": "cases/safe_string.md#1",
+      "upstream_path": "src/markupsafe/_native.py",
+      "upstream_commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "upstream_line_range": [
+        54,
+        66
+      ],
+      "upstream_url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py#L54-L66",
+      "raw_snippet": "original_snippets/safe_string.txt",
+      "raw_snippet_sha256": "8a42fa4d501f61f33d80b96965e69b870ddaaaaf4f754b38d64b9a1de4b038ef",
+      "derived_document": "cases/safe_string.md",
+      "derived_document_sha256": "05a57b36b1711f1bf8a8a987ed33f4f56eb0baf7cbdf299cfa1f74c9581c1e34",
+      "conversion": "Parse the official function docstring with ast.get_docstring and doctest.DocTestParser; retain every source statement and literal; when a single expression has a doctest expected result, wrap only that expression in print(repr(...)); concatenate expected doctest results as external expected_stdout. Add a Markdown fence and a description; do not alter upstream API calls.",
+      "setup": "from markupsafe import * (explicit public-module scope equivalent for Sphinx autodoc snippets; unchanged for original and repaired runs)",
+      "doctest_expected_stdout": "Markup('&lt;User 1&gt;')\nMarkup('&amp;lt;User 1&amp;gt;')\nMarkup('&lt;User 1&gt;')\n"
+    },
+    {
+      "case_id": "cases/optional_values.md#1",
+      "upstream_path": "src/markupsafe/_native.py",
+      "upstream_commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+      "upstream_line_range": [
+        39,
+        47
+      ],
+      "upstream_url": "https://github.com/pallets/markupsafe/blob/22c946de28c2f5916f8c88a983a3e48e1cdbd2fd/src/markupsafe/_native.py#L39-L47",
+      "raw_snippet": "original_snippets/optional_values.txt",
+      "raw_snippet_sha256": "b45468acce99a1fe7b9f6c288d5cfd8ae5e0aa11aaf6f4b53c57f8ca229b5cfd",
+      "derived_document": "cases/optional_values.md",
+      "derived_document_sha256": "4990c1118def93ebba2621f092f44e75491406b5587fcb3dea3e0dccf0691f40",
+      "conversion": "Parse the official function docstring with ast.get_docstring and doctest.DocTestParser; retain every source statement and literal; when a single expression has a doctest expected result, wrap only that expression in print(repr(...)); concatenate expected doctest results as external expected_stdout. Add a Markdown fence and a description; do not alter upstream API calls.",
+      "setup": "from markupsafe import * (explicit public-module scope equivalent for Sphinx autodoc snippets; unchanged for original and repaired runs)",
+      "doctest_expected_stdout": "Markup('None')\nMarkup('')\n"
+    }
+  ],
+  "execution_policy": "Only selected byte-identical Python source files and snippet code are executed, through ExampleProof fail-closed Bubblewrap isolation. No upstream install/build script is run.",
+  "historical_positive_control": {
+    "release": "1.1.1",
+    "commit": "22c946de28c2f5916f8c88a983a3e48e1cdbd2fd",
+    "inputs": "evidence/old-version-control/inputs",
+    "report": "evidence/old-version-control/check/report.json",
+    "result": "Both original snippets pass with the same checks and doctest output. Only mapped upstream implementation version changes."
+  }
+}

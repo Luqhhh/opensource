@@ -1,0 +1,6 @@
+{
+  "cases/purge_named_table.md#1": {
+    "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+    "rationale": "The error indicates that the `purge_table` method does not exist. The correct method to remove a table is `drop_table`. This method is available in the TinyDB library and will remove the specified table while keeping the default table and its fruit records intact."
+  }
+}

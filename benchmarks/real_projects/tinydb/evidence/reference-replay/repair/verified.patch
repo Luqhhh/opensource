@@ -1,0 +1,19 @@
+--- a/cases/purge_default.md
++++ b/cases/purge_default.md
+@@ -8,6 +8,6 @@
+ db = TinyDB('db.json')
+ db.insert({'type': 'apple', 'count': 7})
+ db.insert({'type': 'peach', 'count': 3})
+-db.purge()
++db.truncate()
+ db.all()
+ ```
+--- a/cases/purge_named_table.md
++++ b/cases/purge_named_table.md
+@@ -11,5 +11,5 @@
+ table = db.table('table_name')
+ table.insert({'value': True})
+ table.all()
+-db.purge_table('table_name')
++db.drop_table('table_name')
+ ```

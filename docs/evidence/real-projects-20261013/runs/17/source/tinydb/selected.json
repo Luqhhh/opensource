@@ -1,0 +1,6 @@
+{
+  "cases/purge_named_table.md#1": {
+    "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+    "rationale": "The error indicates that `purge_table` is not a method of the `Table` object. The correct method to drop a table in TinyDB is `drop_table`, which is available on the `TinyDB` object itself, not on the `Table` object. Therefore, the `drop_table` method is used instead of `purge_table`."
+  }
+}

@@ -4,7 +4,7 @@
 
 仓库：<https://github.com/Luqhhh/opensource>
 
-**当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；工具不自动下载模型。随附候选回放演示**不代表实时模型推理结果或真实项目修复成功率**。另外已完成 [Qwen2.5-Coder 7B 真实推理验证](docs/evidence/ollama-20261013/README.md)，保留优化前后的原始请求、响应和复查结果。
+**当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；工具不自动下载模型。随附候选回放演示**不代表实时模型推理结果或真实项目修复成功率**。已有 [Qwen2.5-Coder 7B 开发验证](docs/evidence/ollama-20261013/README.md)，另新增 [三个真实项目的历史文档迁移证据](benchmarks/real_projects/README.md) 与 [冻结三组对照](docs/evidence/real-projects-20261013/README.md)，保留原始请求、失败及补丁复查结果。
 
 ## 工作流程
 
@@ -17,7 +17,7 @@
 
 ## 本地运行
 
-需要 Linux、Python 3.10+、`/usr/bin/python3` 和可创建用户/网络命名空间的 Bubblewrap。执行器没有退回宿主机执行的模式。v0.1 仅支持单进程、单线程示例，运行环境只含 Python 标准库及配置中明确列出的 `.py` 源码；第三方依赖环境将在后续版本支持。
+需要 Linux、Python 3.10+、`/usr/bin/python3` 和可创建用户/网络命名空间的 Bubblewrap。执行器没有退回宿主机执行的模式。v0.1 仅支持单进程、单线程示例，运行环境只含 Python 标准库及配置中明确列出的 `.py` 源码；可以显式选择第三方纯 Python 源码，暂不支持自动安装依赖或加载编译扩展。
 
 在仓库目录运行，无需安装 Python 依赖：
 
@@ -82,6 +82,8 @@ python3 -m exampleproof repair examples/tutorial \
 
 输入路径必须为规范的相对路径，例如 `docs/guide.md`，不接受 `./docs/guide.md`、重复斜杠、隐藏路径或符号链接。报告以临时文件写入后替换，避免通过既有硬链接改写输入。
 
+配置严格校验字段名；例如误写 `check` 或 `expected_output` 会直接报错，避免漏跑行为检查。支持带 UTF-8 BOM 的 Markdown，生成补丁时保留原始 BOM、换行和文件末尾状态。
+
 退出码：`0` 为没有失败或未验证修复候选（仍应阅读 skipped / runnable_unverified 计数）；`1` 为执行、检查、模型或候选失败；`2` 为配置/隔离环境错误、无示例或全部跳过。
 
 ## 测试
@@ -94,11 +96,56 @@ EXAMPLEPROOF_SANDBOX_TESTS=1 python3 -m unittest discover -s tests -v
 
 首批演示包括一个 Python 真实兼容性变更的重现、两个自制 SDK 变更案例、一个正常案例、一个上下文缺失片段及一个无行为检查的案例。它们用于验证工程流程，不能计为 6 个真实开源缺陷。[案例来源](docs/cases.md)
 
+## 可复现评测
+
+新增 8 个标准库案例：6 个历史兼容性重现、2 个健康对照。每例具有外部行为检查和 CPython 官方来源；它们不代表 8 个真实项目缺陷。
+
+```sh
+# 回放：检查基线、复验候选、在临时副本应用补丁、重新检查完整文档
+python3 -m exampleproof benchmark benchmarks/compatibility \
+  --proposals benchmarks/compatibility/proposals.json --output artifacts/benchmark-replay
+
+# 实时推理：使用已安装模型，保留完整请求、响应和失败结果
+python3 -m exampleproof benchmark benchmarks/compatibility \
+  --model qwen2.5-coder:7b --max-attempts 3 --model-timeout 180 \
+  --output artifacts/benchmark-live
+```
+
+每次评测须使用新的输出目录。`benchmark.json` 明确记录候选回放或实时推理模式、基线是否符合预期、修复数、补丁应用后通过数、健康对照、token 与耗时；`inputs/` 保存本次输入快照，`baseline/`、`repair/`、`patched/` 分别保存三阶段报告。基线不符时返回 `2` 并停止调用模型；环境、模型服务或记录异常也返回 `2`，指标保留未知状态。可评估修复或补丁复查未全部通过返回 `1`，全部通过返回 `0`。[评测协议与指标](docs/benchmark.md)
+
+新增 TinyDB、more-itertools、MarkupSafe 官方历史文档案例，固定旧版/目标版源码、原文位置与许可，合计 5 个迁移失败、3 个健康对照。旧版本同一检查 8/8 通过，目标版本参考补丁应用复查 8/8 通过；参考候选属于工程回放，模型效果另见真实对照。
+
+三组对照比较直接模型、加入目标源码摘录、再加入执行反馈。推理前冻结案例、提示词、模型摘要、种子和每例 3 次调用上限；三组均报告首次及预算内通过数、失败、token 与耗时。复现入口：
+
+```sh
+python3 scripts/run_real_project_study.py freeze \
+  benchmarks/real_projects/tinydb benchmarks/real_projects/more_itertools \
+  benchmarks/real_projects/markupsafe --output artifacts/real-project-study
+python3 scripts/run_real_project_study.py run artifacts/real-project-study
+```
+
+需要已运行的本地 Ollama 和对应模型；已有实验目录不可覆盖。三种子重复的每组 15 次案例运行仍只对应 5 个失败案例，不能据此估计真实项目总体成功率。[协议、结果与局限](docs/evidence/real-projects-20261013/README.md)
+
 ## 参赛资料
 
 - [项目范围、评分对应与开发安排](docs/competition.md)
 - [资源与 AI 使用记录](docs/resources.md)
 - [架构与执行边界](docs/architecture.md)
 - [验证记录与当前局限](docs/validation.md)
+- [参赛材料草稿与提交缺项](docs/submission/README.md)
+- [开发、案例贡献与维护约定](CONTRIBUTING.md)
+
+## 构建与安装
+
+源码目录可直接运行；需要安装包时使用干净的虚拟环境构建，再从仓库外验证入口：
+
+```sh
+python3 -m venv .venv-build
+.venv-build/bin/python -m pip wheel --no-deps --wheel-dir dist .
+.venv-build/bin/python -m pip install --no-deps dist/aic_exampleproof-0.1.0-py3-none-any.whl
+.venv-build/bin/exampleproof benchmark --help
+```
+
+已在本机发现系统 pip 22.0.2 的构建隔离仍导入旧 setuptools，可能返回成功却生成 `UNKNOWN-0.0.0` 空包。正确产物名应为 `aic_exampleproof-0.1.0-py3-none-any.whl`；CI另检查元数据、源码内容、入口和仓库外安装，不能只凭构建退出码判断成功。[安装验证](docs/validation.md)
 
 许可证：MIT。报告与参赛材料需如实披露使用的第三方组件、模型及 AI 辅助开发情况。

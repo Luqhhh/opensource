@@ -1,0 +1,6 @@
+{
+  "cases/grouper.md#1": {
+    "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+    "rationale": "The error indicates that the 'x' argument is being interpreted as the 'incomplete' parameter, which expects a string ('fill', 'ignore', or 'strict'). By explicitly providing 'fillvalue' as a keyword argument, the function call is corrected to match the expected parameters."
+  }
+}

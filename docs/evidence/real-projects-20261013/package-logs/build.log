@@ -1,0 +1,182 @@
+* Getting build dependencies for sdist...
+running egg_info
+creating aic_exampleproof.egg-info
+writing aic_exampleproof.egg-info/PKG-INFO
+writing dependency_links to aic_exampleproof.egg-info/dependency_links.txt
+writing entry points to aic_exampleproof.egg-info/entry_points.txt
+writing top-level names to aic_exampleproof.egg-info/top_level.txt
+writing manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+reading manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+WARNING `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+* Building sdist...
+running sdist
+running egg_info
+writing aic_exampleproof.egg-info/PKG-INFO
+writing dependency_links to aic_exampleproof.egg-info/dependency_links.txt
+writing entry points to aic_exampleproof.egg-info/entry_points.txt
+writing top-level names to aic_exampleproof.egg-info/top_level.txt
+reading manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+running check
+creating aic_exampleproof-0.1.0
+creating aic_exampleproof-0.1.0/aic_exampleproof.egg-info
+creating aic_exampleproof-0.1.0/exampleproof
+copying files to aic_exampleproof-0.1.0...
+copying LICENSE -> aic_exampleproof-0.1.0
+copying README.md -> aic_exampleproof-0.1.0
+copying pyproject.toml -> aic_exampleproof-0.1.0
+copying aic_exampleproof.egg-info/PKG-INFO -> aic_exampleproof-0.1.0/aic_exampleproof.egg-info
+copying aic_exampleproof.egg-info/SOURCES.txt -> aic_exampleproof-0.1.0/aic_exampleproof.egg-info
+copying aic_exampleproof.egg-info/dependency_links.txt -> aic_exampleproof-0.1.0/aic_exampleproof.egg-info
+copying aic_exampleproof.egg-info/entry_points.txt -> aic_exampleproof-0.1.0/aic_exampleproof.egg-info
+copying aic_exampleproof.egg-info/top_level.txt -> aic_exampleproof-0.1.0/aic_exampleproof.egg-info
+copying exampleproof/__init__.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/__main__.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/benchmark.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/cli.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/config.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/extract.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/guard.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/models.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/pipeline.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/providers.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/report.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/runner.py -> aic_exampleproof-0.1.0/exampleproof
+copying exampleproof/study.py -> aic_exampleproof-0.1.0/exampleproof
+Writing aic_exampleproof-0.1.0/setup.cfg
+Creating tar archive
+removing 'aic_exampleproof-0.1.0' (and everything under it)
+WARNING `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+* Building wheel from sdist
+* Getting build dependencies for wheel...
+running egg_info
+writing aic_exampleproof.egg-info/PKG-INFO
+writing dependency_links to aic_exampleproof.egg-info/dependency_links.txt
+writing entry points to aic_exampleproof.egg-info/entry_points.txt
+writing top-level names to aic_exampleproof.egg-info/top_level.txt
+reading manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+WARNING `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+* Building wheel...
+running bdist_wheel
+running build
+running build_py
+creating build/lib/exampleproof
+copying exampleproof/models.py -> build/lib/exampleproof
+copying exampleproof/pipeline.py -> build/lib/exampleproof
+copying exampleproof/__main__.py -> build/lib/exampleproof
+copying exampleproof/providers.py -> build/lib/exampleproof
+copying exampleproof/cli.py -> build/lib/exampleproof
+copying exampleproof/extract.py -> build/lib/exampleproof
+copying exampleproof/runner.py -> build/lib/exampleproof
+copying exampleproof/__init__.py -> build/lib/exampleproof
+copying exampleproof/guard.py -> build/lib/exampleproof
+copying exampleproof/study.py -> build/lib/exampleproof
+copying exampleproof/benchmark.py -> build/lib/exampleproof
+copying exampleproof/report.py -> build/lib/exampleproof
+copying exampleproof/config.py -> build/lib/exampleproof
+running egg_info
+writing aic_exampleproof.egg-info/PKG-INFO
+writing dependency_links to aic_exampleproof.egg-info/dependency_links.txt
+writing entry points to aic_exampleproof.egg-info/entry_points.txt
+writing top-level names to aic_exampleproof.egg-info/top_level.txt
+reading manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'aic_exampleproof.egg-info/SOURCES.txt'
+installing to build/bdist.linux-x86_64/wheel
+running install
+running install_lib
+creating build/bdist.linux-x86_64/wheel
+creating build/bdist.linux-x86_64/wheel/exampleproof
+copying build/lib/exampleproof/models.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/pipeline.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/__main__.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/providers.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/cli.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/extract.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/runner.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/__init__.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/guard.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/study.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/benchmark.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/report.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+copying build/lib/exampleproof/config.py -> build/bdist.linux-x86_64/wheel/./exampleproof
+running install_egg_info
+Copying aic_exampleproof.egg-info to build/bdist.linux-x86_64/wheel/./aic_exampleproof-0.1.0-py3.10.egg-info
+running install_scripts
+creating build/bdist.linux-x86_64/wheel/aic_exampleproof-0.1.0.dist-info/WHEEL
+creating '/tmp/exampleproof-real-package/dist/.tmp-dys8onne/aic_exampleproof-0.1.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it
+adding 'aic_exampleproof-0.1.0.dist-info/licenses/LICENSE'
+adding 'exampleproof/__init__.py'
+adding 'exampleproof/__main__.py'
+adding 'exampleproof/benchmark.py'
+adding 'exampleproof/cli.py'
+adding 'exampleproof/config.py'
+adding 'exampleproof/extract.py'
+adding 'exampleproof/guard.py'
+adding 'exampleproof/models.py'
+adding 'exampleproof/pipeline.py'
+adding 'exampleproof/providers.py'
+adding 'exampleproof/report.py'
+adding 'exampleproof/runner.py'
+adding 'exampleproof/study.py'
+adding 'aic_exampleproof-0.1.0.dist-info/METADATA'
+adding 'aic_exampleproof-0.1.0.dist-info/WHEEL'
+adding 'aic_exampleproof-0.1.0.dist-info/entry_points.txt'
+adding 'aic_exampleproof-0.1.0.dist-info/top_level.txt'
+adding 'aic_exampleproof-0.1.0.dist-info/RECORD'
+removing build/bdist.linux-x86_64/wheel
+WARNING `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+Successfully built aic_exampleproof-0.1.0.tar.gz and aic_exampleproof-0.1.0-py3-none-any.whl

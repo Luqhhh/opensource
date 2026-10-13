@@ -1,0 +1,6 @@
+{
+  "cases/grouper.md#1": {
+    "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+    "rationale": "The error indicates that the 'x' value is not being used correctly. The 'fillvalue' parameter should be used when the length of the iterable is not a multiple of 'n'. The original code was passing 'x' as a separate argument, which caused the error. The corrected code passes 'x' as the value for the 'fillvalue' parameter instead."
+  }
+}

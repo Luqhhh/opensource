@@ -1,0 +1,14 @@
+usage: exampleproof [-h] [--version] {scan,check,repair,benchmark} ...
+
+例证：验证 Python 文档示例，复验修复补丁。
+
+positional arguments:
+  {scan,check,repair,benchmark}
+    scan                只提取示例，不执行
+    check               隔离执行示例
+    repair              提出并复验修复
+    benchmark           按 metadata.json 评测并在临时副本应用补丁复查
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit

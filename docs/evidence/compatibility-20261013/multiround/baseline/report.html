@@ -1,0 +1,151 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'"><title>例证 · 文档验证报告</title><style>
+    :root{color-scheme:light;--ink:#172a35;--muted:#526876;--line:#d8e2e7;--accent:#096c61}*{box-sizing:border-box}body{margin:0;background:#f3f6f7;color:var(--ink);font:15px/1.65 system-ui,sans-serif}.wrap{max-width:1050px;margin:auto;padding:48px 24px}header{border-bottom:1px solid var(--line);padding-bottom:28px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:750}h1{font-size:36px;margin:8px 0}h2{font-size:17px;margin:0;overflow-wrap:anywhere}h3{font-size:14px;margin:24px 0 8px}.intro,.meta,.context{color:var(--muted)}.meta{font-size:12px}.stats{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.stat{background:white;border:1px solid var(--line);padding:14px 20px;border-radius:10px;min-width:145px}.stat strong{display:block;font-size:28px}.stat span{font-size:12px;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:22px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.badge{font-size:12px;border-radius:20px;padding:5px 12px;background:#fff0d5;color:#775119}.verified_repair,.checked{background:#dff2eb;color:#11644d}.failed,.repair_failed,.rejected,.blocked,.provider_error{background:#fde7e4;color:#9a3029}summary{cursor:pointer;color:var(--accent);font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#172a35;color:#e4eef2;border-radius:8px;padding:16px;font:12px/1.7 ui-monospace,monospace}.diff{background:#edf5f1;color:#214b3b}.provider{font-size:12px;color:var(--muted)}.warning{border-left:3px solid #c96a29;padding-left:12px}footer{font-size:12px;color:var(--muted);margin-top:28px}@media(max-width:600px){.wrap{padding:24px 16px}h1{font-size:28px}article{padding:16px}}
+    </style></head><body><main class="wrap"><header><div class="eyebrow">EXAMPLEPROOF / 例证</div><h1>每一处修复，都有运行证据。</h1><p class="intro">compatibility · 文档示例检查报告</p><p class="meta">2026-10-13T05:18:34.288588+00:00</p></header><section class="stats"><div class="stat"><strong>6</strong><span>运行或检查失败</span></div><div class="stat"><strong>2</strong><span>原示例通过检查</span></div><div class="stat"><strong>0</strong><span>修复轮次 · 每例上限 1</span></div></section><article data-status="failed"><div class="card-head"><h2>cases/base64_mime.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/base64_mime.md · 第 8–14 行 · 0.0364 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 保留 MIME 换行的 Base64 往返
+这是依据真实 API 移除事件自编的最小重现，非第三方仓库缺陷。这里需要 MIME 风格的 76 字符换行与末尾换行，不能用无换行编码替代。编码器和解码器还应支持其他二进制输入。
+
+`base64.encodestring` / `decodestring` 自 Python 3.1 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。</p><h3>原始示例</h3><pre>import base64
+encode_payload = base64.encodestring
+decode_payload = base64.decodestring
+payload = b&quot;abc&quot; * 20
+encoded = encode_payload(payload)
+decoded = decode_payload(encoded)
+print(len(decoded), len(encoded.splitlines()), decoded == payload)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0364 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 2, in &lt;module&gt;
+    encode_payload = base64.encodestring
+AttributeError: module &#x27;base64&#x27; has no attribute &#x27;encodestring&#x27;
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/elapsed_clock.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/elapsed_clock.md · 第 8–13 行 · 0.0372 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 包含等待时间的短时计时
+这是依据真实 API 移除事件自编的最小重现。计时目标是包含睡眠的经过时间，单位为秒；不能换成排除睡眠的 CPU 时间。旧 `clock` 的行为依赖平台，本例不声称它在所有旧平台上满足这项需求。
+
+`time.clock` 自 Python 3.3 弃用，Python 3.8 移除。官方来源与版本记录见基准元数据。</p><h3>原始示例</h3><pre>import time
+timer = time.clock
+started = timer()
+time.sleep(0.02)
+elapsed = timer() - started
+print(elapsed &gt;= 0.01)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0372 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 2, in &lt;module&gt;
+    timer = time.clock
+AttributeError: module &#x27;time&#x27; has no attribute &#x27;clock&#x27;
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/array_bytes.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/array_bytes.md · 第 8–15 行 · 0.0361 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 数组的二进制序列化与追加
+这是依据真实 API 移除事件自编的最小重现。将无符号单字节数组序列化为 `bytes`，再追加到已有数组。使用 `B` 类型避免机器字节序影响。解码必须追加，不能覆盖已有元素。
+
+`array.array.tostring` / `fromstring` 自 Python 3.2 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。</p><h3>原始示例</h3><pre>from array import array
+serialize = array.tostring
+append_bytes = array.fromstring
+values = array(&quot;B&quot;, [0, 127, 255])
+encoded = serialize(values)
+restored = array(&quot;B&quot;, [42])
+append_bytes(restored, encoded)
+print(restored.tolist())
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0361 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 2, in &lt;module&gt;
+    serialize = array.tostring
+AttributeError: type object &#x27;array.array&#x27; has no attribute &#x27;tostring&#x27;
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/html_unescape.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/html_unescape.md · 第 8–12 行 · 0.0363 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 将 HTML 字符引用还原为文本
+这是依据真实 API 移除事件自编的最小重现。需要同时处理命名、十进制、十六进制字符引用，并保留未知引用；这不是删除 HTML 标签的接口。
+
+`HTMLParser.unescape` 自 Python 3.4 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。</p><h3>原始示例</h3><pre>from html.parser import HTMLParser
+decode_entities = HTMLParser().unescape
+text = &quot;Tom &amp;amp; Jerry &amp;#60;3 &amp;#x2603;&quot;
+decoded = decode_entities(text)
+print(decoded)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0363 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 2, in &lt;module&gt;
+    decode_entities = HTMLParser().unescape
+AttributeError: &#x27;HTMLParser&#x27; object has no attribute &#x27;unescape&#x27;
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/integer_gcd.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/integer_gcd.md · 第 8–12 行 · 0.0358 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 使用最大公约数约分
+这是依据真实 API 移除事件自编的最小重现。约分数据为非负整数，分母大于零。外部检查覆盖互质数和含零输入；不扩展到旧接口与当前接口符号行为可能不同的负数域。
+
+`fractions.gcd` 自 Python 3.5 弃用，Python 3.9 移除。官方来源与版本记录见基准元数据。</p><h3>原始示例</h3><pre>from fractions import gcd
+numerator, denominator = 84, 30
+divisor = gcd(numerator, denominator)
+reduced = (numerator // divisor, denominator // divisor)
+print(reduced)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0358 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 1, in &lt;module&gt;
+    from fractions import gcd
+ImportError: cannot import name &#x27;gcd&#x27; from &#x27;fractions&#x27; (/usr/lib/python3.10/fractions.py)
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/json_encoding.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/json_encoding.md · 第 8–14 行 · 0.0361 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 保留 Decimal 精度的 JSON 读取
+这是依据真实 API 移除事件自编的最小重现。输入为 Unicode JSON 文本，保留中文名称，并通过 `parse_float=Decimal` 保留小数精度。移除废弃参数时不能连带删除有效的解析选项。
+
+`json.loads` 的 `encoding` 参数自 Python 3.1 弃用并被忽略，Python 3.8 起产生弃用警告，Python 3.9 移除。官方来源与版本记录见基准元数据。</p><h3>原始示例</h3><pre>import json
+from decimal import Decimal
+from functools import partial
+load_document = partial(json.loads, encoding=&quot;utf-8&quot;, parse_float=Decimal)
+document = &#x27;{&quot;name&quot;: &quot;雪&quot;, &quot;price&quot;: 1.20, &quot;available&quot;: true}&#x27;
+record = load_document(document)
+print(record[&quot;name&quot;], record[&quot;price&quot;])
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0361 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 6, in &lt;module&gt;
+    record = load_document(document)
+  File &quot;/usr/lib/python3.10/json/__init__.py&quot;, line 359, in loads
+    return cls(**kw).decode(s)
+TypeError: JSONDecoder.__init__() got an unexpected keyword argument &#x27;encoding&#x27;
+</pre></details></article><article data-status="checked"><div class="card-head"><h2>cases/healthy_query.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/healthy_query.md · 第 6–10 行 · 0.037 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 正常对照：保留查询参数的重复值和空值
+# 正常对照：保留查询参数的重复值和空值
+
+当前支持的 `urllib.parse` 接口。所有外部检查通过时应直接标记 `checked`，不能请求修复候选。该对照没有历史移除事件，也不是一个待修复缺陷。[官方查询解析接口](https://docs.python.org/3.10/library/urllib.parse.html#urllib.parse.parse_qs)。</p><h3>原始示例</h3><pre>from urllib.parse import parse_qs, urlencode
+query = &quot;tag=ai&amp;tag=open+source&amp;empty=&amp;name=%E9%9B%AA&quot;
+parsed = parse_qs(query, keep_blank_values=True)
+rebuilt = urlencode(parsed, doseq=True)
+print(parsed[&quot;tag&quot;], parsed[&quot;empty&quot;], parsed[&quot;name&quot;])
+</pre><h3>运行证据</h3><p class="meta">passed · 0.037 秒 · 检查：configured_behavior_checks</p><p>标准输出</p><pre>[&#x27;ai&#x27;, &#x27;open source&#x27;] [&#x27;&#x27;] [&#x27;雪&#x27;]
+</pre></details></article><article data-status="checked"><div class="card-head"><h2>cases/healthy_escape.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/healthy_escape.md · 第 6–10 行 · 0.0357 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># 正常对照：HTML 转义与还原
+# 正常对照：HTML 转义与还原
+
+当前支持的 `html.escape` / `html.unescape` 接口。默认转义引号、尖括号与和号，并保持可逆。所有外部检查通过时应直接标记 `checked`，不能请求修复候选。该对照没有历史移除事件。[官方 HTML 接口](https://docs.python.org/3.10/library/html.html#html.escape)。</p><h3>原始示例</h3><pre>from html import escape, unescape
+text = &#x27;&lt;a title=&quot;A&amp;B&quot;&gt;雪&lt;/a&gt;&#x27;
+escaped = escape(text, quote=True)
+restored = unescape(escaped)
+print(escaped)
+</pre><h3>运行证据</h3><p class="meta">passed · 0.0357 秒 · 检查：configured_behavior_checks</p><p>标准输出</p><pre>&amp;lt;a title=&amp;quot;A&amp;amp;B&amp;quot;&amp;gt;雪&amp;lt;/a&amp;gt;
+</pre></details></article><footer>“修复通过检查”表示通过已有断言或配置的行为检查。检查覆盖之外的语义仍需人工核验。候选补丁不会自动修改原始项目。</footer></main></body></html>

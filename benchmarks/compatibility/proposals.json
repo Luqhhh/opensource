@@ -1,0 +1,26 @@
+{
+  "cases/base64_mime.md#1": {
+    "code": "import base64\nencode_payload = base64.encodebytes\ndecode_payload = base64.decodebytes\npayload = b\"abc\" * 20\nencoded = encode_payload(payload)\ndecoded = decode_payload(encoded)\nprint(len(decoded), len(encoded.splitlines()), decoded == payload)\n",
+    "rationale": "AI-assisted recorded candidate, not live inference: replace aliases removed in Python 3.9 with encodebytes/decodebytes while retaining MIME newlines. https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+  },
+  "cases/elapsed_clock.md#1": {
+    "code": "import time\ntimer = time.perf_counter\nstarted = timer()\ntime.sleep(0.02)\nelapsed = timer() - started\nprint(elapsed >= 0.01)\n",
+    "rationale": "AI-assisted recorded candidate, not live inference: clock was removed in Python 3.8; perf_counter measures elapsed seconds including sleep, as required here. https://docs.python.org/3.10/whatsnew/3.8.html#api-and-feature-removals"
+  },
+  "cases/array_bytes.md#1": {
+    "code": "from array import array\nserialize = array.tobytes\nappend_bytes = array.frombytes\nvalues = array(\"B\", [0, 127, 255])\nencoded = serialize(values)\nrestored = array(\"B\", [42])\nappend_bytes(restored, encoded)\nprint(restored.tolist())\n",
+    "rationale": "AI-assisted recorded candidate, not live inference: use tobytes/frombytes for aliases removed in Python 3.9; preserve append behavior and the unsigned-byte type. https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+  },
+  "cases/html_unescape.md#1": {
+    "code": "from html import unescape\ndecode_entities = unescape\ntext = \"Tom &amp; Jerry &#60;3 &#x2603;\"\ndecoded = decode_entities(text)\nprint(decoded)\n",
+    "rationale": "AI-assisted recorded candidate, not live inference: replace HTMLParser.unescape, removed in Python 3.9, with html.unescape. https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+  },
+  "cases/integer_gcd.md#1": {
+    "code": "from math import gcd\nnumerator, denominator = 84, 30\ndivisor = gcd(numerator, denominator)\nreduced = (numerator // divisor, denominator // divisor)\nprint(reduced)\n",
+    "rationale": "AI-assisted recorded candidate, not live inference: import gcd from math after removal from fractions in Python 3.9; the example contract covers nonnegative integer inputs. https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+  },
+  "cases/json_encoding.md#1": {
+    "code": "import json\nfrom decimal import Decimal\nfrom functools import partial\nload_document = partial(json.loads, parse_float=Decimal)\ndocument = '{\"name\": \"雪\", \"price\": 1.20, \"available\": true}'\nrecord = load_document(document)\nprint(record[\"name\"], record[\"price\"])\n",
+    "rationale": "AI-assisted recorded candidate, not live inference: remove the ignored encoding keyword removed in Python 3.9 and preserve parse_float=Decimal. https://docs.python.org/3.9/whatsnew/3.9.html#removed"
+  }
+}

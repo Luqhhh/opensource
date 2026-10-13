@@ -1,0 +1,36 @@
+{
+  "documents": [
+    "cases/purge_default.md",
+    "cases/purge_named_table.md",
+    "cases/healthy_query.md"
+  ],
+  "source_files": [
+    "tinydb/__init__.py",
+    "tinydb/database.py",
+    "tinydb/middlewares.py",
+    "tinydb/operations.py",
+    "tinydb/queries.py",
+    "tinydb/storages.py",
+    "tinydb/table.py",
+    "tinydb/utils.py",
+    "tinydb/version.py"
+  ],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/purge_default.md#1": {
+      "setup": "import json\nwith open('db.json', 'w') as _fixture:\n    json.dump({'archive': {'1': {'value': 'keep'}}}, _fixture)\n",
+      "checks": "assert db.all() == []\nassert len(db) == 0\nassert db.tables() == {'_default', 'archive'}\nassert db.table('archive').all() == [{'value': 'keep'}]\nassert db.storage.read()['_default'] == {}\nassert db.insert({'type': 'plum', 'count': 2}) == 1\nassert db.all() == [{'type': 'plum', 'count': 2}]\n",
+      "expected_stdout": ""
+    },
+    "cases/purge_named_table.md#1": {
+      "setup": "",
+      "checks": "assert db.tables() == {'_default'}\nassert db.all() == [{'type': 'apple', 'count': 7}, {'type': 'peach', 'count': 3}]\nassert 'table_name' not in db.storage.read()\nassert db.table('table_name').all() == []\nassert db.table('table_name').insert({'value': False}) == 1\nassert db.table('table_name').all() == [{'value': False}]\nassert len(db) == 2\n",
+      "expected_stdout": ""
+    },
+    "cases/healthy_query.md#1": {
+      "setup": "",
+      "checks": "assert db.all() == [{'type': 'apple', 'count': 7}, {'type': 'peach', 'count': 3}]\nassert db.search(Fruit.type == 'peach') == [{'type': 'peach', 'count': 3}]\nassert db.search(Fruit.count > 5) == [{'type': 'apple', 'count': 7}]\nassert db.search(Fruit.count > 7) == []\nassert db.tables() == {'_default'}\n",
+      "expected_stdout": ""
+    }
+  }
+}

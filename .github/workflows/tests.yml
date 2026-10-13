@@ -52,3 +52,76 @@ jobs:
               print("Sandbox CI requires every test to run; skips are failures.", file=sys.stderr)
           sys.exit(0 if result.wasSuccessful() and result.testsRun and not result.skipped else 1)
           PY
+      - name: Replay compatibility benchmark and verify exported patch
+        run: |
+          /usr/bin/python3 -m exampleproof benchmark benchmarks/compatibility \
+            --proposals benchmarks/compatibility/proposals.json --output artifacts/benchmark-ci
+      - name: Verify real project provenance and reference patches
+        run: |
+          PYTHONPATH=. /usr/bin/python3 benchmarks/real_projects/tinydb/verify_provenance.py
+          /usr/bin/python3 benchmarks/real_projects/more_itertools/verify_provenance.py
+          /usr/bin/python3 benchmarks/real_projects/markupsafe/verify_provenance.py
+          for project in tinydb more_itertools markupsafe; do
+            /usr/bin/python3 -m exampleproof benchmark "benchmarks/real_projects/$project" \
+              --proposals "benchmarks/real_projects/$project/proposals.json" \
+              --output "artifacts/real-project-ci/$project"
+          done
+
+  package:
+    name: Wheel metadata and installed CLI
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.10"
+      - name: Build wheel with modern isolated build tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip wheel --no-deps --wheel-dir "$RUNNER_TEMP/exampleproof-wheels" .
+      - name: Verify wheel and install outside the checkout
+        run: |
+          python - <<'PY'
+          import configparser
+          from email.parser import Parser
+          import os
+          from pathlib import Path
+          import subprocess
+          import tempfile
+          import venv
+          import zipfile
+
+          wheels = list((Path(os.environ["RUNNER_TEMP"]) / "exampleproof-wheels").glob("*.whl"))
+          assert len(wheels) == 1, wheels
+          wheel = wheels[0]
+          assert wheel.name == "aic_exampleproof-0.1.0-py3-none-any.whl", wheel.name
+          with zipfile.ZipFile(wheel) as archive:
+              names = archive.namelist()
+              assert {"exampleproof/benchmark.py", "exampleproof/study.py", "exampleproof/cli.py", "exampleproof/__main__.py"} <= set(names)
+              metadata_files = [name for name in names if name.endswith(".dist-info/METADATA")]
+              assert len(metadata_files) == 1, metadata_files
+              metadata = Parser().parsestr(archive.read(metadata_files[0]).decode("utf-8"))
+              assert metadata["Name"] == "aic-exampleproof", metadata["Name"]
+              assert metadata["Version"] == "0.1.0", metadata["Version"]
+              assert metadata["Requires-Python"] == ">=3.10", metadata["Requires-Python"]
+              assert not metadata.get_all("Requires-Dist"), metadata.get_all("Requires-Dist")
+              entries = configparser.ConfigParser()
+              entries.read_string(archive.read(metadata_files[0].rsplit("/", 1)[0] + "/entry_points.txt").decode("utf-8"))
+              assert entries.get("console_scripts", "exampleproof") == "exampleproof.cli:main"
+
+          with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
+              outside = Path(temporary)
+              environment = outside / "venv"
+              venv.EnvBuilder(with_pip=True).create(environment)
+              python = str(environment / "bin/python")
+              command = str(environment / "bin/exampleproof")
+              subprocess.run([python, "-m", "pip", "install", "--no-deps", str(wheel)], cwd=outside, check=True)
+              for invocation in ([python, "-I", "-m", "exampleproof"], [command]):
+                  version = subprocess.check_output([*invocation, "--version"], cwd=outside, text=True).strip()
+                  assert version == "0.1.0", version
+                  help_text = subprocess.check_output([*invocation, "benchmark", "--help"], cwd=outside, text=True)
+                  assert "--proposals" in help_text and "--max-attempts" in help_text, help_text
+          PY

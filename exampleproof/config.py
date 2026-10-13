@@ -3,6 +3,8 @@ from pathlib import Path, PurePosixPath
 
 MAX_FILE_BYTES = 256_000
 MAX_TOTAL_BYTES = 2_000_000
+CONFIG_FIELDS = {"documents", "source_files", "examples", "timeout_seconds"}
+EXAMPLE_FIELDS = {"skip", "setup", "checks", "expected_stdout"}
 
 
 def safe_path(root: Path, relative: str) -> Path:
@@ -32,6 +34,9 @@ def load_config(root: Path) -> dict:
     config = json.loads(safe_path(root, "exampleproof.json").read_text()) if config_path.exists() else {}
     if not isinstance(config, dict):
         raise ValueError("exampleproof.json must contain an object")
+    unknown = set(config) - CONFIG_FIELDS
+    if unknown:
+        raise ValueError("Unknown configuration fields: " + ", ".join(sorted(unknown)))
     config.setdefault("documents", ["README.md"])
     config.setdefault("source_files", [])
     config.setdefault("examples", {})
@@ -59,7 +64,10 @@ def load_config(root: Path) -> dict:
     for key, spec in config["examples"].items():
         if not isinstance(spec, dict):
             raise ValueError(f"{key}: example configuration must be an object")
-        for field in ("skip", "setup", "checks", "expected_stdout"):
+        unknown = set(spec) - EXAMPLE_FIELDS
+        if unknown:
+            raise ValueError(f"{key}: unknown example fields: " + ", ".join(sorted(unknown)))
+        for field in sorted(EXAMPLE_FIELDS):
             if field in spec and not isinstance(spec[field], str):
                 raise ValueError(f"{key}: {field} must be a string")
         if spec.get("checks", "").strip():

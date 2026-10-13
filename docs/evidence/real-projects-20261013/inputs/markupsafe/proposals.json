@@ -1,0 +1,6 @@
+{
+  "cases/safe_string.md#1": {
+    "code": "value = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_str(value))))\n",
+    "rationale": "Recorded engineering reference candidate, not live inference: migrate the documented removed soft_unicode call to soft_str, as specified in the upstream 2.1.0 change notes, retaining original data and all doctest output."
+  }
+}

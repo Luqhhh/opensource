@@ -1,0 +1,100 @@
+{
+  "wheel": "aic_exampleproof-0.1.0-py3-none-any.whl",
+  "sha256": "695a730ee8e93ce8b16dfbcc8d5f1e7e48205dba51e060a3675fb3b4213e9459",
+  "module_files_match_workspace": 12,
+  "runtime_dependencies": 0,
+  "build_environment": "Fresh Python 3.10.12 venv, with declared isolated build dependencies",
+  "installed_outside_checkout": true,
+  "console_version": "0.1.0",
+  "benchmark_help": "passed",
+  "installed_benchmark": {
+    "baseline_valid": true,
+    "total": 8,
+    "expected_failures": 6,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 6,
+    "healthy_controls": 2,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 6,
+    "patch_confirmed_repairs": 6,
+    "repair_rate": 1.0,
+    "healthy_preserved": 2,
+    "all_passed": true,
+    "cases": [
+      {
+        "id": "cases/base64_mime.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/elapsed_clock.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/array_bytes.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/html_unescape.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/integer_gcd.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/json_encoding.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/healthy_query.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      },
+      {
+        "id": "cases/healthy_escape.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "system_build_issue": "System pip 22.0.2 retained /usr/lib/python3/dist-packages ahead of isolated build dependencies and imported setuptools 59.6.0, creating UNKNOWN-0.0.0 despite successful exit. Fresh venv build produced the verified wheel."
+}

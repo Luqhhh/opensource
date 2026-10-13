@@ -1,0 +1,1615 @@
+{
+  "schema_version": 1,
+  "audit_type": "independent_read_only_evidence_recalculation",
+  "audited_at": "2026-10-13T05:53:22.322118+00:00",
+  "study": "/home/lux1/exampleproof/docs/evidence/real-projects-20261013",
+  "expected_protocol_sha256": "3f04390bca570862d412c4318be85be4b002ebba3facdc1297f4c7419d0ec7a4",
+  "complete": true,
+  "missing_cells": [],
+  "issues": [],
+  "checks_performed": {
+    "protocol_matches_preinference_digest": 1,
+    "protocol_local_seal": 1,
+    "fixed_seeds_and_max_calls": 1,
+    "fixed_generation_options": 1,
+    "input_inventory_unchanged": 3,
+    "source_context_unchanged": 3,
+    "baseline_report_unchanged": 3,
+    "bounded_source_context": 5,
+    "source_context_location_format": 375,
+    "source_context_verbatim_slice": 375,
+    "current_implementation_matches_freeze": 1,
+    "cell_identity": 27,
+    "cell_case_coverage": 27,
+    "patch_metrics_match_raw_benchmark": 27,
+    "postpatch_stage_not_counted_as_live_model": 27,
+    "identical_initial_failure": 45,
+    "call_budget": 45,
+    "first_verified_candidate_selection": 24,
+    "selected_candidate_unmodified": 24,
+    "all_attempts_have_request_evidence": 92,
+    "consecutive_attempt_numbers": 92,
+    "same_model_and_system": 92,
+    "paired_seed_and_sampling": 92,
+    "same_request_timeout": 92,
+    "same_original_case_and_context": 92,
+    "initial_exception_verbatim": 92,
+    "only_declared_sources": 92,
+    "no_oracle_keys_in_model_prompt": 92,
+    "no_full_external_checks_in_prompt": 92,
+    "only_feedback_arm_receives_history": 92,
+    "reported_token_counts": 184,
+    "proposal_usage_matches_response": 184,
+    "completed_response_model": 92,
+    "generated_token_cap": 92,
+    "reported_token_counts_below_context_window": 92,
+    "returned_context_below_context_window": 92,
+    "no_reported_length_stop": 92,
+    "model_candidate_not_postedited": 92,
+    "healthy_never_called_model": 27,
+    "history_matches_observed_status": 21,
+    "history_candidate_unmodified": 21,
+    "external_check_feedback_redacted": 8,
+    "source_feedback_first_payload_identical": 15,
+    "first_payloads_only_differ_in_sources": 15,
+    "initial_final_model_digest_and_server_unchanged": 1,
+    "aggregate_counts_and_tokens": 24,
+    "aggregate_seconds": 6,
+    "aggregate_status_counts": 3,
+    "complete_pair_denominators": 3,
+    "aggregate_rates": 3
+  },
+  "independently_recomputed_totals": {
+    "direct": {
+      "case_runs": 15,
+      "first_try_passed": 4,
+      "budget_passed": 7,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 35,
+      "input_tokens": 24926,
+      "output_tokens": 4513,
+      "inference_seconds": 139.96960000000004,
+      "wall_seconds": 148.7099,
+      "statuses": {
+        "verified_repair": 7,
+        "repair_failed": 27,
+        "rejected": 1
+      }
+    },
+    "source": {
+      "case_runs": 15,
+      "first_try_passed": 8,
+      "budget_passed": 9,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 28,
+      "input_tokens": 129525,
+      "output_tokens": 4177,
+      "inference_seconds": 145.17549999999997,
+      "wall_seconds": 153.8261,
+      "statuses": {
+        "repair_failed": 19,
+        "verified_repair": 9
+      }
+    },
+    "source_feedback": {
+      "case_runs": 15,
+      "first_try_passed": 8,
+      "budget_passed": 8,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 29,
+      "input_tokens": 140668,
+      "output_tokens": 4669,
+      "inference_seconds": 150.153,
+      "wall_seconds": 159.0571,
+      "statuses": {
+        "repair_failed": 20,
+        "verified_repair": 8,
+        "rejected": 1
+      }
+    }
+  },
+  "generation_ranges": {
+    "max_input_tokens": 5892,
+    "max_output_tokens": 270,
+    "max_reported_input_plus_output": 6162,
+    "max_returned_context_tokens": 6161,
+    "done_reasons": {
+      "stop": 92
+    }
+  },
+  "same_request_first_generations": [
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "payload_equal": true,
+      "response_equal": false,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 29,
+      "id": "cases/safe_string.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 43,
+      "id": "cases/safe_string.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "payload_equal": true,
+      "response_equal": false,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "id": "cases/grouper.md#1",
+      "payload_equal": true,
+      "response_equal": false,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 29,
+      "id": "cases/grouper.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 43,
+      "id": "cases/grouper.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "payload_equal": true,
+      "response_equal": false,
+      "candidate_code_equal": false,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "payload_equal": true,
+      "response_equal": false,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    },
+    {
+      "project": "tinydb",
+      "seed": 29,
+      "id": "cases/purge_default.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "tinydb",
+      "seed": 29,
+      "id": "cases/purge_named_table.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "tinydb",
+      "seed": 43,
+      "id": "cases/purge_default.md#1",
+      "payload_equal": true,
+      "response_equal": true,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "repair_failed",
+      "source_feedback_status": "repair_failed"
+    },
+    {
+      "project": "tinydb",
+      "seed": 43,
+      "id": "cases/purge_named_table.md#1",
+      "payload_equal": true,
+      "response_equal": false,
+      "candidate_code_equal": true,
+      "first_attempt_status_equal": true,
+      "source_status": "verified_repair",
+      "source_feedback_status": "verified_repair"
+    }
+  ],
+  "cases": [
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.truncate()\ndb.all()\n",
+        "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. The 'truncate' method is the correct alternative to clear all records from the default table."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+        "rationale": "The error indicates that `purge_table` is not a method of the `Table` object. The correct method to drop a table in TinyDB is `drop_table`, which is available on the `TinyDB` object itself, not on the `Table` object. Therefore, the `drop_table` method is used instead of `purge_table`."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+        "rationale": "The error indicates that `purge_table` is not a method of the `Table` object. The correct method to drop a table in TinyDB is `drop_table`, which is a method of the `TinyDB` class itself."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the 'x' argument is being interpreted as the 'incomplete' parameter, which expects a string ('fill', 'ignore', or 'strict'). By explicitly providing 'fillvalue' as a keyword argument, the function call is corrected to match the expected parameters."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the 'x' value is not being used correctly. The 'fillvalue' parameter should be used when the length of the iterable is not a multiple of 'n'. The original code was passing 'x' as a separate argument, which caused the error. The corrected code passes 'x' as the value for the 'fillvalue' parameter instead."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 2,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the second argument to `grouper` should be the iterable, and the number of groups should be specified as the third argument. The original example had the arguments in the wrong order, so they were swapped to match the function's expected parameters."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "rationale": "The error indicates that `soft_unicode` is not defined. Since `soft_unicode` is not used in the provided code, it can be removed. The `escape` function from the `markupsafe` module is used instead to ensure that the string is properly escaped and not escaped again."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "rationale": "The error indicates that `soft_unicode` is not defined. Since `soft_unicode` is not used in the provided code, it has been replaced with `escape(value)` to ensure the code runs without errors. The `escape` function is used to escape the string, and it is applied three times to demonstrate the effect of escaping multiple times."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 2,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+        "rationale": "The error indicates that `purge_table` is not an attribute of the `Table` object. The correct method to remove a table is `drop_table`, which is available on the `TinyDB` object. This method removes the specified table from the database."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/purge_default.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.truncate()\ndb.all()\n",
+        "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. The 'truncate' method is the correct alternative to clear all records from the default table."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the 'x' value is not being passed correctly to the 'grouper' function. The 'fillvalue' parameter should be passed as a keyword argument to avoid any issues with positional arguments."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 2,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the iterable should be the first argument, and the number of groups should be the second argument. The fillvalue is an optional third argument. The original code had the arguments in the wrong order, causing a TypeError."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the 'x' value is not being passed correctly to the 'grouper' function. The 'fillvalue' parameter should be passed as a keyword argument to avoid any issues with positional arguments."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/safe_string.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "rationale": "The error indicates that 'soft_unicode' is not defined. The correct function to use is 'escape' itself, as it handles the conversion and escaping correctly. The code has been updated to use 'escape' consistently."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "rationale": "The error indicates that 'soft_unicode' is not defined. The correct function to use is 'escape' itself, as it handles the conversion and escaping correctly. The code has been updated to use 'escape' consistently."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+        "rationale": "The error indicates that the `purge_table` method does not exist. The correct method to remove a table is `drop_table`. This method is available in the TinyDB library and will remove the specified table while keeping the default table and its fruit records intact."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/purge_default.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.truncate()\ndb.all()\n",
+        "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. The 'truncate' method is the correct replacement to clear all records from the default table while keeping the named archive table intact."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.drop_table('table_name')\n",
+        "rationale": "The error indicates that 'purge_table' is not an attribute of the 'Table' object. The correct method to remove a table is 'drop_table'."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 3,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the second argument should be the iterable, and the third argument should be the fillvalue. The original code had the arguments in the wrong order."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the 'x' value is not being correctly passed as the fillvalue argument. The corrected code ensures that the fillvalue is correctly passed to the grouper function."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "selected": null,
+      "patched_status": "failed"
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "The error indicates that the 'x' value is not being correctly passed as the fillvalue argument. The corrected code ensures that the fillvalue is correctly passed to the grouper function."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "rationale": "The error indicates that 'soft_unicode' is not defined. Since 'soft_unicode' is not used in the provided code, it can be removed. The replacement uses 'escape' instead of 'soft_unicode' to ensure the text is escaped correctly."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+        "rationale": "The error indicates that 'soft_unicode' is not defined. Since 'soft_unicode' is not used in the provided code, it can be removed. The replacement uses 'escape' instead of 'soft_unicode' to ensure the text is escaped correctly."
+      },
+      "patched_status": "checked"
+    },
+    {
+      "project": "markupsafe",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "selected": {
+        "code": "from markupsafe import escape\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(value)))\n",
+        "rationale": "The error indicates that 'soft_unicode' is not defined. Since 'soft_unicode' is not part of the standard 'markupsafe' library, it has been removed from the code. The 'escape' function from 'markupsafe' is used directly to handle the conversion and escaping of the string."
+      },
+      "patched_status": "checked"
+    }
+  ],
+  "unrepaired_cases_with_actual_candidates": [
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that the 'purge_table' method does not exist. The correct method to remove a table in TinyDB 4.8.2 is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The 'purge_table' method does not exist in TinyDB 4.8.2. The correct method to remove a table is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that the 'purge_table' method does not exist. The correct method to remove a table in TinyDB is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table. This method will delete the specified table and all its records.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table, effectively clearing all records from it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The error indicates that the 'purge' method does not exist. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table(db.default_table_name)\ndb.all()\n",
+          "rationale": "The error indicates that the 'purge' method does not exist. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 3, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.purge()\ndb.all()\n",
+          "rationale": "The error indicates that the 'purge' method does not exist. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 5, in <module>\n    db.purge()\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'purge'\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table(db.default_table_name)\ndb.all()\n",
+          "rationale": "The error indicates that the 'purge' method does not exist. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 3, in <module>\nAssertionError\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list only functions like `last`, `nth_or_last`, `repeat_last`, and `value_chain`. Since `collate` is not listed, it is likely a custom function or a typo. The repair imports these functions instead and attempts to use them as placeholders. The actual implementation of `collate` is not provided, so this is the best repair based on the available information.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list shows that `collate` is not defined in `more_itertools`. Instead, I've replaced `collate` with equivalent functions from `more_itertools` that can achieve similar functionality. This ensures that the code can be executed without errors.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list several functions from `more_itertools`, including `last`, `nth_or_last`, `repeat_last`, and `value_chain`. The `collate` function is not explicitly listed, but it is likely a custom function or a typo. The code has been modified to use these available functions instead of `collate`.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list `last`, `nth_or_last`, `repeat_last`, and `value_chain` as part of `more_itertools`. Since `collate` is not listed, it is likely that the example is incorrect or outdated. The provided imports are used to demonstrate the use of other functions from `more_itertools` that might be relevant to the intended functionality of `collate`.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list `last`, `nth_or_last`, `repeat_last`, and `value_chain` as part of `more_itertools`. Since `collate` is not listed, it is likely that the example is incorrect or outdated. The provided imports are used to demonstrate the use of other functions from `more_itertools` that might be relevant to the intended functionality of `collate`.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 3,
+          "status": "rejected",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\n# Assuming collate is a custom function that needs to be defined or imported from another module\n# For demonstration, let's define a simple collate function\ndef collate(*iterables):\n    return sorted(chain(*iterables))\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. Since `collate` is not listed in the provided sources, it is likely that the example is incorrect or outdated. The provided imports are used to demonstrate the use of other functions from `more_itertools` that might be relevant to the intended functionality of `collate`. A simple `collate` function is defined to demonstrate the sorting of iterables.",
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)",
+          "stderr": null
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(['ACDZ', 'AZ', 'JKL'])))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together(['1', '10'], ['2', '11'], key=key)))\nprint(list(sort_together([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'collate' function from 'more_itertools' was not found. The 'sort_together' function from 'more_itertools' is a likely replacement as it sorts multiple iterables together. The code has been updated to use 'sort_together' instead of 'collate'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 4, in <module>\n    print(list(sort_together(['1', '10'], ['2', '11'], key=key)))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(['ACDZ', 'AZ', 'JKL'])))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together(['1', '10'], ['2', '11'], key=key)))\nprint(list(sort_together([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'collate' function from 'more_itertools' was not found. The 'sort_together' function from 'more_itertools' serves a similar purpose and can be used as a replacement. The code has been updated to use 'sort_together' instead of 'collate'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 4, in <module>\n    print(list(sort_together(['1', '10'], ['2', '11'], key=key)))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(['ACDZ', 'AZ', 'JKL'])))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together(['1', '10'], ['2', '11'], key=key)))\nprint(list(sort_together([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'collate' function is not available in the 'more_itertools' package. The 'sort_together' function from 'more_itertools' can be used as a replacement to achieve the same functionality.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 4, in <module>\n    print(list(sort_together(['1', '10'], ['2', '11'], key=key)))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        }
+      ]
+    },
+    {
+      "project": "markupsafe",
+      "arm": "direct",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from markupsafe import escape, soft_unicode\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_unicode(value))))\n",
+          "rationale": "The error indicates that the `soft_unicode` function is not defined. By importing `soft_unicode` from the `markupsafe` module, the code can be repaired to avoid this error.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from markupsafe import escape, soft_unicode\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_unicode(value))))\n",
+          "rationale": "The error indicates that the `soft_unicode` function is not defined. By importing `soft_unicode` from the `markupsafe` module, the code can be repaired to work as intended.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from markupsafe import escape, soft_unicode\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_unicode(value))))\n",
+          "rationale": "The error indicates that the `soft_unicode` function is not defined. Since `soft_unicode` is not part of the standard `markupsafe` library, we need to import it from the `markupsafe` module. This ensures that the code uses the correct function and avoids the `NameError`.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The `purge` method does not exist in TinyDB 4.8.2. Instead, the `drop_table` method can be used to remove the default table, effectively clearing it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The error indicates that the 'purge' method does not exist. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table, effectively clearing all records from it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The `purge` method does not exist in TinyDB 4.8.2. Instead, the `drop_table` method can be used to remove the default table, effectively clearing it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The `purge` method does not exist in TinyDB 4.8.2. Instead, the `drop_table` method can be used to remove the default table, effectively clearing it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The `purge` method does not exist in TinyDB 4.8.2. Instead, the `drop_table` method can be used to remove the default table, effectively clearing it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\nprint(table.all())\ndb.drop_table('table_name')\n",
+          "rationale": "The error indicates that `purge_table` does not exist. The correct method to remove a table is `drop_table`, which is available in the TinyDB API. The `print(table.all())` statement is added to display the contents of the table before it is dropped.",
+          "rejection": null,
+          "stderr": "\nExpected stdout did not match the configured oracle."
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\nprint(table.all())\ndb.drop_table('table_name')\n",
+          "rationale": "The error indicates that `purge_table` does not exist. The correct method to remove a table is `drop_table`, which is available in the TinyDB API. The `print(table.all())` statement is added to display the contents of the table before it is dropped.",
+          "rejection": null,
+          "stderr": "\nExpected stdout did not match the configured oracle."
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\nprint(table.all())\ndb.drop_table('table_name')\n",
+          "rationale": "The error indicates that `purge_table` does not exist. The correct method to remove a table is `drop_table`, which is available in the TinyDB API. The `print(table.all())` statement is added to display the contents of the table before it is dropped.",
+          "rejection": null,
+          "stderr": "\nExpected stdout did not match the configured oracle."
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\nprint(table.all())\ndb.remove_table('table_name')\n",
+          "rationale": "The `purge_table` method does not exist in TinyDB 4.8.2. Instead, the `remove_table` method is used to delete a table.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that the 'purge_table' method does not exist. The correct method to remove a table in TinyDB is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that the 'purge_table' method does not exist. The correct method to remove a table in TinyDB is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import and use the `collate` function from `more_itertools`, but it was not found. The provided sources do not include a `collate` function, so I replaced it with equivalent functions from `more_itertools`: `last`, `nth_or_last`, `repeat_last`, and `value_chain`. These functions are used to demonstrate the intended behavior of the original `collate` function.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(nth_or_last('ACDZ', 2)))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(nth_or_last(['1', '10'], 1, key=key)))\nprint(list(repeat_last([5, 3, 1], 2)))\n",
+          "rationale": "The original code attempted to import and use the `collate` function from `more_itertools`, but it was not found. The provided sources do not include a `collate` function, so I replaced it with equivalent functions from `more_itertools`: `last`, `nth_or_last`, `repeat_last`, and `value_chain`. These functions are used to demonstrate the intended behavior of the original `collate` function. The `nth_or_last` function is used to select the nth or last item from an iterable, which is a common operation that might be similar to what `collate` was intended to do.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 5, in <module>\n    print(list(nth_or_last(['1', '10'], 1, key=key)))\nTypeError: nth_or_last() got an unexpected keyword argument 'key'\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(nth_or_last('ACDZ', 2)))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(nth_or_last(['1', '10'], 1, key=key)))\nprint(list(repeat_last([5, 3, 1], 2)))\n",
+          "rationale": "The original code attempted to import and use the `collate` function from `more_itertools`, but it was not found. The provided sources do not include a `collate` function, so I replaced it with equivalent functions from `more_itertools`: `last`, `nth_or_last`, `repeat_last`, and `value_chain`. These functions are used to demonstrate the intended behavior of the original `collate` function. The `nth_or_last` function is used to select the nth or last item from an iterable, which is a common operation that might be similar to what `collate` was intended to do. The `key` argument is removed from the `nth_or_last` call because it is not supported by that function.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 5, in <module>\n    print(list(nth_or_last(['1', '10'], 1, key=key)))\nTypeError: nth_or_last() got an unexpected keyword argument 'key'\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(['ACDZ', 'AZ', 'JKL'])))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together(['1', '10'], ['2', '11'], key=key)))\nprint(list(sort_together([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'more_itertools' library does not have a 'collate' function. The 'sort_together' function from the same library can be used as a replacement, as it sorts multiple iterables together. The code has been updated to use 'sort_together' instead of 'collate'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 4, in <module>\n    print(list(sort_together(['1', '10'], ['2', '11'], key=key)))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        },
+        {
+          "number": 2,
+          "status": "rejected",
+          "code": "from more_itertools import chain, ilen\n\n# Define the collate function\ndef collate(*iterables, key=None, reverse=False):\n    iterables = [iter(it) for it in iterables]\n    return sorted(chain(*iterables), key=key, reverse=reverse)\n\n# Test cases\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. I replaced the import with a custom implementation of `collate` using `more_itertools.chain` and Python's built-in `sorted` function. This implementation preserves the functionality of the original examples.",
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)",
+          "stderr": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together as collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'more_itertools' library does not have a 'collate' function. The 'sort_together' function from 'more_itertools' can be used as a replacement. It sorts multiple iterables together, which is similar to the intended behavior of 'collate'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 29,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import and use the `collate` function from `more_itertools`, but it was not found. The provided sources do not include a `collate` function, so I replaced it with equivalent functions from `more_itertools`: `last`, `nth_or_last`, `repeat_last`, and `value_chain`. These functions are used to demonstrate the intended behavior of the original `collate` function.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import more\nprint(list(more.collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(more.collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(more.collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'more_itertools' package does not have a 'collate' function. The correct function is 'collate' from the 'more' module within 'more_itertools'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    print(list(more.collate('ACDZ', 'AZ', 'JKL')))\nAttributeError: module 'more_itertools.more' has no attribute 'collate'\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list several functions from `more_itertools`, including `last`, `nth_or_last`, `repeat_last`, and `value_chain`. Since `collate` is not listed, it is likely a custom function or a typo. The repair attempts to use functions from `more_itertools` that are similar in functionality to the intended `collate` function. The specific functions used are chosen based on their ability to handle iterable data and perform transformations similar to what `collate` might do.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        }
+      ]
+    },
+    {
+      "project": "markupsafe",
+      "arm": "direct",
+      "seed": 29,
+      "id": "cases/safe_string.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from markupsafe import escape, soft_unicode\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_unicode(value))))\n",
+          "rationale": "The error indicates that the `soft_unicode` function is not defined. To fix this, we need to import `soft_unicode` from the `markupsafe` module. This ensures that all functions used in the example are properly defined and available for use.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from markupsafe import escape, soft_unicode\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_unicode(value))))\n",
+          "rationale": "The error indicates that the `soft_unicode` function is not defined. By importing `soft_unicode` from the `markupsafe` module, the code can be repaired to avoid this error.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from markupsafe import escape, soft_unicode\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_unicode(value))))\n",
+          "rationale": "The error indicates that the `soft_unicode` function is not defined. By importing `soft_unicode` from the `markupsafe` module, the code can be repaired to work as intended.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table, effectively clearing all records from it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table, effectively clearing all records from it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table, effectively clearing all records from it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/purge_named_table.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that 'purge_table' is not an attribute of the 'Table' object. The correct method to remove a table in TinyDB is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that the 'purge_table' method does not exist. The correct method to remove a table in TinyDB is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.remove_table('table_name')\n",
+          "rationale": "The error indicates that the 'purge_table' method does not exist. The correct method to remove a table in TinyDB is 'remove_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    db.remove_table('table_name')\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'remove_table'\n"
+        }
+      ]
+    },
+    {
+      "project": "tinydb",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. Instead, the 'drop_table' method can be used to remove the default table, effectively clearing all records from it while keeping the named archive table intact.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.drop_table('default')\ndb.all()\n",
+          "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. The correct method to clear all records from the default table is 'drop_table'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "direct",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(['ACDZ', 'AZ', 'JKL'])))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together(['1', '10'], ['2', '11'], key=key)))\nprint(list(sort_together([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'more_itertools' library does not have a 'collate' function. The 'sort_together' function from 'more_itertools' can be used as a replacement, as it sorts multiple iterables together. The code has been updated to use 'sort_together' instead of 'collate'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 4, in <module>\n    print(list(sort_together(['1', '10'], ['2', '11'], key=key)))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(['ACDZ', 'AZ', 'JKL'])))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together(['1', '10'], ['2', '11'], key=key)))\nprint(list(sort_together([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The 'more_itertools' library does not have a 'collate' function. The 'sort_together' function from the same library can be used as a replacement, as it sorts multiple iterables together. The code has been updated to use 'sort_together' instead of 'collate'.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 4, in <module>\n    print(list(sort_together(['1', '10'], ['2', '11'], key=key)))\n  File \"/workspace/more_itertools/more.py\", line 1747, in sort_together\n    zip(*sorted(zip(*iterables), key=key_argument, reverse=reverse))\n  File \"/workspace/more_itertools/more.py\", line 1743, in <lambda>\n    *get_key_items(zipped_items)\nTypeError: tuple indices must be integers or slices, not str\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import sort_together\nprint(list(sort_together(('ACDZ', 'AZ', 'JKL'))))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(sort_together((['1', '10'], ['2', '11']), key=key)))\nprint(list(sort_together(([5, 3, 1], [4, 2, 0]), reverse=True)))\n",
+          "rationale": "The 'more_itertools' library does not have a 'collate' function. The 'sort_together' function from 'more_itertools' can be used as a replacement to achieve the same functionality as 'collate'. The 'sort_together' function sorts multiple iterables together, and the 'key' parameter can be used to specify a custom sorting key.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nNameError: name 'collate' is not defined\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list contains implementations for `last`, `nth_or_last`, `repeat_last`, and `value_chain`, which are part of the `more_itertools` library. These functions can be used to achieve similar functionality to `collate` in the context of sorting and merging iterables. The code has been modified to use these functions instead of `collate`.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The error indicates that the 'collate' function is not found in the 'more_itertools' module. The provided sources do not include a 'collate' function, so the example cannot be repaired using the given sources. The example should be removed or updated to use a supported function from the 'more_itertools' module.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The error indicates that the 'collate' function is not found in the 'more_itertools' module. The provided sources do not include a definition for 'collate', so I have replaced it with functions that are available in the 'more_itertools' module. The 'last', 'nth_or_last', 'repeat_last', and 'value_chain' functions are used instead to demonstrate the intended behavior of the original 'collate' function.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        }
+      ]
+    },
+    {
+      "project": "more_itertools",
+      "arm": "source_feedback",
+      "seed": 43,
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list contains implementations for `last`, `nth_or_last`, `repeat_last`, and `value_chain`, which are part of the `more_itertools` library. These functions can be used to achieve similar functionality to `collate` in the context of sorting and merging iterables. The code has been modified to use these functions instead of `collate`.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(collate('ACDZ', 'AZ', 'JKL')))\nNameError: name 'collate' is not defined\n"
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(last('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(nth_or_last(['1', '10'], ['2', '11'], key=key)))\nprint(list(repeat_last([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list contains implementations for `last`, `nth_or_last`, `repeat_last`, and `value_chain`, which are part of the `more_itertools` library. These functions can be used to achieve similar functionality to `collate` in the context of sorting and merging iterables. The code has been modified to use these functions instead of `collate`. The `last` function is used to get the last item of each iterable, `nth_or_last` is used to get the nth or the last item of each iterable, and `repeat_last` is used to repeat the last item of each iterable.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(last('ACDZ', 'AZ', 'JKL')))\nTypeError: last() takes from 1 to 2 positional arguments but 3 were given\n"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "code": "from more_itertools import last, nth_or_last, repeat_last, value_chain\n\nprint(list(last('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(nth_or_last(['1', '10'], ['2', '11'], key=key)))\nprint(list(repeat_last([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+          "rationale": "The original code attempted to import `collate` from `more_itertools`, but it was not found. The provided sources list contains implementations for `last`, `nth_or_last`, `repeat_last`, and `value_chain`, which are part of the `more_itertools` library. These functions can be used to achieve similar functionality to `collate` in the context of sorting and merging iterables. The code has been modified to use these functions instead of `collate`. The `last` function is used to get the last item of each iterable, `nth_or_last` is used to get the nth or the last item of each iterable, and `repeat_last` is used to repeat the last item of each iterable.",
+          "rejection": null,
+          "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 3, in <module>\n    print(list(last('ACDZ', 'AZ', 'JKL')))\nTypeError: last() takes from 1 to 2 positional arguments but 3 were given\n"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Checks attest to internal consistency of preserved files; local hashes are not independent external attestation.",
+    "A fixed tag and server metadata at start/end do not prove bitwise deterministic inference.",
+    "Reported token counters and returned context lengths are checked against 8192; this audit has no complete server log or independent tokenizer record and does not prove every prompt was untruncated.",
+    "Five selected version-migration cases repeated with three seeds are five underlying failures, not fifteen independent defects."
+  ],
+  "manual_review": {
+    "conclusion": "No inconsistencies found in protocol digest, frozen input inventories, actual request controls, cost accounting, selected candidates, and patch-confirmed summary totals. Acceptance means the frozen finite checks passed, not complete API equivalence.",
+    "per_case_budget_passes_out_of_three": [
+      {
+        "project": "markupsafe",
+        "id": "cases/safe_string.md#1",
+        "direct": 1,
+        "source": 3,
+        "source_feedback": 3
+      },
+      {
+        "project": "more_itertools",
+        "id": "cases/collate.md#1",
+        "direct": 0,
+        "source": 0,
+        "source_feedback": 0
+      },
+      {
+        "project": "more_itertools",
+        "id": "cases/grouper.md#1",
+        "direct": 3,
+        "source": 3,
+        "source_feedback": 3
+      },
+      {
+        "project": "tinydb",
+        "id": "cases/purge_default.md#1",
+        "direct": 3,
+        "source": 0,
+        "source_feedback": 0
+      },
+      {
+        "project": "tinydb",
+        "id": "cases/purge_named_table.md#1",
+        "direct": 0,
+        "source": 3,
+        "source_feedback": 2
+      }
+    ],
+    "failure_explanations": [
+      {
+        "project": "tinydb",
+        "id": "cases/purge_default.md#1",
+        "arms": "source and source_feedback",
+        "observation": "Source-arm candidates call db.drop_table('default'), which does not clear the actual _default records. Feedback seed17 also drops db.default_table_name itself (violating retained-table checks), then repeats removed db.purge(). No accepted candidate in these arms. Direct uses db.truncate() and passes all three seeds.",
+        "classification": "wrong_table_name_or_wrong_operation_scope"
+      },
+      {
+        "project": "tinydb",
+        "id": "cases/purge_named_table.md#1",
+        "arms": "direct",
+        "observation": "Direct candidates repeatedly invent db.remove_table(), producing AttributeError. Source uses actual db.drop_table() and reaches 3/3.",
+        "classification": "nonexistent_replacement_api"
+      },
+      {
+        "project": "tinydb",
+        "id": "cases/purge_named_table.md#1",
+        "arms": "source_feedback seed29",
+        "observation": "All three candidates use the correct db.drop_table('table_name') but also change table.all() to print(table.all()); behavior checks pass and the frozen empty expected_stdout fails. The failure must be described as output-contract violation, not wrong table deletion. Source seed29 has the same first candidate but its next independent draw removes print and passes.",
+        "classification": "stdout_contract_failure"
+      },
+      {
+        "project": "more_itertools",
+        "id": "cases/collate.md#1",
+        "arms": "all",
+        "observation": "Direct mostly substitutes sort_together (not a sorted merge; errors or fails callable/output contract). Source mainly imports unrelated last/nth_or_last/repeat_last/value_chain while still calling absent collate; feedback also attempts those unrelated callables with invalid arguments. Two custom-function candidates across arms are rejected by the declared straight-line-code guard; rejection is not a runtime semantic verdict. All arms remain 0/3.",
+        "classification": "wrong_replacement_or_undefined_name_or_guard_rejection"
+      },
+      {
+        "project": "markupsafe",
+        "id": "cases/safe_string.md#1",
+        "arms": "direct seeds17 and29",
+        "observation": "Candidates merely add from markupsafe import escape, soft_unicode, so the deleted symbol causes ImportError in all three calls for each seed.",
+        "classification": "deleted_api_reimported"
+      }
+    ],
+    "accepted_candidate_limitations": [
+      {
+        "project": "markupsafe",
+        "id": "cases/safe_string.md#1",
+        "observation": "All seven accepted case-runs use escape(value) or escape(escape(value)), not the recorded soft_str reference fix. value is already a Markup instance, so these preserve this example output and pass the unchanged finite checks. They do not establish general soft_unicode-to-soft_str object-conversion equivalence. No post-hoc score adjustment was made.",
+        "classification": "example_specific_equivalence_not_general_api_migration"
+      }
+    ],
+    "same_seed_determinism": {
+      "paired_initial_requests": 15,
+      "identical_payloads": 15,
+      "identical_raw_responses": 9,
+      "identical_candidate_code": 14,
+      "identical_first_attempt_status": 15,
+      "conclusion": "Matched seeds and identical first-call payloads did not produce fully deterministic text; this is disclosed rather than treating paired seeds as proof of identical generations."
+    },
+    "permitted_inference": "For this frozen set, source context increases budget successes from 7/15 to 9/15; source plus feedback reaches 8/15 and does not demonstrate a feedback gain over source alone. The same five selected migration failures were repeated three times, so these fractions are not independent project defect success rates.",
+    "not_measured": [
+      "General repair equivalence beyond frozen cases",
+      "Monetary cost, energy, maintenance labor saved",
+      "Population generalization or statistical significance",
+      "Complete server-side absence of input truncation"
+    ]
+  }
+}

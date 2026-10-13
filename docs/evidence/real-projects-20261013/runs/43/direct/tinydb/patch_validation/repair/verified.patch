@@ -1,0 +1,10 @@
+--- a/cases/purge_default.md
++++ b/cases/purge_default.md
+@@ -8,6 +8,6 @@
+ db = TinyDB('db.json')
+ db.insert({'type': 'apple', 'count': 7})
+ db.insert({'type': 'peach', 'count': 3})
+-db.purge()
++db.truncate()
+ db.all()
+ ```

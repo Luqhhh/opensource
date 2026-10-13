@@ -1,0 +1,9 @@
+--- a/cases/safe_string.md
++++ b/cases/safe_string.md
+@@ -7,5 +7,5 @@
+ value = escape('<User 1>')
+ print(repr(value))
+ print(repr(escape(str(value))))
+-print(repr(escape(soft_unicode(value))))
++print(repr(escape(soft_str(value))))
+ ```

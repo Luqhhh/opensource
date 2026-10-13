@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "purpose": "Execute original upstream documentation on its matching historical library version, using the same frozen behavior checks and isolated runner.",
+  "mode": "no_model_historical_runtime_validation",
+  "documentation_commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+  "runtime_commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+  "runtime_version": "3.15.2",
+  "source_mapping": "upstream/v3.15.2/tinydb/*.py -> /workspace/tinydb/*.py, unchanged",
+  "report": {
+    "schema_version": 2,
+    "generated_at": "2026-10-13T05:34:40.968204+00:00",
+    "project_name": "exampleproof-tinydb-historical-w5gbdr6_",
+    "runner": "bubblewrap",
+    "runner_interpreter": "/usr/bin/python3 -I -S",
+    "host_python": "3.10.12",
+    "provenance": {
+      "documents": {
+        "cases/purge_default.md": "29c6f8ae5ecaf0971bf1a162622384bc28dc727ffe5f364b9e7d333063beb487",
+        "cases/purge_named_table.md": "625a8c1ae550f72fb9fce2e85cf752f971d2a8f01ebb32ee10ea413c0e6fcf38",
+        "cases/healthy_query.md": "122083f61dd591d25d148c6b8171f581b90868e84713fc7d4286dfdb51302a67"
+      },
+      "sources": {
+        "tinydb/__init__.py": "6a0a35e057b66243ca0df8a05f910fb17519c9adc0aaf21f178067259a9f36ad",
+        "tinydb/database.py": "1cf90f6f2142791e1bc0e9d34decae47785331921204e803329a1aebbd941e36",
+        "tinydb/middlewares.py": "fb1776c941e4948239a60989f934151b3d88ffdc7f466e70051e50a1a5d2f72d",
+        "tinydb/operations.py": "ce68d8217ab21ec9b3c004f908c9195c037dc7488592cf07647d6504ed9e0e78",
+        "tinydb/queries.py": "819c4239806dbde4bca2c7ae5c0b019497e3b47f2ddca20516ac5d3e477f2ed4",
+        "tinydb/storages.py": "d6b00af3d1f46cfd54040dae037b85c5a1cb954767623eb0edb1c7b1e0888cf6",
+        "tinydb/utils.py": "39131b4a6c5b7ca304cbbda63fd5a97506971305297e99c944a96b714be1a887",
+        "tinydb/version.py": "0e3eebe3ad21526f0855ceb3249a251927187e7c9c340b160d042418ce8f32e1"
+      },
+      "configuration_sha256": "d28aea5fecd8d137cb55011f919fbf34724f0375071a10159d908115fea32b48"
+    },
+    "summary": {
+      "total": 3,
+      "counts": {
+        "checked": 3
+      }
+    },
+    "repair": {
+      "max_attempts": 1,
+      "attempts": 0,
+      "proposals": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "inference_requests": 0,
+      "inference_duration_seconds": 0,
+      "proposal_duration_seconds": 0
+    },
+    "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+    "results": [
+      {
+        "example": {
+          "id": "cases/purge_default.md#1",
+          "path": "cases/purge_default.md",
+          "start_line": 7,
+          "end_line": 12,
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.purge()\ndb.all()\n",
+          "context": "# TinyDB 3.15.2 documentation on TinyDB 4.8.2: purge_default\nClear all records from the default table of the TinyDB database. Keep the named archive table intact. The sandbox fixture starts with an archive table; the example creates and clears the default table.\nThe executable block joins the listed upstream doctest commands, with only the REPL prompts removed."
+        },
+        "before": {
+          "status": "passed",
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "duration_seconds": 0.0356,
+          "oracle": "configured_behavior_checks"
+        },
+        "status": "checked",
+        "proposal": null,
+        "after": null,
+        "rejection": null,
+        "diff": null,
+        "attempts": [],
+        "stop_reason": null
+      },
+      {
+        "example": {
+          "id": "cases/purge_named_table.md#1",
+          "path": "cases/purge_named_table.md",
+          "start_line": 7,
+          "end_line": 14,
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndb.purge_table('table_name')\n",
+          "context": "# TinyDB 3.15.2 documentation on TinyDB 4.8.2: purge_named_table\nCreate the named table table_name, then remove that table while keeping the default table and its fruit records intact.\nThe executable block joins the listed upstream doctest commands, with only the REPL prompts removed."
+        },
+        "before": {
+          "status": "passed",
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "duration_seconds": 0.0355,
+          "oracle": "configured_behavior_checks"
+        },
+        "status": "checked",
+        "proposal": null,
+        "after": null,
+        "rejection": null,
+        "diff": null,
+        "attempts": [],
+        "stop_reason": null
+      },
+      {
+        "example": {
+          "id": "cases/healthy_query.md#1",
+          "path": "cases/healthy_query.md",
+          "start_line": 7,
+          "end_line": 13,
+          "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nFruit = Query()\ndb.search(Fruit.type == 'peach')\ndb.search(Fruit.count > 5)\n",
+          "context": "# TinyDB 3.15.2 documentation on TinyDB 4.8.2: healthy_query\nInsert the fruit records and query peaches and records with count greater than five. This is a healthy control; preserve its behavior.\nThe executable block joins the listed upstream doctest commands, with only the REPL prompts removed."
+        },
+        "before": {
+          "status": "passed",
+          "returncode": 0,
+          "stdout": "",
+          "stderr": "",
+          "duration_seconds": 0.036,
+          "oracle": "configured_behavior_checks"
+        },
+        "status": "checked",
+        "proposal": null,
+        "after": null,
+        "rejection": null,
+        "diff": null,
+        "attempts": [],
+        "stop_reason": null
+      }
+    ]
+  }
+}

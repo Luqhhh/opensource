@@ -1,0 +1,6 @@
+{
+  "cases/purge_default.md#1": {
+    "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ndb.truncate()\ndb.all()\n",
+    "rationale": "The 'purge' method does not exist in TinyDB 4.8.2. The 'truncate' method is the correct alternative to clear all records from the default table."
+  }
+}

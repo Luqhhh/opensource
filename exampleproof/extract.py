@@ -8,6 +8,11 @@ LANGUAGES = {"python", "py", "python3"}
 
 
 def extract_markdown(text: str, path: str) -> list[Example]:
+    # A UTF-8 BOM is an encoding marker, not part of the opening Markdown
+    # fence. Remove it only from this parsing view; documents and hashes retain
+    # their original bytes so exported patches preserve the marker.
+    if text.startswith("\ufeff"):
+        text = text[1:]
     lines = text.splitlines(keepends=True)
     results = []
     opening = None

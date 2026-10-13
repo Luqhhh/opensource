@@ -1,0 +1,166 @@
+[
+  {
+    "name": "create-build-venv",
+    "argv": [
+      "/usr/bin/python3",
+      "-m",
+      "venv",
+      "/tmp/exampleproof-real-package/build-venv"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "upgrade-build-tools",
+    "argv": [
+      "/tmp/exampleproof-real-package/build-venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--upgrade",
+      "pip",
+      "build",
+      "setuptools",
+      "wheel"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "build",
+    "argv": [
+      "/tmp/exampleproof-real-package/build-venv/bin/python",
+      "-m",
+      "build",
+      "--no-isolation",
+      "--outdir",
+      "/tmp/exampleproof-real-package/dist",
+      "/tmp/exampleproof-real-package/source"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "build-tools",
+    "argv": [
+      "/tmp/exampleproof-real-package/build-venv/bin/python",
+      "-m",
+      "pip",
+      "list",
+      "--format=json"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "create-install-venv",
+    "argv": [
+      "/usr/bin/python3",
+      "-m",
+      "venv",
+      "/tmp/exampleproof-real-package/install-venv"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "upgrade-install-pip",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--upgrade",
+      "pip"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "install-wheel",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--no-deps",
+      "/tmp/exampleproof-real-package/dist/aic_exampleproof-0.1.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "pip-check",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "installed-package",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/python",
+      "-c",
+      "import hashlib, importlib.metadata, json, pathlib, exampleproof, exampleproof.study; root=pathlib.Path(exampleproof.__file__).parent; print(json.dumps({'location':str(root),'version':importlib.metadata.version('aic-exampleproof'),'modules':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.glob('*.py'))},'dependencies':importlib.metadata.requires('aic-exampleproof')},indent=2))"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "console-version",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/exampleproof",
+      "--version"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "module-version",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/python",
+      "-m",
+      "exampleproof",
+      "--version"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "cli-help",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/exampleproof",
+      "--help"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "benchmark-help",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/exampleproof",
+      "benchmark",
+      "--help"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  },
+  {
+    "name": "installed-tinydb-benchmark",
+    "argv": [
+      "/tmp/exampleproof-real-package/install-venv/bin/exampleproof",
+      "benchmark",
+      "/home/lux1/exampleproof/benchmarks/real_projects/tinydb",
+      "--proposals",
+      "/home/lux1/exampleproof/benchmarks/real_projects/tinydb/proposals.json",
+      "--output",
+      "/tmp/exampleproof-real-package/tinydb-benchmark"
+    ],
+    "cwd": "/tmp/exampleproof-real-package",
+    "returncode": 0
+  }
+]

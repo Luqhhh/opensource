@@ -1,0 +1,43 @@
+{
+  "host_python": "3.10.12",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "sandbox_python": "Python 3.10.12",
+  "bubblewrap": "bubblewrap 0.6.1",
+  "git": "git version 2.34.1",
+  "ollama": {
+    "version": "0.40.3"
+  },
+  "models": [
+    {
+      "name": "qwen2.5-coder:7b",
+      "model": "qwen2.5-coder:7b",
+      "modified_at": "2026-10-13T12:53:16.487315423+08:00",
+      "size": 4683087561,
+      "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen2",
+        "families": [
+          "qwen2"
+        ],
+        "parameter_size": "7.6B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 32768,
+        "embedding_length": 3584,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "tools",
+        "insert"
+      ]
+    }
+  ],
+  "base_commit": "87f71a3eb2e54102f5398ef46b11cf3571677a8a",
+  "working_tree_note": "Uncommitted continuation of the base commit; each benchmark.json records exact implementation SHA-256 hashes.",
+  "runtime_context_length": 8192,
+  "runtime_num_parallel": 1,
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU, 8188 MiB, 566.26",
+  "scope": "AI-assisted self-authored historical CPython reproductions; not a held-out or cross-project benchmark. Case documents, manifest, evaluator and provider prompt frozen before live runs; candidates and private evaluator checks are not sent to the live model."
+}

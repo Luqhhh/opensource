@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "suite_id": "tinydb-real-project-migration-v1",
+  "description": "Two exact TinyDB 3.15.2 upstream documentation excerpts evaluated on pinned TinyDB 4.8.2, plus one healthy query control. These are version migration cases, not current upstream documentation bugs.",
+  "classification": "upstream_documentation_version_migrations_with_healthy_control",
+  "project": "TinyDB",
+  "upstream_repository": "https://github.com/msiemens/tinydb",
+  "documentation_commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+  "runtime_commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+  "license": "MIT",
+  "target_runtime": {
+    "implementation": "CPython",
+    "minimum_version": "3.8",
+    "verified_interpreter": "/usr/bin/python3",
+    "verified_version": "3.10.12"
+  },
+  "provenance": {
+    "collected_at": "2026-10-13",
+    "upstream_code_copied": true,
+    "candidate_mode": "recorded_candidate_replay",
+    "live_model_evaluation": false,
+    "held_out_from_prior_prompt_development": true,
+    "selection_before_live_model_calls": true,
+    "training_contamination_unknown": true,
+    "team_review_required": true
+  },
+  "limitations": [
+    "Selected historical migrations; not a random sample of open-source documentation failures.",
+    "Reference candidates and checks were authored together; reference replay validates the oracle and pipeline, not model quality.",
+    "These public upstream snippets may have appeared in model training; held-out means not used in local prompt tuning.",
+    "Configured checks and example share a Python process, so finite checks are not adversarial semantic-equivalence proof."
+  ],
+  "cases": [
+    {
+      "id": "cases/purge_default.md#1",
+      "title": "purge default",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "documentation_version": "3.15.2",
+      "runtime_version": "4.8.2",
+      "behavior": "Clear all records from the default table of the TinyDB database. Keep the named archive table intact. The sandbox fixture starts with an archive table; the example creates and clears the default table.",
+      "oracle": "configured_behavior_checks",
+      "source_ranges": [
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 25,
+          "end_line": 26,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L25-L26",
+          "command_lines": [
+            25,
+            26
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 31,
+          "end_line": 32,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L31-L32",
+          "command_lines": [
+            31,
+            32
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 74,
+          "end_line": 75,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L74-L75",
+          "command_lines": [
+            74,
+            75
+          ]
+        }
+      ],
+      "extraction": "Concatenate only >>> command lines in the declared ranges; strip exactly the four-character REPL prefix. No command content is changed. REPL display output is not executable code.",
+      "extracted_code_sha256": "3615173e53a4e56cc6abcb6c1f3ff3784a9143bcd3bca4c181750b7c914428b3",
+      "setup": {
+        "code": "import json\nwith open('db.json', 'w') as _fixture:\n    json.dump({'archive': {'1': {'value': 'keep'}}}, _fixture)\n",
+        "purpose": "Create a separate named archive table to check default-table scope preservation.",
+        "authorship": "AI-assisted evaluator fixture, not upstream code"
+      }
+    },
+    {
+      "id": "cases/purge_named_table.md#1",
+      "title": "purge named table",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "documentation_version": "3.15.2",
+      "runtime_version": "4.8.2",
+      "behavior": "Create the named table table_name, then remove that table while keeping the default table and its fruit records intact.",
+      "oracle": "configured_behavior_checks",
+      "source_ranges": [
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 25,
+          "end_line": 26,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L25-L26",
+          "command_lines": [
+            25,
+            26
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 31,
+          "end_line": 32,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L31-L32",
+          "command_lines": [
+            31,
+            32
+          ]
+        },
+        {
+          "upstream_path": "docs/usage.rst",
+          "start_line": 463,
+          "end_line": 465,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/usage.rst#L463-L465",
+          "command_lines": [
+            463,
+            464,
+            465
+          ]
+        },
+        {
+          "upstream_path": "docs/usage.rst",
+          "start_line": 473,
+          "end_line": 473,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/usage.rst#L473-L473",
+          "command_lines": [
+            473
+          ]
+        }
+      ],
+      "extraction": "Concatenate only >>> command lines in the declared ranges; strip exactly the four-character REPL prefix. No command content is changed. REPL display output is not executable code.",
+      "extracted_code_sha256": "537485507956d8f298a71c4cf862aa9357239f0490436c16a4214362893579ca",
+      "setup": {
+        "code": "",
+        "purpose": "No setup; original upstream TinyDB constructor writes db.json inside the isolated /tmp only.",
+        "authorship": "AI-assisted evaluator fixture, not upstream code"
+      }
+    },
+    {
+      "id": "cases/healthy_query.md#1",
+      "title": "healthy query",
+      "category": "healthy_control",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "documentation_version": "3.15.2",
+      "runtime_version": "4.8.2",
+      "behavior": "Insert the fruit records and query peaches and records with count greater than five. This is a healthy control; preserve its behavior.",
+      "oracle": "configured_behavior_checks",
+      "source_ranges": [
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 25,
+          "end_line": 26,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L25-L26",
+          "command_lines": [
+            25,
+            26
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 31,
+          "end_line": 32,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L31-L32",
+          "command_lines": [
+            31,
+            32
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 52,
+          "end_line": 55,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L52-L55",
+          "command_lines": [
+            52,
+            53,
+            55
+          ]
+        }
+      ],
+      "extraction": "Concatenate only >>> command lines in the declared ranges; strip exactly the four-character REPL prefix. No command content is changed. REPL display output is not executable code.",
+      "extracted_code_sha256": "d2abd6a4588ab75e8a8d7629ba20a30d8443f6437ff0a5ae0bba5d1933c758be",
+      "setup": {
+        "code": "",
+        "purpose": "No setup; original upstream TinyDB constructor writes db.json inside the isolated /tmp only.",
+        "authorship": "AI-assisted evaluator fixture, not upstream code"
+      }
+    }
+  ]
+}
