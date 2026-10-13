@@ -1,0 +1,54 @@
+import argparse
+import json
+from pathlib import Path
+import sys
+
+from . import __version__
+from .pipeline import exit_code, read_project, run_project
+from .providers import FileProvider, OllamaProvider
+from .report import write_report
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(prog="exampleproof", description="例证：验证 Python 文档示例，复验修复补丁。")
+    parser.add_argument("--version", action="version", version=__version__)
+    commands = parser.add_subparsers(dest="command", required=True)
+    scan = commands.add_parser("scan", help="只提取示例，不执行")
+    scan.add_argument("project", type=Path)
+    for name in ("check", "repair"):
+        command = commands.add_parser(name, help="隔离执行示例" if name == "check" else "提出并复验修复")
+        command.add_argument("project", type=Path)
+        command.add_argument("--output", type=Path, required=True)
+        if name == "repair":
+            group = command.add_mutually_exclusive_group(required=True)
+            group.add_argument("--proposals", type=Path, help="导入候选补丁 JSON；非实时模型推理")
+            group.add_argument("--model", help="本机 Ollama 中已安装的模型名称")
+            command.add_argument("--endpoint", default="http://127.0.0.1:11434")
+    args = parser.parse_args(argv)
+    try:
+        if args.command == "scan":
+            _, _, _, examples = read_project(args.project)
+            print(json.dumps([{"id": x.id, "line": x.start_line, "code": x.code} for x in examples], ensure_ascii=False, indent=2))
+            return 0
+        root = args.project.resolve()
+        output = args.output.resolve()
+        # Outputs must not overwrite selected input files. Report directories
+        # are otherwise allowed within the project for ordinary CI usage.
+        config, _, _, _ = read_project(root)
+        inputs = {root / p for p in config["documents"] + config["source_files"] + ["exampleproof.json"]}
+        for name in ("report.json", "report.html", "verified.patch"):
+            destination = output / name
+            if destination in inputs or destination.is_symlink():
+                raise ValueError(f"Output would overwrite an input or symlink: {destination}")
+        provider = None
+        if args.command == "repair":
+            provider = FileProvider(args.proposals) if args.proposals else OllamaProvider(args.model, args.endpoint)
+        report, patch = run_project(root, provider)
+        write_report(output, report, patch)
+        print(json.dumps(report["summary"], ensure_ascii=False))
+        print(f"报告：{output / 'report.html'}")
+        print(f"通过检查的补丁：{output / 'verified.patch'}")
+        return exit_code(report)
+    except (ValueError, OSError, SyntaxError) as exc:
+        print(f"exampleproof: {exc}", file=sys.stderr)
+        return 2

@@ -1,0 +1,12 @@
+{
+  "documents": ["README.md"],
+  "source_files": ["sdk/__init__.py"],
+  "timeout_seconds": 5,
+  "examples": {
+    "README.md#1": {"expected_stdout": "True\n", "checks": "assert result is True"},
+    "README.md#2": {"expected_stdout": "1.23\n", "checks": "assert result == 1.23\nassert rounded(2.718, decimals=1) == 2.7"},
+    "README.md#3": {"expected_stdout": "apple\n", "checks": "assert result == product.name\nassert lookup('pear').name == 'pear'"},
+    "README.md#4": {"expected_stdout": "6\n", "checks": "assert result == 6\nassert double(7) == 14"},
+    "README.md#5": {"skip": "Requires training_dataset; fixture data and initialization are not available."}
+  }
+}

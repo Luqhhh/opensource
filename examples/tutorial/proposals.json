@@ -1,0 +1,14 @@
+{
+  "README.md#1": {
+    "code": "from collections.abc import Mapping\nresult = isinstance({\"a\": 1}, Mapping)\nassert result is True\nprint(result)\n",
+    "rationale": "Python 3.10 removed deprecated collections aliases for abstract base classes; import Mapping from collections.abc. Reference: https://docs.python.org/3.10/whatsnew/3.10.html#removed"
+  },
+  "README.md#2": {
+    "code": "from sdk import rounded\nresult = rounded(1.234, decimals=2)\nassert result == 1.23\nprint(result)\n",
+    "rationale": "The selected sdk/__init__.py defines rounded(value, *, decimals=2). Update the obsolete keyword while retaining the input and assertion."
+  },
+  "README.md#3": {
+    "code": "from sdk import lookup\nproduct = lookup(\"apple\")\nresult = product.name\nassert result == \"apple\"\nprint(result)\n",
+    "rationale": "The selected source returns a Product dataclass, not a mapping. Read its name attribute."
+  }
+}
