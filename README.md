@@ -4,7 +4,7 @@
 
 仓库：<https://github.com/Luqhhh/opensource>
 
-**当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；没有自动下载模型。随附演示使用显式记录的候选补丁，**不代表实时模型推理结果或真实项目修复成功率**。
+**当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；工具不自动下载模型。随附候选回放演示**不代表实时模型推理结果或真实项目修复成功率**。另外已完成 [Qwen2.5-Coder 7B 真实推理验证](docs/evidence/ollama-20261013/README.md)，保留优化前后的原始请求、响应和复查结果。
 
 ## 工作流程
 
@@ -52,7 +52,7 @@ python3 -m exampleproof repair examples/tutorial \
   --model YOUR_LOCAL_MODEL --max-attempts 3 --model-timeout 180 --output artifacts/live
 ```
 
-模型收到原始示例、周边文档、明确选择的源文件，以及此前候选的拒绝或执行反馈。外部检查和预期输出不放入请求；配置检查失败、超时或异常退出的反馈会隐藏 evaluator 细节，仅在确认 setup/示例异常时保留详细错误。Ollama 仅支持回环地址，禁用环境代理和 HTTP 重定向。模型接口适配有协议单元测试；是否完成真实模型测试以 [验证记录](docs/validation.md) 为准。
+模型收到原始示例、周边文档、明确选择的源文件，以及此前候选的拒绝或执行反馈。外部检查和预期输出不放入请求；配置检查失败、超时或异常退出的反馈会隐藏 evaluator 细节，仅在确认 setup/示例异常时保留详细错误。Ollama 仅支持回环地址，禁用环境代理和 HTTP 重定向。协议测试和真实模型调用结果见 [验证记录](docs/validation.md)。
 
 候选 JSON 按示例 ID 映射到 `{"code": "...", "rationale": "..."}`；多轮回放时将该值改成按轮次排列的对象数组。文件上限为 2 MB。JSON 报告当前为 `schema_version: 2`，保留结果级最终候选字段并新增 `attempts`、`stop_reason` 和项目级 `repair` 统计。token 总量仅在所有尝试均提供相应计数时给出，否则为 `null`；服务已返回用量但候选解析失败时也计入统计。
 

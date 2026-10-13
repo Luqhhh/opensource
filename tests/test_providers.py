@@ -91,6 +91,11 @@ class OllamaProviderTests(unittest.TestCase):
         _, prompt = self.propose()
         self.assertNotIn('previous_attempts', prompt)
 
+    def test_original_error_is_not_duplicated_in_the_prompt(self):
+        _, prompt = self.propose(before=Execution('failed', returncode=21, stderr='unique traceback marker'))
+        self.assertEqual(json.dumps(prompt).count('unique traceback marker'), 1)
+        self.assertEqual(prompt['execution']['status'], 'failed')
+
     def test_external_evaluator_details_are_withheld_from_original_and_retry_errors(self):
         check_error = 'Traceback:\n  File "external-checks", line 2\nassert value == "secret_expected"\nValueError: secret_message'
         before = Execution('failed', returncode=22, stderr=check_error)

@@ -1,0 +1,20 @@
+--- a/README.md
++++ b/README.md
+@@ -20,7 +20,7 @@
+ 
+ ```python
+ from sdk import rounded
+-result = rounded(1.234, digits=2)
++result = rounded(1.234, decimals=2)
+ assert result == 1.23
+ print(result)
+ ```
+@@ -32,7 +32,7 @@
+ ```python
+ from sdk import lookup
+ product = lookup("apple")
+-result = product["name"]
++result = product.name
+ assert result == "apple"
+ print(result)
+ ```

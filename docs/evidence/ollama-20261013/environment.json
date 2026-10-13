@@ -1,0 +1,204 @@
+{
+  "host_python": "3.10.12",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "bubblewrap": "bubblewrap 0.6.1",
+  "ollama_version": "0.40.3",
+  "models": [
+    {
+      "name": "qwen2.5-coder:7b",
+      "model": "qwen2.5-coder:7b",
+      "modified_at": "2026-10-13T12:53:16.487315423+08:00",
+      "size": 4683087561,
+      "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen2",
+        "families": [
+          "qwen2"
+        ],
+        "parameter_size": "7.6B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 32768,
+        "embedding_length": 3584,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "tools",
+        "insert"
+      ]
+    }
+  ],
+  "model_details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "qwen2",
+    "families": [
+      "qwen2"
+    ],
+    "parameter_size": "7.6B",
+    "quantization_level": "Q4_K_M"
+  },
+  "model_info": {
+    "general.architecture": "qwen2",
+    "general.base_model.0.name": "Qwen2.5 Coder 7B",
+    "general.base_model.0.organization": "Qwen",
+    "general.base_model.0.repo_url": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B",
+    "general.base_model.count": 1,
+    "general.basename": "Qwen2.5-Coder",
+    "general.file_type": 15,
+    "general.finetune": "Instruct",
+    "general.languages": [
+      "en"
+    ],
+    "general.license": "apache-2.0",
+    "general.license.link": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct/blob/main/LICENSE",
+    "general.parameter_count": 7615616512,
+    "general.quantization_version": 2,
+    "general.size_label": "7B",
+    "general.tags": [
+      "code",
+      "codeqwen",
+      "chat",
+      "qwen",
+      "qwen-coder",
+      "text-generation"
+    ],
+    "general.type": "model",
+    "qwen2.attention.head_count": 28,
+    "qwen2.attention.head_count_kv": 4,
+    "qwen2.attention.layer_norm_rms_epsilon": 1e-06,
+    "qwen2.block_count": 28,
+    "qwen2.context_length": 32768,
+    "qwen2.embedding_length": 3584,
+    "qwen2.feed_forward_length": 18944,
+    "qwen2.rope.freq_base": 1000000,
+    "tokenizer.ggml.add_bos_token": false,
+    "tokenizer.ggml.bos_token_id": 151643,
+    "tokenizer.ggml.eos_token_id": 151645,
+    "tokenizer.ggml.merges": [],
+    "tokenizer.ggml.model": "gpt2",
+    "tokenizer.ggml.padding_token_id": 151643,
+    "tokenizer.ggml.pre": "qwen2",
+    "tokenizer.ggml.token_type": [],
+    "tokenizer.ggml.tokens": []
+  },
+  "runtime_context_length": 8192,
+  "runtime_num_parallel": 1,
+  "model_manifest_sha256": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "ollama_archive_sha256": "ce6f8b671a699bf1ebafb28d60dbbabf4f37b30b499145fa308a8ba72de021d6",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU, 8188 MiB, 566.26",
+  "installation_note": "Official Ollama archive and official registry manifest/layers downloaded with curl and verified by SHA-256; built-in pull encountered a manifest timeout. Model weights are stored outside the repository.",
+  "baseline_commit": "30fed20be37f9626298a2cfacfb9e64ad95c9515",
+  "optimized_source_sha256": {
+    "exampleproof/__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "exampleproof/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "exampleproof/cli.py": "8b9ffa5c19839188c8e818e943ce903828a0c6271a2db9d125fdf54698df8222",
+    "exampleproof/config.py": "ef14e6e3afd1f7f332d05704c4489b1bcb3a6875bdea3e0ee40cd4e75d1e10d7",
+    "exampleproof/extract.py": "62b8f16d86e7719da7e68b2aa5e6c894150acca963ce0c2c0ba27537b6fa6d17",
+    "exampleproof/guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "exampleproof/models.py": "3db338d749267635c3ed9f2f146c8f27dd4ac43c014b6ffda711e0ae3b1ef22f",
+    "exampleproof/pipeline.py": "21a3cffc58a89ebcd3849091f3d5ad88458fe5e4dc422792e6791f7bb818e281",
+    "exampleproof/providers.py": "c4e1b25b3cd1375ca2af2e86dfed36076831f338e95501070758f68d2ceef685",
+    "exampleproof/report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "exampleproof/runner.py": "6b63fc7fd1b77aaddc3c4886cd2f44c19ec6e4fbdc2c9702da27b2920c4922bc"
+  },
+  "validation_scope": "Development fixtures only: one historical standard-library reproduction and two synthetic SDK failures; prompt was adjusted after observing baseline. Not a held-out benchmark.",
+  "runs": [
+    {
+      "run": "single",
+      "original_exit_code": 1,
+      "patch_apply_check": "passed",
+      "patched_exit_code": 1,
+      "patched_counts": {
+        "failed": 1,
+        "checked": 3,
+        "skipped": 1,
+        "runnable_unverified": 1
+      },
+      "results": {
+        "total": 6,
+        "counts": {
+          "declined": 1,
+          "verified_repair": 2,
+          "checked": 1,
+          "skipped": 1,
+          "runnable_unverified": 1
+        }
+      },
+      "repair": {
+        "max_attempts": 1,
+        "attempts": 3,
+        "proposals": 3,
+        "input_tokens": 2440,
+        "output_tokens": 248,
+        "inference_requests": 3,
+        "inference_duration_seconds": 12.9232,
+        "proposal_duration_seconds": 12.9232
+      }
+    },
+    {
+      "run": "multiround",
+      "original_exit_code": 1,
+      "patch_apply_check": "passed",
+      "patched_exit_code": 1,
+      "patched_counts": {
+        "failed": 1,
+        "checked": 3,
+        "skipped": 1,
+        "runnable_unverified": 1
+      },
+      "results": {
+        "total": 6,
+        "counts": {
+          "declined": 1,
+          "verified_repair": 2,
+          "checked": 1,
+          "skipped": 1,
+          "runnable_unverified": 1
+        }
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 3,
+        "proposals": 3,
+        "input_tokens": 2440,
+        "output_tokens": 248,
+        "inference_requests": 3,
+        "inference_duration_seconds": 7.4572,
+        "proposal_duration_seconds": 7.4572
+      }
+    },
+    {
+      "run": "optimized",
+      "original_exit_code": 0,
+      "patch_apply_check": "passed",
+      "patched_exit_code": 0,
+      "patched_counts": {
+        "checked": 4,
+        "skipped": 1,
+        "runnable_unverified": 1
+      },
+      "results": {
+        "total": 6,
+        "counts": {
+          "verified_repair": 3,
+          "checked": 1,
+          "skipped": 1,
+          "runnable_unverified": 1
+        }
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 3,
+        "proposals": 3,
+        "input_tokens": 1977,
+        "output_tokens": 273,
+        "inference_requests": 3,
+        "inference_duration_seconds": 9.5299,
+        "proposal_duration_seconds": 9.5299
+      }
+    }
+  ]
+}

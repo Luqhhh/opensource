@@ -1,0 +1,188 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T04:57:25.101583+00:00",
+  "project_name": "tutorial",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "README.md": "16dbcd174ff553a9a79f99ad666aac5bbd6d41653c0f504f98fc5d9e3794087d"
+    },
+    "sources": {
+      "sdk/__init__.py": "b6edc2c226cd4b13923f0d72a2271d20cd5d92dd8244ec4ec2cb131c0d19a3e5"
+    },
+    "configuration_sha256": "1c07a9e880ce34b815b513d102e89f9fc911680338e4a0466a6de0751e8dea4d"
+  },
+  "summary": {
+    "total": 6,
+    "counts": {
+      "checked": 4,
+      "skipped": 1,
+      "runnable_unverified": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "README.md#1",
+        "path": "README.md",
+        "start_line": 11,
+        "end_line": 14,
+        "code": "from collections.abc import Mapping\nresult = isinstance({\"a\": 1}, Mapping)\nassert result is True\nprint(result)\n",
+        "context": "## 1. Historical standard-library compatibility\n## 1. Historical standard-library compatibility\n\nCheck whether a dictionary implements the mapping interface."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "True\n",
+        "stderr": "",
+        "duration_seconds": 0.0355,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "README.md#2",
+        "path": "README.md",
+        "start_line": 22,
+        "end_line": 25,
+        "code": "from sdk import rounded\nresult = rounded(1.234, decimals=2)\nassert result == 1.23\nprint(result)\n",
+        "context": "## 2. Renamed keyword in a synthetic SDK\n## 2. Renamed keyword in a synthetic SDK\n\nRound a number to two decimal places using the bundled SDK."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "1.23\n",
+        "stderr": "",
+        "duration_seconds": 0.036,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "README.md#3",
+        "path": "README.md",
+        "start_line": 33,
+        "end_line": 37,
+        "code": "from sdk import lookup\nproduct = lookup(\"apple\")\nresult = product.name\nassert result == \"apple\"\nprint(result)\n",
+        "context": "## 3. Changed return type in a synthetic SDK\n## 3. Changed return type in a synthetic SDK\n\nRetrieve a product name from the SDK's lookup result."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "apple\n",
+        "stderr": "",
+        "duration_seconds": 0.037,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "README.md#4",
+        "path": "README.md",
+        "start_line": 43,
+        "end_line": 46,
+        "code": "from sdk import double\nresult = double(3)\nassert result == 6\nprint(result)\n",
+        "context": "## 4. Healthy example: must stay unchanged\n```\n\n## 4. Healthy example: must stay unchanged"
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "6\n",
+        "stderr": "",
+        "duration_seconds": 0.0362,
+        "oracle": "configured_behavior_checks"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "README.md#5",
+        "path": "README.md",
+        "start_line": 54,
+        "end_line": 54,
+        "code": "print(training_dataset[0])\n",
+        "context": "## 5. Incomplete contextual fragment\n## 5. Incomplete contextual fragment\n\nThis fragment needs a dataset that is intentionally not included."
+      },
+      "before": {
+        "status": "skipped",
+        "returncode": null,
+        "stdout": "",
+        "stderr": "Requires training_dataset; fixture data and initialization are not available.",
+        "duration_seconds": 0.0,
+        "oracle": "none"
+      },
+      "status": "skipped",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "README.md#6",
+        "path": "README.md",
+        "start_line": 60,
+        "end_line": 61,
+        "code": "from sdk import double\nprint(double(5))\n",
+        "context": "## 6. Runs, but has no behavioral oracle\n```\n\n## 6. Runs, but has no behavioral oracle"
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "10\n",
+        "stderr": "",
+        "duration_seconds": 0.0365,
+        "oracle": "none"
+      },
+      "status": "runnable_unverified",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}
