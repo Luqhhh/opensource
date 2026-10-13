@@ -1,0 +1,6 @@
+{
+  "reason": "Distribution review found missing full Apache-2.0 text and additional public-domain/no-warranty attributions from the indexed CPython modules.",
+  "earlier_build": "package-pre-license.json",
+  "earlier_build_scope": "Engineering and module-hash checks passed, but this build is superseded for distribution.",
+  "remedy": "Add separate package-data license/attribution files, verify them in wheel and sdist, and rebuild. No frozen Python method is changed."
+}

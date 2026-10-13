@@ -131,6 +131,13 @@
 - **使用方式/自主边界：** 仅满足 more-itertools 5.0.0 旧版正控制的兼容依赖，字节不变地映射为沙箱中的 `six.py`。不在宿主安装或导入，不提供给 9.0.0 目标案例或实时修复模型，不属于本作品实现。
 - **开放及再分发范围：** 归档原始单文件源码、许可证及旧版控制的输入快照，以便复现 3/3 `checked` 记录；其存在不表示作品运行依赖 six，也不表示重建了 more-itertools 5.0.0 发布时的完整系统环境。
 
+### 18. CPython 3.10.12 标准库 API 检索语料
+
+- **版本/来源：** [CPython v3.10.12 官方源码](https://github.com/python/cpython/tree/v3.10.12/Lib)，固定发行归档 SHA-256 为 `5bcecf44fb27cda3efb0426a1b464d1925d0e7bfb1e423aaa301e5294db1fcef`。按统一规则选择全部 153 个公开平面 `Lib/*.py` 模块，AST 提取 999 个顶层公开函数的签名和 docstring；不含私有模块、类、子包或 C 内置实现。[原始语料及逐文件摘要](../benchmarks/semantic_v2/resources/cpython-3.10.12/provenance.json) 与 [生成器](../scripts/build_stdlib_index.py) 随仓库保存。
+- **许可/关键义务：** [完整 CPython LICENSE](../benchmarks/semantic_v2/resources/cpython-3.10.12/LICENSE)，包括 PSF License Agreement 和历史许可；另保留源码局部版权及附加许可通知。再分发须保留适用版权、许可、免责及变更说明，不把 Python 示例文档的 0BSD 双许可推及所有源码。完整许可和收集到的模块通知也嵌入安装包的 `stdlib_index.py`。逐个检查全部 153 个模块后，另随 wheel/sdist 分发 [Apache-2.0 完整正文](../exampleproof/licenses/Apache-2.0.txt)，对应 `profile.py`、`pstats.py` 的 Disney Enterprises 声明；[独立归属补充](../exampleproof/licenses/stdlib-attribution.txt)保留各模块原始通知并补齐 doctest、inspect、tabnanny 和 socket 辅助函数的 public-domain/no-warranty 声明，附完整 153 文件摘要清单。包内还提供可单独阅读的 [CPython 完整许可副本](../exampleproof/licenses/CPython-3.10.12.txt)。这是分发许可补充，未修改冻结的方法、索引或实验。
+- **使用方式/自主边界：** 官方源码按统一规则机械抽取，未修改原文行片段；静态语料用于缺失导入时的候选 API 检索，不执行索引中的代码，不携带案例参考修复或外部检查。生成、触发、排名与预算控制在本仓库实现。只使用原有解释器执行修复候选，没有新增 Python 运行依赖。
+- **开放及再分发范围：** 原始公开平面模块以压缩 JSON 归档；完整候选索引、出处摘要和许可随源码、wheel/sdist 及实验实现快照保存。新方法包含新增标准库信息，应作为完整方法升级解释，不能归因为执行反馈单项收益。固定官方版本与本机发行版解释器版本号对应，不声称两者全部实现字节一致。
+
 以上复制资源、其机械派生案例，以及含相同文本的 `inputs/` 和报告不能仅依赖仓库根目录 MIT 进行统一授权；公开或导出证据时应保留对应项目的 `provenance.json`、原始许可证及本清单。参考 `proposals.json` 属工程回放资料，不是模型输出成绩；真实模型请求须排除这些参考答案和外部 oracle。
 
 ## AI参与和审核记录
@@ -142,3 +149,41 @@
 两组既有真实提示词优化均在观察对应开发样例基线后进行：原教程三例第一轮通过；新增兼容性集优化后六个失败中四例通过补丁复查，其中计时例实际经历三轮。后者提示词及实际调用预算同时变化，不能独立证明多轮增益，也不代表未见项目成功率。新增三个上游项目案例未参与此前提示词优化，其参考复验不是实时模型评测；冻结后的固定预算对照应以另行保存的协议、请求和完整结果为准。“未见”只指本项目开发过程中的留出，不能断言公开文档从未进入基础模型训练集。尚无维护者或真实用户反馈可供引用。
 
 **提交前待补：** 团队确认实际AI服务和模型档案，审核生成内容来源/权利，记录人工修改及验证，确认共同权利人的参赛和公开授权，检查最终版本的新增资源已全部列入。不得将“待审核”改写为“团队已审核”。
+
+## semantic_v2 新增独立留出资源
+
+以下资源位于 `benchmarks/semantic_v2/holdout/`。两个新项目提供四个历史迁移失败和两个健康对照，原文、库实现与各自许可证按原字节保留；[独立封存清单](../benchmarks/semantic_v2/holdout/input-inventory.json)记录 266 个输入文件，SHA-256 为 `48557123a7453b5e8a899f7531e3b4cc4773ce1e158136ba0aa974cbe6d485ac`。这组素材不是当前上游缺陷报告，也不是随机抽样；参考候选和负例仅用于验证检查器，不作为模型效果。
+
+### 19. Mistune（官方 README、实现与版本迁移留出）
+
+- **版本/来源：** 文档及旧版正控制为 [0.8.4 / `6470c42b`](https://github.com/lepture/mistune/tree/6470c42b2087a4649ad0437227cf7b5c570c3a91)，运行目标为 [3.1.3 / `45e4de61`](https://github.com/lepture/mistune/tree/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2)。官方 `docs/index.rst` 包含 README；三个片段精确位置为 README.rst 70–73、87–90、61–64 行。[来源清单](../benchmarks/semantic_v2/holdout/mistune/provenance.json)保留完整 commit、URL、原始文件及片段 SHA。
+- **许可/关键义务：** 两版 BSD-3-Clause，原版权及条款分别保存在 [0.8.4 LICENSE](../benchmarks/semantic_v2/holdout/mistune/upstream/0.8.4/LICENSE)、[3.1.3 LICENSE](../benchmarks/semantic_v2/holdout/mistune/upstream/3.1.3/LICENSE)。再分发保留版权、许可和免责；不借作者名称作背书，不将上游实现归为本仓库 MIT 自主代码。
+- **使用方式/自主边界：** 复用 HTML 渲染器的返回类型变化、Renderer 接口与选项迁移，以及 convenience function 健康对照。只剥离 RST 缩进，保留语句、注释和静默表达式；原文 `text` 占位参数的 setup 明确披露。多输入、空输入、类型、HTML 转义、软／硬换行及重复调用检查为本仓库编写。运行时的 typing_extensions 另列下项，未改上游源码或在宿主安装上游包。
+- **开放及再分发范围：** 旧／新源码、README、Sphinx 入口、许可证、机械提取记录、配置、参考候选及失败证据随仓库保存。相同外部检查在旧版 3/3 通过，目标两失败一健康；人工参考补丁应用后 3/3 通过，两个错误候选均拒绝。[控制证据](../benchmarks/semantic_v2/holdout/validation-final/mistune/validation.json)全部经 Bubblewrap 执行，不产生模型请求。该验证不证明任意 Markdown 的语义等价。
+
+### 20. Werkzeug（官方 docstring、实现与版本迁移留出）
+
+- **版本/来源：** 文档及旧版正控制为 [2.2.3 / `22a254fc`](https://github.com/pallets/werkzeug/tree/22a254fca2ad0130adbbcbd11d3de51bcb04a08b)，运行目标为 [3.0.6 / `5eaefc39`](https://github.com/pallets/werkzeug/tree/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624)。官方 `docs/wsgi.rst`、`docs/urls.rst` 发布选定的函数 docstring；[来源清单](../benchmarks/semantic_v2/holdout/werkzeug/provenance.json)给出精确行号、URL、commit 与原始字节 SHA。
+- **许可/关键义务：** 两版 BSD-3-Clause，原 [2.2.3 许可](../benchmarks/semantic_v2/holdout/werkzeug/upstream/2.2.3/LICENSE.rst)、[3.0.6 许可](../benchmarks/semantic_v2/holdout/werkzeug/upstream/3.0.6/LICENSE.txt)及源码局部声明随归档保留。复制分发保留版权、条款和免责，不借 Pallets 或贡献者名称背书。Markupsafe 依赖沿用第 16 项固定 2.1.5 commit，原生 Python 回退实现及完整许可另随本项目归档，不计作新的 MarkupSafe 迁移案例。
+- **使用方式/自主边界：** `pop_path_info`、`peek_path_info` 移除及 `iri_to_uri` 健康对照。仅去 doctest 提示符、补文档模块显式导入，并以 `print(repr(...))` 保留 REPL 输出。外部检查覆盖可调用名称复用、环境字典副作用、空／缺失路径、重复斜线、无关字段、Unicode／WSGI 字节和 `charset=None`。固定旧版实现的空路径行为与 docstring 概述存在差别，已在上下文和案例 README 显式说明，没有静默改变契约。
+- **开放及再分发范围：** 两版纯 Python 源码、原始 docstring、Sphinx 入口、原许可证、案例和参考证据随仓库保留；所有上游执行仅在沙箱内完成。相同检查旧版 3/3 通过；目标两失败一健康，参考补丁复查 3/3，两个错误候选均拒绝。[运行证据](../benchmarks/semantic_v2/holdout/validation-final/werkzeug/validation.json)为人工候选回放，不是模型实测。导出的补丁用于规范化 Markdown 副本，不等同于上游 PR。
+
+### 21. typing_extensions（仅用于固定隔离运行依赖）
+
+- **版本/来源：** [4.12.2 / `e1250ff8`](https://github.com/python/typing_extensions/tree/e1250ff869e7ee5ad05170d8a4b65469f13801c3)，[原始单文件](../benchmarks/semantic_v2/holdout/mistune/upstream/dependencies/typing_extensions-4.12.2/src/typing_extensions.py) SHA 在 Mistune 来源清单中。
+- **许可/关键义务：** PSF-2.0 及 [完整 LICENSE 中的历史许可说明](../benchmarks/semantic_v2/holdout/mistune/upstream/dependencies/typing_extensions-4.12.2/LICENSE)，再分发保留适用版权、许可和免责；不改标为本仓库 MIT。
+- **使用方式/自主边界：** 满足 Mistune 3.1.3 在 Python 3.10 上的 `Self` 类型依赖，旧、新版本使用同一固定源文件，运行字节不变。仅放入沙箱选定源码，不安装到宿主，不增加 ExampleProof 安装包运行依赖；来源和许可随原始输入及验证快照保留。
+
+### 22. Click（仅用于采样与排除记录）
+
+- **版本/来源：** [7.1.2 / `1784558e`](https://github.com/pallets/click/tree/1784558ed7c75c65764d2a434bd9cbb206ca939d) 与 [8.1.8 / `934813e4`](https://github.com/pallets/click/tree/934813e4d421071a1b3db3973c02fe2721359a6e)。`collection/click/` 保留所查 API、补全和回调文档、utils/termui 源码与两个 commit 文件。
+- **许可/关键义务：** BSD-3-Clause，所查版本原始许可证分别保存在 [7.1.2 LICENSE.rst](../benchmarks/semantic_v2/holdout/collection/click/7.1.2/LICENSE.rst) 与 [8.1.8 LICENSE.txt](../benchmarks/semantic_v2/holdout/collection/click/8.1.8/LICENSE.txt)。复制的调研材料仍须保留上游版权、许可和免责。
+- **使用方式/自主边界：** 适合的完整官方示例需要 decorator 或函数定义，超出现有直线修复范围，故在模型调用前排除；没有人为改坏或重写成自编片段。未用于模型输入，不计入案例分母，不导入或执行这些归档文件；[采样记录](../benchmarks/semantic_v2/holdout/sampling-record.json)同时说明只做公开搜索而未复制源码的其他候选项目。
+
+### 本轮 AI 参与与留出边界补充
+
+AI 独立采集者完成上述两个新项目的来源采集、机械提取、外部契约、旧版正控制、参考候选及错误候选。准备阶段的依赖缺失和换行格式预期错误均保留，并在首次模型调用前根据固定旧版本验证结果纠正；没有根据留出模型输出更换题目、改检查或补答案。
+
+采集者先选定项目与四个题目，随后为查看既有 FileProvider 接口意外看到正在开发的通用 SYSTEM_V2 增补和反馈分类开头，立即披露；未读取模型输出或检索实现。因此本轮不称双盲。采集输入先封存，方法作者随后完成第二次方法实现与工程测试并锁定方法，再获知具体项目与案例；锁定时第二次开发推理尚在运行，之后没有按开发或留出输出改方法。顺序和局限见[封存外说明](../benchmarks/semantic_v2/holdout/COLLECTION-BOUNDARY-NOTE.md)；[方法锁](evidence/semantic-v2-20261013/method-lock.json) SHA-256 为 `76087371cf7e09eee4d03c03ce9308597a394d5a1f1dcabdc43098bbd3586fe2`。准确范围是“未用于方法优化、首次模型调用前冻结的留出”，不代表随机样本或排除了基础模型预训练污染。
+
+参考回放、安装包验证和来源核对没有调用本地模型；它们验证的是工程流程。留出真实模型效果与 token 成本须引用后续冻结协议和原始调用证据，不以这些 6/6 参考结果替代实测。上述说明不代替团队人工审核、作者贡献与权利确认。

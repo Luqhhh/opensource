@@ -1,0 +1,28 @@
+{
+  "documents": [
+    "cases/collate.md",
+    "cases/grouper.md",
+    "cases/healthy_chunked.md"
+  ],
+  "source_files": [
+    "more_itertools/__init__.py",
+    "more_itertools/more.py",
+    "more_itertools/recipes.py",
+    "six.py"
+  ],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/collate.md#1": {
+      "expected_stdout": "['A', 'A', 'C', 'D', 'J', 'K', 'L', 'Z', 'Z']\n['1', '2', '10', '11']\n[5, 4, 3, 2, 1, 0]\n",
+      "checks": "assert list(collate([1, 1, 5], [1, 2, 5])) == [1, 1, 1, 2, 5, 5]\nassert list(collate([], [])) == []\nassert list(collate(['-2', '12'], ['0', '15'], key=int)) == ['-2', '0', '12', '15']\nassert list(collate([9, 3], [8, 1], reverse=True)) == [9, 8, 3, 1]\nassert callable(collate)\nassert list(collate()) == []\nassert list(collate(iter([0, 0, 2]), iter([-1, 0, 3]), iter([]))) == [-1, 0, 0, 0, 2, 3]\nassert list(collate(iter(['é', '界']), iter(['ñ', '汉']))) == ['é', 'ñ', '汉', '界']\nassert list(collate(['20', '3', '-1'], ['12', '2'], key=int, reverse=True)) == ['20', '12', '3', '2', '-1']\n_left = [(1, 'left-a'), (1, 'left-b'), (3, 'left-c')]\n_right = [(1, 'right-a'), (2, 'right-b')]\nassert list(collate(iter(_left), iter(_right), key=lambda item: item[0])) == [(1, 'left-a'), (1, 'left-b'), (1, 'right-a'), (2, 'right-b'), (3, 'left-c')]\n_seen = []\ndef _stream(start):\n    for value in range(start, 100, 2):\n        _seen.append(value)\n        yield value\n_merged = collate(_stream(0), _stream(1))\nassert _seen == [], 'merge must not consume the inputs before iteration'\nassert next(_merged) == 0\nassert next(_merged) == 1\nassert len(_seen) <= 4, 'merge must consume only a bounded prefix'\nfrom itertools import islice, count\nassert list(islice(collate(count(0, 2), count(1, 2)), 8)) == list(range(8))\n"
+    },
+    "cases/grouper.md#1": {
+      "expected_stdout": "[('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]\n",
+      "checks": "assert list(grouper(iterable='ABCDEFG', n=3, fillvalue='x')) == [('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]\nassert list(grouper(iterable='ABCD', n=2, fillvalue='x')) == [('A', 'B'), ('C', 'D')]\nassert list(grouper(iterable='', n=3, fillvalue='x')) == []\nassert list(grouper(iterable='Z', n=2, fillvalue='!')) == [('Z', '!')]\n"
+    },
+    "cases/healthy_chunked.md#1": {
+      "expected_stdout": "[[1, 2, 3], [4, 5, 6], [7, 8]]\n",
+      "checks": "assert list(chunked(range(5), 2)) == [[0, 1], [2, 3], [4]]\nassert list(chunked([], 3)) == []\nassert list(chunked([1, 2, 3, 4], 2)) == [[1, 2], [3, 4]]\n"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+        >>> list(collate('ACDZ', 'AZ', 'JKL'))
+        ['A', 'A', 'C', 'D', 'J', 'K', 'L', 'Z', 'Z']
+
+        >>> key = lambda s: int(s)  # Sort by numeric value, not by string
+        >>> list(collate(['1', '10'], ['2', '11'], key=key))
+        ['1', '2', '10', '11']
+
+        >>> list(collate([5, 3, 1], [4, 2, 0], reverse=True))
+        [5, 4, 3, 2, 1, 0]
+

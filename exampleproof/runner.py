@@ -79,9 +79,9 @@ class SandboxRunner:
         for name in self.sources:
             path = Path(name)
             if path.is_absolute() or ".." in path.parts or path == Path("."):
-                return Execution("blocked", stderr=f"Source path must stay inside the workspace: {name!r}", oracle=oracle)
+                return Execution("blocked", stderr=f"Source path must stay inside the workspace: {name!r}", oracle=oracle, failure_kind="environment")
         if not shutil.which("bwrap") or not Path("/usr/bin/python3").exists():
-            return Execution("blocked", stderr="Requires Linux, bubblewrap and /usr/bin/python3; host execution is disabled", oracle=oracle)
+            return Execution("blocked", stderr="Requires Linux, bubblewrap and /usr/bin/python3; host execution is disabled", oracle=oracle, failure_kind="environment")
         start = time.monotonic()
         with tempfile.TemporaryDirectory(prefix="exampleproof-") as temporary:
             base = Path(temporary)
@@ -128,15 +128,20 @@ class SandboxRunner:
                     stderr = err.read(OUTPUT_LIMIT).decode("utf-8", errors="replace")
                     if proc.returncode != 0 and stderr.startswith("bwrap:"):
                         status = "blocked"
+                    failure_kind = ("environment" if status == "blocked" else "timeout" if status == "timeout"
+                                    else "none" if status == "passed" else "example_exception" if proc.returncode == 21
+                                    else "behavior_check" if proc.returncode == 22 else "abnormal_exit")
                     if status == "passed":
                         receipt.seek(0)
                         if receipt.read(len(completion_token) + 1) != completion_token:
                             status = "failed"
+                            failure_kind = "incomplete_execution"
                             stderr += "\nExecution did not complete setup, the example and external checks normally."
                     if status == "passed" and "expected_stdout" in spec and stdout != spec["expected_stdout"]:
                         status = "failed"
+                        failure_kind = "stdout_mismatch"
                         stderr += "\nExpected stdout did not match the configured oracle."
                     return Execution(status, proc.returncode, stdout, stderr,
-                                     round(time.monotonic() - start, 4), oracle)
+                                     round(time.monotonic() - start, 4), oracle, failure_kind)
                 except (OSError, subprocess.SubprocessError) as exc:
-                    return Execution("blocked", stderr=str(exc), duration_seconds=round(time.monotonic() - start, 4), oracle=oracle)
+                    return Execution("blocked", stderr=str(exc), duration_seconds=round(time.monotonic() - start, 4), oracle=oracle, failure_kind="environment")

@@ -1,0 +1,117 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:15:00.364881+00:00",
+  "project_name": "markupsafe",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/safe_string.md": "4e3c9376ed60cc89cd6fe4ed792814078bdcd61403c1c56bd288fbc4f5a47d1e",
+      "cases/convert_contract.md": "044f689e13e4a524b2643e58721779379dd700da570341fbd02a545afeb8d36a",
+      "cases/optional_values.md": "4990c1118def93ebba2621f092f44e75491406b5587fcb3dea3e0dccf0691f40"
+    },
+    "sources": {
+      "markupsafe/__init__.py": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "markupsafe/_native.py": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb"
+    },
+    "configuration_sha256": "e53c97ce75d2fd76aead33a38f6171b48520505e04ef4914363b85a53638dd9c"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "checked": 3
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/safe_string.md#1",
+        "path": "cases/safe_string.md",
+        "start_line": 7,
+        "end_line": 10,
+        "code": "value = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(soft_str(value))))\n",
+        "context": "# Original soft conversion display regression\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nThe harness imports markupsafe's public namespace. Preserve value as Markup and all three original displayed lines. This remains a finite display regression: the reusable convert contract is a separate new case."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('&lt;User 1&gt;')\nMarkup('&amp;lt;User 1&amp;gt;')\nMarkup('&lt;User 1&gt;')\n",
+        "stderr": "",
+        "duration_seconds": 0.0346,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/convert_contract.md#1",
+        "path": "cases/convert_contract.md",
+        "start_line": 7,
+        "end_line": 10,
+        "code": "from markupsafe import escape, soft_str\nconvert = soft_str\nvalue = escape('<User 1>')\nprint(repr(escape(convert(value))))\n",
+        "context": "# Reusable soft conversion without HTML escaping\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep a reusable callable named convert that converts non-strings with str(), preserves existing str/str-subclass/Markup objects by identity, and performs no HTML escaping. Cover ordinary/empty/Unicode/HTML-sensitive strings, numbers, booleans, None and objects defining __str__ or __html__. The displayed escaped Markup must remain Markup('&lt;User 1&gt;'). This authored binding task expands the upstream soft-conversion contract; it is not a mechanical excerpt."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('&lt;User 1&gt;')\n",
+        "stderr": "",
+        "duration_seconds": 0.035,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/optional_values.md#1",
+        "path": "cases/optional_values.md",
+        "start_line": 7,
+        "end_line": 8,
+        "code": "print(repr(escape(None)))\nprint(repr(escape_silent(None)))\n",
+        "context": "# Escape optional values\nTreat optional None values as empty strings while escaping ordinary values.\nThe harness imports the public `markupsafe` namespace, matching the documented module context."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('None')\nMarkup('')\n",
+        "stderr": "",
+        "duration_seconds": 0.0352,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

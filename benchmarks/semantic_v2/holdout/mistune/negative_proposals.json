@@ -1,0 +1,10 @@
+{
+  "cases/reusable_html.md#1": {
+    "code": "import mistune\nmarkdown = lambda text: '<p>I am using <strong>mistune markdown parser</strong></p>\\n'\nmarkdown('I am using **mistune markdown parser**')\n",
+    "rationale": "Deliberately incorrect constant/scope/output-only candidate for oracle validation."
+  },
+  "cases/renderer_options.md#1": {
+    "code": "markdown = mistune.create_markdown(escape=True, hard_wrap=False)\nmarkdown(text)\n",
+    "rationale": "Deliberately incorrect constant/scope/output-only candidate for oracle validation."
+  }
+}

@@ -15,3 +15,6 @@ exampleproof = "exampleproof.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["exampleproof*"]
+
+[tool.setuptools.package-data]
+exampleproof = ["licenses/*.txt"]

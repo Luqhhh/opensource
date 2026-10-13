@@ -1,0 +1,10 @@
+{
+  "cases/pop_path_info.md#1": {
+    "code": "pop_path_info = lambda environ, charset='utf-8', errors='replace': (None if not environ.get('PATH_INFO') else (lambda path, script: (lambda leading, head, separator, tail: (environ.update({'PATH_INFO': '/' + tail if separator else '', 'SCRIPT_NAME': script + leading + head}), head.encode('latin1').decode(charset, errors) if charset is not None else head.encode('latin1'))[1])('/' * (len(path) - len(path.lstrip('/'))), *path.lstrip('/').partition('/')))(environ['PATH_INFO'], environ.get('SCRIPT_NAME', '')))\nenv = {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nprint(repr(pop_path_info(env)))\nprint(repr(env['SCRIPT_NAME']))\nprint(repr(pop_path_info(env)))\nprint(repr(env['SCRIPT_NAME']))\n",
+    "rationale": "Evaluator-authored reference replay, not model output."
+  },
+  "cases/peek_path_info.md#1": {
+    "code": "peek_path_info = lambda environ, charset='utf-8', errors='replace': (lambda value: value.decode(charset, errors) if charset is not None else value)(environ.get('PATH_INFO', '').lstrip('/').split('/', 1)[0].encode('latin1'))\nenv = {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nprint(repr(peek_path_info(env)))\nprint(repr(peek_path_info(env)))\n",
+    "rationale": "Evaluator-authored reference replay, not model output."
+  }
+}

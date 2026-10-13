@@ -31,6 +31,22 @@ When previous attempts are supplied, use their execution or integrity feedback
 to refine the repair without repeating an unsuccessful candidate.
 """
 
+# Versioned development policy. SYSTEM remains the exact v1 comparison prompt.
+# No project names, removed APIs, reference candidates or evaluator inputs appear here.
+SYSTEM_V2 = SYSTEM + """
+Read the task's behavior and reusable-binding contract before choosing an API.
+Source excerpts are incomplete evidence, not a list of mandatory imports. A
+similarly named function may perform a different operation. For a removed symbol,
+consider a standard-library equivalent as well as the remaining project API.
+Every name used by your replacement must be defined or imported; deleting a
+failing import alone cannot fix its call sites. Preserve any reusable callable
+named by the task, and preserve whether expressions are silent or printed.
+When feedback reports a category, use it to revise the relevant operation. A
+stdout mismatch calls for checking added prints and formatting; a behavior-check
+failure calls for checking types, scope, side effects, and boundary inputs.
+Do not repeat a failed candidate unchanged or replace task data with constants.
+"""
+
 MAX_RESPONSE_BYTES = 256_000
 MAX_PROPOSAL_FILE_BYTES = 2_000_000
 WITHHELD_CHECK_ERROR = "Execution did not pass configured behavior checks; evaluator details are withheld."
@@ -60,6 +76,31 @@ def execution_feedback(execution):
             or "Expected stdout did not match the configured oracle." in error):
         error = WITHHELD_CHECK_ERROR
     return {"status": execution.status, "error": error[-8000:]}
+
+
+def categorized_feedback(execution):
+    """Expose fixed host-observed categories, never evaluator code or values.
+
+    The runner assigns failure_kind from execution stage and receipt/output
+    checks. We do not parse evaluator traceback text into diagnostic hints.
+    This is a diagnostic channel, not a boundary against a hostile shared process.
+    """
+    if execution is None:
+        return None
+    feedback = execution_feedback(execution)
+    hints = {
+        "none": "No classified failure.",
+        "example_exception": "The setup or example raised an exception before external checks.",
+        "behavior_check": "A configured behavior check failed. Review documented types, transformation, scope, side effects and boundary behavior.",
+        "stdout_mismatch": "Execution and configured behavior checks completed, but stdout differed. Preserve the documented output and avoid adding prints to silent expressions.",
+        "timeout": "Execution exceeded its time budget.",
+        "abnormal_exit": "Execution exited abnormally.",
+        "incomplete_execution": "Execution did not complete the required stages normally.",
+        "environment": "The isolated execution environment was unavailable.",
+    }
+    kind = execution.failure_kind if execution.failure_kind in hints else "unknown"
+    return {**feedback, "category": kind,
+            "guidance": hints.get(kind, "No reliable failure category is available.")}
 
 
 class FileProvider:
@@ -114,7 +155,8 @@ def _read_response(response, inference):
 
 class OllamaProvider:
     def __init__(self, model: str, endpoint: str = "http://127.0.0.1:11434", timeout: float = 60,
-                 *, options: dict | None = None):
+                 *, options: dict | None = None, system_prompt: str | None = None,
+                 feedback_mode: str = "legacy"):
         if not isinstance(endpoint, str) or any(character.isspace() or ord(character) < 32 for character in endpoint):
             raise ValueError("v0.1 Ollama endpoint must be a loopback HTTP(S) address")
         parsed = urlparse(endpoint)
@@ -133,6 +175,12 @@ class OllamaProvider:
                 or not math.isfinite(timeout) or timeout <= 0):
             raise ValueError("Ollama timeout must be a finite positive number")
         self.model, self.endpoint, self.timeout = model, endpoint.rstrip("/"), timeout
+        if system_prompt is not None and (not isinstance(system_prompt, str) or not system_prompt.strip()):
+            raise ValueError("System prompt must be a nonempty string")
+        if feedback_mode not in {"legacy", "categorized"}:
+            raise ValueError("Unknown feedback mode")
+        self.system_prompt = SYSTEM if system_prompt is None else system_prompt
+        self.feedback = categorized_feedback if feedback_mode == "categorized" else execution_feedback
         self.options = {"temperature": 0}
         if options is not None:
             if not isinstance(options, dict) or set(options) - {"temperature", "seed", "num_ctx", "num_predict"}:
@@ -150,20 +198,22 @@ class OllamaProvider:
 
     def propose(self, example, before, sources, *, history=()):
         # No evaluator checks or expected outputs are included in the prompt.
+        # Initial evidence is identical across feedback modes; categories are
+        # an ablation on subsequent candidate feedback, not extra first-call data.
         feedback = execution_feedback(before)
         evidence = {"example_id": example.id, "context": example.context,
                     "code": example.code, "error": feedback["error"],
-                    "execution": {"status": feedback["status"]}, "sources": sources}
+                    "execution": {key: value for key, value in feedback.items() if key != "error"}, "sources": sources}
         if history:
             evidence["previous_attempts"] = [
                 {"number": attempt.number, "status": attempt.status,
                  "candidate": {"code": attempt.proposal.code, "rationale": attempt.proposal.rationale}
                  if attempt.proposal is not None else None,
-                 "execution": execution_feedback(attempt.after), "rejection": attempt.rejection}
+                 "execution": self.feedback(attempt.after), "rejection": attempt.rejection}
                 for attempt in history
             ]
         payload = {"model": self.model, "stream": False, "format": "json",
-                   "system": SYSTEM, "prompt": json.dumps(evidence, ensure_ascii=False),
+                   "system": self.system_prompt, "prompt": json.dumps(evidence, ensure_ascii=False),
                    "options": dict(self.options)}
         inference = InferenceEvidence(request=payload,
                                       started_at=datetime.now(timezone.utc).isoformat(),
@@ -209,3 +259,14 @@ class OllamaProvider:
             # Preserve existing error types while allowing reports to retain context.
             exc.inference_evidence = inference
             raise
+
+
+class SemanticOllamaProvider(OllamaProvider):
+    """Opt-in v2 repair policy; same sandbox, guard and evaluator as legacy."""
+
+    def __init__(self, model, endpoint="http://127.0.0.1:11434", timeout=60):
+        super().__init__(model, endpoint, timeout, system_prompt=SYSTEM_V2, feedback_mode="categorized")
+
+    def propose(self, example, before, sources, *, history=()):
+        from .context import source_context
+        return super().propose(example, before, source_context(example, before, sources, limit=6000), history=history)

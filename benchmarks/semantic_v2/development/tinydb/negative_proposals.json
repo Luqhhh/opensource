@@ -1,0 +1,22 @@
+{
+  "wrong_scope": {
+    "cases/purge_default.md#1": {
+      "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nclear_default = db.drop_tables\nclear_default()\ndb.all()\n",
+      "rationale": "Wrong scope: removes archive tables."
+    },
+    "cases/purge_named_table.md#1": {
+      "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndrop_named = lambda name: db.truncate()\ndrop_named('table_name')\n",
+      "rationale": "Wrong scope: clears default records instead of dropping requested table."
+    }
+  },
+  "single_use": {
+    "cases/purge_default.md#1": {
+      "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nclear_default = lambda: None\ndb.truncate()\ndb.all()\n",
+      "rationale": "Matches first operation but reusable callable does nothing."
+    },
+    "cases/purge_named_table.md#1": {
+      "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndrop_named = lambda name: None\ndb.drop_table('table_name')\n",
+      "rationale": "Matches first operation but cannot remove later records."
+    }
+  }
+}

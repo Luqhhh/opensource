@@ -1,0 +1,6 @@
+{
+  "cases/grouper.md#1": {
+    "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))",
+    "rationale": "The error indicates that the 'grouper' function from 'more_itertools' expects an iterable as its first argument, but an integer was provided. The provided code snippet is correct and should work as expected with the 'more_itertools' library. If the error persists, it may be due to a version mismatch or an issue with the 'more_itertools' library itself. In that case, a different approach or library may need to be considered."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "documents": [
+    "cases/safe_string.md",
+    "cases/convert_contract.md",
+    "cases/optional_values.md"
+  ],
+  "source_files": [
+    "markupsafe/__init__.py",
+    "markupsafe/_native.py",
+    "markupsafe/_compat.py",
+    "markupsafe/_constants.py"
+  ],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/safe_string.md#1": {
+      "setup": "from markupsafe import *\n",
+      "expected_stdout": "Markup('&lt;User 1&gt;')\nMarkup('&amp;lt;User 1&amp;gt;')\nMarkup('&lt;User 1&gt;')\n",
+      "checks": "from markupsafe import Markup as _Markup\nassert type(value) is _Markup\nassert str(value) == '&lt;User 1&gt;'\nassert escape(value) == value\nassert escape(str(value)) != value\n"
+    },
+    "cases/optional_values.md#1": {
+      "setup": "from markupsafe import *\n",
+      "expected_stdout": "Markup('None')\nMarkup('')\n",
+      "checks": "from markupsafe import Markup as _Markup\nassert type(escape_silent(None)) is _Markup\nassert escape_silent(None) == ''\nassert escape_silent('<tag>') == '&lt;tag&gt;'\nassert escape_silent(0) == '0'\n"
+    },
+    "cases/convert_contract.md#1": {
+      "expected_stdout": "Markup('&lt;User 1&gt;')\n",
+      "checks": "from markupsafe import Markup as _Markup\nassert callable(convert)\nfor _text in ['ordinary text', '', '<tag>&' + chr(34) + chr(39), '中文🙂é', 'already &lt;escaped&gt;']:\n    _converted = convert(_text)\n    assert type(_converted) is str\n    assert _converted is _text, 'existing strings must preserve identity'\nfor _safe in [_Markup(''), _Markup('<b>&safe</b>'), _Markup('&lt;escaped&gt;')]:\n    assert convert(_safe) is _safe, 'Markup must retain type and identity'\nclass _Text(str):\n    pass\n_subclass = _Text('<still text>')\nassert convert(_subclass) is _subclass\nfor _input, _expected in [(0, '0'), (-42, '-42'), (1.25, '1.25'), (True, 'True'), (False, 'False'), (None, 'None')]:\n    _converted = convert(_input)\n    assert type(_converted) is str\n    assert _converted == _expected\nclass _Object:\n    def __str__(self):\n        return '<object>&'\n    def __html__(self):\n        return '<em>different HTML</em>'\n_converted = convert(_Object())\nassert type(_converted) is str\nassert _converted == '<object>&', 'soft conversion uses str, not __html__ or HTML escaping'\nassert convert(value) is value\n"
+    }
+  }
+}

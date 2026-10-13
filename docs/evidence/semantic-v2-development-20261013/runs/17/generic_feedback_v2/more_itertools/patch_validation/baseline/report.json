@@ -1,0 +1,119 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:27:36.473825+00:00",
+  "project_name": "more_itertools",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/collate.md": "1bf42b3961ad279391f59c26d00ccae231afbbf4a43368afb75f065ab5a275b5",
+      "cases/grouper.md": "d3fd80e45c1d827979fd11d572d39557ac44ed4ab87ff6bffbe4cde95b57cefa",
+      "cases/healthy_chunked.md": "fd01cc4fd271a46276471d5aaa1adcf966064be48815f2fd869153358ab3c31b"
+    },
+    "sources": {
+      "more_itertools/__init__.py": "e4f350329cb8d34b39181de3716c338ded110b0f24d1bbd4f56fc2e3d5747ddd",
+      "more_itertools/more.py": "1669ad913fa3ebda882e4c4410b939651a192bc4add5583f7ce196d2c4c577b8",
+      "more_itertools/recipes.py": "657e3ed887db64a94f2156832131f66ee5ff7cfb8c0ded4455ce9ed974ac0b3f"
+    },
+    "configuration_sha256": "bf41bf4c9d557ccd621000d74b83957cb13058fe0b1ea7637936fd18c6e10025"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "failed": 2,
+      "checked": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/collate.md#1",
+        "path": "cases/collate.md",
+        "start_line": 7,
+        "end_line": 11,
+        "code": "from more_itertools import collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+        "context": "# Reusable lazy sorted merge\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nPreserve a reusable callable named collate and all three displayed outputs. Merge any number of already-sorted iterables, retaining duplicates and stable order for equal keys, accepting key and reverse together. Support empty inputs, Unicode and one-shot iterators. Preserve lazy iteration: do not consume inputs at construction or read the entire input to return a prefix. These evaluator-authored requirements expand the original documented lazy merge contract."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from more_itertools import collate\nImportError: cannot import name 'collate' from 'more_itertools' (/workspace/more_itertools/__init__.py)\n",
+        "duration_seconds": 0.0702,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/grouper.md#1",
+        "path": "cases/grouper.md",
+        "start_line": 7,
+        "end_line": 8,
+        "code": "from more_itertools import grouper\nprint(list(grouper(3, 'ABCDEFG', 'x')))\n",
+        "context": "# Grouped values with padding\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep a reusable callable named grouper accepting iterable, n and fillvalue keyword arguments. Preserve the original displayed groups of three with x padding; support empty input, exact multiples, and a final partial group padded with the supplied fill value."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    print(list(grouper(3, 'ABCDEFG', 'x')))\n  File \"/workspace/more_itertools/recipes.py\", line 372, in grouper\n    args = [iter(iterable)] * n\nTypeError: 'int' object is not iterable\n",
+        "duration_seconds": 0.0695,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_chunked.md#1",
+        "path": "cases/healthy_chunked.md",
+        "start_line": 7,
+        "end_line": 8,
+        "code": "from more_itertools import chunked\nprint(list(chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)))\n",
+        "context": "# Healthy chunked iterator\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep a reusable callable named chunked. Preserve the original displayed list of chunks; support empty input, exact multiples, and a final shorter chunk without padding."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[[1, 2, 3], [4, 5, 6], [7, 8]]\n",
+        "stderr": "",
+        "duration_seconds": 0.0702,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "cases/reusable_html.md#1": [
+    {
+      "code": "import mistune\n\nmarkdown = mistune.create_markdown(escape=False)\nmarkdown('I am using **mistune markdown parser**')\n",
+      "rationale": "Evaluator-authored reference replay, not model output."
+    }
+  ],
+  "cases/renderer_options.md#1": [
+    {
+      "code": "renderer = mistune.HTMLRenderer(escape=True)\nmarkdown = mistune.Markdown(renderer=renderer, inline=mistune.InlineParser(hard_wrap=True))\nmarkdown(text)\n",
+      "rationale": "Evaluator-authored reference replay, not model output."
+    }
+  ]
+}

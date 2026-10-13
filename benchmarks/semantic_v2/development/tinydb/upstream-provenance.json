@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "project": "TinyDB",
+  "repository": "https://github.com/msiemens/tinydb",
+  "collected_at": "2026-10-13",
+  "documentation": {
+    "tag": "v3.15.2",
+    "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+    "license": "MIT",
+    "license_path": "upstream/v3.15.2/LICENSE"
+  },
+  "runtime": {
+    "tag": "v4.8.2",
+    "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+    "license": "MIT",
+    "license_path": "upstream/v4.8.2/LICENSE"
+  },
+  "retrieval": "git clone --depth 1 --branch <tag> https://github.com/msiemens/tinydb.git; HEAD checked against git ls-remote. Copied files are byte-identical to each checked-out commit.",
+  "source_mapping": "Target-runtime tinydb/*.py maps unchanged to /workspace/tinydb/*.py. Old-runtime snapshot maps unchanged from upstream/v3.15.2/tinydb/*.py to /workspace/tinydb/*.py only for historical validation. mypy_plugin.py is excluded because it is optional static-analysis integration and imports an unavailable third-party dependency; no runtime module is rewritten.",
+  "extraction": "Case code consists exactly of >>> command lines from each ordered source_ranges list after stripping four-character prompts; no API call, literal or identifier was modified. Headings and intent text are evaluator-authored. RST originals and expected REPL output remain in upstream/.",
+  "migration_evidence": {
+    "path": "upstream/v4.8.2/docs/upgrade.rst",
+    "start_line": 3,
+    "end_line": 16,
+    "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/docs/upgrade.rst#L3-L16"
+  },
+  "files": [
+    {
+      "path": "upstream/v3.15.2/LICENSE",
+      "upstream_path": "LICENSE",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/LICENSE",
+      "sha256": "b0e2a2d39271e3d96b717d7be8235ac413d74797bf7f742f0801cfaad6c8c912",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/docs/getting-started.rst",
+      "upstream_path": "docs/getting-started.rst",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst",
+      "sha256": "46ea613302722e6c63c431f1a7276de5a61147461014dbba6167cc0d4c592c3e",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/docs/usage.rst",
+      "upstream_path": "docs/usage.rst",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/usage.rst",
+      "sha256": "85b03b38547da019a88f5e6e62f938f898f23207896e684a7db7cb441f6b75b0",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/docs/upgrade.rst",
+      "upstream_path": "docs/upgrade.rst",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/upgrade.rst",
+      "sha256": "0b90b4762103230a49725ada01615206ecf62b9b8607735c59785932cf77b642",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/__init__.py",
+      "upstream_path": "tinydb/__init__.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/__init__.py",
+      "sha256": "6a0a35e057b66243ca0df8a05f910fb17519c9adc0aaf21f178067259a9f36ad",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/database.py",
+      "upstream_path": "tinydb/database.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/database.py",
+      "sha256": "1cf90f6f2142791e1bc0e9d34decae47785331921204e803329a1aebbd941e36",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/middlewares.py",
+      "upstream_path": "tinydb/middlewares.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/middlewares.py",
+      "sha256": "fb1776c941e4948239a60989f934151b3d88ffdc7f466e70051e50a1a5d2f72d",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/operations.py",
+      "upstream_path": "tinydb/operations.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/operations.py",
+      "sha256": "ce68d8217ab21ec9b3c004f908c9195c037dc7488592cf07647d6504ed9e0e78",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/queries.py",
+      "upstream_path": "tinydb/queries.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/queries.py",
+      "sha256": "819c4239806dbde4bca2c7ae5c0b019497e3b47f2ddca20516ac5d3e477f2ed4",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/storages.py",
+      "upstream_path": "tinydb/storages.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/storages.py",
+      "sha256": "d6b00af3d1f46cfd54040dae037b85c5a1cb954767623eb0edb1c7b1e0888cf6",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/utils.py",
+      "upstream_path": "tinydb/utils.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/utils.py",
+      "sha256": "39131b4a6c5b7ca304cbbda63fd5a97506971305297e99c944a96b714be1a887",
+      "modified": false
+    },
+    {
+      "path": "upstream/v3.15.2/tinydb/version.py",
+      "upstream_path": "tinydb/version.py",
+      "commit": "5e7813053f721ab37acd4ed1e50b41009886f5b2",
+      "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/tinydb/version.py",
+      "sha256": "0e3eebe3ad21526f0855ceb3249a251927187e7c9c340b160d042418ce8f32e1",
+      "modified": false
+    },
+    {
+      "path": "upstream/v4.8.2/LICENSE",
+      "upstream_path": "LICENSE",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/LICENSE",
+      "sha256": "b0e2a2d39271e3d96b717d7be8235ac413d74797bf7f742f0801cfaad6c8c912",
+      "modified": false
+    },
+    {
+      "path": "upstream/v4.8.2/docs/getting-started.rst",
+      "upstream_path": "docs/getting-started.rst",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/docs/getting-started.rst",
+      "sha256": "56ebfd0a51b953f33750c00bc5c9fc65a62474d02a35bb7bc811034a6e16281c",
+      "modified": false
+    },
+    {
+      "path": "upstream/v4.8.2/docs/usage.rst",
+      "upstream_path": "docs/usage.rst",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/docs/usage.rst",
+      "sha256": "69d21d6ef2aebb7f32e38e669db4ded43f2c1f9a5d6635622960030bfaf61dbf",
+      "modified": false
+    },
+    {
+      "path": "upstream/v4.8.2/docs/upgrade.rst",
+      "upstream_path": "docs/upgrade.rst",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/docs/upgrade.rst",
+      "sha256": "2af35ebeed5157f3376e47ed4e0c6225c23bf71fcd8b896753f2c5d63fec2198",
+      "modified": false
+    },
+    {
+      "path": "tinydb/__init__.py",
+      "upstream_path": "tinydb/__init__.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/__init__.py",
+      "sha256": "28f94493eea983ea655d6285ada5827fd0cdc6eed455121ce7c6244121d51cda",
+      "modified": false
+    },
+    {
+      "path": "tinydb/database.py",
+      "upstream_path": "tinydb/database.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/database.py",
+      "sha256": "113f0a4a5bca46aa1beb6c88cc3d71c4b0ea048768e17f8e5a46b3c522131030",
+      "modified": false
+    },
+    {
+      "path": "tinydb/middlewares.py",
+      "upstream_path": "tinydb/middlewares.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/middlewares.py",
+      "sha256": "eb5b3e53a2f80bdff86bc7560e534548e573ebe4e521405db91acd6f7e3e5d36",
+      "modified": false
+    },
+    {
+      "path": "tinydb/operations.py",
+      "upstream_path": "tinydb/operations.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/operations.py",
+      "sha256": "09fc2723fbc2327abbf5596a6328a014dd5db4c23f97ac1e87cd75dfe1c7082f",
+      "modified": false
+    },
+    {
+      "path": "tinydb/queries.py",
+      "upstream_path": "tinydb/queries.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/queries.py",
+      "sha256": "2deaffc39e09bb1de74ce713b509cf9aedaed4310a74c8a39c81bb10e3aff129",
+      "modified": false
+    },
+    {
+      "path": "tinydb/storages.py",
+      "upstream_path": "tinydb/storages.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/storages.py",
+      "sha256": "edcd3d20cc0c684be1a1d48cfb528867777867a6e7db05bf92beee7da44d9d44",
+      "modified": false
+    },
+    {
+      "path": "tinydb/table.py",
+      "upstream_path": "tinydb/table.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/table.py",
+      "sha256": "02fe25fc7da803487a631ac29d380e8e8b8537de7fd9b09adbfc5309248712fc",
+      "modified": false
+    },
+    {
+      "path": "tinydb/utils.py",
+      "upstream_path": "tinydb/utils.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/utils.py",
+      "sha256": "196737158a888cbf2a3f33eb7b59b7748a6421556dc56fd3885f551a8f5479b9",
+      "modified": false
+    },
+    {
+      "path": "tinydb/version.py",
+      "upstream_path": "tinydb/version.py",
+      "commit": "10644a0e07ad180c5b756aba272ee6b0dbd12df8",
+      "url": "https://github.com/msiemens/tinydb/blob/10644a0e07ad180c5b756aba272ee6b0dbd12df8/tinydb/version.py",
+      "sha256": "4b9a66676ab9b389e574661d94f57de836fa817a4548b31efcb7dc9d542d25c1",
+      "modified": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "cases/purge_default.md#1",
+      "title": "purge default",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "documentation_version": "3.15.2",
+      "runtime_version": "4.8.2",
+      "behavior": "Clear all records from the default table of the TinyDB database. Keep the named archive table intact. The sandbox fixture starts with an archive table; the example creates and clears the default table.",
+      "oracle": "configured_behavior_checks",
+      "source_ranges": [
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 25,
+          "end_line": 26,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L25-L26",
+          "command_lines": [
+            25,
+            26
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 31,
+          "end_line": 32,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L31-L32",
+          "command_lines": [
+            31,
+            32
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 74,
+          "end_line": 75,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L74-L75",
+          "command_lines": [
+            74,
+            75
+          ]
+        }
+      ],
+      "extraction": "Concatenate only >>> command lines in the declared ranges; strip exactly the four-character REPL prefix. No command content is changed. REPL display output is not executable code.",
+      "extracted_code_sha256": "3615173e53a4e56cc6abcb6c1f3ff3784a9143bcd3bca4c181750b7c914428b3",
+      "setup": {
+        "code": "import json\nwith open('db.json', 'w') as _fixture:\n    json.dump({'archive': {'1': {'value': 'keep'}}}, _fixture)\n",
+        "purpose": "Create a separate named archive table to check default-table scope preservation.",
+        "authorship": "AI-assisted evaluator fixture, not upstream code"
+      }
+    },
+    {
+      "id": "cases/purge_named_table.md#1",
+      "title": "purge named table",
+      "category": "version_migration",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "documentation_version": "3.15.2",
+      "runtime_version": "4.8.2",
+      "behavior": "Create the named table table_name, then remove that table while keeping the default table and its fruit records intact.",
+      "oracle": "configured_behavior_checks",
+      "source_ranges": [
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 25,
+          "end_line": 26,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L25-L26",
+          "command_lines": [
+            25,
+            26
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 31,
+          "end_line": 32,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L31-L32",
+          "command_lines": [
+            31,
+            32
+          ]
+        },
+        {
+          "upstream_path": "docs/usage.rst",
+          "start_line": 463,
+          "end_line": 465,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/usage.rst#L463-L465",
+          "command_lines": [
+            463,
+            464,
+            465
+          ]
+        },
+        {
+          "upstream_path": "docs/usage.rst",
+          "start_line": 473,
+          "end_line": 473,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/usage.rst#L473-L473",
+          "command_lines": [
+            473
+          ]
+        }
+      ],
+      "extraction": "Concatenate only >>> command lines in the declared ranges; strip exactly the four-character REPL prefix. No command content is changed. REPL display output is not executable code.",
+      "extracted_code_sha256": "537485507956d8f298a71c4cf862aa9357239f0490436c16a4214362893579ca",
+      "setup": {
+        "code": "",
+        "purpose": "No setup; original upstream TinyDB constructor writes db.json inside the isolated /tmp only.",
+        "authorship": "AI-assisted evaluator fixture, not upstream code"
+      }
+    },
+    {
+      "id": "cases/healthy_query.md#1",
+      "title": "healthy query",
+      "category": "healthy_control",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "documentation_version": "3.15.2",
+      "runtime_version": "4.8.2",
+      "behavior": "Insert the fruit records and query peaches and records with count greater than five. This is a healthy control; preserve its behavior.",
+      "oracle": "configured_behavior_checks",
+      "source_ranges": [
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 25,
+          "end_line": 26,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L25-L26",
+          "command_lines": [
+            25,
+            26
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 31,
+          "end_line": 32,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L31-L32",
+          "command_lines": [
+            31,
+            32
+          ]
+        },
+        {
+          "upstream_path": "docs/getting-started.rst",
+          "start_line": 52,
+          "end_line": 55,
+          "url": "https://github.com/msiemens/tinydb/blob/5e7813053f721ab37acd4ed1e50b41009886f5b2/docs/getting-started.rst#L52-L55",
+          "command_lines": [
+            52,
+            53,
+            55
+          ]
+        }
+      ],
+      "extraction": "Concatenate only >>> command lines in the declared ranges; strip exactly the four-character REPL prefix. No command content is changed. REPL display output is not executable code.",
+      "extracted_code_sha256": "d2abd6a4588ab75e8a8d7629ba20a30d8443f6437ff0a5ae0bba5d1933c758be",
+      "setup": {
+        "code": "",
+        "purpose": "No setup; original upstream TinyDB constructor writes db.json inside the isolated /tmp only.",
+        "authorship": "AI-assisted evaluator fixture, not upstream code"
+      }
+    }
+  ]
+}

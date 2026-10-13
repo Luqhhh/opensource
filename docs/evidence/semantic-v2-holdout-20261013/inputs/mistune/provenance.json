@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/lepture/mistune",
+  "files": [
+    {
+      "local_path": "upstream/0.8.4/LICENSE",
+      "upstream_path": "LICENSE",
+      "version": "0.8.4",
+      "commit": "6470c42b2087a4649ad0437227cf7b5c570c3a91",
+      "sha256": "0c5259c3dd0a7c46f4835221645f62a0638c9b9faa02af08676e8069e1ff964b",
+      "url": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/LICENSE"
+    },
+    {
+      "local_path": "upstream/0.8.4/README.rst",
+      "upstream_path": "README.rst",
+      "version": "0.8.4",
+      "commit": "6470c42b2087a4649ad0437227cf7b5c570c3a91",
+      "sha256": "960bf3197882e271c186e252e9efb2e455da1c1d3498794da13621c2eb86b756",
+      "url": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst"
+    },
+    {
+      "local_path": "upstream/0.8.4/docs/index.rst",
+      "upstream_path": "docs/index.rst",
+      "version": "0.8.4",
+      "commit": "6470c42b2087a4649ad0437227cf7b5c570c3a91",
+      "sha256": "70f3d540f207ed394c9e2e74f5d28f3d6e88ad0e07679a1f87ac12b36bf6d264",
+      "url": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/docs/index.rst"
+    },
+    {
+      "local_path": "upstream/0.8.4/mistune.py",
+      "upstream_path": "mistune.py",
+      "version": "0.8.4",
+      "commit": "6470c42b2087a4649ad0437227cf7b5c570c3a91",
+      "sha256": "bc783737ee6f2be689d6a77dabd603bfe514fd54df9fb2273902600383da804c",
+      "url": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/mistune.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/LICENSE",
+      "upstream_path": "LICENSE",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "539013fd8e19f744f8bf0e27a532bbff54cd689ecef7a800f56ae5dc824be870",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/LICENSE"
+    },
+    {
+      "local_path": "upstream/3.1.3/README.rst",
+      "upstream_path": "README.rst",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "6d58608a9cc8e3a60ed21b1b58143856e27900cd320f6c577b09f5e958e1aab0",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/README.rst"
+    },
+    {
+      "local_path": "upstream/3.1.3/docs/index.rst",
+      "upstream_path": "docs/index.rst",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "11eb2f5f7a1a87ad8233bf358ad9904c1655ddc9c36b4bd0201b82e21d1867b7",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/docs/index.rst"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/__init__.py",
+      "upstream_path": "src/mistune/__init__.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "492b874002bfbd9f261208872f54c4d9699e5fe975d8920782c1b7ebb7f58e72",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/__main__.py",
+      "upstream_path": "src/mistune/__main__.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "9e6ffdd02af2445c4a073ca2ceefdee10425f5ca7550fdc5523b89627d6f7ac8",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/__main__.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/block_parser.py",
+      "upstream_path": "src/mistune/block_parser.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "c02421a482d4c8d255554b1c548bdc0d2750db96b81c6080866c60ec16fd35a9",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/block_parser.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/core.py",
+      "upstream_path": "src/mistune/core.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "4e3a995b29bb4e2e7811c5f10f55d101fe235db033666ced6199268d92e97034",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/core.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/__init__.py",
+      "upstream_path": "src/mistune/directives/__init__.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "a93eed8287b31f6f19417b9f96664d97f3ad377e7592137c534c217c37ae0e4e",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/_base.py",
+      "upstream_path": "src/mistune/directives/_base.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "a986228b127ce18c9b18b0ba2b43d5cfa66bdf34a4f38f1482054834d0f73f40",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/_base.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/_fenced.py",
+      "upstream_path": "src/mistune/directives/_fenced.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "47add31449b94bf9dc82fc3a4505cc8b5cc2ed72833370507aa1be1548768c0e",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/_fenced.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/_rst.py",
+      "upstream_path": "src/mistune/directives/_rst.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "d12c69719f7aabb4142e76a915f231639def90452cb9857846a771b816500a9f",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/_rst.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/admonition.py",
+      "upstream_path": "src/mistune/directives/admonition.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "8e4476834798a4046427aa4f5ea2f5773ea420e64508790f52389ff79e515210",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/admonition.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/image.py",
+      "upstream_path": "src/mistune/directives/image.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "294a155fcfe832c7c14db9505d457a6127b86d99458de252879c13910a4afc24",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/image.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/include.py",
+      "upstream_path": "src/mistune/directives/include.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "bb8dc777c4e060f393a0cc31441c9efec754a714b1d9e95084fc3dede9d064f2",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/include.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/directives/toc.py",
+      "upstream_path": "src/mistune/directives/toc.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "c539149499aaf858f17496c218111b9e518e183f99394bcd55b6c05850d467d7",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/directives/toc.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/helpers.py",
+      "upstream_path": "src/mistune/helpers.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "eca7e3946cb827417b0c13a4d75c0ee7e98dc6ca51df561bb6625b2f3557ae84",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/helpers.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/inline_parser.py",
+      "upstream_path": "src/mistune/inline_parser.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "f4e8f84971ee79d84a44348b48337ef019eb028ebca07a3fe307a62d1a878338",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/inline_parser.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/list_parser.py",
+      "upstream_path": "src/mistune/list_parser.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "06074e0beb0e00570dbc0cca60889488180e22f2399a09a07dd70cf6c680de28",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/list_parser.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/markdown.py",
+      "upstream_path": "src/mistune/markdown.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "c06efb307d990643ba969c703b63026c85bfcac46a86ebce9e1b3d9a9ce911a1",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/markdown.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/__init__.py",
+      "upstream_path": "src/mistune/plugins/__init__.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "30628af1adf5ca5b14052f14ab9ba448bb0de3466874ca65e7d048f79515e631",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/abbr.py",
+      "upstream_path": "src/mistune/plugins/abbr.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "892e289909d19144053b0603301b44c820ab6f2af580f071b2be60885391dfd1",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/abbr.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/def_list.py",
+      "upstream_path": "src/mistune/plugins/def_list.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "8fa73f8f6274d5e8e5c022b05f6910b545505ad36289c519647929d349a2d0a5",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/def_list.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/footnotes.py",
+      "upstream_path": "src/mistune/plugins/footnotes.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "d539915cc983a9b3fe55bba5e192cd2655e2ad29c0d9d362c707d18801f89244",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/footnotes.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/formatting.py",
+      "upstream_path": "src/mistune/plugins/formatting.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "ccc6b5bec4ab26542f51bc272a89facd04a89449322c50b2c86b64e139decc6f",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/formatting.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/math.py",
+      "upstream_path": "src/mistune/plugins/math.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "f1b084c183cf654ea7afb39b7030173a111179c0f2174c6bd7c9bfce7a673db7",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/math.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/ruby.py",
+      "upstream_path": "src/mistune/plugins/ruby.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "ca309703bb9422574de393e6d9c9dfaed255d424978088c37259b46507298e75",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/ruby.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/speedup.py",
+      "upstream_path": "src/mistune/plugins/speedup.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "947c4f74630adc1d23cc5c62c91c33935df1c6339af8461ba7c8014cb0021505",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/speedup.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/spoiler.py",
+      "upstream_path": "src/mistune/plugins/spoiler.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "7c01fa95e781bd5194b5c6a303ba9690cf889503b226101ea7ed393be63e5a23",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/spoiler.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/table.py",
+      "upstream_path": "src/mistune/plugins/table.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "c68f3e8a80fbb51e0511718076afc85f824265cbf6759ea32a4d920e1da3f83c",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/table.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/task_lists.py",
+      "upstream_path": "src/mistune/plugins/task_lists.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "e3cf6a459225363f5558a1a4a0228ed5a74d22947df358b39da194aa2475d6f3",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/task_lists.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/plugins/url.py",
+      "upstream_path": "src/mistune/plugins/url.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "2227b17145917f95120c195cf3e1023620a296c31fd1fad2166cacf30cab7b3f",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/plugins/url.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/renderers/__init__.py",
+      "upstream_path": "src/mistune/renderers/__init__.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/renderers/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/renderers/_list.py",
+      "upstream_path": "src/mistune/renderers/_list.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "eb9bf37e61c9b9c4dc838312b57c0118847a64e848f07f085b1f612f864ac2cd",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/renderers/_list.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/renderers/html.py",
+      "upstream_path": "src/mistune/renderers/html.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "5d0a1a3803906ca3b3ed61fb3a867747e006320737cf1d399c3560fe8db730c8",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/renderers/html.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/renderers/markdown.py",
+      "upstream_path": "src/mistune/renderers/markdown.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "2add2a156fe93e54352f34840cb635c5e7f4ab83b57e2c5c6fcd04360ce74ab1",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/renderers/markdown.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/renderers/rst.py",
+      "upstream_path": "src/mistune/renderers/rst.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "2a07318bcb439f0bc1eea6f91a0b4a3c1e6260e8a518cb66f6c14b7cb00013ad",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/renderers/rst.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/toc.py",
+      "upstream_path": "src/mistune/toc.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "53f42a1c0084f2a1212c2666521b628cb0b7e99bd246e0575cfe065d825765c7",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/toc.py"
+    },
+    {
+      "local_path": "upstream/3.1.3/src/mistune/util.py",
+      "upstream_path": "src/mistune/util.py",
+      "version": "3.1.3",
+      "commit": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2",
+      "sha256": "cd08174b2dd594d7768b3ab732ce18193cbcbb04434b316874f78ff2088e01c1",
+      "url": "https://github.com/lepture/mistune/blob/45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2/src/mistune/util.py"
+    },
+    {
+      "local_path": "upstream/dependencies/typing_extensions-4.12.2/src/typing_extensions.py",
+      "upstream_path": "src/typing_extensions.py",
+      "version": "typing_extensions 4.12.2",
+      "commit": "e1250ff869e7ee5ad05170d8a4b65469f13801c3",
+      "sha256": "8307a4a721bd0d51b797158a5f89e2f2eee793759ee6c946f7c980f45dc3250c",
+      "url": "https://github.com/python/typing_extensions/blob/e1250ff869e7ee5ad05170d8a4b65469f13801c3/src/typing_extensions.py"
+    },
+    {
+      "local_path": "upstream/dependencies/typing_extensions-4.12.2/LICENSE",
+      "upstream_path": "LICENSE",
+      "version": "typing_extensions 4.12.2",
+      "commit": "e1250ff869e7ee5ad05170d8a4b65469f13801c3",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "url": "https://github.com/python/typing_extensions/blob/e1250ff869e7ee5ad05170d8a4b65469f13801c3/LICENSE"
+    }
+  ],
+  "extractions": [
+    {
+      "case_id": "cases/reusable_html.md#1",
+      "source": "upstream/0.8.4/README.rst",
+      "line_range": [
+        70,
+        73
+      ],
+      "raw_snippet": "raw-snippets/reusable_html.rst",
+      "raw_sha256": "136b0d85e038bd3ef8c07f2b80badfc46f1f477f96b3cd833d137e82c7629223",
+      "derived_document": "cases/reusable_html.md",
+      "document_sha256": "b10aaeb411bd00f1a4538abe94842d7e9f8a3dcf8c4dc6245eb036e02c863f62",
+      "code_sha256": "82d4599d55fba30884f776e7a0e891b1c6b7e68567ac09d30ae5489bc19881c8",
+      "normalization": {
+        "kind": "dedent_code_block",
+        "imports_added": []
+      },
+      "function": null
+    },
+    {
+      "case_id": "cases/renderer_options.md#1",
+      "source": "upstream/0.8.4/README.rst",
+      "line_range": [
+        87,
+        90
+      ],
+      "raw_snippet": "raw-snippets/renderer_options.rst",
+      "raw_sha256": "6f0c3d5b4e01e8c925641e36ea4b78e5f637a1f8b69c4d8d7324b495a1b342af",
+      "derived_document": "cases/renderer_options.md",
+      "document_sha256": "5a0d8e361567d26e66b5b7315d68ee80ad0bd274b4f146dd0e5d97673f74d65c",
+      "code_sha256": "a9a58554c8a5a503ee7205e1658458571e749c1dc047200c6a0689977014bd52",
+      "normalization": {
+        "kind": "dedent_code_block",
+        "imports_added": []
+      },
+      "function": null
+    },
+    {
+      "case_id": "cases/simple_html.md#1",
+      "source": "upstream/0.8.4/README.rst",
+      "line_range": [
+        61,
+        64
+      ],
+      "raw_snippet": "raw-snippets/simple_html.rst",
+      "raw_sha256": "874565d492355c9437f95d05a3416541ea44de5c49024c451dfd8edfaa9da8de",
+      "derived_document": "cases/simple_html.md",
+      "document_sha256": "6434667e4dbea8c73b6bee984c3a373ba5dbac958efce38ce62e6261db0b963c",
+      "code_sha256": "8ec37aac92507698bd0b807395a8c468f88522df499a0cc93499eb82bd5c8f3f",
+      "normalization": {
+        "kind": "dedent_code_block",
+        "imports_added": []
+      },
+      "function": null
+    }
+  ],
+  "source_mappings": {
+    "0.8.4": {
+      "mistune.py": "upstream/0.8.4/mistune.py",
+      "typing_extensions.py": "upstream/dependencies/typing_extensions-4.12.2/src/typing_extensions.py"
+    },
+    "3.1.3": {
+      "mistune/__init__.py": "upstream/3.1.3/src/mistune/__init__.py",
+      "mistune/__main__.py": "upstream/3.1.3/src/mistune/__main__.py",
+      "mistune/block_parser.py": "upstream/3.1.3/src/mistune/block_parser.py",
+      "mistune/core.py": "upstream/3.1.3/src/mistune/core.py",
+      "mistune/directives/__init__.py": "upstream/3.1.3/src/mistune/directives/__init__.py",
+      "mistune/directives/_base.py": "upstream/3.1.3/src/mistune/directives/_base.py",
+      "mistune/directives/_fenced.py": "upstream/3.1.3/src/mistune/directives/_fenced.py",
+      "mistune/directives/_rst.py": "upstream/3.1.3/src/mistune/directives/_rst.py",
+      "mistune/directives/admonition.py": "upstream/3.1.3/src/mistune/directives/admonition.py",
+      "mistune/directives/image.py": "upstream/3.1.3/src/mistune/directives/image.py",
+      "mistune/directives/include.py": "upstream/3.1.3/src/mistune/directives/include.py",
+      "mistune/directives/toc.py": "upstream/3.1.3/src/mistune/directives/toc.py",
+      "mistune/helpers.py": "upstream/3.1.3/src/mistune/helpers.py",
+      "mistune/inline_parser.py": "upstream/3.1.3/src/mistune/inline_parser.py",
+      "mistune/list_parser.py": "upstream/3.1.3/src/mistune/list_parser.py",
+      "mistune/markdown.py": "upstream/3.1.3/src/mistune/markdown.py",
+      "mistune/plugins/__init__.py": "upstream/3.1.3/src/mistune/plugins/__init__.py",
+      "mistune/plugins/abbr.py": "upstream/3.1.3/src/mistune/plugins/abbr.py",
+      "mistune/plugins/def_list.py": "upstream/3.1.3/src/mistune/plugins/def_list.py",
+      "mistune/plugins/footnotes.py": "upstream/3.1.3/src/mistune/plugins/footnotes.py",
+      "mistune/plugins/formatting.py": "upstream/3.1.3/src/mistune/plugins/formatting.py",
+      "mistune/plugins/math.py": "upstream/3.1.3/src/mistune/plugins/math.py",
+      "mistune/plugins/ruby.py": "upstream/3.1.3/src/mistune/plugins/ruby.py",
+      "mistune/plugins/speedup.py": "upstream/3.1.3/src/mistune/plugins/speedup.py",
+      "mistune/plugins/spoiler.py": "upstream/3.1.3/src/mistune/plugins/spoiler.py",
+      "mistune/plugins/table.py": "upstream/3.1.3/src/mistune/plugins/table.py",
+      "mistune/plugins/task_lists.py": "upstream/3.1.3/src/mistune/plugins/task_lists.py",
+      "mistune/plugins/url.py": "upstream/3.1.3/src/mistune/plugins/url.py",
+      "mistune/renderers/__init__.py": "upstream/3.1.3/src/mistune/renderers/__init__.py",
+      "mistune/renderers/_list.py": "upstream/3.1.3/src/mistune/renderers/_list.py",
+      "mistune/renderers/html.py": "upstream/3.1.3/src/mistune/renderers/html.py",
+      "mistune/renderers/markdown.py": "upstream/3.1.3/src/mistune/renderers/markdown.py",
+      "mistune/renderers/rst.py": "upstream/3.1.3/src/mistune/renderers/rst.py",
+      "mistune/toc.py": "upstream/3.1.3/src/mistune/toc.py",
+      "mistune/util.py": "upstream/3.1.3/src/mistune/util.py",
+      "typing_extensions.py": "upstream/dependencies/typing_extensions-4.12.2/src/typing_extensions.py"
+    }
+  },
+  "version_commits": {
+    "0.8.4": "6470c42b2087a4649ad0437227cf7b5c570c3a91",
+    "3.1.3": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2"
+  }
+}

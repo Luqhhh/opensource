@@ -1,0 +1,14 @@
+{
+  "eager_merge": {
+    "cases/collate.md#1": {
+      "code": "from itertools import chain\ncollate = lambda *inputs, key=None, reverse=False: iter(sorted(chain.from_iterable(inputs), key=key, reverse=reverse))\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+      "rationale": "Displayed values match but eager sorting violates lazy merge."
+    }
+  },
+  "drops_duplicates": {
+    "cases/collate.md#1": {
+      "code": "from heapq import merge\nfrom itertools import groupby\ncollate = lambda *inputs, **options: (key for key, group in groupby(merge(*inputs, **options)))\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+      "rationale": "Wrongly removes repeated values."
+    }
+  }
+}

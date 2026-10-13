@@ -1,0 +1,11 @@
+{
+  "core_and_sandbox_tests": "EXAMPLEPROOF_SANDBOX_TESTS=1 python3 -m unittest discover -s tests -v",
+  "development_reference_controls": "python3 benchmarks/semantic_v2/development/validate.py --output artifacts/semantic-v2-development-final-validation",
+  "holdout_reference_controls": "python3 benchmarks/semantic_v2/holdout/verify_provenance.py --runtime --output artifacts/semantic-v2-holdout-final-validation",
+  "v1_archive_audit": "python3 scripts/verify_real_project_study.py docs/evidence/real-projects-20261013 --archived-only",
+  "stdlib_regeneration": "python3 scripts/build_stdlib_index.py --output /tmp/exampleproof-stdlib-regenerated.py",
+  "method_lock": "python3 scripts/run_semantic_study.py lock-method docs/evidence/semantic-v2-20261013/method-lock.json",
+  "holdout_freeze": "python3 scripts/run_semantic_study.py freeze benchmarks/semantic_v2/holdout/mistune benchmarks/semantic_v2/holdout/werkzeug --split holdout --method-lock docs/evidence/semantic-v2-20261013/method-lock.json --output docs/evidence/semantic-v2-holdout-20261013",
+  "holdout_run": "python3 scripts/run_semantic_study.py run docs/evidence/semantic-v2-holdout-20261013",
+  "note": "These identify the recorded operations. Reproductions must use new output directories; do not overwrite the published evidence or describe reruns of known cases as new holdouts."
+}

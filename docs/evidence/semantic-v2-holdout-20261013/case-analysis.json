@@ -1,0 +1,2647 @@
+{
+  "scope": "Read-only descriptive holdout analysis after all model calls. Four distinct failed cases in two projects, repeated at three paired seeds; twelve case-runs per arm are not twelve independent cases. Raw candidates are unchanged. Cost per successful repair is undefined when none pass.",
+  "protocol_sha256": "544e714f53a69e53b18cfd3d23a1aa8499948760ad30d1e3c91e60935f7272aa",
+  "cases": [
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 12906,
+        "output_tokens": 307,
+        "seconds": 14.0314
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 13629,
+        "output_tokens": 308,
+        "seconds": 13.4175
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13327,
+        "output_tokens": 276,
+        "seconds": 9.4203
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 14917,
+        "output_tokens": 369,
+        "seconds": 14.1928
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8589,
+        "output_tokens": 295,
+        "seconds": 11.4019
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 3,
+      "cost": {
+        "input_tokens": 8526,
+        "output_tokens": 335,
+        "seconds": 12.7097
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9349,
+        "output_tokens": 234,
+        "seconds": 7.7787
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9468,
+        "output_tokens": 439,
+        "seconds": 15.8056
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9472,
+        "output_tokens": 272,
+        "seconds": 8.9678
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 9958,
+        "output_tokens": 387,
+        "seconds": 13.1993
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 14188,
+        "output_tokens": 435,
+        "seconds": 18.157
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13870,
+        "output_tokens": 372,
+        "seconds": 15.2006
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7530,
+        "output_tokens": 471,
+        "seconds": 17.0069
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7281,
+        "output_tokens": 388,
+        "seconds": 12.9963
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8149,
+        "output_tokens": 474,
+        "seconds": 15.6293
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7840,
+        "output_tokens": 414,
+        "seconds": 14.2235
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8269,
+        "output_tokens": 498,
+        "seconds": 15.5958
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7978,
+        "output_tokens": 456,
+        "seconds": 17.7599
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13608,
+        "output_tokens": 464,
+        "seconds": 15.674
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13353,
+        "output_tokens": 396,
+        "seconds": 13.2505
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/werkzeug/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "legacy_feedback",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 13318,
+        "output_tokens": 265,
+        "seconds": 10.7367
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_feedback/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "legacy_feedback",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 14032,
+        "output_tokens": 286,
+        "seconds": 9.8176
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_feedback/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "source_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8589,
+        "output_tokens": 302,
+        "seconds": 10.1476
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/source_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "source_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 8526,
+        "output_tokens": 328,
+        "seconds": 11.4312
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/source_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "generic_feedback_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9388,
+        "output_tokens": 273,
+        "seconds": 9.8549
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/generic_feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "generic_feedback_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 8941,
+        "output_tokens": 276,
+        "seconds": 10.2071
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/generic_feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "feedback_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9468,
+        "output_tokens": 273,
+        "seconds": 12.2817
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "feedback_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 9037,
+        "output_tokens": 270,
+        "seconds": 8.9576
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "legacy_source",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 12906,
+        "output_tokens": 257,
+        "seconds": 8.5265
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_source/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "arm": "legacy_source",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13629,
+        "output_tokens": 273,
+        "seconds": 9.1828
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_source/mistune/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "source_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 7530,
+        "output_tokens": 457,
+        "seconds": 16.5935
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/source_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "source_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7281,
+        "output_tokens": 412,
+        "seconds": 13.4768
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/source_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "generic_feedback_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8128,
+        "output_tokens": 453,
+        "seconds": 15.8449
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/generic_feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "generic_feedback_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7843,
+        "output_tokens": 417,
+        "seconds": 15.5721
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/generic_feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "feedback_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8224,
+        "output_tokens": 453,
+        "seconds": 14.8376
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "feedback_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7960,
+        "output_tokens": 438,
+        "seconds": 16.168
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "legacy_source",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 13608,
+        "output_tokens": 457,
+        "seconds": 15.9219
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_source/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "legacy_source",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13353,
+        "output_tokens": 409,
+        "seconds": 15.4321
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_source/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "legacy_feedback",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 14197,
+        "output_tokens": 444,
+        "seconds": 16.528
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_feedback/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "arm": "legacy_feedback",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13876,
+        "output_tokens": 378,
+        "seconds": 15.8523
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/29/legacy_feedback/werkzeug/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "source_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8589,
+        "output_tokens": 261,
+        "seconds": 8.7749
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/source_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "source_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 3,
+      "cost": {
+        "input_tokens": 8526,
+        "output_tokens": 348,
+        "seconds": 10.4463
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/source_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "generic_feedback_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9385,
+        "output_tokens": 270,
+        "seconds": 9.463
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/generic_feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "generic_feedback_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9296,
+        "output_tokens": 374,
+        "seconds": 13.291
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/generic_feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "feedback_v2",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 9465,
+        "output_tokens": 270,
+        "seconds": 11.2307
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "feedback_v2",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 3,
+      "cost": {
+        "input_tokens": 9369,
+        "output_tokens": 389,
+        "seconds": 12.3622
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/feedback_v2/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "legacy_source",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 12906,
+        "output_tokens": 316,
+        "seconds": 10.037
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_source/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "legacy_source",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 13629,
+        "output_tokens": 324,
+        "seconds": 11.1898
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_source/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "legacy_feedback",
+      "id": "cases/reusable_html.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13375,
+        "output_tokens": 324,
+        "seconds": 13.4335
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_feedback/mistune/inference.json"
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "arm": "legacy_feedback",
+      "id": "cases/renderer_options.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 14360,
+        "output_tokens": 356,
+        "seconds": 12.2609
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_feedback/mistune/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "generic_feedback_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8170,
+        "output_tokens": 495,
+        "seconds": 16.2849
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/generic_feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "generic_feedback_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7849,
+        "output_tokens": 423,
+        "seconds": 13.8421
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/generic_feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "feedback_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 8266,
+        "output_tokens": 495,
+        "seconds": 18.4279
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "feedback_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7945,
+        "output_tokens": 423,
+        "seconds": 14.3823
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/feedback_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "legacy_source",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13608,
+        "output_tokens": 477,
+        "seconds": 15.4248
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_source/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "legacy_source",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13353,
+        "output_tokens": 393,
+        "seconds": 15.1753
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_source/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "legacy_feedback",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 14236,
+        "output_tokens": 483,
+        "seconds": 19.5698
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_feedback/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "legacy_feedback",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13888,
+        "output_tokens": 390,
+        "seconds": 12.8318
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/legacy_feedback/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "source_v2",
+      "id": "cases/pop_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7530,
+        "output_tokens": 452,
+        "seconds": 15.3827
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/source_v2/werkzeug/inference.json"
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "arm": "source_v2",
+      "id": "cases/peek_path_info.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 7281,
+        "output_tokens": 412,
+        "seconds": 13.8299
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "behavior_check",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/43/source_v2/werkzeug/inference.json"
+    }
+  ],
+  "first_request_output_comparison": [
+    {
+      "project": "mistune",
+      "seed": 17,
+      "id": "cases/reusable_html.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "id": "cases/reusable_html.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "id": "cases/renderer_options.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 17,
+      "id": "cases/renderer_options.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": false
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "id": "cases/reusable_html.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "id": "cases/reusable_html.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "id": "cases/renderer_options.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 29,
+      "id": "cases/renderer_options.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "id": "cases/reusable_html.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "id": "cases/reusable_html.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "id": "cases/renderer_options.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "mistune",
+      "seed": 43,
+      "id": "cases/renderer_options.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "id": "cases/pop_path_info.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "id": "cases/pop_path_info.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "id": "cases/peek_path_info.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 17,
+      "id": "cases/peek_path_info.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "id": "cases/pop_path_info.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "id": "cases/pop_path_info.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "id": "cases/peek_path_info.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 29,
+      "id": "cases/peek_path_info.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "id": "cases/pop_path_info.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "id": "cases/pop_path_info.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "id": "cases/peek_path_info.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "werkzeug",
+      "seed": 43,
+      "id": "cases/peek_path_info.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    }
+  ],
+  "per_case_cost_across_three_seeds": {
+    "mistune/cases/reusable_html.md#1": {
+      "legacy_source": {
+        "input_tokens": 38718,
+        "output_tokens": 880,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "legacy_feedback": {
+        "input_tokens": 40020,
+        "output_tokens": 865,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "source_v2": {
+        "input_tokens": 25767,
+        "output_tokens": 858,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "generic_feedback_v2": {
+        "input_tokens": 28122,
+        "output_tokens": 777,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "feedback_v2": {
+        "input_tokens": 28405,
+        "output_tokens": 815,
+        "requests": 9,
+        "passed_case_runs": 0
+      }
+    },
+    "mistune/cases/renderer_options.md#1": {
+      "legacy_source": {
+        "input_tokens": 40887,
+        "output_tokens": 905,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "legacy_feedback": {
+        "input_tokens": 43309,
+        "output_tokens": 1011,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "source_v2": {
+        "input_tokens": 25578,
+        "output_tokens": 1011,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "generic_feedback_v2": {
+        "input_tokens": 27705,
+        "output_tokens": 1089,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "feedback_v2": {
+        "input_tokens": 28364,
+        "output_tokens": 1046,
+        "requests": 9,
+        "passed_case_runs": 0
+      }
+    },
+    "werkzeug/cases/pop_path_info.md#1": {
+      "legacy_feedback": {
+        "input_tokens": 42621,
+        "output_tokens": 1362,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "source_v2": {
+        "input_tokens": 22590,
+        "output_tokens": 1380,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "generic_feedback_v2": {
+        "input_tokens": 24447,
+        "output_tokens": 1422,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "feedback_v2": {
+        "input_tokens": 24759,
+        "output_tokens": 1446,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "legacy_source": {
+        "input_tokens": 40824,
+        "output_tokens": 1398,
+        "requests": 9,
+        "passed_case_runs": 0
+      }
+    },
+    "werkzeug/cases/peek_path_info.md#1": {
+      "legacy_feedback": {
+        "input_tokens": 41634,
+        "output_tokens": 1140,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "source_v2": {
+        "input_tokens": 21843,
+        "output_tokens": 1212,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "generic_feedback_v2": {
+        "input_tokens": 23532,
+        "output_tokens": 1254,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "feedback_v2": {
+        "input_tokens": 23883,
+        "output_tokens": 1317,
+        "requests": 9,
+        "passed_case_runs": 0
+      },
+      "legacy_source": {
+        "input_tokens": 40059,
+        "output_tokens": 1198,
+        "requests": 9,
+        "passed_case_runs": 0
+      }
+    }
+  },
+  "candidate_repetition_and_failure_categories": {
+    "legacy_source": {
+      "case_runs": 12,
+      "three_calls_with_one_candidate_code": 8,
+      "failure_categories": {
+        "behavior_check": 34,
+        "example_exception": 2
+      }
+    },
+    "legacy_feedback": {
+      "case_runs": 12,
+      "three_calls_with_one_candidate_code": 8,
+      "failure_categories": {
+        "behavior_check": 30,
+        "example_exception": 6
+      }
+    },
+    "source_v2": {
+      "case_runs": 12,
+      "three_calls_with_one_candidate_code": 8,
+      "failure_categories": {
+        "example_exception": 15,
+        "behavior_check": 21
+      }
+    },
+    "generic_feedback_v2": {
+      "case_runs": 12,
+      "three_calls_with_one_candidate_code": 6,
+      "failure_categories": {
+        "example_exception": 8,
+        "behavior_check": 28
+      }
+    },
+    "feedback_v2": {
+      "case_runs": 12,
+      "three_calls_with_one_candidate_code": 8,
+      "failure_categories": {
+        "example_exception": 8,
+        "behavior_check": 28
+      }
+    }
+  },
+  "interpretation": [
+    "Every arm has zero verified repairs on all four distinct held-out failures; reporting budget-only progress as repair success would be misleading.",
+    "Source v2 reduces input tokens relative to legacy source under the same maximum call and generated-token budgets. Neither generic nor categorized feedback establishes a success-rate benefit.",
+    "The generic-feedback and categorized-feedback v2 arms each have eight example exceptions and twenty-eight behavior-check failures; changing the failure stage is not equivalent to passing the independent checks.",
+    "One v2 first-request triplet has different candidate code despite identical model, payload and seed. No history was sent yet, so this variation cannot be attributed to feedback.",
+    "Three seeds repeat the same four cases; sample size is four distinct failures in two projects, not twelve independent tasks per arm."
+  ]
+}

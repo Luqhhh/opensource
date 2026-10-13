@@ -1,0 +1,1010 @@
+{
+  "scope": "Read-only descriptive development analysis; known cases and one seed, not a generalization score. Model selections remain raw; no repaired candidates were added by this analysis.",
+  "protocol_sha256": "42f77f71ab8b9ed778e466bbd3f5177c9103965092f8a7122a5e064092a169ff",
+  "cases": [
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 13782,
+        "output_tokens": 434,
+        "seconds": 23.9126
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 4600,
+        "output_tokens": 160,
+        "seconds": 7.6016
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/purge_default.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 14923,
+        "output_tokens": 435,
+        "seconds": 13.729
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 4600,
+        "output_tokens": 171,
+        "seconds": 5.1659
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/purge_default.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2585,
+        "output_tokens": 139,
+        "seconds": 5.3618
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2559,
+        "output_tokens": 161,
+        "seconds": 5.7888
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/purge_default.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2585,
+        "output_tokens": 133,
+        "seconds": 4.0519
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2559,
+        "output_tokens": 165,
+        "seconds": 4.9666
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/purge_default.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2585,
+        "output_tokens": 133,
+        "seconds": 4.3847
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/tinydb/inference.json"
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/purge_named_table.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2559,
+        "output_tokens": 165,
+        "seconds": 5.0714
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/tinydb/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 16353,
+        "output_tokens": 715,
+        "seconds": 25.7862
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 4814,
+        "output_tokens": 95,
+        "seconds": 5.836
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 3,
+      "cost": {
+        "input_tokens": 8946,
+        "output_tokens": 651,
+        "seconds": 20.0864
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        }
+      ],
+      "evidence": "runs/17/source_v2/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2936,
+        "output_tokens": 131,
+        "seconds": 5.2018
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 10498,
+        "output_tokens": 570,
+        "seconds": 17.2132
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2936,
+        "output_tokens": 131,
+        "seconds": 3.9803
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 10531,
+        "output_tokens": 531,
+        "seconds": 16.2048
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2936,
+        "output_tokens": 131,
+        "seconds": 4.0428
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/collate.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 14778,
+        "output_tokens": 1726,
+        "seconds": 51.8888
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        },
+        {
+          "number": 2,
+          "status": "provider_error",
+          "failure_kind": null,
+          "rejection": "JSONDecodeError: Unterminated string starting at: line 3 column 16 (char 882)"
+        },
+        {
+          "number": 3,
+          "status": "repair_failed",
+          "failure_kind": "example_exception",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/more_itertools/inference.json"
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/grouper.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 4814,
+        "output_tokens": 102,
+        "seconds": 3.251
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/more_itertools/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2784,
+        "output_tokens": 167,
+        "seconds": 6.3976
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/source_v2/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "source_v2",
+      "id": "cases/convert_contract.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 8193,
+        "output_tokens": 607,
+        "seconds": 18.5626
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 2,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 3,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        }
+      ],
+      "evidence": "runs/17/source_v2/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2784,
+        "output_tokens": 173,
+        "seconds": 5.1594
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "generic_feedback_v2",
+      "id": "cases/convert_contract.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 8878,
+        "output_tokens": 549,
+        "seconds": 15.8561
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 2,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 3,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        }
+      ],
+      "evidence": "runs/17/generic_feedback_v2/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 2784,
+        "output_tokens": 173,
+        "seconds": 5.3902
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "feedback_v2",
+      "id": "cases/convert_contract.md#1",
+      "status": "not_repaired",
+      "success_attempt": null,
+      "requests": 3,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 8732,
+        "output_tokens": 486,
+        "seconds": 14.3101
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 2,
+          "status": "provider_error",
+          "failure_kind": null,
+          "rejection": "ValueError: Model/proposal response must contain string fields code and rationale"
+        },
+        {
+          "number": 3,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        }
+      ],
+      "evidence": "runs/17/feedback_v2/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 3788,
+        "output_tokens": 129,
+        "seconds": 6.4475
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "legacy_source",
+      "id": "cases/convert_contract.md#1",
+      "status": "verified_repair",
+      "success_attempt": 2,
+      "requests": 2,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 7714,
+        "output_tokens": 345,
+        "seconds": 13.3386
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 2,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_source/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/safe_string.md#1",
+      "status": "verified_repair",
+      "success_attempt": 1,
+      "requests": 1,
+      "unique_candidate_codes": 1,
+      "cost": {
+        "input_tokens": 3788,
+        "output_tokens": 135,
+        "seconds": 4.0526
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/markupsafe/inference.json"
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "arm": "legacy_feedback",
+      "id": "cases/convert_contract.md#1",
+      "status": "verified_repair",
+      "success_attempt": 2,
+      "requests": 2,
+      "unique_candidate_codes": 2,
+      "cost": {
+        "input_tokens": 7967,
+        "output_tokens": 361,
+        "seconds": 11.4585
+      },
+      "attempts": [
+        {
+          "number": 1,
+          "status": "rejected",
+          "failure_kind": null,
+          "rejection": "v0.1 repairs must remain straight-line code (imports, assignments, calls, assertions)"
+        },
+        {
+          "number": 2,
+          "status": "verified_repair",
+          "failure_kind": "none",
+          "rejection": null
+        }
+      ],
+      "evidence": "runs/17/legacy_feedback/markupsafe/inference.json"
+    }
+  ],
+  "first_request_output_comparison": [
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "id": "cases/purge_default.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "tinydb",
+      "seed": 17,
+      "id": "cases/purge_named_table.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": false
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "id": "cases/collate.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "id": "cases/grouper.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "more_itertools",
+      "seed": 17,
+      "id": "cases/grouper.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": true,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "id": "cases/safe_string.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "id": "cases/convert_contract.md#1",
+      "arms": [
+        "legacy_source",
+        "legacy_feedback"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": false
+    },
+    {
+      "project": "markupsafe",
+      "seed": 17,
+      "id": "cases/convert_contract.md#1",
+      "arms": [
+        "source_v2",
+        "generic_feedback_v2",
+        "feedback_v2"
+      ],
+      "equal_first_payloads": true,
+      "equal_raw_generation_text": false,
+      "equal_candidate_code": true
+    }
+  ]
+}

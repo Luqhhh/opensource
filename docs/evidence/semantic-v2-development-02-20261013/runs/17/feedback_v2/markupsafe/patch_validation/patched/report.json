@@ -1,0 +1,118 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:48:00.589523+00:00",
+  "project_name": "markupsafe",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/safe_string.md": "f8bbf072fec629d8ff2aed5e7af0833cbd03e71849bfcd827c40f72ffb6c4c6a",
+      "cases/convert_contract.md": "f53a6b4dce024cb14885d10acca5fd0d5b72b3d428778671e6277bd41fb999b7",
+      "cases/optional_values.md": "d8671f9254776d2027201ec25c481be87dfa30df14da46467bd15728887d8861"
+    },
+    "sources": {
+      "markupsafe/__init__.py": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "markupsafe/_native.py": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb"
+    },
+    "configuration_sha256": "e53c97ce75d2fd76aead33a38f6171b48520505e04ef4914363b85a53638dd9c"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "checked": 2,
+      "failed": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/safe_string.md#1",
+        "path": "cases/safe_string.md",
+        "start_line": 7,
+        "end_line": 12,
+        "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(value)))\n",
+        "context": "# Original soft conversion display regression\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nThe harness imports markupsafe's public namespace. Preserve value as Markup and all three original displayed lines. This remains a finite display regression: the reusable convert contract is a separate new case."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('&lt;User 1&gt;')\nMarkup('&amp;lt;User 1&amp;gt;')\nMarkup('&lt;User 1&gt;')\n",
+        "stderr": "",
+        "duration_seconds": 0.0698,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/convert_contract.md#1",
+        "path": "cases/convert_contract.md",
+        "start_line": 7,
+        "end_line": 10,
+        "code": "from markupsafe import escape, soft_unicode\nconvert = soft_unicode\nvalue = escape('<User 1>')\nprint(repr(escape(convert(value))))\n",
+        "context": "# Reusable soft conversion without HTML escaping\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep a reusable callable named convert that converts non-strings with str(), preserves existing str/str-subclass/Markup objects by identity, and performs no HTML escaping. Cover ordinary/empty/Unicode/HTML-sensitive strings, numbers, booleans, None and objects defining __str__ or __html__. The displayed escaped Markup must remain Markup('&lt;User 1&gt;'). This authored binding task expands the upstream soft-conversion contract; it is not a mechanical excerpt."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from markupsafe import escape, soft_unicode\nImportError: cannot import name 'soft_unicode' from 'markupsafe' (/workspace/markupsafe/__init__.py)\n",
+        "duration_seconds": 0.0692,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/optional_values.md#1",
+        "path": "cases/optional_values.md",
+        "start_line": 7,
+        "end_line": 8,
+        "code": "print(repr(escape(None)))\nprint(repr(escape_silent(None)))\n",
+        "context": "# Healthy optional escaped values\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nThe harness imports the public markupsafe namespace. Keep escape and escape_silent callable. Preserve displayed Markup('None') and Markup(''); escape_silent(None) returns empty Markup, HTML-sensitive text is escaped, and numeric zero is converted to Markup('0')."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Markup('None')\nMarkup('')\n",
+        "stderr": "",
+        "duration_seconds": 0.0695,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

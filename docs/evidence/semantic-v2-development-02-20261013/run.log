@@ -1,0 +1,15 @@
+{"project": "tinydb", "seed": 17, "arm": "legacy_source", "status": "complete", "patch_confirmed": 1}
+{"project": "tinydb", "seed": 17, "arm": "legacy_feedback", "status": "complete", "patch_confirmed": 1}
+{"project": "tinydb", "seed": 17, "arm": "source_v2", "status": "complete", "patch_confirmed": 2}
+{"project": "tinydb", "seed": 17, "arm": "generic_feedback_v2", "status": "complete", "patch_confirmed": 2}
+{"project": "tinydb", "seed": 17, "arm": "feedback_v2", "status": "complete", "patch_confirmed": 2}
+{"project": "more_itertools", "seed": 17, "arm": "legacy_feedback", "status": "complete", "patch_confirmed": 1}
+{"project": "more_itertools", "seed": 17, "arm": "source_v2", "status": "complete", "patch_confirmed": 1}
+{"project": "more_itertools", "seed": 17, "arm": "generic_feedback_v2", "status": "complete", "patch_confirmed": 1}
+{"project": "more_itertools", "seed": 17, "arm": "feedback_v2", "status": "complete", "patch_confirmed": 1}
+{"project": "more_itertools", "seed": 17, "arm": "legacy_source", "status": "complete", "patch_confirmed": 1}
+{"project": "markupsafe", "seed": 17, "arm": "source_v2", "status": "complete", "patch_confirmed": 1}
+{"project": "markupsafe", "seed": 17, "arm": "generic_feedback_v2", "status": "complete", "patch_confirmed": 1}
+{"project": "markupsafe", "seed": 17, "arm": "feedback_v2", "status": "complete", "patch_confirmed": 1}
+{"project": "markupsafe", "seed": 17, "arm": "legacy_source", "status": "complete", "patch_confirmed": 2}
+{"project": "markupsafe", "seed": 17, "arm": "legacy_feedback", "status": "complete", "patch_confirmed": 2}

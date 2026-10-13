@@ -1,0 +1,3 @@
+Processing ./dist/aic_exampleproof-0.1.0-py3-none-any.whl
+Installing collected packages: aic-exampleproof
+Successfully installed aic-exampleproof-0.1.0

@@ -1,0 +1,14 @@
+{
+  "cases/collate.md#1": [
+    {
+      "code": "from itertools import chain\ncollate = lambda *inputs, key=None, reverse=False: iter(sorted(chain.from_iterable(inputs), key=key, reverse=reverse))\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+      "rationale": "Displayed values match but eager sorting violates lazy merge."
+    }
+  ],
+  "cases/grouper.md#1": [
+    {
+      "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+      "rationale": "Recorded reference candidate for engineering verification only; not a live-model result. Apply the documented 9.0.0 migration while preserving the upstream doctest output."
+    }
+  ]
+}

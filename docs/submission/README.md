@@ -18,6 +18,8 @@ python3 scripts/build_submission.py
 
 输出目录为 `artifacts/submission/`：`technical-report-draft.pdf` 是包含资源清单的报告；`build-manifest.json` 记录输入摘要、构建工具、字符数、页数、大小及产物摘要；`technical-report-draft.txt` 可供文本审校。脚本将报告总页数限制为15页（比规则的“正文建议15页”更保守），体积限制为10,000,000字节。它会检查简介字符数并拒绝超限，但不认证内容真实性、匿名性或权属。
 
+2026-10-13 的 semantic-v2 版本已构建：总计 15 页（含资源附件）、491,731 字节，简介 246 字符；[构建记录](../evidence/semantic-v2-20261013/submission-build.json) 保存本次输入与 PDF 摘要。报告包含开发集及新项目留出集的完整失败结论。
+
 `artifacts/` 被仓库忽略；源码与脚本可重建PDF，实际提交时需另行选取生成文件。字体与排版工具改变可能导致PDF字节不同，清单中的摘要只标识本次产物。
 
 **尚未完成：** 团队人工审核与授权确认、技术报告参考大纲核对、MP4录制/验收、报名系统提交。自动构建不能代替这些环节。决赛答辩PPT按晋级通知准备。

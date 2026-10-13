@@ -1,0 +1,32 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'"><title>例证 · 文档验证报告</title><style>
+    :root{color-scheme:light;--ink:#172a35;--muted:#526876;--line:#d8e2e7;--accent:#096c61}*{box-sizing:border-box}body{margin:0;background:#f3f6f7;color:var(--ink);font:15px/1.65 system-ui,sans-serif}.wrap{max-width:1050px;margin:auto;padding:48px 24px}header{border-bottom:1px solid var(--line);padding-bottom:28px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:750}h1{font-size:36px;margin:8px 0}h2{font-size:17px;margin:0;overflow-wrap:anywhere}h3{font-size:14px;margin:24px 0 8px}.intro,.meta,.context{color:var(--muted)}.meta{font-size:12px}.stats{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.stat{background:white;border:1px solid var(--line);padding:14px 20px;border-radius:10px;min-width:145px}.stat strong{display:block;font-size:28px}.stat span{font-size:12px;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:22px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.badge{font-size:12px;border-radius:20px;padding:5px 12px;background:#fff0d5;color:#775119}.verified_repair,.checked{background:#dff2eb;color:#11644d}.failed,.repair_failed,.rejected,.blocked,.provider_error{background:#fde7e4;color:#9a3029}summary{cursor:pointer;color:var(--accent);font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#172a35;color:#e4eef2;border-radius:8px;padding:16px;font:12px/1.7 ui-monospace,monospace}.diff{background:#edf5f1;color:#214b3b}.provider{font-size:12px;color:var(--muted)}.warning{border-left:3px solid #c96a29;padding-left:12px}footer{font-size:12px;color:var(--muted);margin-top:28px}@media(max-width:600px){.wrap{padding:24px 16px}h1{font-size:28px}article{padding:16px}}
+    </style></head><body><main class="wrap"><header><div class="eyebrow">EXAMPLEPROOF / 例证</div><h1>每一处修复，都有运行证据。</h1><p class="intro">more_itertools · 文档示例检查报告</p><p class="meta">2026-10-13T06:46:45.781998+00:00</p></header><section class="stats"><div class="stat"><strong>1</strong><span>运行或检查失败</span></div><div class="stat"><strong>2</strong><span>原示例通过检查</span></div><div class="stat"><strong>0</strong><span>修复轮次 · 每例上限 1</span></div></section><article data-status="failed"><div class="card-head"><h2>cases/collate.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/collate.md · 第 7–11 行 · 0.0693 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Reusable lazy sorted merge
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+Preserve a reusable callable named collate and all three displayed outputs. Merge any number of already-sorted iterables, retaining duplicates and stable order for equal keys, accepting key and reverse together. Support empty inputs, Unicode and one-shot iterators. Preserve lazy iteration: do not consume inputs at construction or read the entire input to return a prefix. These evaluator-authored requirements expand the original documented lazy merge contract.</p><h3>原始示例</h3><pre>from more_itertools import collate
+print(list(collate(&#x27;ACDZ&#x27;, &#x27;AZ&#x27;, &#x27;JKL&#x27;)))
+key = lambda s: int(s)  # Sort by numeric value, not by string
+print(list(collate([&#x27;1&#x27;, &#x27;10&#x27;], [&#x27;2&#x27;, &#x27;11&#x27;], key=key)))
+print(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0693 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 1, in &lt;module&gt;
+    from more_itertools import collate
+ImportError: cannot import name &#x27;collate&#x27; from &#x27;more_itertools&#x27; (/workspace/more_itertools/__init__.py)
+</pre></details></article><article data-status="checked"><div class="card-head"><h2>cases/grouper.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/grouper.md · 第 7–8 行 · 0.0698 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Grouped values with padding
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+Keep a reusable callable named grouper accepting iterable, n and fillvalue keyword arguments. Preserve the original displayed groups of three with x padding; support empty input, exact multiples, and a final partial group padded with the supplied fill value.</p><h3>原始示例</h3><pre>from more_itertools import grouper
+print(list(grouper(&#x27;ABCDEFG&#x27;, 3, fillvalue=&#x27;x&#x27;)))
+</pre><h3>运行证据</h3><p class="meta">passed · 0.0698 秒 · 检查：configured_behavior_checks</p><p>标准输出</p><pre>[(&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;), (&#x27;D&#x27;, &#x27;E&#x27;, &#x27;F&#x27;), (&#x27;G&#x27;, &#x27;x&#x27;, &#x27;x&#x27;)]
+</pre></details></article><article data-status="checked"><div class="card-head"><h2>cases/healthy_chunked.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/healthy_chunked.md · 第 7–8 行 · 0.0694 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Healthy chunked iterator
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+Keep a reusable callable named chunked. Preserve the original displayed list of chunks; support empty input, exact multiples, and a final shorter chunk without padding.</p><h3>原始示例</h3><pre>from more_itertools import chunked
+print(list(chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)))
+</pre><h3>运行证据</h3><p class="meta">passed · 0.0694 秒 · 检查：configured_behavior_checks</p><p>标准输出</p><pre>[[1, 2, 3], [4, 5, 6], [7, 8]]
+</pre></details></article><footer>“修复通过检查”表示通过已有断言或配置的行为检查。检查覆盖之外的语义仍需人工核验。候选补丁不会自动修改原始项目。</footer></main></body></html>

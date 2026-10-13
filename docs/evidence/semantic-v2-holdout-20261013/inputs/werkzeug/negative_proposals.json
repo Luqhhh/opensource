@@ -1,0 +1,10 @@
+{
+  "cases/pop_path_info.md#1": {
+    "code": "from wsgiref.util import shift_path_info as pop_path_info\nenv = {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nprint(repr(pop_path_info(env)))\nprint(repr(env['SCRIPT_NAME']))\nprint(repr(pop_path_info(env)))\nprint(repr(env['SCRIPT_NAME']))\n",
+    "rationale": "Deliberately incorrect constant/scope/output-only candidate for oracle validation."
+  },
+  "cases/peek_path_info.md#1": {
+    "code": "peek_path_info = lambda environ, **kwargs: 'a'\nenv = {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nprint(repr(peek_path_info(env)))\nprint(repr(peek_path_info(env)))\n",
+    "rationale": "Deliberately incorrect constant/scope/output-only candidate for oracle validation."
+  }
+}

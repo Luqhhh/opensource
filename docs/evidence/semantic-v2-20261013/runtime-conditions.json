@@ -1,0 +1,7 @@
+{
+  "observed_at": "2026-10-13T06:54:04.737095+00:00",
+  "concurrent_gpu_processes_reported": 2,
+  "other_workload_observed_during_holdout": true,
+  "action": "No unrelated process was stopped or changed.",
+  "interpretation": "Request timing is recorded cost under the observed shared host, not an isolated throughput/speed comparison; token counts and call budgets remain the primary cost comparison."
+}

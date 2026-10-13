@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "study": "/home/lux1/exampleproof/docs/evidence/semantic-v2-development-02-20261013",
+  "protocol_sha256": "7e52cf9ffc3093d551f4224cdba9ad244c0b1aa49cb35888159834e4c9464ab6",
+  "checked": {
+    "stdlib_public_function_slices": 999,
+    "frozen_projects": 3,
+    "complete_cells": 15,
+    "equal_source_feedback_first_payloads": 12,
+    "summary_reconciled": 1
+  },
+  "scheduled_cells": 15,
+  "implementation_check": "current_and_archived",
+  "errors": [],
+  "incomplete": [],
+  "independent_groups": {
+    "legacy_source": {
+      "case_runs": 6,
+      "first_try_passed": 3,
+      "budget_passed": 4,
+      "healthy_case_runs": 3,
+      "healthy_preserved": 3,
+      "requests": 11,
+      "input_tokens": 49476,
+      "output_tokens": 2896,
+      "inference_seconds": 102.6515,
+      "wall_seconds": 105.7765,
+      "raw_server_seconds": 102.4052,
+      "statuses": {
+        "repair_failed": 5,
+        "verified_repair": 4,
+        "provider_error": 1,
+        "rejected": 1
+      },
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.5,
+      "budget_rate": 0.6666666666666666
+    },
+    "legacy_feedback": {
+      "case_runs": 6,
+      "first_try_passed": 3,
+      "budget_passed": 4,
+      "healthy_case_runs": 3,
+      "healthy_preserved": 3,
+      "requests": 11,
+      "input_tokens": 52445,
+      "output_tokens": 1912,
+      "inference_seconds": 66.3379,
+      "wall_seconds": 69.713,
+      "raw_server_seconds": 66.1008,
+      "statuses": {
+        "repair_failed": 6,
+        "verified_repair": 4,
+        "rejected": 1
+      },
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.5,
+      "budget_rate": 0.6666666666666666
+    },
+    "source_v2": {
+      "case_runs": 6,
+      "first_try_passed": 4,
+      "budget_passed": 4,
+      "healthy_case_runs": 3,
+      "healthy_preserved": 3,
+      "requests": 10,
+      "input_tokens": 24844,
+      "output_tokens": 1723,
+      "inference_seconds": 58.3376,
+      "wall_seconds": 61.3559,
+      "raw_server_seconds": 58.1429,
+      "statuses": {
+        "verified_repair": 4,
+        "repair_failed": 3,
+        "rejected": 3
+      },
+      "failures": [
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "id": "cases/convert_contract.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.6666666666666666,
+      "budget_rate": 0.6666666666666666
+    },
+    "generic_feedback_v2": {
+      "case_runs": 6,
+      "first_try_passed": 4,
+      "budget_passed": 4,
+      "healthy_case_runs": 3,
+      "healthy_preserved": 3,
+      "requests": 10,
+      "input_tokens": 26263,
+      "output_tokens": 1707,
+      "inference_seconds": 52.5915,
+      "wall_seconds": 55.9697,
+      "raw_server_seconds": 52.3851,
+      "statuses": {
+        "verified_repair": 4,
+        "repair_failed": 3,
+        "rejected": 3
+      },
+      "failures": [
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "id": "cases/convert_contract.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.6666666666666666,
+      "budget_rate": 0.6666666666666666
+    },
+    "feedback_v2": {
+      "case_runs": 6,
+      "first_try_passed": 4,
+      "budget_passed": 4,
+      "healthy_case_runs": 3,
+      "healthy_preserved": 3,
+      "requests": 10,
+      "input_tokens": 26362,
+      "output_tokens": 1710,
+      "inference_seconds": 51.5171,
+      "wall_seconds": 54.8838,
+      "raw_server_seconds": 51.3016,
+      "statuses": {
+        "verified_repair": 4,
+        "repair_failed": 3,
+        "rejected": 3
+      },
+      "failures": [
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "id": "cases/convert_contract.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.6666666666666666,
+      "budget_rate": 0.6666666666666666
+    }
+  },
+  "scope": "Read-only independent hash/payload/raw-cost/report audit. Unified diffs are applied only in memory and checked against recorded post-patch document hashes. No model calls or snippet execution. Local seal is not external attestation."
+}

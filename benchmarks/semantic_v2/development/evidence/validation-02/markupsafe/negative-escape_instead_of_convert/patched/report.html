@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'"><title>例证 · 文档验证报告</title><style>
+    :root{color-scheme:light;--ink:#172a35;--muted:#526876;--line:#d8e2e7;--accent:#096c61}*{box-sizing:border-box}body{margin:0;background:#f3f6f7;color:var(--ink);font:15px/1.65 system-ui,sans-serif}.wrap{max-width:1050px;margin:auto;padding:48px 24px}header{border-bottom:1px solid var(--line);padding-bottom:28px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:750}h1{font-size:36px;margin:8px 0}h2{font-size:17px;margin:0;overflow-wrap:anywhere}h3{font-size:14px;margin:24px 0 8px}.intro,.meta,.context{color:var(--muted)}.meta{font-size:12px}.stats{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.stat{background:white;border:1px solid var(--line);padding:14px 20px;border-radius:10px;min-width:145px}.stat strong{display:block;font-size:28px}.stat span{font-size:12px;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:22px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.badge{font-size:12px;border-radius:20px;padding:5px 12px;background:#fff0d5;color:#775119}.verified_repair,.checked{background:#dff2eb;color:#11644d}.failed,.repair_failed,.rejected,.blocked,.provider_error{background:#fde7e4;color:#9a3029}summary{cursor:pointer;color:var(--accent);font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#172a35;color:#e4eef2;border-radius:8px;padding:16px;font:12px/1.7 ui-monospace,monospace}.diff{background:#edf5f1;color:#214b3b}.provider{font-size:12px;color:var(--muted)}.warning{border-left:3px solid #c96a29;padding-left:12px}footer{font-size:12px;color:var(--muted);margin-top:28px}@media(max-width:600px){.wrap{padding:24px 16px}h1{font-size:28px}article{padding:16px}}
+    </style></head><body><main class="wrap"><header><div class="eyebrow">EXAMPLEPROOF / 例证</div><h1>每一处修复，都有运行证据。</h1><p class="intro">markupsafe · 文档示例检查报告</p><p class="meta">2026-10-13T06:16:30.498643+00:00</p></header><section class="stats"><div class="stat"><strong>2</strong><span>原示例通过检查</span></div><div class="stat"><strong>1</strong><span>运行或检查失败</span></div><div class="stat"><strong>0</strong><span>修复轮次 · 每例上限 1</span></div></section><article data-status="checked"><div class="card-head"><h2>cases/safe_string.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/safe_string.md · 第 7–10 行 · 0.0348 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Original soft conversion display regression
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+The harness imports markupsafe&#x27;s public namespace. Preserve value as Markup and all three original displayed lines. This remains a finite display regression: the reusable convert contract is a separate new case.</p><h3>原始示例</h3><pre>value = escape(&#x27;&lt;User 1&gt;&#x27;)
+print(repr(value))
+print(repr(escape(str(value))))
+print(repr(escape(soft_str(value))))
+</pre><h3>运行证据</h3><p class="meta">passed · 0.0348 秒 · 检查：configured_behavior_checks</p><p>标准输出</p><pre>Markup(&#x27;&amp;lt;User 1&amp;gt;&#x27;)
+Markup(&#x27;&amp;amp;lt;User 1&amp;amp;gt;&#x27;)
+Markup(&#x27;&amp;lt;User 1&amp;gt;&#x27;)
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/convert_contract.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/convert_contract.md · 第 7–10 行 · 0.0347 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Reusable soft conversion without HTML escaping
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+Keep a reusable callable named convert that converts non-strings with str(), preserves existing str/str-subclass/Markup objects by identity, and performs no HTML escaping. Cover ordinary/empty/Unicode/HTML-sensitive strings, numbers, booleans, None and objects defining __str__ or __html__. The displayed escaped Markup must remain Markup(&#x27;&amp;lt;User 1&amp;gt;&#x27;). This authored binding task expands the upstream soft-conversion contract; it is not a mechanical excerpt.</p><h3>原始示例</h3><pre>from markupsafe import escape, soft_unicode
+convert = soft_unicode
+value = escape(&#x27;&lt;User 1&gt;&#x27;)
+print(repr(escape(convert(value))))
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0347 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 1, in &lt;module&gt;
+    from markupsafe import escape, soft_unicode
+ImportError: cannot import name &#x27;soft_unicode&#x27; from &#x27;markupsafe&#x27; (/workspace/markupsafe/__init__.py)
+</pre></details></article><article data-status="checked"><div class="card-head"><h2>cases/optional_values.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/optional_values.md · 第 7–8 行 · 0.0347 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Healthy optional escaped values
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+The harness imports the public markupsafe namespace. Keep escape and escape_silent callable. Preserve displayed Markup(&#x27;None&#x27;) and Markup(&#x27;&#x27;); escape_silent(None) returns empty Markup, HTML-sensitive text is escaped, and numeric zero is converted to Markup(&#x27;0&#x27;).</p><h3>原始示例</h3><pre>print(repr(escape(None)))
+print(repr(escape_silent(None)))
+</pre><h3>运行证据</h3><p class="meta">passed · 0.0347 秒 · 检查：configured_behavior_checks</p><p>标准输出</p><pre>Markup(&#x27;None&#x27;)
+Markup(&#x27;&#x27;)
+</pre></details></article><footer>“修复通过检查”表示通过已有断言或配置的行为检查。检查覆盖之外的语义仍需人工核验。候选补丁不会自动修改原始项目。</footer></main></body></html>

@@ -1,0 +1,1000 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/pallets/werkzeug",
+  "files": [
+    {
+      "local_path": "upstream/2.2.3/LICENSE.rst",
+      "upstream_path": "LICENSE.rst",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "3b49dcee4105eb37bac10faf1be260408fe85d252b8e9df2e0979fc1e094437b",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/LICENSE.rst"
+    },
+    {
+      "local_path": "upstream/2.2.3/docs/urls.rst",
+      "upstream_path": "docs/urls.rst",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "b8ddad488137329f6f7ee675fbb4a69b97afa026c97836b1a117024bd662517b",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/docs/urls.rst"
+    },
+    {
+      "local_path": "upstream/2.2.3/docs/wsgi.rst",
+      "upstream_path": "docs/wsgi.rst",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "db1d7776267705a55e5854f11ae1be5542f439f83b27034734e6bee5c525a08e",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/docs/wsgi.rst"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/__init__.py",
+      "upstream_path": "src/werkzeug/__init__.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "1ebd25430782db51d73d505e992a41254233adbab69a7f21ef4275877d1072a6",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/__init__.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/_internal.py",
+      "upstream_path": "src/werkzeug/_internal.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "e25c2c85eeb7a45942a3487620c726be16ee800e7441742f7cb0f95686397384",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/_internal.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/_reloader.py",
+      "upstream_path": "src/werkzeug/_reloader.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "8623f4cf86e2ea9ffc50824eb6aecad0157676a0a2939cb3b562ec0d7788fd61",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/_reloader.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/datastructures.py",
+      "upstream_path": "src/werkzeug/datastructures.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "bf65987ecd6b6f53ae4205f22eb8a91d017082876b7d33427793f97fc9f7b9e0",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/datastructures.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/debug/__init__.py",
+      "upstream_path": "src/werkzeug/debug/__init__.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "c1f2763a6963b0ee42d1ed2c5c9a535221ba6f0194eae1ed1430c331f25f4099",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/debug/__init__.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/debug/console.py",
+      "upstream_path": "src/werkzeug/debug/console.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "75e721aa20ad1dfb340106566687d40b54bdeed0aebf00e04f481d85ae4ac163",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/debug/console.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/debug/repr.py",
+      "upstream_path": "src/werkzeug/debug/repr.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "bc5dd32e7601a2162bf15e86cf5dcf4c9b2942ce36bafde05094b349b987241a",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/debug/repr.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/debug/tbtools.py",
+      "upstream_path": "src/werkzeug/debug/tbtools.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "ea2a21268bed05215101c817eff691638af77b5f4f2e3dc56af601dd13380a60",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/debug/tbtools.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/exceptions.py",
+      "upstream_path": "src/werkzeug/exceptions.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "f3e28e5e0b9090e2e805474dfbbc7f5b21d3f764dc0268d358dc06e2df106088",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/exceptions.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/formparser.py",
+      "upstream_path": "src/werkzeug/formparser.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "0c145b6c09f3b2961407381fc4f6990bb3231802bf9b9413bdd5a8cafae1c38a",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/formparser.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/http.py",
+      "upstream_path": "src/werkzeug/http.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "36a263602b7cb4a9f65ce10a3c0a6ae0bdeaf336fc605ab718539ee60b289c8e",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/http.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/local.py",
+      "upstream_path": "src/werkzeug/local.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "bfe1c4aabe1b2e92c7978ba90a3f7b30e7d4c828d6d744e9ea670d685445c9ec",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/local.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/__init__.py",
+      "upstream_path": "src/werkzeug/middleware/__init__.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "a9faa0753e67a701bdb1eb37f855d025fdda07de4960fd737217ad1ff4f73d4c",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/__init__.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/dispatcher.py",
+      "upstream_path": "src/werkzeug/middleware/dispatcher.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "161ff0f8ac969d349817e2dfbf9762990ed31d24bb69f3c064c9af738cc5d608",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/dispatcher.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/http_proxy.py",
+      "upstream_path": "src/werkzeug/middleware/http_proxy.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "1c4f15ca14bb091f84d4eebff5bebc86ebfc14b806191d432d8aa44b75dca774",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/http_proxy.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/lint.py",
+      "upstream_path": "src/werkzeug/middleware/lint.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "d70fd454a900c2ae708e3b42703083670840856ccf499d1a0f25266e3004797c",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/lint.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/profiler.py",
+      "upstream_path": "src/werkzeug/middleware/profiler.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "ee95980d83c2efbe12d3e1d82e41b75207b9f0f194317eed5a9fc2a2bddeb6fa",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/profiler.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/proxy_fix.py",
+      "upstream_path": "src/werkzeug/middleware/proxy_fix.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "97b2c2fcb0eed187784af5314b94858a00093337083869ba2cd2a5f485c90525",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/proxy_fix.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/middleware/shared_data.py",
+      "upstream_path": "src/werkzeug/middleware/shared_data.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "7d78eb124baac5454b1b50cbace7502dcf7a4107637ed081675a0ce682bcf61e",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/middleware/shared_data.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/routing/__init__.py",
+      "upstream_path": "src/werkzeug/routing/__init__.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "1e9bda858ed6c242dd5780aadc1b1cdc6aea3689f8bbab7cfaf85b6fd139a34d",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/routing/__init__.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/routing/converters.py",
+      "upstream_path": "src/werkzeug/routing/converters.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "d396e47a483ae2f2c2ea6aaa2b875d061e7cf561fdc81b23b56f0826175406fc",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/routing/converters.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/routing/exceptions.py",
+      "upstream_path": "src/werkzeug/routing/exceptions.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "4649540cbf5a8cebf67d3711363e296f5f01b3863e18a938ac879349fb2a924b",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/routing/exceptions.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/routing/map.py",
+      "upstream_path": "src/werkzeug/routing/map.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "5cde198f3105d527ccc6d768bfcf520c4fb5fd4efc2959e7a1b4df9c7cea6e61",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/routing/map.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/routing/matcher.py",
+      "upstream_path": "src/werkzeug/routing/matcher.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "e95bd060208e8f28f524a5192ae022540fd4d675edbef27bd2949b05474bff59",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/routing/matcher.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/routing/rules.py",
+      "upstream_path": "src/werkzeug/routing/rules.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "dd8b0fa48f5919c3661625761a8d937750ef67d65d68c327bc63f5a35eda31f7",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/routing/rules.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/sansio/__init__.py",
+      "upstream_path": "src/werkzeug/sansio/__init__.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/sansio/__init__.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/sansio/http.py",
+      "upstream_path": "src/werkzeug/sansio/http.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "9379d11017d4fabf1f5c27d24ca41e9f2b36e6af5bcd43af758f8e546aeaced0",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/sansio/http.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/sansio/multipart.py",
+      "upstream_path": "src/werkzeug/sansio/multipart.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "bcc67ce5cbcb0f9e5c9544dc4e29f60ed06fd864111a1d3f7c4c649675ca1e82",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/sansio/multipart.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/sansio/request.py",
+      "upstream_path": "src/werkzeug/sansio/request.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "4a219cc76733fa5f354e5082acaad3d9f78fa82eb884df1f4a0e4883a27abd1b",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/sansio/request.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/sansio/response.py",
+      "upstream_path": "src/werkzeug/sansio/response.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "51397eb5e4030e3a2fad93248e3dd942c1f0f89b6215a93925f284935fef0585",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/sansio/response.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/sansio/utils.py",
+      "upstream_path": "src/werkzeug/sansio/utils.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "1236ea747753f8965682351069a592801508469ad7524aec31042a265247a555",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/sansio/utils.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/security.py",
+      "upstream_path": "src/werkzeug/security.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "ed3548d0beb67a6047021fb544707f2a5c0661c134f293c2c94ebbe07a3868d1",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/security.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/serving.py",
+      "upstream_path": "src/werkzeug/serving.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "5c288715b30214281e70ac9c81a8e1178ac5b06a1e99e374c56d5e4d0a8db7e8",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/serving.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/test.py",
+      "upstream_path": "src/werkzeug/test.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "b8c6a17ccf3546a10dddddd2a784a4377e8f8bca19a55e9d4e0158d1c5b5ff67",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/test.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/testapp.py",
+      "upstream_path": "src/werkzeug/testapp.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "449853ff627078d88c29edf4e0dddb175cda21e329471f8220c11175ec9d7d36",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/testapp.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/urls.py",
+      "upstream_path": "src/werkzeug/urls.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "43d4a2f9e561ef2c64debc24cebc06466d78e855d55e083d9413f79341d47d53",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/urls.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/user_agent.py",
+      "upstream_path": "src/werkzeug/user_agent.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "59c959869be02eeacc178e61b22a126d2ef91f565be2231018a377ff2676a0aa",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/user_agent.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/utils.py",
+      "upstream_path": "src/werkzeug/utils.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "0435f9ffb382315825fa26fce1b0847411b9315bebc5a4a57dd83b0b1878343d",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/utils.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/wrappers/__init__.py",
+      "upstream_path": "src/werkzeug/wrappers/__init__.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "906c8aeeb3ae777a82c6597f8c5c96d7961aac9863d71b5d7f7a1cc7d661781f",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wrappers/__init__.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/wrappers/request.py",
+      "upstream_path": "src/werkzeug/wrappers/request.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "5e6a534e15f2b537739db3c99c8b1f768200bdd8be4c7cd3250f43b2f011867e",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wrappers/request.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/wrappers/response.py",
+      "upstream_path": "src/werkzeug/wrappers/response.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "8a2d4868dd9e51fa01fad06a6e7ff8e9f081fd25552fc16ee2a77a72ed009446",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wrappers/response.py"
+    },
+    {
+      "local_path": "upstream/2.2.3/src/werkzeug/wsgi.py",
+      "upstream_path": "src/werkzeug/wsgi.py",
+      "version": "2.2.3",
+      "commit": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+      "sha256": "f95288da2c0280b6fe553a0865e06976eb644c44f1cbd1e423081c142e68ae45",
+      "url": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wsgi.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/LICENSE.txt",
+      "upstream_path": "LICENSE.txt",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "3b49dcee4105eb37bac10faf1be260408fe85d252b8e9df2e0979fc1e094437b",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/LICENSE.txt"
+    },
+    {
+      "local_path": "upstream/3.0.6/docs/urls.rst",
+      "upstream_path": "docs/urls.rst",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "b8ddad488137329f6f7ee675fbb4a69b97afa026c97836b1a117024bd662517b",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/docs/urls.rst"
+    },
+    {
+      "local_path": "upstream/3.0.6/docs/wsgi.rst",
+      "upstream_path": "docs/wsgi.rst",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "af02e0b2abd7c087ee0a9cd426e898f5d0d844142651c840ca246d032ab74964",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/docs/wsgi.rst"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/__init__.py",
+      "upstream_path": "src/werkzeug/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "1d7fcf498e44dafb55943dd1e186e5c014428e0ee3dd3966dcb0126d8a8e4a45",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/_internal.py",
+      "upstream_path": "src/werkzeug/_internal.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "b2ed689646c7324cedd1529c1243cb0a16bcb1d5735cd06ea96e98569a7c1878",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/_internal.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/_reloader.py",
+      "upstream_path": "src/werkzeug/_reloader.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "42e30ef94c2e0fe707b14a7048452bee260d6efff388716180d0c08afdb927cd",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/_reloader.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/__init__.py",
+      "upstream_path": "src/werkzeug/datastructures/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "cb305d393f4374ade7ada346e3da40ddb56cbed3cf2f1dbeb7637c666b8077dc",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/accept.py",
+      "upstream_path": "src/werkzeug/datastructures/accept.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "0ae0af040c4dcdbb784146f5eeb1fdf3abef395194445523a340d7d8f432ff22",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/accept.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/auth.py",
+      "upstream_path": "src/werkzeug/datastructures/auth.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "b59cf4c19d6c22921c010a0401586b52fcbc33792a2af232b66bc6bf0900771a",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/auth.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/cache_control.py",
+      "upstream_path": "src/werkzeug/datastructures/cache_control.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "453522a597afe74b3ed53027dab60666bcad9bfe88388c5077aedf911e5b345d",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/cache_control.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/csp.py",
+      "upstream_path": "src/werkzeug/datastructures/csp.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "0c03803b6eba2cad0929bbe51bcd1b6e40207eb36c9d4f47068cfe15d21835da",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/csp.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/etag.py",
+      "upstream_path": "src/werkzeug/datastructures/etag.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "26cc88fb25dac85fa142edba3321736c714866c690ea8763dd164efe317efdc7",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/etag.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/file_storage.py",
+      "upstream_path": "src/werkzeug/datastructures/file_storage.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "78f78cb6beb9b3fd7fb2e9d732ffd204e885a1fe425f905ea58bf9fd6d7a7d99",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/file_storage.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/headers.py",
+      "upstream_path": "src/werkzeug/datastructures/headers.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "f7bf8ff8b833b5eaf1130c4b6d0b01106899a423805f367b7c4c575dde2e1fea",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/headers.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/mixins.py",
+      "upstream_path": "src/werkzeug/datastructures/mixins.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "f8841243bd1438c425aad244232ca1a6539de286da4ce7f31af91af9cba70ad3",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/mixins.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/range.py",
+      "upstream_path": "src/werkzeug/datastructures/range.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "2574833ec786ee21f9822269dd1d529d00bf4aa429eb7e0cf08bfa413b1b4f13",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/range.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/datastructures/structures.py",
+      "upstream_path": "src/werkzeug/datastructures/structures.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "f2746abf01ccf26a198ff7c46b13aa17e37b960ba85e09cd25e4f697d2d7ef10",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/datastructures/structures.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/debug/__init__.py",
+      "upstream_path": "src/werkzeug/debug/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "f34bda6af559630576d48b6bb0e2d0b9d1148b6b8a0e5c5c8e6e5c0a6794d6ee",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/debug/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/debug/console.py",
+      "upstream_path": "src/werkzeug/debug/console.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "b78859d10835a7a52ed8c5a29aaa0c0e2ed2dd6619bcb3239dcf2ffdd3dac40a",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/debug/console.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/debug/repr.py",
+      "upstream_path": "src/werkzeug/debug/repr.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "8873189f2f3086288c0dab2f52a8f49e6e3ed551d5bf07baf7b2a57a26552b5b",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/debug/repr.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/debug/tbtools.py",
+      "upstream_path": "src/werkzeug/debug/tbtools.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "a76e5fd203fd576182cf0c49c5dc4c71b4f3d0691c1bbfc390df2d1412e43fd9",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/debug/tbtools.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/exceptions.py",
+      "upstream_path": "src/werkzeug/exceptions.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "497dcc513aaf595c80f529df30fc68c0d3eee5b791f43cab99b509e000f65d3d",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/exceptions.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/formparser.py",
+      "upstream_path": "src/werkzeug/formparser.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "9a4acff23e02631b61b98b4d44fb129ffc71ceca4b2c94657238293cd00605ba",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/formparser.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/http.py",
+      "upstream_path": "src/werkzeug/http.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "d7c783f382f2b3cb48415cb39527dac52326914feeb4e105a0d0ff9078617dc3",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/http.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/local.py",
+      "upstream_path": "src/werkzeug/local.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "29416e026f0101ac90a2ecd5834306a96fe18b063c67f958e65eddd5272fb31f",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/local.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/__init__.py",
+      "upstream_path": "src/werkzeug/middleware/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/dispatcher.py",
+      "upstream_path": "src/werkzeug/middleware/dispatcher.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "cd6379fe5a89affb1cf540eff8f3e84a50c737fcd1df7cfa07be05ff80b1a68f",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/dispatcher.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/http_proxy.py",
+      "upstream_path": "src/werkzeug/middleware/http_proxy.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "b1d93e57a1a867a68c9f2f83d1034a35fe4c583d8e4cedc019b060eaea69e077",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/http_proxy.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/lint.py",
+      "upstream_path": "src/werkzeug/middleware/lint.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "970b198720cd4e7b0daf80fc76ab201bc024a7b60ff43fd7e3d482899b9c134e",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/lint.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/profiler.py",
+      "upstream_path": "src/werkzeug/middleware/profiler.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "d5900794379835d860a7c4c7397915e6582670b977d3ba6102bd947f2df4fa56",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/profiler.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/proxy_fix.py",
+      "upstream_path": "src/werkzeug/middleware/proxy_fix.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "9fe1d6f8c45626ab822219aa8992a819d6db11e1ee589a8f447845a6e8f8a736",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/proxy_fix.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/middleware/shared_data.py",
+      "upstream_path": "src/werkzeug/middleware/shared_data.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "1b6f1b1b7af3acfe91d243833ac6c57d63a3e5771cfea20e56ed5535597c896d",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/middleware/shared_data.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/routing/__init__.py",
+      "upstream_path": "src/werkzeug/routing/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "77c4d1c6c936e085aed8176839851f2fef9d7a8947c2219508126a2e811edd83",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/routing/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/routing/converters.py",
+      "upstream_path": "src/werkzeug/routing/converters.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "8aaa5e7bf9808ebd6819bab47adba3605f4f883bf953b0e03640111d79cc21dd",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/routing/converters.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/routing/exceptions.py",
+      "upstream_path": "src/werkzeug/routing/exceptions.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "c0d062526524e0eb453a96dd0d2afb28a2948c7ef29fce09ab0062714ba9f29f",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/routing/exceptions.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/routing/map.py",
+      "upstream_path": "src/werkzeug/routing/map.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "9845e51ceca29e483526dc792f450362cbe85f87952e212e1154330f92d5033f",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/routing/map.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/routing/matcher.py",
+      "upstream_path": "src/werkzeug/routing/matcher.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "9df05b977ede180919d5d425ba6b2115c3eec9f8209858cfb92490384e86b98b",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/routing/matcher.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/routing/rules.py",
+      "upstream_path": "src/werkzeug/routing/rules.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "7868ba3c3f82386d80b3f1d8d27030fa7c58c4b4c7d05b2ea91692cbc77d1634",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/routing/rules.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/sansio/__init__.py",
+      "upstream_path": "src/werkzeug/sansio/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/sansio/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/sansio/http.py",
+      "upstream_path": "src/werkzeug/sansio/http.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "ff97d52a8a202d4c8d1f93b60672adcba745075a7844405989e278bd8a0e50e0",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/sansio/http.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/sansio/multipart.py",
+      "upstream_path": "src/werkzeug/sansio/multipart.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "7cc1a063d0af3034603602a8cf3d9c048a7488dd84304d8820e061df4ebf11cb",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/sansio/multipart.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/sansio/request.py",
+      "upstream_path": "src/werkzeug/sansio/request.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "308e7d44e5f53ff63a17816408b8da57d8703c45c4eda4d3a9a5698624f0e140",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/sansio/request.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/sansio/response.py",
+      "upstream_path": "src/werkzeug/sansio/response.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "ba1298b83cb9f90e6fd0c939548c6217e5e86fdbdf19d0f35a2246ec9ecc6187",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/sansio/response.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/sansio/utils.py",
+      "upstream_path": "src/werkzeug/sansio/utils.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "63bce412622f04bb55be0c1276d0611691aa09c941b58c7b19485c922452ca12",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/sansio/utils.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/security.py",
+      "upstream_path": "src/werkzeug/security.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "5b9e984973c113a1f94e4ca19cf9a39353d4a3d5c257adc20b0f48d821e01b34",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/security.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/serving.py",
+      "upstream_path": "src/werkzeug/serving.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "61be16804b5a2d8d902b45fefc292798882b9e8ada18fd836d915b403baffd04",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/serving.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/test.py",
+      "upstream_path": "src/werkzeug/test.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "90c116b42fdb6792eabc1c9af8fbedab526fb5be1147fb7ba41a76effe09a49a",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/test.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/testapp.py",
+      "upstream_path": "src/werkzeug/testapp.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "e7f212e4387f59f59f35c4cb99bc9d8f4d65a2681c280ff897d3cf08d66799d2",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/testapp.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/urls.py",
+      "upstream_path": "src/werkzeug/urls.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "5f234ac07bcae480b7efec2e2033185a4882277c8b4cb1afef09f6185de776a2",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/urls.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/user_agent.py",
+      "upstream_path": "src/werkzeug/user_agent.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "95294b60a09c6f30944a46dd0283bcccf936511fbc31d9fa8aefe20369183c10",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/user_agent.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/utils.py",
+      "upstream_path": "src/werkzeug/utils.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "ea257ff8974568b5c6e9b091dc5312332518d070a7b1dce52a2ac035abc05e49",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/utils.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/wrappers/__init__.py",
+      "upstream_path": "src/werkzeug/wrappers/__init__.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "6fbf2308cf31f7a9095062d9e45605477ce52bede99c50263fd449206534b1eb",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/wrappers/__init__.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/wrappers/request.py",
+      "upstream_path": "src/werkzeug/wrappers/request.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "76fb2eba495d34bcf9b62c32adb71eb61a30f74dc3038c2643b31c4744508239",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/wrappers/request.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/wrappers/response.py",
+      "upstream_path": "src/werkzeug/wrappers/response.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "bbace0ed5a4d62b09e123a4881ff15aa07da4a2f7247ff708bd972daeb9d8258",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/wrappers/response.py"
+    },
+    {
+      "local_path": "upstream/3.0.6/src/werkzeug/wsgi.py",
+      "upstream_path": "src/werkzeug/wsgi.py",
+      "version": "3.0.6",
+      "commit": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624",
+      "sha256": "3fb8c1d15a46e97ea68a27ace2e93b6609bb3559b8633f116ba227af9abf14cb",
+      "url": "https://github.com/pallets/werkzeug/blob/5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624/src/werkzeug/wsgi.py"
+    },
+    {
+      "local_path": "upstream/dependencies/markupsafe-2.1.5/src/markupsafe/__init__.py",
+      "upstream_path": "src/markupsafe/__init__.py",
+      "version": "MarkupSafe 2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "sha256": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/src/markupsafe/__init__.py"
+    },
+    {
+      "local_path": "upstream/dependencies/markupsafe-2.1.5/src/markupsafe/_native.py",
+      "upstream_path": "src/markupsafe/_native.py",
+      "version": "MarkupSafe 2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "sha256": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/src/markupsafe/_native.py"
+    },
+    {
+      "local_path": "upstream/dependencies/markupsafe-2.1.5/LICENSE.rst",
+      "upstream_path": "LICENSE.rst",
+      "version": "MarkupSafe 2.1.5",
+      "commit": "fbba4acd0312826cec9cfe18371c7df07962cb65",
+      "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea",
+      "url": "https://github.com/pallets/markupsafe/blob/fbba4acd0312826cec9cfe18371c7df07962cb65/LICENSE.rst"
+    }
+  ],
+  "extractions": [
+    {
+      "case_id": "cases/pop_path_info.md#1",
+      "source": "upstream/2.2.3/src/werkzeug/wsgi.py",
+      "line_range": [
+        243,
+        275
+      ],
+      "raw_snippet": "raw-snippets/pop_path_info.py",
+      "raw_sha256": "06791775f1492a7f2c6d24baab9984fe658a702481f77470405a759d335c32de",
+      "derived_document": "cases/pop_path_info.md",
+      "document_sha256": "c963af2fe3b716c8d8b58c90391dc09be94bf70be440b1acaebec8b2399ada38",
+      "code_sha256": "530e1506fd9fd574e6fa6b9405713c0d06464bdee2a715f612e20b24992638ed",
+      "normalization": {
+        "kind": "docstring_doctest_repr",
+        "imports_added": [
+          "from werkzeug.wsgi import pop_path_info"
+        ]
+      },
+      "function": "pop_path_info"
+    },
+    {
+      "case_id": "cases/peek_path_info.md#1",
+      "source": "upstream/2.2.3/src/werkzeug/wsgi.py",
+      "line_range": [
+        310,
+        332
+      ],
+      "raw_snippet": "raw-snippets/peek_path_info.py",
+      "raw_sha256": "925e358a7eb4324f7556837c580a72bd0565d35eebf70bfcaa2ca8d22d745a46",
+      "derived_document": "cases/peek_path_info.md",
+      "document_sha256": "2ad1fccb0f68005e7657ceb8fa31a1affe0049127d476ed51aae3a1b469b3b12",
+      "code_sha256": "73f393e81af8e2971eebca856b9348e81f89cdf1e8bbb9f13af6c7481b3421f0",
+      "normalization": {
+        "kind": "docstring_doctest_repr",
+        "imports_added": [
+          "from werkzeug.wsgi import peek_path_info"
+        ]
+      },
+      "function": "peek_path_info"
+    },
+    {
+      "case_id": "cases/iri_to_uri.md#1",
+      "source": "upstream/2.2.3/src/werkzeug/urls.py",
+      "line_range": [
+        759,
+        795
+      ],
+      "raw_snippet": "raw-snippets/iri_to_uri.py",
+      "raw_sha256": "e82ad70ecf7808b4242a0e08f14803807f5fca97eb9ac40548068011d218d6ad",
+      "derived_document": "cases/iri_to_uri.md",
+      "document_sha256": "5309b64c6c7c5da9cca0d257b79886682e9dc448edf006d17f03b4b447b5f35b",
+      "code_sha256": "3c1e83f63a6476226eb4ae940d1c3c9b900efc44a359a0b3db9bf5cfa0e6e672",
+      "normalization": {
+        "kind": "docstring_doctest_repr",
+        "imports_added": [
+          "from werkzeug.urls import iri_to_uri"
+        ]
+      },
+      "function": "iri_to_uri"
+    }
+  ],
+  "source_mappings": {
+    "2.2.3": {
+      "werkzeug/__init__.py": "upstream/2.2.3/src/werkzeug/__init__.py",
+      "werkzeug/_internal.py": "upstream/2.2.3/src/werkzeug/_internal.py",
+      "werkzeug/_reloader.py": "upstream/2.2.3/src/werkzeug/_reloader.py",
+      "werkzeug/datastructures.py": "upstream/2.2.3/src/werkzeug/datastructures.py",
+      "werkzeug/debug/__init__.py": "upstream/2.2.3/src/werkzeug/debug/__init__.py",
+      "werkzeug/debug/console.py": "upstream/2.2.3/src/werkzeug/debug/console.py",
+      "werkzeug/debug/repr.py": "upstream/2.2.3/src/werkzeug/debug/repr.py",
+      "werkzeug/debug/tbtools.py": "upstream/2.2.3/src/werkzeug/debug/tbtools.py",
+      "werkzeug/exceptions.py": "upstream/2.2.3/src/werkzeug/exceptions.py",
+      "werkzeug/formparser.py": "upstream/2.2.3/src/werkzeug/formparser.py",
+      "werkzeug/http.py": "upstream/2.2.3/src/werkzeug/http.py",
+      "werkzeug/local.py": "upstream/2.2.3/src/werkzeug/local.py",
+      "werkzeug/middleware/__init__.py": "upstream/2.2.3/src/werkzeug/middleware/__init__.py",
+      "werkzeug/middleware/dispatcher.py": "upstream/2.2.3/src/werkzeug/middleware/dispatcher.py",
+      "werkzeug/middleware/http_proxy.py": "upstream/2.2.3/src/werkzeug/middleware/http_proxy.py",
+      "werkzeug/middleware/lint.py": "upstream/2.2.3/src/werkzeug/middleware/lint.py",
+      "werkzeug/middleware/profiler.py": "upstream/2.2.3/src/werkzeug/middleware/profiler.py",
+      "werkzeug/middleware/proxy_fix.py": "upstream/2.2.3/src/werkzeug/middleware/proxy_fix.py",
+      "werkzeug/middleware/shared_data.py": "upstream/2.2.3/src/werkzeug/middleware/shared_data.py",
+      "werkzeug/routing/__init__.py": "upstream/2.2.3/src/werkzeug/routing/__init__.py",
+      "werkzeug/routing/converters.py": "upstream/2.2.3/src/werkzeug/routing/converters.py",
+      "werkzeug/routing/exceptions.py": "upstream/2.2.3/src/werkzeug/routing/exceptions.py",
+      "werkzeug/routing/map.py": "upstream/2.2.3/src/werkzeug/routing/map.py",
+      "werkzeug/routing/matcher.py": "upstream/2.2.3/src/werkzeug/routing/matcher.py",
+      "werkzeug/routing/rules.py": "upstream/2.2.3/src/werkzeug/routing/rules.py",
+      "werkzeug/sansio/__init__.py": "upstream/2.2.3/src/werkzeug/sansio/__init__.py",
+      "werkzeug/sansio/http.py": "upstream/2.2.3/src/werkzeug/sansio/http.py",
+      "werkzeug/sansio/multipart.py": "upstream/2.2.3/src/werkzeug/sansio/multipart.py",
+      "werkzeug/sansio/request.py": "upstream/2.2.3/src/werkzeug/sansio/request.py",
+      "werkzeug/sansio/response.py": "upstream/2.2.3/src/werkzeug/sansio/response.py",
+      "werkzeug/sansio/utils.py": "upstream/2.2.3/src/werkzeug/sansio/utils.py",
+      "werkzeug/security.py": "upstream/2.2.3/src/werkzeug/security.py",
+      "werkzeug/serving.py": "upstream/2.2.3/src/werkzeug/serving.py",
+      "werkzeug/test.py": "upstream/2.2.3/src/werkzeug/test.py",
+      "werkzeug/testapp.py": "upstream/2.2.3/src/werkzeug/testapp.py",
+      "werkzeug/urls.py": "upstream/2.2.3/src/werkzeug/urls.py",
+      "werkzeug/user_agent.py": "upstream/2.2.3/src/werkzeug/user_agent.py",
+      "werkzeug/utils.py": "upstream/2.2.3/src/werkzeug/utils.py",
+      "werkzeug/wrappers/__init__.py": "upstream/2.2.3/src/werkzeug/wrappers/__init__.py",
+      "werkzeug/wrappers/request.py": "upstream/2.2.3/src/werkzeug/wrappers/request.py",
+      "werkzeug/wrappers/response.py": "upstream/2.2.3/src/werkzeug/wrappers/response.py",
+      "werkzeug/wsgi.py": "upstream/2.2.3/src/werkzeug/wsgi.py",
+      "markupsafe/__init__.py": "upstream/dependencies/markupsafe-2.1.5/src/markupsafe/__init__.py",
+      "markupsafe/_native.py": "upstream/dependencies/markupsafe-2.1.5/src/markupsafe/_native.py"
+    },
+    "3.0.6": {
+      "werkzeug/__init__.py": "upstream/3.0.6/src/werkzeug/__init__.py",
+      "werkzeug/_internal.py": "upstream/3.0.6/src/werkzeug/_internal.py",
+      "werkzeug/_reloader.py": "upstream/3.0.6/src/werkzeug/_reloader.py",
+      "werkzeug/datastructures/__init__.py": "upstream/3.0.6/src/werkzeug/datastructures/__init__.py",
+      "werkzeug/datastructures/accept.py": "upstream/3.0.6/src/werkzeug/datastructures/accept.py",
+      "werkzeug/datastructures/auth.py": "upstream/3.0.6/src/werkzeug/datastructures/auth.py",
+      "werkzeug/datastructures/cache_control.py": "upstream/3.0.6/src/werkzeug/datastructures/cache_control.py",
+      "werkzeug/datastructures/csp.py": "upstream/3.0.6/src/werkzeug/datastructures/csp.py",
+      "werkzeug/datastructures/etag.py": "upstream/3.0.6/src/werkzeug/datastructures/etag.py",
+      "werkzeug/datastructures/file_storage.py": "upstream/3.0.6/src/werkzeug/datastructures/file_storage.py",
+      "werkzeug/datastructures/headers.py": "upstream/3.0.6/src/werkzeug/datastructures/headers.py",
+      "werkzeug/datastructures/mixins.py": "upstream/3.0.6/src/werkzeug/datastructures/mixins.py",
+      "werkzeug/datastructures/range.py": "upstream/3.0.6/src/werkzeug/datastructures/range.py",
+      "werkzeug/datastructures/structures.py": "upstream/3.0.6/src/werkzeug/datastructures/structures.py",
+      "werkzeug/debug/__init__.py": "upstream/3.0.6/src/werkzeug/debug/__init__.py",
+      "werkzeug/debug/console.py": "upstream/3.0.6/src/werkzeug/debug/console.py",
+      "werkzeug/debug/repr.py": "upstream/3.0.6/src/werkzeug/debug/repr.py",
+      "werkzeug/debug/tbtools.py": "upstream/3.0.6/src/werkzeug/debug/tbtools.py",
+      "werkzeug/exceptions.py": "upstream/3.0.6/src/werkzeug/exceptions.py",
+      "werkzeug/formparser.py": "upstream/3.0.6/src/werkzeug/formparser.py",
+      "werkzeug/http.py": "upstream/3.0.6/src/werkzeug/http.py",
+      "werkzeug/local.py": "upstream/3.0.6/src/werkzeug/local.py",
+      "werkzeug/middleware/__init__.py": "upstream/3.0.6/src/werkzeug/middleware/__init__.py",
+      "werkzeug/middleware/dispatcher.py": "upstream/3.0.6/src/werkzeug/middleware/dispatcher.py",
+      "werkzeug/middleware/http_proxy.py": "upstream/3.0.6/src/werkzeug/middleware/http_proxy.py",
+      "werkzeug/middleware/lint.py": "upstream/3.0.6/src/werkzeug/middleware/lint.py",
+      "werkzeug/middleware/profiler.py": "upstream/3.0.6/src/werkzeug/middleware/profiler.py",
+      "werkzeug/middleware/proxy_fix.py": "upstream/3.0.6/src/werkzeug/middleware/proxy_fix.py",
+      "werkzeug/middleware/shared_data.py": "upstream/3.0.6/src/werkzeug/middleware/shared_data.py",
+      "werkzeug/routing/__init__.py": "upstream/3.0.6/src/werkzeug/routing/__init__.py",
+      "werkzeug/routing/converters.py": "upstream/3.0.6/src/werkzeug/routing/converters.py",
+      "werkzeug/routing/exceptions.py": "upstream/3.0.6/src/werkzeug/routing/exceptions.py",
+      "werkzeug/routing/map.py": "upstream/3.0.6/src/werkzeug/routing/map.py",
+      "werkzeug/routing/matcher.py": "upstream/3.0.6/src/werkzeug/routing/matcher.py",
+      "werkzeug/routing/rules.py": "upstream/3.0.6/src/werkzeug/routing/rules.py",
+      "werkzeug/sansio/__init__.py": "upstream/3.0.6/src/werkzeug/sansio/__init__.py",
+      "werkzeug/sansio/http.py": "upstream/3.0.6/src/werkzeug/sansio/http.py",
+      "werkzeug/sansio/multipart.py": "upstream/3.0.6/src/werkzeug/sansio/multipart.py",
+      "werkzeug/sansio/request.py": "upstream/3.0.6/src/werkzeug/sansio/request.py",
+      "werkzeug/sansio/response.py": "upstream/3.0.6/src/werkzeug/sansio/response.py",
+      "werkzeug/sansio/utils.py": "upstream/3.0.6/src/werkzeug/sansio/utils.py",
+      "werkzeug/security.py": "upstream/3.0.6/src/werkzeug/security.py",
+      "werkzeug/serving.py": "upstream/3.0.6/src/werkzeug/serving.py",
+      "werkzeug/test.py": "upstream/3.0.6/src/werkzeug/test.py",
+      "werkzeug/testapp.py": "upstream/3.0.6/src/werkzeug/testapp.py",
+      "werkzeug/urls.py": "upstream/3.0.6/src/werkzeug/urls.py",
+      "werkzeug/user_agent.py": "upstream/3.0.6/src/werkzeug/user_agent.py",
+      "werkzeug/utils.py": "upstream/3.0.6/src/werkzeug/utils.py",
+      "werkzeug/wrappers/__init__.py": "upstream/3.0.6/src/werkzeug/wrappers/__init__.py",
+      "werkzeug/wrappers/request.py": "upstream/3.0.6/src/werkzeug/wrappers/request.py",
+      "werkzeug/wrappers/response.py": "upstream/3.0.6/src/werkzeug/wrappers/response.py",
+      "werkzeug/wsgi.py": "upstream/3.0.6/src/werkzeug/wsgi.py",
+      "markupsafe/__init__.py": "upstream/dependencies/markupsafe-2.1.5/src/markupsafe/__init__.py",
+      "markupsafe/_native.py": "upstream/dependencies/markupsafe-2.1.5/src/markupsafe/_native.py"
+    }
+  },
+  "version_commits": {
+    "2.2.3": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+    "3.0.6": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624"
+  }
+}

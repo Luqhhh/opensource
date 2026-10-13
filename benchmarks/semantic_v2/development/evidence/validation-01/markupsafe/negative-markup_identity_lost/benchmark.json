@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "suite_id": "markupsafe-semantic-development-v2",
+  "generated_at": "2026-10-13T06:15:01.194317+00:00",
+  "mode": "recorded_candidates",
+  "model": null,
+  "max_attempts": 1,
+  "manifest_sha256": "7c6cb69545c331e2ea3f659f2d9ef4287fc0e90c2d38e3f6b76b742b7d4a2392",
+  "manifest": {
+    "schema_version": 1,
+    "suite_id": "markupsafe-semantic-development-v2",
+    "split": "development_v2",
+    "description": "Expanded development checks based on previously observed v1 migrations; never report these cases as held out.",
+    "classification": "evaluator_authored_migration_contracts_and_retained_regressions",
+    "provenance": {
+      "origin": "benchmarks/real_projects/markupsafe",
+      "previous_cases_and_live_results_seen": true,
+      "held_out": false,
+      "upstream_runtime_bytes_unchanged": true,
+      "candidate_mode": "recorded_candidate_replay",
+      "live_model_evaluation": false
+    },
+    "limitations": [
+      "Cases were deliberately selected from known failures and are development data.",
+      "New callable tasks and boundary checks are authored adaptations, not new official upstream documentation excerpts.",
+      "Finite checks share a process with candidate code and do not prove adversarial semantic equivalence.",
+      "Reference candidates validate the evaluation pipeline, not model quality."
+    ],
+    "cases": [
+      {
+        "id": "cases/safe_string.md#1",
+        "expected_before": "failed",
+        "classification": "retained_development_regression",
+        "origin_case": "cases/safe_string.md#1",
+        "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+        "oracle": "configured_behavior_checks_and_expected_stdout"
+      },
+      {
+        "id": "cases/convert_contract.md#1",
+        "expected_before": "failed",
+        "classification": "expanded_development_contract",
+        "origin_case": "cases/safe_string.md#1",
+        "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+        "oracle": "configured_behavior_checks_and_expected_stdout"
+      },
+      {
+        "id": "cases/optional_values.md#1",
+        "expected_before": "checked",
+        "classification": "retained_development_regression",
+        "origin_case": "cases/optional_values.md#1",
+        "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+        "oracle": "configured_behavior_checks_and_expected_stdout"
+      }
+    ]
+  },
+  "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",
+  "patch_application": "passed",
+  "stage": "complete",
+  "implementation_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "0242ef64b3adc9b928da1471aba758346fe611ce3f98d893701489caff9ec0ba",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "context.py": "b703f9b325d7ef875d9ecab7859612c6efd03ebacbe77d015e1df24dc0e689d2",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "25c41ba0b1e5fb4a012e047d39796ac6f11fff3d704603ed3a9cc363a7840933",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "5d9d385f59f556eac83493f25d08994713335f4f144f1d51c5016692cc5d1060",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "e5cf60ecab4848ac36e68d92e1781964d93a010628cb4afdc921af1b2664bfcc",
+    "study.py": "9d30b476a1fb335d27e683d18908fa709c81ae395a232fd939cd615817ba65f0"
+  },
+  "candidate_snapshot_sha256": "4d47b4ebb02d35f5c68f49cdd59d810fe656a5bf519e76ef0f555e4216950dda",
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 2,
+    "proposals": 2,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0.0
+  },
+  "metrics": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 1,
+    "patch_confirmed_repairs": 1,
+    "repair_rate": 0.5,
+    "healthy_preserved": 1,
+    "all_passed": false,
+    "cases": [
+      {
+        "id": "cases/safe_string.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/convert_contract.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "repair_failed",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/optional_values.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "duration_seconds": 0.4107,
+  "exit_code": 1
+}

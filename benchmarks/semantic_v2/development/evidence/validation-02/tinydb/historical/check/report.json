@@ -1,0 +1,123 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:16:26.423221+00:00",
+  "project_name": "inputs",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/purge_default.md": "4ce826be3f2099b778b6126ac5115ffed505a62c1f7519d5ff8365d075b95a24",
+      "cases/purge_named_table.md": "f4adc3a1a3c29670505f9b6585fd2ae0a433c4a35293a9c10fd1e66e520026db",
+      "cases/healthy_query.md": "df583f769a65e583989a9662e9e58a949f75d530e9043e875f1e7aaffd9bc0e5"
+    },
+    "sources": {
+      "tinydb/queries.py": "819c4239806dbde4bca2c7ae5c0b019497e3b47f2ddca20516ac5d3e477f2ed4",
+      "tinydb/version.py": "0e3eebe3ad21526f0855ceb3249a251927187e7c9c340b160d042418ce8f32e1",
+      "tinydb/__init__.py": "6a0a35e057b66243ca0df8a05f910fb17519c9adc0aaf21f178067259a9f36ad",
+      "tinydb/utils.py": "39131b4a6c5b7ca304cbbda63fd5a97506971305297e99c944a96b714be1a887",
+      "tinydb/storages.py": "d6b00af3d1f46cfd54040dae037b85c5a1cb954767623eb0edb1c7b1e0888cf6",
+      "tinydb/operations.py": "ce68d8217ab21ec9b3c004f908c9195c037dc7488592cf07647d6504ed9e0e78",
+      "tinydb/middlewares.py": "fb1776c941e4948239a60989f934151b3d88ffdc7f466e70051e50a1a5d2f72d",
+      "tinydb/database.py": "1cf90f6f2142791e1bc0e9d34decae47785331921204e803329a1aebbd941e36"
+    },
+    "configuration_sha256": "ea5ddaf9b6b39e3fbc457a715c0f783ff5568a45f632304df29b101629573206"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "checked": 3
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/purge_default.md#1",
+        "path": "cases/purge_default.md",
+        "start_line": 7,
+        "end_line": 13,
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nclear_default = db.purge\nclear_default()\ndb.all()\n",
+        "context": "# Clear default records and retain unrelated tables\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep db and a reusable zero-argument clear_default callable bound to this database. Clear only default-table records, retaining the default table and named archive/empty_archive tables and data. The fixture contains pre-existing records including Unicode, empty strings, false and null. Repeated calls on empty and refilled tables must work, reset IDs to 1, invalidate cached searches, and persist after reopen. Emit no stdout."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 0.0347,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/purge_named_table.md#1",
+        "path": "cases/purge_named_table.md",
+        "start_line": 7,
+        "end_line": 15,
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndrop_named = db.purge_table\ndrop_named('table_name')\n",
+        "context": "# Drop one named table and preserve other records\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep db and a reusable drop_named(name) callable bound to this database. Remove only the requested named table and its records; preserve default, archive and empty_archive tables and data. Handle missing/empty tables and repeated calls, invalidate table caches so recreation starts at ID 1, and persist after reopen. The fixture includes multiple Unicode/false/null records. Emit no stdout."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 0.0353,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_query.md#1",
+        "path": "cases/healthy_query.md",
+        "start_line": 7,
+        "end_line": 13,
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nFruit = Query()\ndb.search(Fruit.type == 'peach')\ndb.search(Fruit.count > 5)\n",
+        "context": "# Healthy fruit query\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep db and the Query instance Fruit available. Insert the original two records and preserve equality, count-greater-than, and empty-result queries without mutating stored data. Retain only the default table. Emit no stdout."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 0.0352,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

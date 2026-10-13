@@ -1,0 +1,719 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "missing_or_incomplete": [],
+  "run_status": {
+    "status": "complete",
+    "metadata": {
+      "server": {
+        "version": "0.40.3"
+      },
+      "model": {
+        "name": "qwen2.5-coder:7b",
+        "model": "qwen2.5-coder:7b",
+        "modified_at": "2026-10-13T12:53:16.487315423+08:00",
+        "size": 4683087561,
+        "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen2",
+          "families": [
+            "qwen2"
+          ],
+          "parameter_size": "7.6B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 32768,
+          "embedding_length": 3584,
+          "runner": "ggml"
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "insert"
+        ]
+      }
+    },
+    "finished_at": "2026-10-13T07:04:43.086434+00:00"
+  },
+  "split": "holdout",
+  "protocol_sha256": "544e714f53a69e53b18cfd3d23a1aa8499948760ad30d1e3c91e60935f7272aa",
+  "groups": {
+    "legacy_source": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 160488,
+      "output_tokens": 4381,
+      "inference_seconds": 157.2636,
+      "wall_seconds": 174.7305,
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 36
+      },
+      "cells": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "arm": "legacy_source",
+          "path": "runs/17/legacy_source/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "arm": "legacy_source",
+          "path": "runs/17/legacy_source/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "arm": "legacy_source",
+          "path": "runs/29/legacy_source/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "arm": "legacy_source",
+          "path": "runs/29/legacy_source/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "arm": "legacy_source",
+          "path": "runs/43/legacy_source/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "arm": "legacy_source",
+          "path": "runs/43/legacy_source/werkzeug/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "legacy_feedback": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 167584,
+      "output_tokens": 4378,
+      "inference_seconds": 168.0013,
+      "wall_seconds": 186.3502,
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 36
+      },
+      "cells": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "arm": "legacy_feedback",
+          "path": "runs/17/legacy_feedback/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "arm": "legacy_feedback",
+          "path": "runs/17/legacy_feedback/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "arm": "legacy_feedback",
+          "path": "runs/29/legacy_feedback/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "arm": "legacy_feedback",
+          "path": "runs/29/legacy_feedback/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "arm": "legacy_feedback",
+          "path": "runs/43/legacy_feedback/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "arm": "legacy_feedback",
+          "path": "runs/43/legacy_feedback/werkzeug/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "source_v2": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 95778,
+      "output_tokens": 4461,
+      "inference_seconds": 154.1977,
+      "wall_seconds": 172.4756,
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 36
+      },
+      "cells": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "arm": "source_v2",
+          "path": "runs/17/source_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "arm": "source_v2",
+          "path": "runs/17/source_v2/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "arm": "source_v2",
+          "path": "runs/29/source_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "arm": "source_v2",
+          "path": "runs/29/source_v2/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "arm": "source_v2",
+          "path": "runs/43/source_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "arm": "source_v2",
+          "path": "runs/43/source_v2/werkzeug/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "generic_feedback_v2": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 103806,
+      "output_tokens": 4542,
+      "inference_seconds": 157.7971,
+      "wall_seconds": 175.9319,
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 36
+      },
+      "cells": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "arm": "generic_feedback_v2",
+          "path": "runs/17/generic_feedback_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "arm": "generic_feedback_v2",
+          "path": "runs/17/generic_feedback_v2/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "arm": "generic_feedback_v2",
+          "path": "runs/29/generic_feedback_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "arm": "generic_feedback_v2",
+          "path": "runs/29/generic_feedback_v2/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "arm": "generic_feedback_v2",
+          "path": "runs/43/generic_feedback_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "arm": "generic_feedback_v2",
+          "path": "runs/43/generic_feedback_v2/werkzeug/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "feedback_v2": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 105411,
+      "output_tokens": 4624,
+      "inference_seconds": 164.1708,
+      "wall_seconds": 183.6176,
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "statuses": {
+        "repair_failed": 36
+      },
+      "cells": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "arm": "feedback_v2",
+          "path": "runs/17/feedback_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "arm": "feedback_v2",
+          "path": "runs/17/feedback_v2/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "arm": "feedback_v2",
+          "path": "runs/29/feedback_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "arm": "feedback_v2",
+          "path": "runs/29/feedback_v2/werkzeug/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "arm": "feedback_v2",
+          "path": "runs/43/feedback_v2/mistune/inference.json",
+          "status": "complete"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "arm": "feedback_v2",
+          "path": "runs/43/feedback_v2/werkzeug/inference.json",
+          "status": "complete"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    }
+  },
+  "interpretation": "Case-runs repeat the same cases under paired seeds, not additional independent defects. Small purposively selected migration set; no population success-rate inference."
+}

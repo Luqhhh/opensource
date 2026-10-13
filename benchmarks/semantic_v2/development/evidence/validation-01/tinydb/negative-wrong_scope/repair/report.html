@@ -1,0 +1,115 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'"><title>例证 · 文档验证报告</title><style>
+    :root{color-scheme:light;--ink:#172a35;--muted:#526876;--line:#d8e2e7;--accent:#096c61}*{box-sizing:border-box}body{margin:0;background:#f3f6f7;color:var(--ink);font:15px/1.65 system-ui,sans-serif}.wrap{max-width:1050px;margin:auto;padding:48px 24px}header{border-bottom:1px solid var(--line);padding-bottom:28px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:750}h1{font-size:36px;margin:8px 0}h2{font-size:17px;margin:0;overflow-wrap:anywhere}h3{font-size:14px;margin:24px 0 8px}.intro,.meta,.context{color:var(--muted)}.meta{font-size:12px}.stats{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.stat{background:white;border:1px solid var(--line);padding:14px 20px;border-radius:10px;min-width:145px}.stat strong{display:block;font-size:28px}.stat span{font-size:12px;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:22px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.badge{font-size:12px;border-radius:20px;padding:5px 12px;background:#fff0d5;color:#775119}.verified_repair,.checked{background:#dff2eb;color:#11644d}.failed,.repair_failed,.rejected,.blocked,.provider_error{background:#fde7e4;color:#9a3029}summary{cursor:pointer;color:var(--accent);font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#172a35;color:#e4eef2;border-radius:8px;padding:16px;font:12px/1.7 ui-monospace,monospace}.diff{background:#edf5f1;color:#214b3b}.provider{font-size:12px;color:var(--muted)}.warning{border-left:3px solid #c96a29;padding-left:12px}footer{font-size:12px;color:var(--muted);margin-top:28px}@media(max-width:600px){.wrap{padding:24px 16px}h1{font-size:28px}article{padding:16px}}
+    </style></head><body><main class="wrap"><header><div class="eyebrow">EXAMPLEPROOF / 例证</div><h1>每一处修复，都有运行证据。</h1><p class="intro">tinydb · 文档示例检查报告</p><p class="meta">2026-10-13T06:14:57.229870+00:00</p></header><section class="stats"><div class="stat"><strong>2</strong><span>候选未通过复验</span></div><div class="stat"><strong>1</strong><span>原示例通过检查</span></div><div class="stat"><strong>2</strong><span>修复轮次 · 每例上限 1</span></div></section><article data-status="repair_failed"><div class="card-head"><h2>cases/purge_default.md#1</h2><span class="badge repair_failed">候选未通过复验</span></div><p class="meta">cases/purge_default.md · 第 7–13 行 · 0.0347 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Clear default records and retain unrelated tables
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+Keep db and a reusable zero-argument clear_default callable bound to this database. Clear only default-table records, retaining the default table and named archive/empty_archive tables and data. The fixture contains pre-existing records including Unicode, empty strings, false and null. Repeated calls on empty and refilled tables must work, reset IDs to 1, invalidate cached searches, and persist after reopen. Emit no stdout.</p><h3>原始示例</h3><pre>from tinydb import TinyDB, Query
+db = TinyDB(&#x27;db.json&#x27;)
+db.insert({&#x27;type&#x27;: &#x27;apple&#x27;, &#x27;count&#x27;: 7})
+db.insert({&#x27;type&#x27;: &#x27;peach&#x27;, &#x27;count&#x27;: 3})
+clear_default = db.purge
+clear_default()
+db.all()
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0347 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 5, in &lt;module&gt;
+    clear_default = db.purge
+  File &quot;/workspace/tinydb/database.py&quot;, line 255, in __getattr__
+    return getattr(self.table(self.default_table_name), name)
+AttributeError: &#x27;Table&#x27; object has no attribute &#x27;purge&#x27;
+</pre><p class="provider">导入的候选补丁 · 非本次模型推理</p><p>Wrong scope: removes archive tables.</p><h3>修改差异</h3><pre class="diff">--- original/cases/purge_default.md#1
++++ candidate/cases/purge_default.md#1
+@@ -2,6 +2,6 @@
+ db = TinyDB(&#x27;db.json&#x27;)
+ db.insert({&#x27;type&#x27;: &#x27;apple&#x27;, &#x27;count&#x27;: 7})
+ db.insert({&#x27;type&#x27;: &#x27;peach&#x27;, &#x27;count&#x27;: 3})
+-clear_default = db.purge
++clear_default = db.drop_tables
+ clear_default()
+ db.all()
+</pre><h3>复验结果</h3><p class="meta">failed · 0.0346 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 14, in &lt;module&gt;
+    exec(compile(open(&quot;/work/checks.py&quot;).read(), &quot;external-checks&quot;, &quot;exec&quot;), namespace)
+  File &quot;external-checks&quot;, line 4, in &lt;module&gt;
+AssertionError
+</pre><h3>逐轮修复记录</h3><details><summary>第 1 轮 · 候选未通过复验</summary><p class="provider">导入的候选补丁 · 非本次模型推理</p><p>Wrong scope: removes archive tables.</p><pre>from tinydb import TinyDB, Query
+db = TinyDB(&#x27;db.json&#x27;)
+db.insert({&#x27;type&#x27;: &#x27;apple&#x27;, &#x27;count&#x27;: 7})
+db.insert({&#x27;type&#x27;: &#x27;peach&#x27;, &#x27;count&#x27;: 3})
+clear_default = db.drop_tables
+clear_default()
+db.all()
+</pre><p class="meta">输入 token：未提供 · 输出 token：未提供 · 响应耗时：0.0 秒</p><p class="meta">failed · 0.0346 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 14, in &lt;module&gt;
+    exec(compile(open(&quot;/work/checks.py&quot;).read(), &quot;external-checks&quot;, &quot;exec&quot;), namespace)
+  File &quot;external-checks&quot;, line 4, in &lt;module&gt;
+AssertionError
+</pre></details><p class="meta">停止原因：已达到轮数上限</p></details></article><article data-status="repair_failed"><div class="card-head"><h2>cases/purge_named_table.md#1</h2><span class="badge repair_failed">候选未通过复验</span></div><p class="meta">cases/purge_named_table.md · 第 7–15 行 · 0.0351 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># Drop one named table and preserve other records
+Evaluator-authored development_v2 adaptation; not a newly held-out upstream example.
+Keep db and a reusable drop_named(name) callable bound to this database. Remove only the requested named table and its records; preserve default, archive and empty_archive tables and data. Handle missing/empty tables and repeated calls, invalidate table caches so recreation starts at ID 1, and persist after reopen. The fixture includes multiple Unicode/false/null records. Emit no stdout.</p><h3>原始示例</h3><pre>from tinydb import TinyDB, Query
+db = TinyDB(&#x27;db.json&#x27;)
+db.insert({&#x27;type&#x27;: &#x27;apple&#x27;, &#x27;count&#x27;: 7})
+db.insert({&#x27;type&#x27;: &#x27;peach&#x27;, &#x27;count&#x27;: 3})
+table = db.table(&#x27;table_name&#x27;)
+table.insert({&#x27;value&#x27;: True})
+table.all()
+drop_named = db.purge_table
+drop_named(&#x27;table_name&#x27;)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.0351 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 8, in &lt;module&gt;
+    drop_named = db.purge_table
+  File &quot;/workspace/tinydb/database.py&quot;, line 255, in __getattr__
+    return getattr(self.table(self.default_table_name), name)
+AttributeError: &#x27;Table&#x27; object has no attribute &#x27;purge_table&#x27;
+</pre><p class="provider">导入的候选补丁 · 非本次模型推理</p><p>Wrong scope: clears default records instead of dropping requested table.</p><h3>修改差异</h3><pre class="diff">--- original/cases/purge_named_table.md#1
++++ candidate/cases/purge_named_table.md#1
+@@ -5,5 +5,5 @@
+ table = db.table(&#x27;table_name&#x27;)
+ table.insert({&#x27;value&#x27;: True})
+ table.all()
+-drop_named = db.purge_table
++drop_named = lambda name: db.truncate()
+ drop_named(&#x27;table_name&#x27;)
+</pre><h3>复验结果</h3><p class="meta">failed · 0.035 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 14, in &lt;module&gt;
+    exec(compile(open(&quot;/work/checks.py&quot;).read(), &quot;external-checks&quot;, &quot;exec&quot;), namespace)
+  File &quot;external-checks&quot;, line 2, in &lt;module&gt;
+AssertionError
+</pre><h3>逐轮修复记录</h3><details><summary>第 1 轮 · 候选未通过复验</summary><p class="provider">导入的候选补丁 · 非本次模型推理</p><p>Wrong scope: clears default records instead of dropping requested table.</p><pre>from tinydb import TinyDB, Query
+db = TinyDB(&#x27;db.json&#x27;)
+db.insert({&#x27;type&#x27;: &#x27;apple&#x27;, &#x27;count&#x27;: 7})
+db.insert({&#x27;type&#x27;: &#x27;peach&#x27;, &#x27;count&#x27;: 3})
+table = db.table(&#x27;table_name&#x27;)
+table.insert({&#x27;value&#x27;: True})
+table.all()
+drop_named = lambda name: db.truncate()
+drop_named(&#x27;table_name&#x27;)
+</pre><p class="meta">输入 token：未提供 · 输出 token：未提供 · 响应耗时：0.0 秒</p><p class="meta">failed · 0.035 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 14, in &lt;module&gt;
+    exec(compile(open(&quot;/work/checks.py&quot;).read(), &quot;external-checks&quot;, &quot;exec&quot;), namespace)
+  File &quot;external-checks&quot;, line 2, in &lt;module&gt;
+AssertionError
+</pre></details><p class="meta">停止原因：已达到轮数上限</p></details></article><article data-status="checked"><div class="card-head"><h2>cases/healthy_query.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/healthy_query.md · 第 7–13 行 · 0.035 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># TinyDB 3.15.2 documentation on TinyDB 4.8.2: healthy_query
+Insert the fruit records and query peaches and records with count greater than five. This is a healthy control; preserve its behavior.
+The executable block joins the listed upstream doctest commands, with only the REPL prompts removed.</p><h3>原始示例</h3><pre>from tinydb import TinyDB, Query
+db = TinyDB(&#x27;db.json&#x27;)
+db.insert({&#x27;type&#x27;: &#x27;apple&#x27;, &#x27;count&#x27;: 7})
+db.insert({&#x27;type&#x27;: &#x27;peach&#x27;, &#x27;count&#x27;: 3})
+Fruit = Query()
+db.search(Fruit.type == &#x27;peach&#x27;)
+db.search(Fruit.count &gt; 5)
+</pre><h3>运行证据</h3><p class="meta">passed · 0.035 秒 · 检查：configured_behavior_checks</p></details></article><footer>“修复通过检查”表示通过已有断言或配置的行为检查。检查覆盖之外的语义仍需人工核验。候选补丁不会自动修改原始项目。</footer></main></body></html>

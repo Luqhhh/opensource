@@ -1,0 +1,8 @@
+{
+  "cases/safe_string.md#1": [
+    {
+      "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(value)))\n",
+      "rationale": "The error indicates that 'soft_unicode' is not defined. However, the sources provided do not include a function named 'soft_unicode'. Instead, the 'soft_str' function from 'markupsafe/_native.py' is provided, which can be used to convert an object to a string while preserving a 'Markup' string. The 'escape' function from 'markupsafe/__init__.py' is used to escape the string, and the 'repr' function is used to print the escaped string in a readable format."
+    }
+  ]
+}

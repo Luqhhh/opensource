@@ -1,0 +1,78 @@
+{
+  "documents": [
+    "cases/pop_path_info.md",
+    "cases/peek_path_info.md",
+    "cases/iri_to_uri.md"
+  ],
+  "source_files": [
+    "markupsafe/__init__.py",
+    "markupsafe/_native.py",
+    "werkzeug/__init__.py",
+    "werkzeug/_internal.py",
+    "werkzeug/_reloader.py",
+    "werkzeug/datastructures/__init__.py",
+    "werkzeug/datastructures/accept.py",
+    "werkzeug/datastructures/auth.py",
+    "werkzeug/datastructures/cache_control.py",
+    "werkzeug/datastructures/csp.py",
+    "werkzeug/datastructures/etag.py",
+    "werkzeug/datastructures/file_storage.py",
+    "werkzeug/datastructures/headers.py",
+    "werkzeug/datastructures/mixins.py",
+    "werkzeug/datastructures/range.py",
+    "werkzeug/datastructures/structures.py",
+    "werkzeug/debug/__init__.py",
+    "werkzeug/debug/console.py",
+    "werkzeug/debug/repr.py",
+    "werkzeug/debug/tbtools.py",
+    "werkzeug/exceptions.py",
+    "werkzeug/formparser.py",
+    "werkzeug/http.py",
+    "werkzeug/local.py",
+    "werkzeug/middleware/__init__.py",
+    "werkzeug/middleware/dispatcher.py",
+    "werkzeug/middleware/http_proxy.py",
+    "werkzeug/middleware/lint.py",
+    "werkzeug/middleware/profiler.py",
+    "werkzeug/middleware/proxy_fix.py",
+    "werkzeug/middleware/shared_data.py",
+    "werkzeug/routing/__init__.py",
+    "werkzeug/routing/converters.py",
+    "werkzeug/routing/exceptions.py",
+    "werkzeug/routing/map.py",
+    "werkzeug/routing/matcher.py",
+    "werkzeug/routing/rules.py",
+    "werkzeug/sansio/__init__.py",
+    "werkzeug/sansio/http.py",
+    "werkzeug/sansio/multipart.py",
+    "werkzeug/sansio/request.py",
+    "werkzeug/sansio/response.py",
+    "werkzeug/sansio/utils.py",
+    "werkzeug/security.py",
+    "werkzeug/serving.py",
+    "werkzeug/test.py",
+    "werkzeug/testapp.py",
+    "werkzeug/urls.py",
+    "werkzeug/user_agent.py",
+    "werkzeug/utils.py",
+    "werkzeug/wrappers/__init__.py",
+    "werkzeug/wrappers/request.py",
+    "werkzeug/wrappers/response.py",
+    "werkzeug/wsgi.py"
+  ],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/pop_path_info.md#1": {
+      "expected_stdout": "'a'\n'/foo/a'\n'b'\n'/foo/a/b'\n",
+      "checks": "assert callable(pop_path_info)\nassert env == {'SCRIPT_NAME': '/foo/a/b', 'PATH_INFO': ''}\nfor _initial, _result, _after in [\n    ({'SCRIPT_NAME': '/app', 'PATH_INFO': '/x/y'}, 'x', {'SCRIPT_NAME': '/app/x', 'PATH_INFO': '/y'}),\n    ({'SCRIPT_NAME': '/app', 'PATH_INFO': ''}, None, {'SCRIPT_NAME': '/app', 'PATH_INFO': ''}),\n    ({'PATH_INFO': '/'}, '', {'SCRIPT_NAME': '/', 'PATH_INFO': ''}),\n    ({'SCRIPT_NAME': '/app', 'PATH_INFO': '//x//y'}, 'x', {'SCRIPT_NAME': '/app//x', 'PATH_INFO': '//y'}),\n    ({'PATH_INFO': '/cafÃ©/next'}, 'café', {'SCRIPT_NAME': '/cafÃ©', 'PATH_INFO': '/next'}),\n    ({'PATH_INFO': '/x', 'keep': 7}, 'x', {'SCRIPT_NAME': '/x', 'PATH_INFO': '', 'keep': 7}),\n    ({'keep': 7}, None, {'keep': 7})]:\n    _environment = dict(_initial)\n    assert pop_path_info(_environment) == _result\n    assert _environment == _after\n_environment = {'PATH_INFO': '/cafÃ©'}\nassert pop_path_info(_environment, charset=None) == b'caf\\xc3\\xa9'\n"
+    },
+    "cases/peek_path_info.md#1": {
+      "expected_stdout": "'a'\n'a'\n",
+      "checks": "assert callable(peek_path_info)\nassert env == {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nfor _initial, _expected in [({}, ''), ({'PATH_INFO': ''}, ''), ({'PATH_INFO': '/'}, ''),\n                             ({'PATH_INFO': '/x/y'}, 'x'), ({'PATH_INFO': '//x//y'}, 'x'),\n                             ({'PATH_INFO': '/cafÃ©/y', 'keep': 7}, 'café')]:\n    _environment = dict(_initial)\n    assert peek_path_info(_environment) == _expected\n    assert peek_path_info(_environment) == _expected\n    assert _environment == _initial\nassert peek_path_info({'PATH_INFO': '/cafÃ©'}, charset=None) == b'caf\\xc3\\xa9'\n"
+    },
+    "cases/iri_to_uri.md#1": {
+      "expected_stdout": "'http://xn--n3h.net/p%C3%A5th?q=%C3%A8ry%DF'\n",
+      "checks": "assert iri_to_uri('https://example.com/a b') == 'https://example.com/a%20b'\nassert iri_to_uri('https://例子.test/你好') == 'https://xn--fsqu00a.test/%E4%BD%A0%E5%A5%BD'\nassert iri_to_uri('') == ''\nassert iri_to_uri('/already%20quoted') == '/already%20quoted'\n"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "documents": [
+    "cases/reusable_html.md",
+    "cases/renderer_options.md",
+    "cases/simple_html.md"
+  ],
+  "source_files": [
+    "mistune/__init__.py",
+    "mistune/__main__.py",
+    "mistune/block_parser.py",
+    "mistune/core.py",
+    "mistune/directives/__init__.py",
+    "mistune/directives/_base.py",
+    "mistune/directives/_fenced.py",
+    "mistune/directives/_rst.py",
+    "mistune/directives/admonition.py",
+    "mistune/directives/image.py",
+    "mistune/directives/include.py",
+    "mistune/directives/toc.py",
+    "mistune/helpers.py",
+    "mistune/inline_parser.py",
+    "mistune/list_parser.py",
+    "mistune/markdown.py",
+    "mistune/plugins/__init__.py",
+    "mistune/plugins/abbr.py",
+    "mistune/plugins/def_list.py",
+    "mistune/plugins/footnotes.py",
+    "mistune/plugins/formatting.py",
+    "mistune/plugins/math.py",
+    "mistune/plugins/ruby.py",
+    "mistune/plugins/speedup.py",
+    "mistune/plugins/spoiler.py",
+    "mistune/plugins/table.py",
+    "mistune/plugins/task_lists.py",
+    "mistune/plugins/url.py",
+    "mistune/renderers/__init__.py",
+    "mistune/renderers/_list.py",
+    "mistune/renderers/html.py",
+    "mistune/renderers/markdown.py",
+    "mistune/renderers/rst.py",
+    "mistune/toc.py",
+    "mistune/util.py",
+    "typing_extensions.py"
+  ],
+  "timeout_seconds": 5,
+  "examples": {
+    "cases/reusable_html.md#1": {
+      "expected_stdout": "",
+      "checks": "assert callable(markdown)\nfor _text, _expected in [('', ''), ('plain', '<p>plain</p>\\n'),\n                         ('**bold**', '<p><strong>bold</strong></p>\\n'),\n                         ('*em*', '<p><em>em</em></p>\\n'),\n                         ('你好', '<p>你好</p>\\n'),\n                         ('a\\nb', '<p>a\\nb</p>\\n'),\n                         ('<b>x</b>', '<p><b>x</b></p>\\n')]:\n    _actual = markdown(_text)\n    assert type(_actual) is str\n    assert _actual == _expected\nassert markdown('plain') == markdown('plain')\n"
+    },
+    "cases/renderer_options.md#1": {
+      "expected_stdout": "",
+      "checks": "assert callable(markdown)\nfor _text, _expected in [('', ''), ('a\\nb', '<p>a<br>\\nb</p>\\n'),\n                         ('<b>x</b>', '<p>&lt;b&gt;x&lt;/b&gt;</p>\\n'),\n                         ('**bold**', '<p><strong>bold</strong></p>\\n'),\n                         ('你好\\n世界', '<p>你好<br>\\n世界</p>\\n'),\n                         ('a & b', '<p>a &amp; b</p>\\n')]:\n    _actual = markdown(_text)\n    assert type(_actual) is str\n    assert _actual == _expected\nassert markdown(text) == '<p>&lt;b&gt;x&lt;/b&gt;<br>\\nnext</p>\\n'\n",
+      "setup": "import mistune\ntext = '<b>x</b>\\nnext'\n"
+    },
+    "cases/simple_html.md#1": {
+      "expected_stdout": "",
+      "checks": "assert mistune.markdown('') == ''\nassert mistune.markdown('**x**') == '<p><strong>x</strong></p>\\n'\nassert mistune.markdown('plain') == '<p>plain</p>\\n'\nassert mistune.markdown('你好') == '<p>你好</p>\\n'\nassert mistune.markdown('<b>x</b>', escape=True) == '<p>&lt;b&gt;x&lt;/b&gt;</p>\\n'\n"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "suite_id": "more_itertools-semantic-development-v2",
+  "generated_at": "2026-10-13T06:46:44.940048+00:00",
+  "mode": "recorded_candidates",
+  "model": null,
+  "max_attempts": 1,
+  "manifest_sha256": "4005bccb877a64e82e62ccc71e8d1529b45004966bc07d934bfdd27f09535151",
+  "manifest": {
+    "schema_version": 1,
+    "suite_id": "more_itertools-semantic-development-v2",
+    "split": "development_v2",
+    "description": "Expanded development checks based on previously observed v1 migrations; never report these cases as held out.",
+    "classification": "evaluator_authored_migration_contracts_and_retained_regressions",
+    "provenance": {
+      "origin": "benchmarks/real_projects/more_itertools",
+      "previous_cases_and_live_results_seen": true,
+      "held_out": false,
+      "upstream_runtime_bytes_unchanged": true,
+      "candidate_mode": "recorded_candidate_replay",
+      "live_model_evaluation": false
+    },
+    "limitations": [
+      "Cases were deliberately selected from known failures and are development data.",
+      "New callable tasks and boundary checks are authored adaptations, not new official upstream documentation excerpts.",
+      "Finite checks share a process with candidate code and do not prove adversarial semantic equivalence.",
+      "Reference candidates validate the evaluation pipeline, not model quality."
+    ],
+    "cases": [
+      {
+        "id": "cases/collate.md#1",
+        "expected_before": "failed",
+        "classification": "expanded_development_contract",
+        "origin_case": "cases/collate.md#1",
+        "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+        "oracle": "configured_behavior_checks_and_expected_stdout"
+      },
+      {
+        "id": "cases/grouper.md#1",
+        "expected_before": "failed",
+        "classification": "retained_development_regression",
+        "origin_case": "cases/grouper.md#1",
+        "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+        "oracle": "configured_behavior_checks_and_expected_stdout"
+      },
+      {
+        "id": "cases/healthy_chunked.md#1",
+        "expected_before": "checked",
+        "classification": "retained_development_regression",
+        "origin_case": "cases/healthy_chunked.md#1",
+        "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+        "oracle": "configured_behavior_checks_and_expected_stdout"
+      }
+    ]
+  },
+  "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",
+  "patch_application": "passed",
+  "stage": "complete",
+  "implementation_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "9ab60224b1bdcf2fbf0ef55533234ab107f293e17142c89afbff171a277dacae",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "context.py": "00d30bf5aef2c11b240e294bdec737606b403057bfdbd6cb09f6fc493888b042",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "25c41ba0b1e5fb4a012e047d39796ac6f11fff3d704603ed3a9cc363a7840933",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "48f45dc19649c574195bf14d83776628e41b804d4d0f1b0f4971cf90744316ae",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "e5cf60ecab4848ac36e68d92e1781964d93a010628cb4afdc921af1b2664bfcc",
+    "semantic_study.py": "83828e2ac4bfba7d7f24e98a760cdba2546cdf698cd4f0327aebff3e7a8e23f8",
+    "stdlib_index.py": "d1b4796ef066a0118608d69c9094e9fcf93418a5d92f953a8907d5919f5d3270",
+    "study.py": "5fee28eb9bea7e02993d7178268011dc91b0fc919d0187f12bfcb6dcd03f0c62"
+  },
+  "candidate_snapshot_sha256": "1b6c93b4c931d02b32bed1d798ea34a7a744768f1a4dd80f02a33d0ff66ce88d",
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 1,
+    "proposals": 1,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0.0
+  },
+  "metrics": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 1,
+    "patch_confirmed_repairs": 1,
+    "repair_rate": 0.5,
+    "healthy_preserved": 1,
+    "all_passed": false,
+    "cases": [
+      {
+        "id": "cases/collate.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "failed",
+        "patched_status": "failed",
+        "attempts": 0
+      },
+      {
+        "id": "cases/grouper.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/healthy_chunked.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "duration_seconds": 0.8448,
+  "exit_code": 1
+}

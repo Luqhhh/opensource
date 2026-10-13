@@ -1,0 +1,28 @@
+--- a/cases/safe_string.md
++++ b/cases/safe_string.md
+@@ -4,8 +4,10 @@
+ The harness imports markupsafe's public namespace. Preserve value as Markup and all three original displayed lines. This remains a finite display regression: the reusable convert contract is a separate new case.
+ 
+ ```python
++from markupsafe import escape, Markup
++
+ value = escape('<User 1>')
+ print(repr(value))
+ print(repr(escape(str(value))))
+-print(repr(escape(soft_unicode(value))))
++print(repr(escape(escape(value))))
+ ```
+--- a/cases/convert_contract.md
++++ b/cases/convert_contract.md
+@@ -4,8 +4,9 @@
+ Keep a reusable callable named convert that converts non-strings with str(), preserves existing str/str-subclass/Markup objects by identity, and performs no HTML escaping. Cover ordinary/empty/Unicode/HTML-sensitive strings, numbers, booleans, None and objects defining __str__ or __html__. The displayed escaped Markup must remain Markup('&lt;User 1&gt;'). This authored binding task expands the upstream soft-conversion contract; it is not a mechanical excerpt.
+ 
+ ```python
+-from markupsafe import escape, soft_unicode
+-convert = soft_unicode
++from markupsafe import escape, soft_str
++
++convert = soft_str
+ value = escape('<User 1>')
+ print(repr(escape(convert(value))))
+ ```

@@ -12,35 +12,38 @@
 
 | 时间 | 操作/画面 | 建议讲解 |
 |---|---|---|
-| 00:00–00:30 | 标题与历史API变更示例 | “API 升级后，文档示例可能失效。AI 提出的修改还需要保留原有行为。例证帮助维护者提取、执行、修复并审核 Python 文档代码块。” |
-| 00:30–01:05 | 展示兼容性集metadata与checks；运行scan/check | “输入由维护者明确选择。这里有六个历史标准库兼容性重现和两个正常对照，均有预先设置的行为检查。这是自编开发集，不是真实项目抽样或未见测试集。” |
-| 01:05–01:55 | 执行本地模型benchmark；打开新repair报告 | “修复由本地 Qwen2.5-Coder 生成。工具发送示例、选定源码与错误，不发送外部检查和预期输出。每轮保留原断言，再隔离复验；评测命令同时保存输入快照。” |
-| 01:55–02:35 | 展开计时案例多轮证据、Base64失败及HTML契约限制 | “这里是保存的真实运行：计时案例第三轮通过；Base64候选丢了MIME换行。HTML输出虽正确，却删掉检查要调用的绑定，因此也未通过。通过与否取决于明确检查范围。” |
-| 02:35–03:10 | 展示unified diff、benchmark摘要与patched报告 | “评测自动将通过的补丁应用到一次性副本，再完整提取执行。历史优化运行得到六个通过、两个失败，其中通过数含两个健康对照。用户工作区仍只读，正式应用需要人工审核。” |
-| 03:10–03:45 | 展示三组benchmark.json及token开销 | “原提示词有两例修复通过，调整后四例。提示词在看到样例后优化，请求数也从六次增至十一次，不能声称未见项目成功率或纯多轮增益。全部失败与原始调用都已保留。” |
-| 03:45–04:20 | 仓库模块、资源清单与开放文件 | “核心成果是可复用的修复验证流程、证据报告和补丁。代码以 MIT 开放，模型和隔离工具分别遵守上游许可。下一步采集真实项目与未见评测集，继续完善独立行为验证。” |
+| 00:00–00:30 | 标题与 MarkupSafe 历史版本迁移 | “API 升级后，文档示例可能失效。单个显示值正确，也不一定保留通用转换语义。例证把 AI 修复与预先设置的行为检查、可审核补丁连接起来。” |
+| 00:30–01:05 | 展示原文出处、旧/目标版本及新版 convert 契约；运行 scan/check | “这是固定版本的真实源码迁移场景，新增绑定任务由评测者编写。普通字符串、Markup、None 等输入分别检查。它属于已见开发集，不能冒充新留出样本。” |
+| 01:05–01:55 | 执行 semantic-v2 实时 benchmark；打开新报告 | “默认策略仍是 legacy；这里显式选择新版检索和分类反馈。模型收到任务、源码摘录和允许的反馈，不收到外部检查或预期输出。所有候选都重新在沙箱里检查；如未修好，也保留实际失败。” |
+| 01:55–02:35 | 打开已归档的 escape 错误候选和外部检查失败 | “这一段是明确标记的工程负例回放，不是现场模型输出。显示的 Markup 相同，但 escape 不能替代一般字符串转换。9 个格式合法负例都被语义检查拒绝，8 个的显示输出仍正确。” |
+| 02:35–03:10 | 展示本次 patch、输入快照和 patched 报告 | “只有通过检查的候选进入补丁；评测在一次性副本应用，再重新提取完整文档。工作区保持只读。这里的通过仅限预设检查，仍需人工审阅。” |
+| 03:10–03:45 | 展示五组设计、两轮开发及留出 summary 与 token | “两轮开发五组预算内均4/6。锁定方法后，新项目留出五组均0/12，没有实现修复收益；输入token减少也不能称为修复效率提升。全部180次留出请求均保留，反馈未优于无反馈；12是4个失败的3次种子重复，不是12个独立缺陷，也不是赛事得分。” |
+| 03:45–04:20 | 展示资源清单、方法锁、检查盲点和开放文件 | “核心实现、固定源码索引、案例和原始证据已开放。标准库索引的来源和许可单独披露。检查仍有缓存序列、对象边界和同进程局限；下一步需维护者复现与人工语义评价，不能先宣称普遍正确。” |
 
 ## 可复制命令
 
 以下命令从仓库根目录运行，所有示例执行均由隔离执行器负责。
 
 ```sh
-python3 -m exampleproof scan benchmarks/compatibility
-python3 -m exampleproof check benchmarks/compatibility --output artifacts/video-check
-python3 -m exampleproof benchmark benchmarks/compatibility \
-  --model qwen2.5-coder:7b --max-attempts 3 \
-  --model-timeout 180 --output artifacts/video-compatibility-live
+python3 -m exampleproof scan benchmarks/semantic_v2/development/markupsafe
+python3 -m exampleproof check benchmarks/semantic_v2/development/markupsafe \
+  --output artifacts/video-semantic-check
+python3 -m exampleproof benchmark benchmarks/semantic_v2/development/markupsafe \
+  --model qwen2.5-coder:7b --repair-policy semantic-v2 --max-attempts 3 \
+  --model-timeout 180 --output artifacts/video-semantic-live
 ```
 
 现场没有模型时，可用以下命令演示工具链，画面持续标注“记录候选回放，无实时推理”，随后打开已保存的真实推理证据：
 
 ```sh
-python3 -m exampleproof benchmark benchmarks/compatibility \
-  --proposals benchmarks/compatibility/proposals.json \
-  --output artifacts/video-compatibility-replay
+python3 -m exampleproof benchmark benchmarks/semantic_v2/development/markupsafe \
+  --proposals benchmarks/semantic_v2/development/markupsafe/proposals.json \
+  --output artifacts/video-semantic-replay
 ```
 
-预先保存的历史证据路径：`docs/evidence/compatibility-20261013/optimized/`。解释为2026-10-13的真实运行记录，而不是现场运行产物。实际现场结果可能不同，以本次报告为准。`benchmark`输出目录必须尚不存在；重录时改用新的目录保留前次结果。现场等待超过预留时间时可以明确标注加速，不把历史证据装成当次实时生成。
+负例画面使用 `benchmarks/semantic_v2/development/evidence/validation-02/markupsafe/negative-escape_instead_of_convert/repair/report.html`；旁边显示该记录属于人工构造的错误候选回放。不要把它的拒绝计为模型修复失败或模型输出。
+
+真实模型历史证据入口为 [新版实验总览](../evidence/semantic-v2-20261013/README.md)，分别打开 development-01、development-02 与 holdout 记录；三者均 complete=true，已完成终态复核与独立审计。留出五组均0/12、健康各6/6、各36次请求；source_v2 输入95,778 token，legacy_source 输入160,488 token。零成功时每成功修复成本不可定义，不预录“反馈有提升”或“collate已修好”。旧 v1 已冻结，审计须使用 `--archived-only`。真实历史调用标注日期；现场结果可能不同，以新报告为准。`benchmark` 输出目录必须尚不存在，重录时另建目录；等待加速需明确标注。
 
 ## 导出与验收
 

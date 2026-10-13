@@ -1,0 +1,480 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "study": "/home/lux1/exampleproof/docs/evidence/semantic-v2-holdout-20261013",
+  "protocol_sha256": "544e714f53a69e53b18cfd3d23a1aa8499948760ad30d1e3c91e60935f7272aa",
+  "checked": {
+    "stdlib_public_function_slices": 999,
+    "frozen_projects": 2,
+    "complete_cells": 30,
+    "equal_source_feedback_first_payloads": 24,
+    "summary_reconciled": 1
+  },
+  "scheduled_cells": 30,
+  "implementation_check": "current_and_archived",
+  "errors": [],
+  "incomplete": [],
+  "independent_groups": {
+    "legacy_source": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 160488,
+      "output_tokens": 4381,
+      "inference_seconds": 157.2636,
+      "wall_seconds": 174.7305,
+      "raw_server_seconds": 156.3838,
+      "statuses": {
+        "repair_failed": 36
+      },
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "legacy_feedback": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 167584,
+      "output_tokens": 4378,
+      "inference_seconds": 168.0013,
+      "wall_seconds": 186.3502,
+      "raw_server_seconds": 167.0554,
+      "statuses": {
+        "repair_failed": 36
+      },
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "source_v2": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 95778,
+      "output_tokens": 4461,
+      "inference_seconds": 154.1977,
+      "wall_seconds": 172.4756,
+      "raw_server_seconds": 153.534,
+      "statuses": {
+        "repair_failed": 36
+      },
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "generic_feedback_v2": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 103806,
+      "output_tokens": 4542,
+      "inference_seconds": 157.7971,
+      "wall_seconds": 175.9319,
+      "raw_server_seconds": 157.015,
+      "statuses": {
+        "repair_failed": 36
+      },
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    },
+    "feedback_v2": {
+      "case_runs": 12,
+      "first_try_passed": 0,
+      "budget_passed": 0,
+      "healthy_case_runs": 6,
+      "healthy_preserved": 6,
+      "requests": 36,
+      "input_tokens": 105411,
+      "output_tokens": 4624,
+      "inference_seconds": 164.1708,
+      "wall_seconds": 183.6176,
+      "raw_server_seconds": 163.3461,
+      "statuses": {
+        "repair_failed": 36
+      },
+      "failures": [
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 17,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 17,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 29,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 29,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/reusable_html.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "mistune",
+          "seed": 43,
+          "id": "cases/renderer_options.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/pop_path_info.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "werkzeug",
+          "seed": 43,
+          "id": "cases/peek_path_info.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.0,
+      "budget_rate": 0.0
+    }
+  },
+  "scope": "Read-only independent hash/payload/raw-cost/report audit. Unified diffs are applied only in memory and checked against recorded post-patch document hashes. No model calls or snippet execution. Local seal is not external attestation."
+}

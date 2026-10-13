@@ -1,0 +1,24 @@
+usage: exampleproof benchmark [-h] --output OUTPUT
+                              (--proposals PROPOSALS | --model MODEL)
+                              [--endpoint ENDPOINT]
+                              [--repair-policy {legacy,semantic-v2}]
+                              [--model-timeout MODEL_TIMEOUT]
+                              [--max-attempts {1,2,3,4,5}]
+                              project
+
+positional arguments:
+  project
+
+options:
+  -h, --help            show this help message and exit
+  --output OUTPUT
+  --proposals PROPOSALS
+                        导入候选补丁 JSON；非实时模型推理
+  --model MODEL         本机 Ollama 中已安装的模型名称
+  --endpoint ENDPOINT
+  --repair-policy {legacy,semantic-v2}
+                        模型修复策略；semantic-v2 使用 6000 字符源码检索和分类反馈（默认 legacy）
+  --model-timeout MODEL_TIMEOUT
+                        Ollama 连接/读取空闲超时秒数（默认 60），冷启动模型可调高
+  --max-attempts {1,2,3,4,5}
+                        每个失败示例的候选轮数上限（1–5，默认 1）；失败反馈用于下一轮

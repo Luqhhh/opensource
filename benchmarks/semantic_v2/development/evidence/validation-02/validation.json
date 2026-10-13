@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "split": "development_v2",
+  "mode": "historical_and_recorded_candidate_validation",
+  "live_model_requests": 0,
+  "projects": {
+    "tinydb": {
+      "historical_version": "3.15.2",
+      "target_version": "4.8.2",
+      "historical_same_checks_passed": 3,
+      "target_expected_failures": 2,
+      "healthy_controls": 1,
+      "reference_repairs_patch_confirmed": 2,
+      "reference_healthy_preserved": 1,
+      "negative_controls": [
+        {
+          "variant": "wrong_scope",
+          "id": "cases/purge_default.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 4, in <module>\nAssertionError\n",
+          "report": "tinydb/negative-wrong_scope/repair/report.json"
+        },
+        {
+          "variant": "wrong_scope",
+          "id": "cases/purge_named_table.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 2, in <module>\nAssertionError\n",
+          "report": "tinydb/negative-wrong_scope/repair/report.json"
+        },
+        {
+          "variant": "single_use",
+          "id": "cases/purge_default.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 13, in <module>\nAssertionError\n",
+          "report": "tinydb/negative-single_use/repair/report.json"
+        },
+        {
+          "variant": "single_use",
+          "id": "cases/purge_named_table.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 15, in <module>\nAssertionError\n",
+          "report": "tinydb/negative-single_use/repair/report.json"
+        }
+      ],
+      "copied_files_verified": 29,
+      "input_sha256": {
+        "cases/purge_default.md": "4ce826be3f2099b778b6126ac5115ffed505a62c1f7519d5ff8365d075b95a24",
+        "cases/purge_named_table.md": "f4adc3a1a3c29670505f9b6585fd2ae0a433c4a35293a9c10fd1e66e520026db",
+        "cases/healthy_query.md": "df583f769a65e583989a9662e9e58a949f75d530e9043e875f1e7aaffd9bc0e5",
+        "tinydb/__init__.py": "28f94493eea983ea655d6285ada5827fd0cdc6eed455121ce7c6244121d51cda",
+        "tinydb/database.py": "113f0a4a5bca46aa1beb6c88cc3d71c4b0ea048768e17f8e5a46b3c522131030",
+        "tinydb/middlewares.py": "eb5b3e53a2f80bdff86bc7560e534548e573ebe4e521405db91acd6f7e3e5d36",
+        "tinydb/operations.py": "09fc2723fbc2327abbf5596a6328a014dd5db4c23f97ac1e87cd75dfe1c7082f",
+        "tinydb/queries.py": "2deaffc39e09bb1de74ce713b509cf9aedaed4310a74c8a39c81bb10e3aff129",
+        "tinydb/storages.py": "edcd3d20cc0c684be1a1d48cfb528867777867a6e7db05bf92beee7da44d9d44",
+        "tinydb/table.py": "02fe25fc7da803487a631ac29d380e8e8b8537de7fd9b09adbfc5309248712fc",
+        "tinydb/utils.py": "196737158a888cbf2a3f33eb7b59b7748a6421556dc56fd3885f551a8f5479b9",
+        "tinydb/version.py": "4b9a66676ab9b389e574661d94f57de836fa817a4548b31efcb7dc9d542d25c1",
+        "exampleproof.json": "14b6e0d35463964afab79f4516e9bd2fbb8e48f12f4b3ef16ac74f5bfd513282",
+        "metadata.json": "e9d091ced79bfc29ce4638ea5d3255ffb3cb6aff7c28ae3c5c56ba4cebd747d4"
+      }
+    },
+    "more_itertools": {
+      "historical_version": "5.0.0 + six 1.16.0",
+      "target_version": "9.0.0",
+      "historical_same_checks_passed": 3,
+      "target_expected_failures": 2,
+      "healthy_controls": 1,
+      "reference_repairs_patch_confirmed": 2,
+      "reference_healthy_preserved": 1,
+      "negative_controls": [
+        {
+          "variant": "eager_merge",
+          "id": "cases/collate.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 19, in <module>\nAssertionError: merge must not consume the inputs before iteration\n",
+          "report": "more_itertools/negative-eager_merge/repair/report.json"
+        },
+        {
+          "variant": "drops_duplicates",
+          "id": "cases/collate.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": false,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 1, in <module>\nAssertionError\n",
+          "report": "more_itertools/negative-drops_duplicates/repair/report.json"
+        }
+      ],
+      "copied_files_verified": 23,
+      "input_sha256": {
+        "cases/collate.md": "1bf42b3961ad279391f59c26d00ccae231afbbf4a43368afb75f065ab5a275b5",
+        "cases/grouper.md": "d3fd80e45c1d827979fd11d572d39557ac44ed4ab87ff6bffbe4cde95b57cefa",
+        "cases/healthy_chunked.md": "fd01cc4fd271a46276471d5aaa1adcf966064be48815f2fd869153358ab3c31b",
+        "more_itertools/__init__.py": "e4f350329cb8d34b39181de3716c338ded110b0f24d1bbd4f56fc2e3d5747ddd",
+        "more_itertools/more.py": "1669ad913fa3ebda882e4c4410b939651a192bc4add5583f7ce196d2c4c577b8",
+        "more_itertools/recipes.py": "657e3ed887db64a94f2156832131f66ee5ff7cfb8c0ded4455ce9ed974ac0b3f",
+        "exampleproof.json": "f743a992c65bd53a2225c2a2d42d124593d39dffb13d967179883b979738e17f",
+        "metadata.json": "4005bccb877a64e82e62ccc71e8d1529b45004966bc07d934bfdd27f09535151"
+      }
+    },
+    "markupsafe": {
+      "historical_version": "1.1.1",
+      "target_version": "2.1.5",
+      "historical_same_checks_passed": 3,
+      "target_expected_failures": 2,
+      "healthy_controls": 1,
+      "reference_repairs_patch_confirmed": 2,
+      "reference_healthy_preserved": 1,
+      "negative_controls": [
+        {
+          "variant": "escape_instead_of_convert",
+          "id": "cases/convert_contract.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 5, in <module>\nAssertionError\n",
+          "report": "markupsafe/negative-escape_instead_of_convert/repair/report.json"
+        },
+        {
+          "variant": "none_as_empty",
+          "id": "cases/convert_contract.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 16, in <module>\nAssertionError\n",
+          "report": "markupsafe/negative-none_as_empty/repair/report.json"
+        },
+        {
+          "variant": "markup_identity_lost",
+          "id": "cases/convert_contract.md#1",
+          "guard_passed": true,
+          "candidate_execution_completed": true,
+          "external_checks_rejected": true,
+          "returncode": 22,
+          "displayed_stdout_matches": true,
+          "failure": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 8, in <module>\nAssertionError: Markup must retain type and identity\n",
+          "report": "markupsafe/negative-markup_identity_lost/repair/report.json"
+        }
+      ],
+      "copied_files_verified": 17,
+      "input_sha256": {
+        "cases/safe_string.md": "19f1201ab2b0a8b837cce7bc758475830fde8ff0679fb93e7edecd1236c10465",
+        "cases/convert_contract.md": "f53a6b4dce024cb14885d10acca5fd0d5b72b3d428778671e6277bd41fb999b7",
+        "cases/optional_values.md": "d8671f9254776d2027201ec25c481be87dfa30df14da46467bd15728887d8861",
+        "markupsafe/__init__.py": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+        "markupsafe/_native.py": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb",
+        "exampleproof.json": "c21b0e3832d4f6c844b6db1207ea32a57d205369f59caa779ddf537b75a8e4ed",
+        "metadata.json": "7c6cb69545c331e2ea3f659f2d9ef4287fc0e90c2d38e3f6b76b742b7d4a2392"
+      }
+    }
+  },
+  "complete": true,
+  "v1_projects_and_frozen_evidence_unchanged": true
+}

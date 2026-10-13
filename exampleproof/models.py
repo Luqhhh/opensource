@@ -19,6 +19,7 @@ class Execution:
     stderr: str = ""
     duration_seconds: float = 0.0
     oracle: str = "none"
+    failure_kind: str = "none"
 
 
 @dataclass

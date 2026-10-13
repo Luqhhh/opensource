@@ -1,0 +1,22 @@
+--- a/cases/safe_string.md
++++ b/cases/safe_string.md
+@@ -7,5 +7,5 @@
+ value = escape('<User 1>')
+ print(repr(value))
+ print(repr(escape(str(value))))
+-print(repr(escape(soft_unicode(value))))
++print(repr(escape(soft_str(value))))
+ ```
+--- a/cases/convert_contract.md
++++ b/cases/convert_contract.md
+@@ -4,8 +4,8 @@
+ Keep a reusable callable named convert that converts non-strings with str(), preserves existing str/str-subclass/Markup objects by identity, and performs no HTML escaping. Cover ordinary/empty/Unicode/HTML-sensitive strings, numbers, booleans, None and objects defining __str__ or __html__. The displayed escaped Markup must remain Markup('&lt;User 1&gt;'). This authored binding task expands the upstream soft-conversion contract; it is not a mechanical excerpt.
+ 
+ ```python
+-from markupsafe import escape, soft_unicode
+-convert = soft_unicode
++from markupsafe import escape, soft_str
++convert = soft_str
+ value = escape('<User 1>')
+ print(repr(escape(convert(value))))
+ ```

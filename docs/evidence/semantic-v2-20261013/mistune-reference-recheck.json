@@ -1,0 +1,97 @@
+{
+  "mode": "evaluator_reference_replay_only_no_model",
+  "old_control": {
+    "total": 3,
+    "counts": {
+      "checked": 3
+    }
+  },
+  "reference": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 2,
+    "patch_confirmed_repairs": 2,
+    "repair_rate": 1.0,
+    "healthy_preserved": 1,
+    "all_passed": true,
+    "cases": [
+      {
+        "id": "cases/reusable_html.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/renderer_options.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/simple_html.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "negative": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 0,
+    "patch_confirmed_repairs": 0,
+    "repair_rate": 0.0,
+    "healthy_preserved": 1,
+    "all_passed": false,
+    "cases": [
+      {
+        "id": "cases/reusable_html.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "repair_failed",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/renderer_options.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "repair_failed",
+        "patched_status": "failed",
+        "attempts": 1
+      },
+      {
+        "id": "cases/simple_html.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  }
+}

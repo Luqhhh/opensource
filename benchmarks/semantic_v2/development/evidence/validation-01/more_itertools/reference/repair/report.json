@@ -1,0 +1,207 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:14:58.373800+00:00",
+  "project_name": "more_itertools",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/collate.md": "1bf42b3961ad279391f59c26d00ccae231afbbf4a43368afb75f065ab5a275b5",
+      "cases/grouper.md": "b6c39787b5bfe9ae993e81291ab5a4d56efbb5566d13534dd20a13bedbbab687",
+      "cases/healthy_chunked.md": "83fe25f93b726c80fb89ac93a546852649a57b6d7ca65b0c30428e15cfe275af"
+    },
+    "sources": {
+      "more_itertools/__init__.py": "e4f350329cb8d34b39181de3716c338ded110b0f24d1bbd4f56fc2e3d5747ddd",
+      "more_itertools/more.py": "1669ad913fa3ebda882e4c4410b939651a192bc4add5583f7ce196d2c4c577b8",
+      "more_itertools/recipes.py": "657e3ed887db64a94f2156832131f66ee5ff7cfb8c0ded4455ce9ed974ac0b3f"
+    },
+    "configuration_sha256": "bf41bf4c9d557ccd621000d74b83957cb13058fe0b1ea7637936fd18c6e10025"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "verified_repair": 2,
+      "checked": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 2,
+    "proposals": 2,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0.0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/collate.md#1",
+        "path": "cases/collate.md",
+        "start_line": 7,
+        "end_line": 11,
+        "code": "from more_itertools import collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+        "context": "# Reusable lazy sorted merge\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nPreserve a reusable callable named collate and all three displayed outputs. Merge any number of already-sorted iterables, retaining duplicates and stable order for equal keys, accepting key and reverse together. Support empty inputs, Unicode and one-shot iterators. Preserve lazy iteration: do not consume inputs at construction or read the entire input to return a prefix. These evaluator-authored requirements expand the original documented lazy merge contract."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from more_itertools import collate\nImportError: cannot import name 'collate' from 'more_itertools' (/workspace/more_itertools/__init__.py)\n",
+        "duration_seconds": 0.0667,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "verified_repair",
+      "proposal": {
+        "code": "from heapq import merge as collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+        "rationale": "Recorded reference candidate for engineering verification only; not a live-model result. Apply the documented 9.0.0 migration while preserving the upstream doctest output.",
+        "provider": "candidate_file",
+        "model": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "duration_seconds": 0.0,
+        "inference_evidence": null
+      },
+      "after": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "['A', 'A', 'C', 'D', 'J', 'K', 'L', 'Z', 'Z']\n['1', '2', '10', '11']\n[5, 4, 3, 2, 1, 0]\n",
+        "stderr": "",
+        "duration_seconds": 0.0353,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "rejection": null,
+      "diff": "--- original/cases/collate.md#1\n+++ candidate/cases/collate.md#1\n@@ -1,4 +1,4 @@\n-from more_itertools import collate\n+from heapq import merge as collate\n print(list(collate('ACDZ', 'AZ', 'JKL')))\n key = lambda s: int(s)  # Sort by numeric value, not by string\n print(list(collate(['1', '10'], ['2', '11'], key=key)))\n",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "proposal": {
+            "code": "from heapq import merge as collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+            "rationale": "Recorded reference candidate for engineering verification only; not a live-model result. Apply the documented 9.0.0 migration while preserving the upstream doctest output.",
+            "provider": "candidate_file",
+            "model": null,
+            "input_tokens": null,
+            "output_tokens": null,
+            "duration_seconds": 0.0,
+            "inference_evidence": null
+          },
+          "after": {
+            "status": "passed",
+            "returncode": 0,
+            "stdout": "['A', 'A', 'C', 'D', 'J', 'K', 'L', 'Z', 'Z']\n['1', '2', '10', '11']\n[5, 4, 3, 2, 1, 0]\n",
+            "stderr": "",
+            "duration_seconds": 0.0353,
+            "oracle": "configured_behavior_checks",
+            "failure_kind": "none"
+          },
+          "rejection": null,
+          "diff": "--- original/cases/collate.md#1\n+++ candidate/cases/collate.md#1\n@@ -1,4 +1,4 @@\n-from more_itertools import collate\n+from heapq import merge as collate\n print(list(collate('ACDZ', 'AZ', 'JKL')))\n key = lambda s: int(s)  # Sort by numeric value, not by string\n print(list(collate(['1', '10'], ['2', '11'], key=key)))\n",
+          "inference_evidence": null
+        }
+      ],
+      "stop_reason": "verified_repair"
+    },
+    {
+      "example": {
+        "id": "cases/grouper.md#1",
+        "path": "cases/grouper.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from more_itertools import grouper\nprint(list(grouper(3, 'ABCDEFG', 'x')))\n",
+        "context": "# Grouped items: changed argument order\nOfficial more-itertools 5.0.0 docstring: [L291–L292](https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/recipes.py#L291-L292). Target source: 9.0.0 (ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587).\n\nThe original doctest statements and expected results are stored in `../original/grouper.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    print(list(grouper(3, 'ABCDEFG', 'x')))\n  File \"/workspace/more_itertools/recipes.py\", line 372, in grouper\n    args = [iter(iterable)] * n\nTypeError: 'int' object is not iterable\n",
+        "duration_seconds": 0.0349,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "verified_repair",
+      "proposal": {
+        "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+        "rationale": "Recorded reference candidate for engineering verification only; not a live-model result. Apply the documented 9.0.0 migration while preserving the upstream doctest output.",
+        "provider": "candidate_file",
+        "model": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "duration_seconds": 0.0,
+        "inference_evidence": null
+      },
+      "after": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]\n",
+        "stderr": "",
+        "duration_seconds": 0.067,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "rejection": null,
+      "diff": "--- original/cases/grouper.md#1\n+++ candidate/cases/grouper.md#1\n@@ -1,2 +1,2 @@\n from more_itertools import grouper\n-print(list(grouper(3, 'ABCDEFG', 'x')))\n+print(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+      "attempts": [
+        {
+          "number": 1,
+          "status": "verified_repair",
+          "proposal": {
+            "code": "from more_itertools import grouper\nprint(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+            "rationale": "Recorded reference candidate for engineering verification only; not a live-model result. Apply the documented 9.0.0 migration while preserving the upstream doctest output.",
+            "provider": "candidate_file",
+            "model": null,
+            "input_tokens": null,
+            "output_tokens": null,
+            "duration_seconds": 0.0,
+            "inference_evidence": null
+          },
+          "after": {
+            "status": "passed",
+            "returncode": 0,
+            "stdout": "[('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]\n",
+            "stderr": "",
+            "duration_seconds": 0.067,
+            "oracle": "configured_behavior_checks",
+            "failure_kind": "none"
+          },
+          "rejection": null,
+          "diff": "--- original/cases/grouper.md#1\n+++ candidate/cases/grouper.md#1\n@@ -1,2 +1,2 @@\n from more_itertools import grouper\n-print(list(grouper(3, 'ABCDEFG', 'x')))\n+print(list(grouper('ABCDEFG', 3, fillvalue='x')))\n",
+          "inference_evidence": null
+        }
+      ],
+      "stop_reason": "verified_repair"
+    },
+    {
+      "example": {
+        "id": "cases/healthy_chunked.md#1",
+        "path": "cases/healthy_chunked.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from more_itertools import chunked\nprint(list(chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)))\n",
+        "context": "# Healthy incomplete final chunk\nOfficial more-itertools 5.0.0 docstring: [L101–L102](https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/more.py#L101-L102). Target source: 9.0.0 (ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587).\n\nThe original doctest statements and expected results are stored in `../original/healthy_chunked.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[[1, 2, 3], [4, 5, 6], [7, 8]]\n",
+        "stderr": "",
+        "duration_seconds": 0.0674,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

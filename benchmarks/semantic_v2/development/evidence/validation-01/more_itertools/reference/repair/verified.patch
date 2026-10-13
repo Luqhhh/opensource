@@ -1,0 +1,20 @@
+--- a/cases/collate.md
++++ b/cases/collate.md
+@@ -4,7 +4,7 @@
+ Preserve a reusable callable named collate and all three displayed outputs. Merge any number of already-sorted iterables, retaining duplicates and stable order for equal keys, accepting key and reverse together. Support empty inputs, Unicode and one-shot iterators. Preserve lazy iteration: do not consume inputs at construction or read the entire input to return a prefix. These evaluator-authored requirements expand the original documented lazy merge contract.
+ 
+ ```python
+-from more_itertools import collate
++from heapq import merge as collate
+ print(list(collate('ACDZ', 'AZ', 'JKL')))
+ key = lambda s: int(s)  # Sort by numeric value, not by string
+ print(list(collate(['1', '10'], ['2', '11'], key=key)))
+--- a/cases/grouper.md
++++ b/cases/grouper.md
+@@ -6,5 +6,5 @@
+ 
+ ```python
+ from more_itertools import grouper
+-print(list(grouper(3, 'ABCDEFG', 'x')))
++print(list(grouper('ABCDEFG', 3, fillvalue='x')))
+ ```

@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "suite_id": "mistune-semantic-v2-independent-holdout",
+  "generated_at": "2026-10-13T06:19:36.832076+00:00",
+  "mode": "recorded_candidates",
+  "model": null,
+  "max_attempts": 1,
+  "manifest_sha256": "bbc6740017663bf7763701525d431baab1578b42cc9530399d39b4f12ea7a000",
+  "manifest": {
+    "schema_version": 1,
+    "suite_id": "mistune-semantic-v2-independent-holdout",
+    "classification": "real_upstream_documentation_version_migration",
+    "documentation_version": "0.8.4",
+    "runtime_version": "3.1.3",
+    "version_commits": {
+      "0.8.4": "6470c42b2087a4649ad0437227cf7b5c570c3a91",
+      "3.1.3": "45e4de61b8897fe5b0458d5ebe3d3cc7bde408d2"
+    },
+    "license": "BSD-3-Clause",
+    "cases": [
+      {
+        "id": "cases/reusable_html.md#1",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "upstream_document": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L70-L73",
+        "semantic_contract": "Reuse the callable named markdown to render Markdown to an HTML string. Preserve the old default behavior: raw HTML is retained and ordinary newlines remain soft. The original expression is silent in a script. External checks cover empty text, emphasis, Unicode, raw HTML, and repeated calls.",
+        "category": "historical_migration"
+      },
+      {
+        "id": "cases/renderer_options.md#1",
+        "expected_before": "failed",
+        "expected_repair": "verified_repair",
+        "upstream_document": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L87-L90",
+        "semantic_contract": "Setup supplies import mistune and text = \"<b>x</b>\\nnext\" for the upstream placeholder. Retain the reusable callable markdown. It must render HTML, escape raw HTML, and use hard line breaks. Preserve the original HTML <br> style and silent expression; checks cover other text and boundary inputs.",
+        "category": "historical_migration"
+      },
+      {
+        "id": "cases/simple_html.md#1",
+        "expected_before": "checked",
+        "expected_repair": "checked",
+        "upstream_document": "https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L61-L64",
+        "semantic_contract": "Render the supplied Markdown as HTML using the documented convenience function. The expression is silent in a script. Checks cover empty input, plain text, emphasis, Unicode and escaping.",
+        "category": "healthy_control"
+      }
+    ],
+    "scope": "Purposive historical migration, not a current upstream documentation defect. No model calls during preparation.",
+    "oracle_limit": "Finite evaluator-owned tests establish the declared contract on selected inputs, not unrestricted semantic equivalence."
+  },
+  "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",
+  "patch_application": "passed",
+  "stage": "complete",
+  "implementation_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "9ab60224b1bdcf2fbf0ef55533234ab107f293e17142c89afbff171a277dacae",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "context.py": "7e6540d655c91fe9a554c0b7fc68fff8bf43120452ecaffd8601789858c17215",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "25c41ba0b1e5fb4a012e047d39796ac6f11fff3d704603ed3a9cc363a7840933",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "48f45dc19649c574195bf14d83776628e41b804d4d0f1b0f4971cf90744316ae",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "e5cf60ecab4848ac36e68d92e1781964d93a010628cb4afdc921af1b2664bfcc",
+    "semantic_study.py": "c64dfd3a5da2d68c6abcecb5b28831fb2d56f45698c82d3e35dc8c7f5ad372d0",
+    "study.py": "9d30b476a1fb335d27e683d18908fa709c81ae395a232fd939cd615817ba65f0"
+  },
+  "candidate_snapshot_sha256": "8940e3efe31f8b1ac332bacad184e1a05560c6896c3729f5b486729ea4d191c0",
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 2,
+    "proposals": 2,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0.0
+  },
+  "metrics": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 2,
+    "patch_confirmed_repairs": 2,
+    "repair_rate": 1.0,
+    "healthy_preserved": 1,
+    "all_passed": true,
+    "cases": [
+      {
+        "id": "cases/reusable_html.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/renderer_options.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/simple_html.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "duration_seconds": 0.8653,
+  "exit_code": 0
+}

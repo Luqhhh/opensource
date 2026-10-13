@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "split": "development_v2",
+  "upstream_provenance": "upstream-provenance.json",
+  "copied_files": [
+    {
+      "path": "more_itertools/__init__.py",
+      "origin": "benchmarks/real_projects/more_itertools/more_itertools/__init__.py",
+      "sha256": "e4f350329cb8d34b39181de3716c338ded110b0f24d1bbd4f56fc2e3d5747ddd"
+    },
+    {
+      "path": "more_itertools/more.py",
+      "origin": "benchmarks/real_projects/more_itertools/more_itertools/more.py",
+      "sha256": "1669ad913fa3ebda882e4c4410b939651a192bc4add5583f7ce196d2c4c577b8"
+    },
+    {
+      "path": "more_itertools/recipes.py",
+      "origin": "benchmarks/real_projects/more_itertools/more_itertools/recipes.py",
+      "sha256": "657e3ed887db64a94f2156832131f66ee5ff7cfb8c0ded4455ce9ed974ac0b3f"
+    },
+    {
+      "path": "origin_cases/collate.md",
+      "origin": "benchmarks/real_projects/more_itertools/cases/collate.md",
+      "sha256": "1e59615d7c1a3e192f4498946dd66ce1288140e271619afcb4d428ea0a001b02"
+    },
+    {
+      "path": "origin_cases/grouper.md",
+      "origin": "benchmarks/real_projects/more_itertools/cases/grouper.md",
+      "sha256": "b6c39787b5bfe9ae993e81291ab5a4d56efbb5566d13534dd20a13bedbbab687"
+    },
+    {
+      "path": "origin_cases/healthy_chunked.md",
+      "origin": "benchmarks/real_projects/more_itertools/cases/healthy_chunked.md",
+      "sha256": "83fe25f93b726c80fb89ac93a546852649a57b6d7ca65b0c30428e15cfe275af"
+    },
+    {
+      "path": "original/collate.doctest",
+      "origin": "benchmarks/real_projects/more_itertools/original/collate.doctest",
+      "sha256": "ae6da58c8cc113b9b79c541afa4cdae126979b9b6b1d43829137db8940872ffb"
+    },
+    {
+      "path": "original/grouper.doctest",
+      "origin": "benchmarks/real_projects/more_itertools/original/grouper.doctest",
+      "sha256": "b61f6b77acffa0a6806518533ff7f4b1717178cdd8415d6e76d8d56d1aef3d1a"
+    },
+    {
+      "path": "original/healthy_chunked.doctest",
+      "origin": "benchmarks/real_projects/more_itertools/original/healthy_chunked.doctest",
+      "sha256": "168615585965d1d7ce45f724c8f85654c1b5423d542829e902088b2e298586c9"
+    },
+    {
+      "path": "proposals.json",
+      "origin": "benchmarks/real_projects/more_itertools/proposals.json",
+      "sha256": "6049b286f5b4c9578feb35236029531d4e00ffabfe2dc3c8ef9517a98ecce9f1"
+    },
+    {
+      "path": "upstream/5.0.0/LICENSE",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/5.0.0/LICENSE",
+      "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46"
+    },
+    {
+      "path": "upstream/5.0.0/docs/api.rst",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/5.0.0/docs/api.rst",
+      "sha256": "978e2646a0df39c5f96570180f091772d20f8be93a19d3275729aad39877bdd9"
+    },
+    {
+      "path": "upstream/5.0.0/more_itertools/__init__.py",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/5.0.0/more_itertools/__init__.py",
+      "sha256": "4be9fa4bd37752996a537a7eec057ed599e5eb2270b97b09b6aae512af6d394c"
+    },
+    {
+      "path": "upstream/5.0.0/more_itertools/more.py",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/5.0.0/more_itertools/more.py",
+      "sha256": "d236ae66621a7f170fcaa8b69c4f44b39496c6e3ad4201a2f356710dd024c497"
+    },
+    {
+      "path": "upstream/5.0.0/more_itertools/recipes.py",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/5.0.0/more_itertools/recipes.py",
+      "sha256": "7d1b6291e9d0f3425e3d33b069a81825474eb0e38a30a22abfad9bd3e8033387"
+    },
+    {
+      "path": "upstream/9.0.0/LICENSE",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/9.0.0/LICENSE",
+      "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46"
+    },
+    {
+      "path": "upstream/9.0.0/docs/api.rst",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/9.0.0/docs/api.rst",
+      "sha256": "512d7eabfb54650236d74a8a199da39b2c13d95eb24acbb9083f62f5ef60a173"
+    },
+    {
+      "path": "upstream/9.0.0/docs/versions.rst",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/9.0.0/docs/versions.rst",
+      "sha256": "c2a6cf54620677f0489ded5b3571e4c6134b47c0f66080629e83b91118531e9d"
+    },
+    {
+      "path": "upstream/PYTHON-RECIPES-NOTICE.md",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/PYTHON-RECIPES-NOTICE.md",
+      "sha256": "9efcce6a9433b874178a603eacee46828391ea36d1143eeaa4f366aeac1f9764"
+    },
+    {
+      "path": "upstream/cpython-3.7.0/LICENSE",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/cpython-3.7.0/LICENSE",
+      "sha256": "b9a6d9320b8f2693e8d41e496ce56caadacaddcca9be2a64a61749278f425cf2"
+    },
+    {
+      "path": "upstream/six-1.16.0/LICENSE",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/six-1.16.0/LICENSE",
+      "sha256": "8bb850c565aa389fdc16f3a46965ad23d82adff60f2393fc2762b63185e8e6c9"
+    },
+    {
+      "path": "upstream/six-1.16.0/six.py",
+      "origin": "benchmarks/real_projects/more_itertools/upstream/six-1.16.0/six.py",
+      "sha256": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    {
+      "path": "upstream-provenance.json",
+      "origin": "benchmarks/real_projects/more_itertools/provenance.json",
+      "sha256": "3174d72cb61d2b5fbad8fd0a622fad1ad975a4bb093cc368ab854812d932cc3c"
+    }
+  ],
+  "historical_source_mapping": {
+    "more_itertools/__init__.py": "upstream/5.0.0/more_itertools/__init__.py",
+    "more_itertools/more.py": "upstream/5.0.0/more_itertools/more.py",
+    "more_itertools/recipes.py": "upstream/5.0.0/more_itertools/recipes.py",
+    "six.py": "upstream/six-1.16.0/six.py"
+  },
+  "historical_versions": "5.0.0 + six 1.16.0",
+  "target_versions": "9.0.0",
+  "authored_files": [
+    "metadata.json",
+    "exampleproof.json",
+    "negative_proposals.json",
+    "cases/*.md"
+  ],
+  "execution": "Copied code executes only via SandboxRunner; never host imports."
+}

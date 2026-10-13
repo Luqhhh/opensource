@@ -114,21 +114,29 @@ def local_metadata(endpoint, model):
     return {"server": get("/api/version"), "model": models[0]}
 
 
-def freeze_study(projects, output, model="qwen2.5-coder:7b", endpoint="http://127.0.0.1:11434"):
+def freeze_study(projects, output, model="qwen2.5-coder:7b", endpoint="http://127.0.0.1:11434", *, design=None):
     output = output.resolve()
     if output.exists():
         raise ValueError("Freeze output must be a new directory")
     roots = [p.resolve() for p in projects]
     if len({p.name for p in roots}) != len(roots):
         raise ValueError("Study project names must be unique")
+    if design:
+        from .semantic_study import validate_project_splits
+        validate_project_splits(roots, design)
     metadata = local_metadata(endpoint, model)
+    design = deepcopy(design)
+    arms = tuple(design["arms"]) if design else ARMS
+    seeds = tuple(design["seeds"]) if design else SEEDS
+    if not arms or not seeds or len(set(arms)) != len(arms) or len(set(seeds)) != len(seeds):
+        raise ValueError("Study arms and seeds must be nonempty and unique")
     output.mkdir(parents=True)
     plan = {"schema_version": 1, "status": "preparing", "frozen_at": datetime.now(timezone.utc).isoformat(),
             "model": model, "model_metadata": metadata,
             "system_prompt": providers.SYSTEM,
             "system_sha256": hashlib.sha256(providers.SYSTEM.encode()).hexdigest(),
             "implementation_sha256": implementation_hashes(),
-            "arms": list(ARMS), "replicate_seeds": list(SEEDS), "calls_per_failure_max": 3,
+            "arms": list(arms), "replicate_seeds": list(seeds), "calls_per_failure_max": 3,
             "generation_options": {"temperature": 0.2, "num_ctx": 8192, "num_predict": 1024},
             "timeout_seconds": 180, "source_context_character_limit": CONTEXT_CHARS,
             "stop_policy": "All arms stop on first verified candidate or infrastructure failure; declines/rejections/duplicates consume a call and may continue up to three. Nonfeedback retries are independent.",
@@ -140,7 +148,16 @@ def freeze_study(projects, output, model="qwen2.5-coder:7b", endpoint="http://12
             "runner_python": subprocess.check_output(["/usr/bin/python3", "--version"], text=True).strip(),
             "bubblewrap": subprocess.check_output(["bwrap", "--version"], text=True).strip(),
             "projects": [], "schedule": []}
+    if design:
+        plan["design"] = design
+        plan["held_out_scope"] = design["held_out_scope"]
     try:
+        archive = output / "implementation" / "exampleproof"
+        archive.mkdir(parents=True)
+        for filename, expected_hash in plan["implementation_sha256"].items():
+            shutil.copyfile(Path(__file__).parent / filename, archive / filename)
+            if digest(archive / filename) != expected_hash:
+                raise ValueError("Implementation changed while archiving the study")
         for root in roots:
             project = output / "inputs" / root.name
             if output.is_relative_to(root):
@@ -161,16 +178,22 @@ def freeze_study(projects, output, model="qwen2.5-coder:7b", endpoint="http://12
             write_report(output / "baseline" / root.name, baseline, "")
             contexts = {e.id: source_context(e, Execution(**baseline["results"][i]["before"]), sources)
                         for i, e in enumerate(examples) if expected[e.id] == "failed"}
+            if design:
+                from .context import source_context as context_v2
+                contexts = {e.id: {"legacy": contexts[e.id],
+                                   "v2": context_v2(e, Execution(**baseline["results"][i]["before"]), sources,
+                                                    limit=design["source_context_character_limit"])}
+                            for i, e in enumerate(examples) if expected[e.id] == "failed"}
             write_json(output / "contexts" / f"{root.name}.json", contexts)
             plan["projects"].append({"name": root.name, "suite_id": manifest["suite_id"],
                                      "expected": expected, "input_sha256": inventory(project),
                                      "baseline_sha256": digest(output / "baseline" / root.name / "report.json"),
                                      "context_sha256": digest(output / "contexts" / f"{root.name}.json")})
         # Rotate arm order per project and replicate to reduce order/cache bias.
-        for repeat, seed in enumerate(SEEDS):
+        for repeat, seed in enumerate(seeds):
             for index, project in enumerate(plan["projects"]):
-                offset = (repeat + index) % len(ARMS)
-                for arm in ARMS[offset:] + ARMS[:offset]:
+                offset = (repeat + index) % len(arms)
+                for arm in arms[offset:] + arms[:offset]:
                     plan["schedule"].append({"project": project["name"], "seed": seed, "arm": arm})
         plan["status"] = "frozen_before_live_inference"
     except Exception as exc:
@@ -184,8 +207,10 @@ def freeze_study(projects, output, model="qwen2.5-coder:7b", endpoint="http://12
 
 
 class StudyProvider(OllamaProvider):
-    def __init__(self, model, endpoint, timeout, *, options, arm, context, history):
-        super().__init__(model, endpoint, timeout, options=options)
+    def __init__(self, model, endpoint, timeout, *, options, arm, context, history,
+                 system_prompt=None, feedback_mode="legacy"):
+        super().__init__(model, endpoint, timeout, options=options,
+                         system_prompt=system_prompt, feedback_mode=feedback_mode)
         self.arm, self.context, self.history = arm, context, history
 
     def propose(self, example, before, sources, *, history=()):
@@ -228,8 +253,15 @@ def evaluate_study_case(example, spec, sources, before, context, plan, arm, seed
     runner = runner or SandboxRunner(sources, plan.get("sandbox_timeout_seconds", 5))
     for index in range(plan["calls_per_failure_max"]):
         options = {**plan["generation_options"], "seed": seed + index}
+        selected_context, provider_arm, policy = context, arm, {}
+        if plan.get("design"):
+            definition = plan["design"]["arms"][arm]
+            selected_context = context[definition["context"]]
+            provider_arm = "source" if definition["feedback"] == "none" else "source_feedback"
+            policy = {"system_prompt": definition["system_prompt"],
+                      "feedback_mode": "categorized" if definition["feedback"] == "categorized" else "legacy"}
         provider = provider_factory(plan["model"], endpoint, plan["timeout_seconds"], options=options,
-                                    arm=arm, context=context, history=tuple(attempts))
+                                    arm=provider_arm, context=selected_context, history=tuple(attempts), **policy)
         result = evaluate_example(example, spec, sources, BaselineThenSandbox(before, runner), provider)
         if not result.attempts:
             raise ValueError("A study inference call did not produce an attempt record")
@@ -318,7 +350,7 @@ def summarize_study(root):
     groups = {arm: {"case_runs": 0, "first_try_passed": 0, "budget_passed": 0,
                     "healthy_case_runs": 0, "healthy_preserved": 0, "requests": 0,
                     "input_tokens": 0, "output_tokens": 0, "inference_seconds": 0.0,
-                    "wall_seconds": 0.0, "failures": [], "statuses": Counter(), "cells": []} for arm in ARMS}
+                    "wall_seconds": 0.0, "failures": [], "statuses": Counter(), "cells": []} for arm in plan["arms"]}
     missing = []
     for cell in plan["schedule"]:
         location = Path("runs") / str(cell["seed"]) / cell["arm"] / cell["project"] / "inference.json"
@@ -370,6 +402,7 @@ def summarize_study(root):
         group["statuses"] = dict(group["statuses"])
     result = {"schema_version": 1, "complete": complete, "missing_or_incomplete": missing,
               "run_status": run_status,
+              "split": plan.get("design", {}).get("split", "original_v1"),
               "protocol_sha256": digest(root / "protocol.json"), "groups": groups,
               "interpretation": "Case-runs repeat the same cases under paired seeds, not additional independent defects. Small purposively selected migration set; no population success-rate inference."}
     write_json(root / "summary.json", result)

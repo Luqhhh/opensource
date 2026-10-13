@@ -1,0 +1,14 @@
+{
+  "cases/safe_string.md#1": [
+    {
+      "code": "from markupsafe import escape, Markup\n\nvalue = escape('<User 1>')\nprint(repr(value))\nprint(repr(escape(str(value))))\nprint(repr(escape(escape(value))))\n",
+      "rationale": "The error indicates that 'soft_unicode' is not defined. Since 'soft_unicode' is not used in the provided code, it has been replaced with 'escape' to maintain the original functionality. The 'escape' function is used to ensure that the string is properly escaped, and it is called three times to demonstrate the transformation."
+    }
+  ],
+  "cases/convert_contract.md#1": [
+    {
+      "code": "from markupsafe import escape, Markup\n\nconvert = lambda s: s if isinstance(s, str) else str(s)\nvalue = escape('<User 1>')\nprint(repr(escape(convert(value))))\n",
+      "rationale": "The error indicates that 'soft_unicode' is not available in the 'markupsafe' module. The code has been modified to use a lambda function for the 'convert' callable, which checks if the input is already a string and returns it as is, or converts it to a string otherwise. This preserves the behavior of the original code without relying on 'soft_unicode'."
+    }
+  ]
+}

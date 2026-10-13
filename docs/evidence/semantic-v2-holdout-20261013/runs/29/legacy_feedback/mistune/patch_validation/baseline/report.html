@@ -1,0 +1,41 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'"><title>例证 · 文档验证报告</title><style>
+    :root{color-scheme:light;--ink:#172a35;--muted:#526876;--line:#d8e2e7;--accent:#096c61}*{box-sizing:border-box}body{margin:0;background:#f3f6f7;color:var(--ink);font:15px/1.65 system-ui,sans-serif}.wrap{max-width:1050px;margin:auto;padding:48px 24px}header{border-bottom:1px solid var(--line);padding-bottom:28px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:750}h1{font-size:36px;margin:8px 0}h2{font-size:17px;margin:0;overflow-wrap:anywhere}h3{font-size:14px;margin:24px 0 8px}.intro,.meta,.context{color:var(--muted)}.meta{font-size:12px}.stats{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.stat{background:white;border:1px solid var(--line);padding:14px 20px;border-radius:10px;min-width:145px}.stat strong{display:block;font-size:28px}.stat span{font-size:12px;color:var(--muted)}article{background:white;border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:22px}.card-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.badge{font-size:12px;border-radius:20px;padding:5px 12px;background:#fff0d5;color:#775119}.verified_repair,.checked{background:#dff2eb;color:#11644d}.failed,.repair_failed,.rejected,.blocked,.provider_error{background:#fde7e4;color:#9a3029}summary{cursor:pointer;color:var(--accent);font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#172a35;color:#e4eef2;border-radius:8px;padding:16px;font:12px/1.7 ui-monospace,monospace}.diff{background:#edf5f1;color:#214b3b}.provider{font-size:12px;color:var(--muted)}.warning{border-left:3px solid #c96a29;padding-left:12px}footer{font-size:12px;color:var(--muted);margin-top:28px}@media(max-width:600px){.wrap{padding:24px 16px}h1{font-size:28px}article{padding:16px}}
+    </style></head><body><main class="wrap"><header><div class="eyebrow">EXAMPLEPROOF / 例证</div><h1>每一处修复，都有运行证据。</h1><p class="intro">mistune · 文档示例检查报告</p><p class="meta">2026-10-13T06:55:16.872881+00:00</p></header><section class="stats"><div class="stat"><strong>2</strong><span>运行或检查失败</span></div><div class="stat"><strong>1</strong><span>原示例通过检查</span></div><div class="stat"><strong>0</strong><span>修复轮次 · 每例上限 1</span></div></section><article data-status="failed"><div class="card-head"><h2>cases/reusable_html.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/reusable_html.md · 第 8–11 行 · 0.1749 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># reusable html
+Historical upstream example: https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L70-L73
+
+Reuse the callable named markdown to render Markdown to an HTML string. Preserve the old default behavior: raw HTML is retained and ordinary newlines remain soft. The original expression is silent in a script. External checks cover empty text, emphasis, Unicode, raw HTML, and repeated calls.</p><h3>原始示例</h3><pre>import mistune
+
+markdown = mistune.Markdown()
+markdown(&#x27;I am using **mistune markdown parser**&#x27;)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.1749 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 14, in &lt;module&gt;
+    exec(compile(open(&quot;/work/checks.py&quot;).read(), &quot;external-checks&quot;, &quot;exec&quot;), namespace)
+  File &quot;external-checks&quot;, line 9, in &lt;module&gt;
+AssertionError
+</pre></details></article><article data-status="failed"><div class="card-head"><h2>cases/renderer_options.md#1</h2><span class="badge failed">运行或检查失败</span></div><p class="meta">cases/renderer_options.md · 第 8–11 行 · 0.175 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># renderer options
+Historical upstream example: https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L87-L90
+
+Setup supplies import mistune and text = &quot;&lt;b&gt;x&lt;/b&gt;\nnext&quot; for the upstream placeholder. Retain the reusable callable markdown. It must render HTML, escape raw HTML, and use hard line breaks. Preserve the original HTML &lt;br&gt; style and silent expression; checks cover other text and boundary inputs.</p><h3>原始示例</h3><pre>renderer = mistune.Renderer(escape=True, hard_wrap=True)
+# use this renderer instance
+markdown = mistune.Markdown(renderer=renderer)
+markdown(text)
+</pre><h3>运行证据</h3><p class="meta">failed · 0.175 秒 · 检查：configured_behavior_checks</p><p>错误信息</p><pre>Traceback (most recent call last):
+  File &quot;/work/harness.py&quot;, line 9, in &lt;module&gt;
+    namespace = runpy.run_path(&quot;/work/example.py&quot;, init_globals=namespace)
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File &quot;/usr/lib/python3.10/runpy.py&quot;, line 86, in _run_code
+    exec(code, run_globals)
+  File &quot;/work/example.py&quot;, line 1, in &lt;module&gt;
+    renderer = mistune.Renderer(escape=True, hard_wrap=True)
+AttributeError: module &#x27;mistune&#x27; has no attribute &#x27;Renderer&#x27;
+</pre></details></article><article data-status="checked"><div class="card-head"><h2>cases/simple_html.md#1</h2><span class="badge checked">原示例通过检查</span></div><p class="meta">cases/simple_html.md · 第 8–11 行 · 0.174 秒</p><details><summary>查看示例、证据与修复</summary><p class="context"># simple html
+Historical upstream example: https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L61-L64
+
+Render the supplied Markdown as HTML using the documented convenience function. The expression is silent in a script. Checks cover empty input, plain text, emphasis, Unicode and escaping.</p><h3>原始示例</h3><pre>import mistune
+
+mistune.markdown(&#x27;I am using **mistune markdown parser**&#x27;)
+# output: &lt;p&gt;I am using &lt;strong&gt;mistune markdown parser&lt;/strong&gt;&lt;/p&gt;
+</pre><h3>运行证据</h3><p class="meta">passed · 0.174 秒 · 检查：configured_behavior_checks</p></details></article><footer>“修复通过检查”表示通过已有断言或配置的行为检查。检查覆盖之外的语义仍需人工核验。候选补丁不会自动修改原始项目。</footer></main></body></html>

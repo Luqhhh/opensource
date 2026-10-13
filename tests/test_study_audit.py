@@ -90,6 +90,116 @@ class StudyAuditTests(unittest.TestCase):
         payload = AUDIT.inspect_attempt(*fixture)
         self.assertNotIn("previous_attempts", json.loads(payload["prompt"]))
 
+    def test_v2_request_uses_declared_context_prompt_and_sanitized_category(self):
+        previous = self.fixture()[0]
+        previous["after"]["failure_kind"] = "behavior_check"
+        fixture = self.fixture("source_feedback", (previous,))
+        attempt, _, outcome, project, plan, cell, _ = fixture
+        cell["arm"] = "feedback_v2"
+        plan["design"] = {"arms": {"feedback_v2": {
+            "context": "v2", "feedback": "categorized", "system_prompt": "revised system"}}}
+        project["contexts"]["case.md#1"] = {
+            "legacy": project["contexts"]["case.md#1"], "v2": {"api.py:1-1": "def replacement():\n"}}
+        project["config"] = {"examples": {"case.md#1": {"expected_stdout": ""}}}
+        outcome["before"]["failure_kind"] = "example_exception"
+        attempt["after"]["failure_kind"] = "behavior_check"
+        request = attempt["proposal"]["inference_evidence"]["request"]
+        request["system"] = "revised system"
+        prompt = json.loads(request["prompt"])
+        prompt["sources"] = project["contexts"]["case.md#1"]["v2"]
+        prompt["previous_attempts"] = [AUDIT.history_record(previous, categorized=True)]
+        request["prompt"] = json.dumps(prompt)
+        payload = AUDIT.inspect_attempt(*fixture)
+        self.assertNotIn("secret expected value", payload["prompt"])
+        execution = json.loads(payload["prompt"])["previous_attempts"][0]["execution"]
+        self.assertEqual(execution["category"], "behavior_check")
+        prompt["previous_attempts"][0]["execution"]["guidance"] = "Use secret oracle answer"
+        request["prompt"] = json.dumps(prompt)
+        with self.assertRaisesRegex(ValueError, "separation"):
+            AUDIT.inspect_attempt(*fixture)
+
+    def test_v2_category_must_match_host_execution_facts(self):
+        stdout = {"status": "failed", "returncode": 0, "stdout": "unexpected\n",
+                  "stderr": "\nExpected stdout did not match the configured oracle.",
+                  "failure_kind": "stdout_mismatch"}
+        AUDIT.inspect_failure_kind(stdout, {"expected_stdout": ""})
+        with self.assertRaisesRegex(ValueError, "recorded mismatch"):
+            AUDIT.inspect_failure_kind(stdout, {"expected_stdout": "unexpected\n"})
+        with self.assertRaisesRegex(ValueError, "category"):
+            AUDIT.inspect_failure_kind({**stdout, "failure_kind": "behavior_check"}, {"expected_stdout": ""})
+        with self.assertRaisesRegex(ValueError, "category"):
+            AUDIT.inspect_failure_kind({"status": "failed", "returncode": 22, "failure_kind": "stdout_mismatch"}, {})
+
+    def test_v2_context_rejects_duplicated_or_fabricated_lines_and_over_budget(self):
+        sources = {"api.py": "def first():\n    return 1\ndef second(): return 2\n"}
+        context = {"api.py:1-2": "def first():\n    return 1\n"}
+        AUDIT.inspect_context(context, sources, 100, version="v2")
+        for bad, message in (({**context, "api.py:2-2": "    return 1\n"}, "duplicate"),
+                             ({"api.py:1-2": "def answer(): return 42\n"}, "original source"),
+                             ({"api.py:0-1": "def first():\n"}, "range")):
+            with self.subTest(message=message), self.assertRaisesRegex(ValueError, message):
+                AUDIT.inspect_context(bad, sources, 200, version="v2")
+        with self.assertRaisesRegex(ValueError, "budget"):
+            AUDIT.inspect_context(context, sources, 1, version="v2")
+
+    def test_stdlib_excerpts_cannot_include_unindexed_implementation_body(self):
+        sources = {"stdlib/demo.py": 'def demo(item):\n    """Process an item."""\n    return item\n'}
+        standard = {"sources": sources, "entries": (("stdlib/demo.py", 1, 2, "demo", ""),)}
+        context = {"stdlib/demo.py:1-2": 'def demo(item):\n    """Process an item."""\n'}
+        AUDIT.inspect_context(context, {}, 200, version="v2", standard=standard)
+        with self.assertRaisesRegex(ValueError, "signature/docstring"):
+            AUDIT.inspect_context({"stdlib/demo.py:1-3": sources["stdlib/demo.py"]}, {}, 200,
+                                  version="v2", standard=standard)
+
+    def test_stdlib_pool_needs_observed_matching_import_and_separate_budget(self):
+        design = {"retrieval_policy": {"triggered_character_budget": {"project": 4000, "stdlib": 2000},
+                                       "untriggered_project_character_budget": 6000}}
+        example = {"code": "from project import removed\nremoved()"}
+        before = {"status": "failed", "returncode": 21, "oracle": "configured_behavior_checks",
+                  "stderr": "ImportError: cannot import name 'removed' from 'project'"}
+        context = {"stdlib/demo.py:1-1": "def demo(): pass\n"}
+        AUDIT.inspect_retrieval_pools(context, example, before, {"project.py": ""}, design)
+        with self.assertRaisesRegex(ValueError, "trigger"):
+            AUDIT.inspect_retrieval_pools(context, {"code": "removed()"}, before, {"project.py": ""}, design)
+        with self.assertRaisesRegex(ValueError, "trigger"):
+            AUDIT.inspect_retrieval_pools(context, example, {**before, "returncode": 22}, {"project.py": ""}, design)
+        with self.assertRaisesRegex(ValueError, "Project retrieval allocation"):
+            AUDIT.inspect_retrieval_pools({**context, "project.py:1-1": "x" * 4000}, example, before, {"project.py": ""}, design)
+        with self.assertRaisesRegex(ValueError, "Stdlib retrieval budget"):
+            AUDIT.inspect_retrieval_pools({"stdlib/demo.py:1-1": "x" * 2000}, example, before, {"project.py": ""}, design)
+
+    def test_archived_prompt_reader_never_executes_python(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "providers.py"
+            path.write_text("raise RuntimeError('must not execute')\nSYSTEM = 'fixed'\nSYSTEM_V2 = SYSTEM + ' revision'\n")
+            self.assertEqual(AUDIT.static_system_prompts(path), {"SYSTEM": "fixed", "SYSTEM_V2": "fixed revision"})
+
+    def test_holdout_method_lock_detects_drift_and_invalid_chronology(self):
+        design = {"split": "holdout", "arms": {"an_arm": {}}, "seeds": [17]}
+        plan = {"implementation_sha256": {"core.py": "fixed"}, "frozen_at": "2026-01-02T00:00:00+00:00"}
+        locked = {"locked_at": "2026-01-01T00:00:00+00:00", "implementation_sha256": plan["implementation_sha256"], "design": dict(design)}
+        digest = AUDIT.text_sha(json.dumps(locked, ensure_ascii=False, indent=2) + "\n")
+        design["method_lock"] = {"sha256": digest, **locked}
+        AUDIT.inspect_method_lock(design, plan)
+        with self.assertRaisesRegex(ValueError, "after input freeze"):
+            AUDIT.inspect_method_lock(design, {**plan, "frozen_at": "2025-01-01T00:00:00+00:00"})
+        with self.assertRaisesRegex(ValueError, "implementation"):
+            AUDIT.inspect_method_lock(design, {**plan, "implementation_sha256": {"core.py": "changed"}})
+        design["method_lock"]["locked_at"] = "2025-01-01T00:00:00+00:00"
+        with self.assertRaisesRegex(ValueError, "seal"):
+            AUDIT.inspect_method_lock(design, plan)
+
+    def test_seen_development_project_cannot_be_declared_holdout(self):
+        design = {"split": "holdout"}
+        good = {"split": "holdout_v2", "selection": {"held_out_from_method_optimization": True}, "provenance": {}}
+        AUDIT.inspect_split(good, design)
+        for bad in ({**good, "split": "development_v2"},
+                    {**good, "selection": {}},
+                    {**good, "provenance": {"previous_cases_and_live_results_seen": True}},
+                    {**good, "provenance": {"live_model_evaluation": True}}):
+            with self.subTest(metadata=bad), self.assertRaises(ValueError):
+                AUDIT.inspect_split(bad, design)
+
     def test_missing_runs_return_incomplete_not_passed(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -125,6 +235,16 @@ class StudyAuditTests(unittest.TestCase):
             self.assertEqual(result["status"], "incomplete")
             self.assertEqual(result["errors"], [])
             self.assertTrue(result["incomplete"])
+            # Archived mode is explicit: it permits later core revisions while
+            # retaining every check against the frozen implementation itself.
+            (core / "providers.py").write_text("SYSTEM = 'a later revision'\n")
+            self.assertEqual(AUDIT.audit(study, repo)["status"], "failed")
+            archived = AUDIT.audit(study, repo, archived_only=True)
+            self.assertEqual(archived["status"], "incomplete")
+            self.assertEqual(archived["implementation_check"], "archived_only")
+            self.assertEqual(archived["errors"], [])
+            (archive / "providers.py").write_text("SYSTEM = 'tampered archive'\n")
+            self.assertEqual(AUDIT.audit(study, repo, archived_only=True)["status"], "failed")
 
 
 if __name__ == "__main__":

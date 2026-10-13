@@ -1,0 +1,170 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T07:04:09.696077+00:00",
+  "project_name": "werkzeug",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/pop_path_info.md": "c963af2fe3b716c8d8b58c90391dc09be94bf70be440b1acaebec8b2399ada38",
+      "cases/peek_path_info.md": "2ad1fccb0f68005e7657ceb8fa31a1affe0049127d476ed51aae3a1b469b3b12",
+      "cases/iri_to_uri.md": "5309b64c6c7c5da9cca0d257b79886682e9dc448edf006d17f03b4b447b5f35b"
+    },
+    "sources": {
+      "markupsafe/__init__.py": "afb54e4e352aec4310e2fde9e11d4ba15386260eb2b1f6119dc2ebdf895a441b",
+      "markupsafe/_native.py": "191f3a42fa3f19c80a98aade0355a660df6e775ece170930c3c13e7e25bee7bb",
+      "werkzeug/__init__.py": "1d7fcf498e44dafb55943dd1e186e5c014428e0ee3dd3966dcb0126d8a8e4a45",
+      "werkzeug/_internal.py": "b2ed689646c7324cedd1529c1243cb0a16bcb1d5735cd06ea96e98569a7c1878",
+      "werkzeug/_reloader.py": "42e30ef94c2e0fe707b14a7048452bee260d6efff388716180d0c08afdb927cd",
+      "werkzeug/datastructures/__init__.py": "cb305d393f4374ade7ada346e3da40ddb56cbed3cf2f1dbeb7637c666b8077dc",
+      "werkzeug/datastructures/accept.py": "0ae0af040c4dcdbb784146f5eeb1fdf3abef395194445523a340d7d8f432ff22",
+      "werkzeug/datastructures/auth.py": "b59cf4c19d6c22921c010a0401586b52fcbc33792a2af232b66bc6bf0900771a",
+      "werkzeug/datastructures/cache_control.py": "453522a597afe74b3ed53027dab60666bcad9bfe88388c5077aedf911e5b345d",
+      "werkzeug/datastructures/csp.py": "0c03803b6eba2cad0929bbe51bcd1b6e40207eb36c9d4f47068cfe15d21835da",
+      "werkzeug/datastructures/etag.py": "26cc88fb25dac85fa142edba3321736c714866c690ea8763dd164efe317efdc7",
+      "werkzeug/datastructures/file_storage.py": "78f78cb6beb9b3fd7fb2e9d732ffd204e885a1fe425f905ea58bf9fd6d7a7d99",
+      "werkzeug/datastructures/headers.py": "f7bf8ff8b833b5eaf1130c4b6d0b01106899a423805f367b7c4c575dde2e1fea",
+      "werkzeug/datastructures/mixins.py": "f8841243bd1438c425aad244232ca1a6539de286da4ce7f31af91af9cba70ad3",
+      "werkzeug/datastructures/range.py": "2574833ec786ee21f9822269dd1d529d00bf4aa429eb7e0cf08bfa413b1b4f13",
+      "werkzeug/datastructures/structures.py": "f2746abf01ccf26a198ff7c46b13aa17e37b960ba85e09cd25e4f697d2d7ef10",
+      "werkzeug/debug/__init__.py": "f34bda6af559630576d48b6bb0e2d0b9d1148b6b8a0e5c5c8e6e5c0a6794d6ee",
+      "werkzeug/debug/console.py": "b78859d10835a7a52ed8c5a29aaa0c0e2ed2dd6619bcb3239dcf2ffdd3dac40a",
+      "werkzeug/debug/repr.py": "8873189f2f3086288c0dab2f52a8f49e6e3ed551d5bf07baf7b2a57a26552b5b",
+      "werkzeug/debug/tbtools.py": "a76e5fd203fd576182cf0c49c5dc4c71b4f3d0691c1bbfc390df2d1412e43fd9",
+      "werkzeug/exceptions.py": "497dcc513aaf595c80f529df30fc68c0d3eee5b791f43cab99b509e000f65d3d",
+      "werkzeug/formparser.py": "9a4acff23e02631b61b98b4d44fb129ffc71ceca4b2c94657238293cd00605ba",
+      "werkzeug/http.py": "d7c783f382f2b3cb48415cb39527dac52326914feeb4e105a0d0ff9078617dc3",
+      "werkzeug/local.py": "29416e026f0101ac90a2ecd5834306a96fe18b063c67f958e65eddd5272fb31f",
+      "werkzeug/middleware/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "werkzeug/middleware/dispatcher.py": "cd6379fe5a89affb1cf540eff8f3e84a50c737fcd1df7cfa07be05ff80b1a68f",
+      "werkzeug/middleware/http_proxy.py": "b1d93e57a1a867a68c9f2f83d1034a35fe4c583d8e4cedc019b060eaea69e077",
+      "werkzeug/middleware/lint.py": "970b198720cd4e7b0daf80fc76ab201bc024a7b60ff43fd7e3d482899b9c134e",
+      "werkzeug/middleware/profiler.py": "d5900794379835d860a7c4c7397915e6582670b977d3ba6102bd947f2df4fa56",
+      "werkzeug/middleware/proxy_fix.py": "9fe1d6f8c45626ab822219aa8992a819d6db11e1ee589a8f447845a6e8f8a736",
+      "werkzeug/middleware/shared_data.py": "1b6f1b1b7af3acfe91d243833ac6c57d63a3e5771cfea20e56ed5535597c896d",
+      "werkzeug/routing/__init__.py": "77c4d1c6c936e085aed8176839851f2fef9d7a8947c2219508126a2e811edd83",
+      "werkzeug/routing/converters.py": "8aaa5e7bf9808ebd6819bab47adba3605f4f883bf953b0e03640111d79cc21dd",
+      "werkzeug/routing/exceptions.py": "c0d062526524e0eb453a96dd0d2afb28a2948c7ef29fce09ab0062714ba9f29f",
+      "werkzeug/routing/map.py": "9845e51ceca29e483526dc792f450362cbe85f87952e212e1154330f92d5033f",
+      "werkzeug/routing/matcher.py": "9df05b977ede180919d5d425ba6b2115c3eec9f8209858cfb92490384e86b98b",
+      "werkzeug/routing/rules.py": "7868ba3c3f82386d80b3f1d8d27030fa7c58c4b4c7d05b2ea91692cbc77d1634",
+      "werkzeug/sansio/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "werkzeug/sansio/http.py": "ff97d52a8a202d4c8d1f93b60672adcba745075a7844405989e278bd8a0e50e0",
+      "werkzeug/sansio/multipart.py": "7cc1a063d0af3034603602a8cf3d9c048a7488dd84304d8820e061df4ebf11cb",
+      "werkzeug/sansio/request.py": "308e7d44e5f53ff63a17816408b8da57d8703c45c4eda4d3a9a5698624f0e140",
+      "werkzeug/sansio/response.py": "ba1298b83cb9f90e6fd0c939548c6217e5e86fdbdf19d0f35a2246ec9ecc6187",
+      "werkzeug/sansio/utils.py": "63bce412622f04bb55be0c1276d0611691aa09c941b58c7b19485c922452ca12",
+      "werkzeug/security.py": "5b9e984973c113a1f94e4ca19cf9a39353d4a3d5c257adc20b0f48d821e01b34",
+      "werkzeug/serving.py": "61be16804b5a2d8d902b45fefc292798882b9e8ada18fd836d915b403baffd04",
+      "werkzeug/test.py": "90c116b42fdb6792eabc1c9af8fbedab526fb5be1147fb7ba41a76effe09a49a",
+      "werkzeug/testapp.py": "e7f212e4387f59f59f35c4cb99bc9d8f4d65a2681c280ff897d3cf08d66799d2",
+      "werkzeug/urls.py": "5f234ac07bcae480b7efec2e2033185a4882277c8b4cb1afef09f6185de776a2",
+      "werkzeug/user_agent.py": "95294b60a09c6f30944a46dd0283bcccf936511fbc31d9fa8aefe20369183c10",
+      "werkzeug/utils.py": "ea257ff8974568b5c6e9b091dc5312332518d070a7b1dce52a2ac035abc05e49",
+      "werkzeug/wrappers/__init__.py": "6fbf2308cf31f7a9095062d9e45605477ce52bede99c50263fd449206534b1eb",
+      "werkzeug/wrappers/request.py": "76fb2eba495d34bcf9b62c32adb71eb61a30f74dc3038c2643b31c4744508239",
+      "werkzeug/wrappers/response.py": "bbace0ed5a4d62b09e123a4881ff15aa07da4a2f7247ff708bd972daeb9d8258",
+      "werkzeug/wsgi.py": "3fb8c1d15a46e97ea68a27ace2e93b6609bb3559b8633f116ba227af9abf14cb"
+    },
+    "configuration_sha256": "0a58112598bf56955fc2604968fa4a7582806a7f3e489d56c48c2948de47c262"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "failed": 2,
+      "checked": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/pop_path_info.md#1",
+        "path": "cases/pop_path_info.md",
+        "start_line": 8,
+        "end_line": 13,
+        "code": "from werkzeug.wsgi import pop_path_info\nenv = {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nprint(repr(pop_path_info(env)))\nprint(repr(env['SCRIPT_NAME']))\nprint(repr(pop_path_info(env)))\nprint(repr(env['SCRIPT_NAME']))\n",
+        "context": "# pop path info\nHistorical upstream example: https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wsgi.py#L243-L275\n\nKeep the reusable callable pop_path_info. Remove and return the next path segment while moving its original WSGI bytes from PATH_INFO to SCRIPT_NAME. Preserve repeated slashes, unrelated keys, empty-path behavior, UTF-8 decoding, and charset=None bytes; retain the upstream printed results."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from werkzeug.wsgi import pop_path_info\nImportError: cannot import name 'pop_path_info' from 'werkzeug.wsgi' (/workspace/werkzeug/wsgi.py)\n",
+        "duration_seconds": 0.2266,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/peek_path_info.md#1",
+        "path": "cases/peek_path_info.md",
+        "start_line": 8,
+        "end_line": 11,
+        "code": "from werkzeug.wsgi import peek_path_info\nenv = {'SCRIPT_NAME': '/foo', 'PATH_INFO': '/a/b'}\nprint(repr(peek_path_info(env)))\nprint(repr(peek_path_info(env)))\n",
+        "context": "# peek path info\nHistorical upstream example: https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wsgi.py#L310-L332\n\nKeep the reusable callable peek_path_info. Return the next decoded segment without mutating the environment, including repeated calls and slashes. Preserve the pinned implementation boundary behavior: empty paths return an empty string; charset=None returns bytes. Retain the upstream printed results."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    from werkzeug.wsgi import peek_path_info\nImportError: cannot import name 'peek_path_info' from 'werkzeug.wsgi' (/workspace/werkzeug/wsgi.py)\n",
+        "duration_seconds": 0.2272,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/iri_to_uri.md#1",
+        "path": "cases/iri_to_uri.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from werkzeug.urls import iri_to_uri\nprint(repr(iri_to_uri('http://\\u2603.net/p\\xe5th?q=\\xe8ry%DF')))\n",
+        "context": "# iri to uri\nHistorical upstream example: https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/urls.py#L759-L795\n\nRetain the reusable iri_to_uri callable. Convert Unicode hostnames and paths to URI form while preserving existing percent escapes; retain doctest output."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "'http://xn--n3h.net/p%C3%A5th?q=%C3%A8ry%DF'\n",
+        "stderr": "",
+        "duration_seconds": 0.2275,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

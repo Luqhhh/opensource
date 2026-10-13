@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "selection_kind": "purposive_independent_collection_not_random_not_double_blind",
+  "selected_projects": 2,
+  "selected_failures": 4,
+  "selected_healthy_controls": 2,
+  "model_calls": 0,
+  "held_out_from_method_optimization": true,
+  "timeline": [
+    "Inspected public repositories and documentation; chose two new projects and four failures before consulting FileProvider interface.",
+    "While locating the existing FileProvider interface, collector accidentally saw generic SYSTEM_V2 additions and feedback categories in providers.py. No model outputs or retrieval implementation were read. Selection was retained and root was told immediately.",
+    "Independent old-version controls corrected evaluator preparation errors before any model call: bundled required typing_extensions, and corrected hard-line-break expected HTML from XHTML <br /> to the actual old-version <br>. The official snippet and target versions were not changed.",
+    "Positive old-version controls, target failures, reference patch application/rechecks and deliberately wrong proposals validated before input sealing. Root sees concrete cases only after method lock."
+  ],
+  "excluded_attempts": [
+    {
+      "project": "packaging",
+      "stage": "public-search-only",
+      "reason": "Legacy version/specifier removal was considered but preserving obsolete LegacyVersion identity in a straight-line snippet would require a different compatibility task; no official snippet was adapted or model called."
+    },
+    {
+      "project": "Jinja2",
+      "stage": "public-search-only",
+      "reason": "Candidate context/environment filter examples contain decorated function definitions outside the present straight-line repair scope; no official snippet was adapted or model called."
+    },
+    {
+      "project": "Click",
+      "versions": [
+        "7.1.2",
+        "8.1.8"
+      ],
+      "stage": "downloaded-official-source-and-docs",
+      "reason": "Removed terminal-size/argv APIs had API references but no suitable standalone official example; autocompletion and resultcallback examples require decorated function definitions. Excluded rather than rewriting them into invented snippets. Inspected files retained under collection/click."
+    }
+  ],
+  "preparation_failures": [
+    {
+      "project": "mistune",
+      "evidence": "mistune/evidence/old-control-initial",
+      "issue": "One initial oracle expected XHTML <br /> although pinned old Renderer default emits HTML <br>. Corrected oracle and visible contract from old sandbox observation before freezing."
+    },
+    {
+      "project": "mistune",
+      "evidence": "mistune/evidence/target-initial",
+      "issue": "First target import lacked its required typing_extensions dependency under Python 3.10. Pinned the original 4.12.2 dependency for both runtime versions; no upstream bytes modified. This setup failure is not counted as a migration defect."
+    }
+  ],
+  "limits": [
+    "Four selected failures are clustered within two libraries; they are not four random independent ecosystem samples.",
+    "Public upstream code may be in the model training corpus; no claim of pretraining independence.",
+    "Finite checks are not full semantic equivalence or an adversarial security boundary."
+  ]
+}

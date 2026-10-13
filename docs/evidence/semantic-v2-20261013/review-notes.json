@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-13T06:43:14Z",
+  "reviewer_role": "Separate semantic-case and protocol review agent; also authored the development_v2 contracts. Not an external or blind human review.",
+  "status": "review_complete_with_declared_limits",
+  "scope": {
+    "development_cases_reviewed": true,
+    "holdout_case_contents_or_answers_read": false,
+    "live_model_requests_by_reviewer": 0,
+    "core_modified_by_reviewer": false,
+    "frozen_inputs_or_existing_experiments_modified_by_review": false,
+    "upstream_modules_imported_on_host": false
+  },
+  "reviewed_sha256": {
+    "exampleproof/context.py": "00d30bf5aef2c11b240e294bdec737606b403057bfdbd6cb09f6fc493888b042",
+    "exampleproof/stdlib_index.py": "d1b4796ef066a0118608d69c9094e9fcf93418a5d92f953a8907d5919f5d3270",
+    "scripts/build_stdlib_index.py": "abe70089208649181b686824e4ce8742f6f1627d0852514b9c8f19062f3fdff0",
+    "tests/test_context.py": "794c4a6f278793fe9097cb291a9c6d319b67719cdc2400b1c65f9132935ab40c",
+    "tests/test_semantic_study.py": "3b5976f573fda9701a5a864d8be34eb33a855ec16f863773752bf55e42af5540"
+  },
+  "semantic_revalidation": {
+    "command": "python3 benchmarks/semantic_v2/development/validate.py --output artifacts/semantic-v2-development-final-validation",
+    "summary": "artifacts/semantic-v2-development-final-validation/validation.json",
+    "summary_sha256": "297a6cbaaa51e29a55635550cbeb25ba9b8f4e4b3d27c0a309b3422dbc7b3f08",
+    "execution": "Every upstream snippet and external check ran through SandboxRunner; reference and negative candidates were recorded-candidate replay.",
+    "complete": true,
+    "historical_same_checks_passed": 9,
+    "target_original_expected_failures": 6,
+    "target_healthy_controls": 3,
+    "reference_patch_confirmed_repairs": 6,
+    "reference_healthy_preserved": 3,
+    "negative_candidates_rejected_by_external_assertions": 9,
+    "negative_candidates_with_matching_stdout": 8,
+    "negative_candidates_passed_format_guard": 9,
+    "negative_failure_returncode": 22,
+    "live_model_requests": 0,
+    "v1_project_and_frozen_evidence_hashes_unchanged_during_validation": true
+  },
+  "protocol_checks": {
+    "test_command": "EXAMPLEPROOF_SANDBOX_TESTS=1 python3 -m unittest discover -s tests -p test_semantic_study.py -v",
+    "tests_passed_at_review": 11,
+    "real_sandbox_lifecycle_tests": 2,
+    "model_transport": "Mocked HTTP responses only, on self-authored temporary fixtures; these are not live-model effect measurements.",
+    "covered": [
+      "Actual first-request payloads are equal within the two legacy arms and within the three v2 arms.",
+      "Legacy arms use the original SYSTEM and legacy context; categorized information appears only in later feedback_v2 history.",
+      "External check text, expected-output text and private output sentinels are absent from model payloads.",
+      "Paired seeds, maximum generation budgets, first-success stopping, malformed generations and infrastructure failures retain their intended accounting.",
+      "Healthy controls make no model requests; selected candidates are replayed, patched and checked without counting extra live requests.",
+      "Input/context tampering stops the run before a model request.",
+      "Mislabeled or previously seen development data is rejected as holdout before model metadata is queried.",
+      "A missing, stale, rewritten or development-inapplicable method lock is rejected. A valid lock is embedded in the frozen design."
+    ]
+  },
+  "retrieval_review": {
+    "fixed_cpython_release": "3.10.12",
+    "public_flat_modules": 153,
+    "indexed_public_top_level_functions": 999,
+    "embedded_source_files_with_notices": 36,
+    "checks": [
+      "All 999 indexed snippets were compared with their exact line slices in the archived CPython corpus.",
+      "Corpus SHA, every module SHA, embedded provenance and complete LICENSE text match the source archive records.",
+      "The index module contains literal data; source selection and index generation use AST/text processing without importing indexed or project modules.",
+      "A synthetic selected module containing a top-level RuntimeError was retrieved without host execution.",
+      "Fallback requires a missing-import error, a matching actual from-import in the original snippet, and the corresponding selected project module.",
+      "Evaluator-check errors are sanitized and do not activate missing-import fallback.",
+      "Synthetic limits 0, 1, 20, 80, 1000 and 6000 all respected the label-plus-text character budget.",
+      "Fallback divides the fixed budget into project and standard-library pools; unused allocation is not transferred.",
+      "The private-owner collision regression was independently reproduced, fixed by the implementation owner, and independently rerun successfully."
+    ],
+    "fixed_issue": {
+      "description": "Public.lookup() could also retrieve _Hidden.lookup because matching method names exempted an unrelated private owner from filtering.",
+      "resolution": "Private owners outside the inferred receiver roots are now rejected before method-name exemptions.",
+      "independent_recheck": "The synthetic Public/_Hidden example now returns the Public class and method only."
+    },
+    "limits": [
+      "Static lexical matches are suggestions, not proof that an API is the correct behavioral replacement.",
+      "The corpus excludes classes, subpackages and C builtins, and is not a complete standard-library API inventory.",
+      "Official CPython 3.10.12 source is version-aligned with the runner but is not claimed byte-identical to a distributor-patched interpreter.",
+      "Added standard-library information is part of the complete method change; improvements cannot be attributed solely to feedback."
+    ]
+  },
+  "semantic_blind_spots": [
+    {
+      "project": "MarkupSafe",
+      "covered": "Ordinary, empty, Unicode and HTML-sensitive strings; str-subclass and Markup identity; numeric, boolean and None conversion; __str__ rather than __html__ behavior.",
+      "remaining": "No exhaustive bytes/container conversion or __str__ exception-propagation checks; native Python fallback only, not the C extension. The retained original display regression still does not establish general conversion equivalence."
+    },
+    {
+      "project": "TinyDB",
+      "covered": "Default/named table scope, preservation of unrelated tables, multiple and boundary-valued records, repeated operations, missing/empty table handling, recreation IDs, query results and closing/reopening JSON storage.",
+      "remaining": "The default-table query is populated before a further insert, and insert already clears the query cache. Therefore the current sequence does not independently isolate cache invalidation by clear_default itself. Named-table cache/recreation behavior is still checked. Only single-instance JSONStorage is covered, without middleware or concurrent access.",
+      "evidence": "Target tinydb/table.py _update_table calls self.clear_cache() after every write (line 773 in the pinned copy).",
+      "treatment": "Do not change frozen development checks or rescore previous runs. In a future declared case version, populate the query cache after the final insertion before clearing."
+    },
+    {
+      "project": "more-itertools collate",
+      "covered": "Duplicates, ascending stable equal-key order, key and reverse together, Unicode, empty and one-shot inputs, no consumption at construction, bounded prefix consumption and a finite prefix of infinite streams.",
+      "remaining": "No explicit throwing-iterator behavior, descending equal-key stability, exhaustive custom comparisons or large-scale performance measurement."
+    }
+  ],
+  "interpretation": "These checks strengthen finite behavioral evidence for deliberately selected development cases. They are not a general semantic-equivalence proof, a hostile-code integrity boundary, a blind correctness assessment or a heldout-model success rate. No development input was changed in response to the reviewed live results."
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:50:43.332168+00:00",
+  "project_name": "mistune",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/reusable_html.md": "b10aaeb411bd00f1a4538abe94842d7e9f8a3dcf8c4dc6245eb036e02c863f62",
+      "cases/renderer_options.md": "5a0d8e361567d26e66b5b7315d68ee80ad0bd274b4f146dd0e5d97673f74d65c",
+      "cases/simple_html.md": "6434667e4dbea8c73b6bee984c3a373ba5dbac958efce38ce62e6261db0b963c"
+    },
+    "sources": {
+      "mistune/__init__.py": "492b874002bfbd9f261208872f54c4d9699e5fe975d8920782c1b7ebb7f58e72",
+      "mistune/__main__.py": "9e6ffdd02af2445c4a073ca2ceefdee10425f5ca7550fdc5523b89627d6f7ac8",
+      "mistune/block_parser.py": "c02421a482d4c8d255554b1c548bdc0d2750db96b81c6080866c60ec16fd35a9",
+      "mistune/core.py": "4e3a995b29bb4e2e7811c5f10f55d101fe235db033666ced6199268d92e97034",
+      "mistune/directives/__init__.py": "a93eed8287b31f6f19417b9f96664d97f3ad377e7592137c534c217c37ae0e4e",
+      "mistune/directives/_base.py": "a986228b127ce18c9b18b0ba2b43d5cfa66bdf34a4f38f1482054834d0f73f40",
+      "mistune/directives/_fenced.py": "47add31449b94bf9dc82fc3a4505cc8b5cc2ed72833370507aa1be1548768c0e",
+      "mistune/directives/_rst.py": "d12c69719f7aabb4142e76a915f231639def90452cb9857846a771b816500a9f",
+      "mistune/directives/admonition.py": "8e4476834798a4046427aa4f5ea2f5773ea420e64508790f52389ff79e515210",
+      "mistune/directives/image.py": "294a155fcfe832c7c14db9505d457a6127b86d99458de252879c13910a4afc24",
+      "mistune/directives/include.py": "bb8dc777c4e060f393a0cc31441c9efec754a714b1d9e95084fc3dede9d064f2",
+      "mistune/directives/toc.py": "c539149499aaf858f17496c218111b9e518e183f99394bcd55b6c05850d467d7",
+      "mistune/helpers.py": "eca7e3946cb827417b0c13a4d75c0ee7e98dc6ca51df561bb6625b2f3557ae84",
+      "mistune/inline_parser.py": "f4e8f84971ee79d84a44348b48337ef019eb028ebca07a3fe307a62d1a878338",
+      "mistune/list_parser.py": "06074e0beb0e00570dbc0cca60889488180e22f2399a09a07dd70cf6c680de28",
+      "mistune/markdown.py": "c06efb307d990643ba969c703b63026c85bfcac46a86ebce9e1b3d9a9ce911a1",
+      "mistune/plugins/__init__.py": "30628af1adf5ca5b14052f14ab9ba448bb0de3466874ca65e7d048f79515e631",
+      "mistune/plugins/abbr.py": "892e289909d19144053b0603301b44c820ab6f2af580f071b2be60885391dfd1",
+      "mistune/plugins/def_list.py": "8fa73f8f6274d5e8e5c022b05f6910b545505ad36289c519647929d349a2d0a5",
+      "mistune/plugins/footnotes.py": "d539915cc983a9b3fe55bba5e192cd2655e2ad29c0d9d362c707d18801f89244",
+      "mistune/plugins/formatting.py": "ccc6b5bec4ab26542f51bc272a89facd04a89449322c50b2c86b64e139decc6f",
+      "mistune/plugins/math.py": "f1b084c183cf654ea7afb39b7030173a111179c0f2174c6bd7c9bfce7a673db7",
+      "mistune/plugins/ruby.py": "ca309703bb9422574de393e6d9c9dfaed255d424978088c37259b46507298e75",
+      "mistune/plugins/speedup.py": "947c4f74630adc1d23cc5c62c91c33935df1c6339af8461ba7c8014cb0021505",
+      "mistune/plugins/spoiler.py": "7c01fa95e781bd5194b5c6a303ba9690cf889503b226101ea7ed393be63e5a23",
+      "mistune/plugins/table.py": "c68f3e8a80fbb51e0511718076afc85f824265cbf6759ea32a4d920e1da3f83c",
+      "mistune/plugins/task_lists.py": "e3cf6a459225363f5558a1a4a0228ed5a74d22947df358b39da194aa2475d6f3",
+      "mistune/plugins/url.py": "2227b17145917f95120c195cf3e1023620a296c31fd1fad2166cacf30cab7b3f",
+      "mistune/renderers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mistune/renderers/_list.py": "eb9bf37e61c9b9c4dc838312b57c0118847a64e848f07f085b1f612f864ac2cd",
+      "mistune/renderers/html.py": "5d0a1a3803906ca3b3ed61fb3a867747e006320737cf1d399c3560fe8db730c8",
+      "mistune/renderers/markdown.py": "2add2a156fe93e54352f34840cb635c5e7f4ab83b57e2c5c6fcd04360ce74ab1",
+      "mistune/renderers/rst.py": "2a07318bcb439f0bc1eea6f91a0b4a3c1e6260e8a518cb66f6c14b7cb00013ad",
+      "mistune/toc.py": "53f42a1c0084f2a1212c2666521b628cb0b7e99bd246e0575cfe065d825765c7",
+      "mistune/util.py": "cd08174b2dd594d7768b3ab732ce18193cbcbb04434b316874f78ff2088e01c1",
+      "typing_extensions.py": "8307a4a721bd0d51b797158a5f89e2f2eee793759ee6c946f7c980f45dc3250c"
+    },
+    "configuration_sha256": "3a05bc47b618c2982f1c134d18ca17162b207a88282e9f12d2e2dd49e562e7f1"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "failed": 2,
+      "checked": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/reusable_html.md#1",
+        "path": "cases/reusable_html.md",
+        "start_line": 8,
+        "end_line": 11,
+        "code": "import mistune\n\nmarkdown = mistune.Markdown()\nmarkdown('I am using **mistune markdown parser**')\n",
+        "context": "# reusable html\nHistorical upstream example: https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L70-L73\n\nReuse the callable named markdown to render Markdown to an HTML string. Preserve the old default behavior: raw HTML is retained and ordinary newlines remain soft. The original expression is silent in a script. External checks cover empty text, emphasis, Unicode, raw HTML, and repeated calls."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 22,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 9, in <module>\nAssertionError\n",
+        "duration_seconds": 0.1222,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "behavior_check"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/renderer_options.md#1",
+        "path": "cases/renderer_options.md",
+        "start_line": 8,
+        "end_line": 11,
+        "code": "renderer = mistune.Renderer(escape=True, hard_wrap=True)\n# use this renderer instance\nmarkdown = mistune.Markdown(renderer=renderer)\nmarkdown(text)\n",
+        "context": "# renderer options\nHistorical upstream example: https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L87-L90\n\nSetup supplies import mistune and text = \"<b>x</b>\\nnext\" for the upstream placeholder. Retain the reusable callable markdown. It must render HTML, escape raw HTML, and use hard line breaks. Preserve the original HTML <br> style and silent expression; checks cover other text and boundary inputs."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 1, in <module>\n    renderer = mistune.Renderer(escape=True, hard_wrap=True)\nAttributeError: module 'mistune' has no attribute 'Renderer'\n",
+        "duration_seconds": 0.1221,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/simple_html.md#1",
+        "path": "cases/simple_html.md",
+        "start_line": 8,
+        "end_line": 11,
+        "code": "import mistune\n\nmistune.markdown('I am using **mistune markdown parser**')\n# output: <p>I am using <strong>mistune markdown parser</strong></p>\n",
+        "context": "# simple html\nHistorical upstream example: https://github.com/lepture/mistune/blob/6470c42b2087a4649ad0437227cf7b5c570c3a91/README.rst#L61-L64\n\nRender the supplied Markdown as HTML using the documented convenience function. The expression is silent in a script. Checks cover empty input, plain text, emphasis, Unicode and escaping."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 0.1214,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

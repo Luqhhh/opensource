@@ -1,0 +1,119 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:14:57.881169+00:00",
+  "project_name": "inputs",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/collate.md": "1bf42b3961ad279391f59c26d00ccae231afbbf4a43368afb75f065ab5a275b5",
+      "cases/grouper.md": "b6c39787b5bfe9ae993e81291ab5a4d56efbb5566d13534dd20a13bedbbab687",
+      "cases/healthy_chunked.md": "83fe25f93b726c80fb89ac93a546852649a57b6d7ca65b0c30428e15cfe275af"
+    },
+    "sources": {
+      "more_itertools/__init__.py": "4be9fa4bd37752996a537a7eec057ed599e5eb2270b97b09b6aae512af6d394c",
+      "more_itertools/more.py": "d236ae66621a7f170fcaa8b69c4f44b39496c6e3ad4201a2f356710dd024c497",
+      "more_itertools/recipes.py": "7d1b6291e9d0f3425e3d33b069a81825474eb0e38a30a22abfad9bd3e8033387",
+      "six.py": "4ce39f422ee71467ccac8bed76beb05f8c321c7f0ceda9279ae2dfa3670106b3"
+    },
+    "configuration_sha256": "d648aa489c7c746a2a98fc9ab2c852aa8e9bc54208622ae74bd138baae03269e"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "checked": 3
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/collate.md#1",
+        "path": "cases/collate.md",
+        "start_line": 7,
+        "end_line": 11,
+        "code": "from more_itertools import collate\nprint(list(collate('ACDZ', 'AZ', 'JKL')))\nkey = lambda s: int(s)  # Sort by numeric value, not by string\nprint(list(collate(['1', '10'], ['2', '11'], key=key)))\nprint(list(collate([5, 3, 1], [4, 2, 0], reverse=True)))\n",
+        "context": "# Reusable lazy sorted merge\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nPreserve a reusable callable named collate and all three displayed outputs. Merge any number of already-sorted iterables, retaining duplicates and stable order for equal keys, accepting key and reverse together. Support empty inputs, Unicode and one-shot iterators. Preserve lazy iteration: do not consume inputs at construction or read the entire input to return a prefix. These evaluator-authored requirements expand the original documented lazy merge contract."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "['A', 'A', 'C', 'D', 'J', 'K', 'L', 'Z', 'Z']\n['1', '2', '10', '11']\n[5, 4, 3, 2, 1, 0]\n",
+        "stderr": "",
+        "duration_seconds": 0.035,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/grouper.md#1",
+        "path": "cases/grouper.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from more_itertools import grouper\nprint(list(grouper(3, 'ABCDEFG', 'x')))\n",
+        "context": "# Grouped items: changed argument order\nOfficial more-itertools 5.0.0 docstring: [L291–L292](https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/recipes.py#L291-L292). Target source: 9.0.0 (ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587).\n\nThe original doctest statements and expected results are stored in `../original/grouper.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]\n",
+        "stderr": "",
+        "duration_seconds": 0.0347,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_chunked.md#1",
+        "path": "cases/healthy_chunked.md",
+        "start_line": 8,
+        "end_line": 9,
+        "code": "from more_itertools import chunked\nprint(list(chunked([1, 2, 3, 4, 5, 6, 7, 8], 3)))\n",
+        "context": "# Healthy incomplete final chunk\nOfficial more-itertools 5.0.0 docstring: [L101–L102](https://github.com/more-itertools/more-itertools/blob/53c2c692d3175e4487235213465afb14a211ec3c/more_itertools/more.py#L101-L102). Target source: 9.0.0 (ffcfe0b4e63c75fe1470b8b25a29b0e698a9a587).\n\nThe original doctest statements and expected results are stored in `../original/healthy_chunked.doctest`. This Markdown form adds the documented import and wraps bare REPL expressions in `print(...)`; call arguments, data, and statements are otherwise unchanged."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "[[1, 2, 3], [4, 5, 6], [7, 8]]\n",
+        "stderr": "",
+        "duration_seconds": 0.0349,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

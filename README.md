@@ -4,7 +4,7 @@
 
 仓库：<https://github.com/Luqhhh/opensource>
 
-**当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；工具不自动下载模型。随附候选回放演示**不代表实时模型推理结果或真实项目修复成功率**。已有 [Qwen2.5-Coder 7B 开发验证](docs/evidence/ollama-20261013/README.md)，另新增 [三个真实项目的历史文档迁移证据](benchmarks/real_projects/README.md) 与 [冻结三组对照](docs/evidence/real-projects-20261013/README.md)，保留原始请求、失败及补丁复查结果。
+**当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；工具不自动下载模型。随附候选回放演示**不代表实时模型推理结果或真实项目修复成功率**。已有 [Qwen2.5-Coder 7B 开发验证](docs/evidence/ollama-20261013/README.md)、[三个真实项目的历史文档迁移证据](benchmarks/real_projects/README.md) 与 [冻结三组对照](docs/evidence/real-projects-20261013/README.md)。本轮新增 [多输入语义开发集 v2](benchmarks/semantic_v2/development/README.md) 和可选的 `semantic-v2` 修复策略；新版五组实验与旧结果分开保存，见 [新版实验记录](docs/evidence/semantic-v2-20261013/README.md)。
 
 ## 工作流程
 
@@ -52,7 +52,17 @@ python3 -m exampleproof repair examples/tutorial \
   --model YOUR_LOCAL_MODEL --max-attempts 3 --model-timeout 180 --output artifacts/live
 ```
 
-模型收到原始示例、周边文档、明确选择的源文件，以及此前候选的拒绝或执行反馈。外部检查和预期输出不放入请求；配置检查失败、超时或异常退出的反馈会隐藏 evaluator 细节，仅在确认 setup/示例异常时保留详细错误。Ollama 仅支持回环地址，禁用环境代理和 HTTP 重定向。协议测试和真实模型调用结果见 [验证记录](docs/validation.md)。
+默认 `--repair-policy legacy` 保持原有提示词、所选源码及通用执行反馈。也可在 `repair` 或 `benchmark` 的实时模型路径显式选择新版策略：
+
+```sh
+python3 -m exampleproof repair examples/tutorial \
+  --model YOUR_LOCAL_MODEL --repair-policy semantic-v2 \
+  --max-attempts 3 --model-timeout 180 --output artifacts/live-semantic-v2
+```
+
+`semantic-v2` 按任务语义与调用对象检索最多 6000 字符的原文摘录（包括位置标签）。确认项目缺失导入时，预算分为项目源码 4000 字符与固定 CPython 3.10.12 标准库索引 2000 字符；其他情况全部用于项目源码。策略使用新版通用提示词，并向后续尝试提供固定的失败类别，例如示例异常、行为检查失败或 stdout 不匹配。它沿用相同的沙箱、候选守卫、外部检查和补丁复查；不改写用户检查。策略开关只适用于 `--model`，与 `--proposals` 同用会拒绝执行。索引有明确的版本和范围限制，细节见 [评测协议](docs/benchmark.md#语义评测与五组对照-v2)。
+
+模型收到原始示例、周边文档、所选源码或检索摘录，以及此前候选的拒绝或执行反馈。外部检查和预期输出不放入请求；配置检查失败、超时或异常退出的反馈会隐藏 evaluator 细节，仅在确认 setup/示例异常时保留详细错误。分类反馈来自宿主记录的执行阶段，不解析外部检查的异常文本来生成提示。Ollama 仅支持回环地址，禁用环境代理和 HTTP 重定向。协议测试和真实模型调用结果见 [验证记录](docs/validation.md)。
 
 候选 JSON 按示例 ID 映射到 `{"code": "...", "rationale": "..."}`；多轮回放时将该值改成按轮次排列的对象数组。文件上限为 2 MB。JSON 报告当前为 `schema_version: 2`，保留结果级最终候选字段并新增 `attempts`、`stop_reason` 和项目级 `repair` 统计。token 总量仅在所有尝试均提供相应计数时给出，否则为 `null`；服务已返回用量但候选解析失败时也计入统计。
 
@@ -124,7 +134,20 @@ python3 scripts/run_real_project_study.py freeze \
 python3 scripts/run_real_project_study.py run artifacts/real-project-study
 ```
 
-需要已运行的本地 Ollama 和对应模型；已有实验目录不可覆盖。三种子重复的每组 15 次案例运行仍只对应 5 个失败案例，不能据此估计真实项目总体成功率。[协议、结果与局限](docs/evidence/real-projects-20261013/README.md)
+需要已运行的本地 Ollama 和对应模型；已有实验目录不可覆盖。上述命令创建新实验，不能用新版实现覆盖或重新解释已冻结的 v1 记录。三种子重复的每组 15 次案例运行仍只对应 5 个失败案例，不能据此估计真实项目总体成功率。[协议、结果与局限](docs/evidence/real-projects-20261013/README.md)
+
+旧 v1 实现已经归档；当前代码增加了 v2 模块，审计旧冻结记录须使用归档实现模式：
+
+```sh
+python3 scripts/verify_real_project_study.py \
+  docs/evidence/real-projects-20261013 --archived-only
+```
+
+新版开发集包含 6 个迁移失败和 3 个健康对照，扩展 MarkupSafe 通用转换、TinyDB 表操作以及 `collate` 的多输入、边界和惰性行为检查。旧运行时同检查 9/9 通过，参考补丁修复 6/6 且健康 3/3 保留；9 个有意错误候选均通过格式检查后被外部语义检查拒绝，其中 8 个显示输出仍正确。这些是工程回放结果，模型请求为 0；已见案例明确标记 `development_v2`，不能充作新的留出评测。
+
+新版公平对照比较 `legacy_source`、`legacy_feedback`、`source_v2`、`generic_feedback_v2`、`feedback_v2` 五组。实验内 legacy 摘录上限 12000 字符，v2 为 6000 字符；两种上限均为标签与原文合计，不是 token 上限。五组固定相同模型、每例最多 3 次调用和每次生成上限，分别报告首次/预算内结果及实际 token 成本。开发集与新留出项目分开冻结、分开统计；留出实验先锁定方法，再接触案例内容并冻结输入。详细复现命令与各对比能回答的问题见 [新版评测协议](docs/benchmark.md#语义评测与五组对照-v2)，结果见 [新版实验记录](docs/evidence/semantic-v2-20261013/README.md)。不能仅凭增加反馈或缩短上下文就宣称效果提高。
+
+本轮两次开发实验各 52 次、新留出实验 180 次请求已全部完成。新方法修复了已见 TinyDB 默认表案例，但 `collate` 的可复用绑定和通用字符串转换仍未通过；新留出五组均为 **0/12**，健康对照均为 **6/6**。新无反馈组的输入 token 比旧无反馈组少 **40.32%**，没有证明修复或反馈收益。多输入语义检查能拒绝本轮准备的 13 个错误候选，这属于检查器验证，不是模型成功率。
 
 ## 参赛资料
 

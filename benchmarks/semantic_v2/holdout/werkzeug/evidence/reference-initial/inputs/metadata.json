@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "suite_id": "werkzeug-semantic-v2-independent-holdout",
+  "classification": "real_upstream_documentation_version_migration",
+  "documentation_version": "2.2.3",
+  "runtime_version": "3.0.6",
+  "version_commits": {
+    "2.2.3": "22a254fca2ad0130adbbcbd11d3de51bcb04a08b",
+    "3.0.6": "5eaefc3996aa5cc8c5237d8b82f1b89eed6ea624"
+  },
+  "license": "BSD-3-Clause",
+  "cases": [
+    {
+      "id": "cases/pop_path_info.md#1",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "upstream_document": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wsgi.py#L243-L275",
+      "semantic_contract": "Keep the reusable callable pop_path_info. Remove and return the next path segment while moving its original WSGI bytes from PATH_INFO to SCRIPT_NAME. Preserve repeated slashes, unrelated keys, empty-path behavior, UTF-8 decoding, and charset=None bytes; retain the upstream printed results.",
+      "category": "historical_migration"
+    },
+    {
+      "id": "cases/peek_path_info.md#1",
+      "expected_before": "failed",
+      "expected_repair": "verified_repair",
+      "upstream_document": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/wsgi.py#L310-L332",
+      "semantic_contract": "Keep the reusable callable peek_path_info. Return the next decoded segment without mutating the environment, including repeated calls and slashes. Preserve the pinned implementation boundary behavior: empty paths return an empty string; charset=None returns bytes. Retain the upstream printed results.",
+      "category": "historical_migration"
+    },
+    {
+      "id": "cases/iri_to_uri.md#1",
+      "expected_before": "checked",
+      "expected_repair": "checked",
+      "upstream_document": "https://github.com/pallets/werkzeug/blob/22a254fca2ad0130adbbcbd11d3de51bcb04a08b/src/werkzeug/urls.py#L759-L795",
+      "semantic_contract": "Retain the reusable iri_to_uri callable. Convert Unicode hostnames and paths to URI form while preserving existing percent escapes; retain doctest output.",
+      "category": "healthy_control"
+    }
+  ],
+  "scope": "Purposive historical migration, not a current upstream documentation defect. No model calls during preparation.",
+  "oracle_limit": "Finite evaluator-owned tests establish the declared contract on selected inputs, not unrestricted semantic equivalence."
+}

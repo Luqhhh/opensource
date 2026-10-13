@@ -1,0 +1,3 @@
+        >>> list(grouper(3, 'ABCDEFG', 'x'))
+        [('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'x', 'x')]
+

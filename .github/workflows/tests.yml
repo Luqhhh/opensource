@@ -23,6 +23,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Run core tests
         run: python3 -m unittest discover -s tests -v
+      - name: Reproduce the fixed standard-library API index without network access
+        run: |
+          python3 scripts/build_stdlib_index.py --output "$RUNNER_TEMP/stdlib_index.py"
+          cmp exampleproof/stdlib_index.py "$RUNNER_TEMP/stdlib_index.py"
 
   sandbox:
     name: Bubblewrap integration (system Python)
@@ -66,6 +70,12 @@ jobs:
               --proposals "benchmarks/real_projects/$project/proposals.json" \
               --output "artifacts/real-project-ci/$project"
           done
+      - name: Verify semantic v2 development provenance and negative controls
+        run: |
+          /usr/bin/python3 benchmarks/semantic_v2/development/validate.py --output artifacts/semantic-v2-development-ci
+      - name: Verify semantic v2 holdout provenance and negative controls
+        run: |
+          /usr/bin/python3 benchmarks/semantic_v2/holdout/verify_provenance.py --runtime --output artifacts/semantic-v2-holdout-ci
 
   package:
     name: Wheel metadata and installed CLI
@@ -80,16 +90,19 @@ jobs:
           python-version: "3.10"
       - name: Build wheel with modern isolated build tooling
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip build
           python -m pip wheel --no-deps --wheel-dir "$RUNNER_TEMP/exampleproof-wheels" .
+          python -m build --sdist --outdir "$RUNNER_TEMP/exampleproof-wheels" .
       - name: Verify wheel and install outside the checkout
         run: |
           python - <<'PY'
           import configparser
           from email.parser import Parser
+          import hashlib
           import os
           from pathlib import Path
           import subprocess
+          import tarfile
           import tempfile
           import venv
           import zipfile
@@ -98,9 +111,22 @@ jobs:
           assert len(wheels) == 1, wheels
           wheel = wheels[0]
           assert wheel.name == "aic_exampleproof-0.1.0-py3-none-any.whl", wheel.name
+          modules = {p.name: p.read_bytes() for p in Path("exampleproof").glob("*.py")}
+          assert len(modules) == 16, modules.keys()
+          licenses = {p.name: p.read_bytes() for p in Path("exampleproof/licenses").glob("*.txt")}
+          assert set(licenses) == {"Apache-2.0.txt", "CPython-3.10.12.txt", "stdlib-attribution.txt"}
+          assert hashlib.sha256(licenses["Apache-2.0.txt"]).hexdigest() == "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          assert licenses["CPython-3.10.12.txt"] == Path("benchmarks/semantic_v2/resources/cpython-3.10.12/LICENSE").read_bytes()
+          for marker in (b"stdlib/doctest.py", b"stdlib/inspect.py", b"stdlib/tabnanny.py", b"stdlib/socket.py", b"No warranties."):
+              assert marker in licenses["stdlib-attribution.txt"], marker
           with zipfile.ZipFile(wheel) as archive:
               names = archive.namelist()
-              assert {"exampleproof/benchmark.py", "exampleproof/study.py", "exampleproof/cli.py", "exampleproof/__main__.py"} <= set(names)
+              assert {"exampleproof/benchmark.py", "exampleproof/study.py", "exampleproof/context.py", "exampleproof/semantic_study.py", "exampleproof/cli.py", "exampleproof/__main__.py"} <= set(names)
+              assert {Path(name).name for name in names if name.startswith("exampleproof/") and name.endswith(".py")} == set(modules)
+              for name, data in modules.items():
+                  assert archive.read("exampleproof/" + name) == data, name
+              for name, data in licenses.items():
+                  assert archive.read("exampleproof/licenses/" + name) == data, name
               metadata_files = [name for name in names if name.endswith(".dist-info/METADATA")]
               assert len(metadata_files) == 1, metadata_files
               metadata = Parser().parsestr(archive.read(metadata_files[0]).decode("utf-8"))
@@ -112,6 +138,14 @@ jobs:
               entries.read_string(archive.read(metadata_files[0].rsplit("/", 1)[0] + "/entry_points.txt").decode("utf-8"))
               assert entries.get("console_scripts", "exampleproof") == "exampleproof.cli:main"
 
+          sdists = list(wheel.parent.glob("*.tar.gz"))
+          assert len(sdists) == 1, sdists
+          with tarfile.open(sdists[0], "r:gz") as archive:
+              for name, data in licenses.items():
+                  members = [member for member in archive.getmembers() if member.isfile() and member.name.endswith("/exampleproof/licenses/" + name)]
+                  assert len(members) == 1, name
+                  assert archive.extractfile(members[0]).read() == data, name
+
           with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
               outside = Path(temporary)
               environment = outside / "venv"
@@ -119,9 +153,13 @@ jobs:
               python = str(environment / "bin/python")
               command = str(environment / "bin/exampleproof")
               subprocess.run([python, "-m", "pip", "install", "--no-deps", str(wheel)], cwd=outside, check=True)
+              installed = Path(subprocess.check_output([python, "-I", "-c", "import exampleproof,pathlib; print(pathlib.Path(exampleproof.__file__).parent)"], cwd=outside, text=True).strip())
+              for name, data in licenses.items():
+                  assert (installed / "licenses" / name).read_bytes() == data, name
               for invocation in ([python, "-I", "-m", "exampleproof"], [command]):
                   version = subprocess.check_output([*invocation, "--version"], cwd=outside, text=True).strip()
                   assert version == "0.1.0", version
                   help_text = subprocess.check_output([*invocation, "benchmark", "--help"], cwd=outside, text=True)
                   assert "--proposals" in help_text and "--max-attempts" in help_text, help_text
+                  assert "--repair-policy" in help_text and "semantic-v2" in help_text, help_text
           PY

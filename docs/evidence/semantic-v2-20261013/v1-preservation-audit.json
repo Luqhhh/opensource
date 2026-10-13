@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "study": "/home/lux1/exampleproof/docs/evidence/real-projects-20261013",
+  "protocol_sha256": "3f04390bca570862d412c4318be85be4b002ebba3facdc1297f4c7419d0ec7a4",
+  "checked": {
+    "frozen_projects": 3,
+    "complete_cells": 27,
+    "equal_source_feedback_first_payloads": 15,
+    "summary_reconciled": 1
+  },
+  "scheduled_cells": 27,
+  "implementation_check": "archived_only",
+  "errors": [],
+  "incomplete": [],
+  "independent_groups": {
+    "direct": {
+      "case_runs": 15,
+      "first_try_passed": 4,
+      "budget_passed": 7,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 35,
+      "input_tokens": 24926,
+      "output_tokens": 4513,
+      "inference_seconds": 139.9696,
+      "wall_seconds": 148.7099,
+      "raw_server_seconds": 139.6596,
+      "statuses": {
+        "verified_repair": 7,
+        "repair_failed": 27,
+        "rejected": 1
+      },
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 17,
+          "id": "cases/safe_string.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "markupsafe",
+          "seed": 29,
+          "id": "cases/safe_string.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.26666666666666666,
+      "budget_rate": 0.4666666666666667
+    },
+    "source": {
+      "case_runs": 15,
+      "first_try_passed": 8,
+      "budget_passed": 9,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 28,
+      "input_tokens": 129525,
+      "output_tokens": 4177,
+      "inference_seconds": 145.1755,
+      "wall_seconds": 153.8261,
+      "raw_server_seconds": 144.5902,
+      "statuses": {
+        "repair_failed": 19,
+        "verified_repair": 9
+      },
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.5333333333333333,
+      "budget_rate": 0.6
+    },
+    "source_feedback": {
+      "case_runs": 15,
+      "first_try_passed": 8,
+      "budget_passed": 8,
+      "healthy_case_runs": 9,
+      "healthy_preserved": 9,
+      "requests": 29,
+      "input_tokens": 140668,
+      "output_tokens": 4669,
+      "inference_seconds": 150.153,
+      "wall_seconds": 159.0571,
+      "raw_server_seconds": 149.5143,
+      "statuses": {
+        "repair_failed": 20,
+        "verified_repair": 8,
+        "rejected": 1
+      },
+      "failures": [
+        {
+          "project": "tinydb",
+          "seed": 17,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 17,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 29,
+          "id": "cases/purge_named_table.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 29,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "tinydb",
+          "seed": 43,
+          "id": "cases/purge_default.md#1",
+          "status": "not_repaired"
+        },
+        {
+          "project": "more_itertools",
+          "seed": 43,
+          "id": "cases/collate.md#1",
+          "status": "not_repaired"
+        }
+      ],
+      "first_try_rate": 0.5333333333333333,
+      "budget_rate": 0.5333333333333333
+    }
+  },
+  "scope": "Read-only independent hash/payload/raw-cost/report audit. Unified diffs are applied only in memory and checked against recorded post-patch document hashes. No model calls or snippet execution. Local seal is not external attestation."
+}

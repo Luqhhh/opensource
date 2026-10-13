@@ -1,0 +1,14 @@
+--- a/cases/safe_string.md
++++ b/cases/safe_string.md
+@@ -4,8 +4,10 @@
+ The harness imports markupsafe's public namespace. Preserve value as Markup and all three original displayed lines. This remains a finite display regression: the reusable convert contract is a separate new case.
+ 
+ ```python
++from markupsafe import escape, Markup
++
+ value = escape('<User 1>')
+ print(repr(value))
+ print(repr(escape(str(value))))
+-print(repr(escape(soft_unicode(value))))
++print(repr(escape(value)))
+ ```

@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-13T06:14:57.762870+00:00",
+  "project_name": "tinydb",
+  "runner": "bubblewrap",
+  "runner_interpreter": "/usr/bin/python3 -I -S",
+  "host_python": "3.10.12",
+  "provenance": {
+    "documents": {
+      "cases/purge_default.md": "4ce826be3f2099b778b6126ac5115ffed505a62c1f7519d5ff8365d075b95a24",
+      "cases/purge_named_table.md": "f4adc3a1a3c29670505f9b6585fd2ae0a433c4a35293a9c10fd1e66e520026db",
+      "cases/healthy_query.md": "122083f61dd591d25d148c6b8171f581b90868e84713fc7d4286dfdb51302a67"
+    },
+    "sources": {
+      "tinydb/__init__.py": "28f94493eea983ea655d6285ada5827fd0cdc6eed455121ce7c6244121d51cda",
+      "tinydb/database.py": "113f0a4a5bca46aa1beb6c88cc3d71c4b0ea048768e17f8e5a46b3c522131030",
+      "tinydb/middlewares.py": "eb5b3e53a2f80bdff86bc7560e534548e573ebe4e521405db91acd6f7e3e5d36",
+      "tinydb/operations.py": "09fc2723fbc2327abbf5596a6328a014dd5db4c23f97ac1e87cd75dfe1c7082f",
+      "tinydb/queries.py": "2deaffc39e09bb1de74ce713b509cf9aedaed4310a74c8a39c81bb10e3aff129",
+      "tinydb/storages.py": "edcd3d20cc0c684be1a1d48cfb528867777867a6e7db05bf92beee7da44d9d44",
+      "tinydb/table.py": "02fe25fc7da803487a631ac29d380e8e8b8537de7fd9b09adbfc5309248712fc",
+      "tinydb/utils.py": "196737158a888cbf2a3f33eb7b59b7748a6421556dc56fd3885f551a8f5479b9",
+      "tinydb/version.py": "4b9a66676ab9b389e574661d94f57de836fa817a4548b31efcb7dc9d542d25c1"
+    },
+    "configuration_sha256": "4073286061d0d1a8dcc58d20ef2900fed845b65b39aa269631db54361a250106"
+  },
+  "summary": {
+    "total": 3,
+    "counts": {
+      "failed": 2,
+      "checked": 1
+    }
+  },
+  "repair": {
+    "max_attempts": 1,
+    "attempts": 0,
+    "proposals": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "inference_requests": 0,
+    "inference_duration_seconds": 0,
+    "proposal_duration_seconds": 0
+  },
+  "verification_scope": "verified_repair means the configured checks or preserved original assertions passed; it is not a proof of general semantic equivalence",
+  "results": [
+    {
+      "example": {
+        "id": "cases/purge_default.md#1",
+        "path": "cases/purge_default.md",
+        "start_line": 7,
+        "end_line": 13,
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nclear_default = db.purge\nclear_default()\ndb.all()\n",
+        "context": "# Clear default records and retain unrelated tables\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep db and a reusable zero-argument clear_default callable bound to this database. Clear only default-table records, retaining the default table and named archive/empty_archive tables and data. The fixture contains pre-existing records including Unicode, empty strings, false and null. Repeated calls on empty and refilled tables must work, reset IDs to 1, invalidate cached searches, and persist after reopen. Emit no stdout."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 5, in <module>\n    clear_default = db.purge\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'purge'\n",
+        "duration_seconds": 0.0356,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/purge_named_table.md#1",
+        "path": "cases/purge_named_table.md",
+        "start_line": 7,
+        "end_line": 15,
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\ntable = db.table('table_name')\ntable.insert({'value': True})\ntable.all()\ndrop_named = db.purge_table\ndrop_named('table_name')\n",
+        "context": "# Drop one named table and preserve other records\nEvaluator-authored development_v2 adaptation; not a newly held-out upstream example.\nKeep db and a reusable drop_named(name) callable bound to this database. Remove only the requested named table and its records; preserve default, archive and empty_archive tables and data. Handle missing/empty tables and repeated calls, invalidate table caches so recreation starts at ID 1, and persist after reopen. The fixture includes multiple Unicode/false/null records. Emit no stdout."
+      },
+      "before": {
+        "status": "failed",
+        "returncode": 21,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 8, in <module>\n    drop_named = db.purge_table\n  File \"/workspace/tinydb/database.py\", line 255, in __getattr__\n    return getattr(self.table(self.default_table_name), name)\nAttributeError: 'Table' object has no attribute 'purge_table'\n",
+        "duration_seconds": 0.0352,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "example_exception"
+      },
+      "status": "failed",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    },
+    {
+      "example": {
+        "id": "cases/healthy_query.md#1",
+        "path": "cases/healthy_query.md",
+        "start_line": 7,
+        "end_line": 13,
+        "code": "from tinydb import TinyDB, Query\ndb = TinyDB('db.json')\ndb.insert({'type': 'apple', 'count': 7})\ndb.insert({'type': 'peach', 'count': 3})\nFruit = Query()\ndb.search(Fruit.type == 'peach')\ndb.search(Fruit.count > 5)\n",
+        "context": "# TinyDB 3.15.2 documentation on TinyDB 4.8.2: healthy_query\nInsert the fruit records and query peaches and records with count greater than five. This is a healthy control; preserve its behavior.\nThe executable block joins the listed upstream doctest commands, with only the REPL prompts removed."
+      },
+      "before": {
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 0.0359,
+        "oracle": "configured_behavior_checks",
+        "failure_kind": "none"
+      },
+      "status": "checked",
+      "proposal": null,
+      "after": null,
+      "rejection": null,
+      "diff": null,
+      "attempts": [],
+      "stop_reason": null
+    }
+  ]
+}

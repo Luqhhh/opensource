@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "suite_id": "more_itertools-semantic-development-v2",
+  "split": "development_v2",
+  "description": "Expanded development checks based on previously observed v1 migrations; never report these cases as held out.",
+  "classification": "evaluator_authored_migration_contracts_and_retained_regressions",
+  "provenance": {
+    "origin": "benchmarks/real_projects/more_itertools",
+    "previous_cases_and_live_results_seen": true,
+    "held_out": false,
+    "upstream_runtime_bytes_unchanged": true,
+    "candidate_mode": "recorded_candidate_replay",
+    "live_model_evaluation": false
+  },
+  "limitations": [
+    "Cases were deliberately selected from known failures and are development data.",
+    "New callable tasks and boundary checks are authored adaptations, not new official upstream documentation excerpts.",
+    "Finite checks share a process with candidate code and do not prove adversarial semantic equivalence.",
+    "Reference candidates validate the evaluation pipeline, not model quality."
+  ],
+  "cases": [
+    {
+      "id": "cases/collate.md#1",
+      "expected_before": "failed",
+      "classification": "expanded_development_contract",
+      "origin_case": "cases/collate.md#1",
+      "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+      "oracle": "configured_behavior_checks_and_expected_stdout"
+    },
+    {
+      "id": "cases/grouper.md#1",
+      "expected_before": "failed",
+      "classification": "retained_development_regression",
+      "origin_case": "cases/grouper.md#1",
+      "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+      "oracle": "configured_behavior_checks_and_expected_stdout"
+    },
+    {
+      "id": "cases/healthy_chunked.md#1",
+      "expected_before": "checked",
+      "classification": "retained_development_regression",
+      "origin_case": "cases/healthy_chunked.md#1",
+      "authorship": "Evaluator-authored context and external checks; unchanged source and retained upstream commands where documented.",
+      "oracle": "configured_behavior_checks_and_expected_stdout"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+--- a/cases/reusable_html.md
++++ b/cases/reusable_html.md
+@@ -7,6 +7,6 @@
+ ```python
+ import mistune
+ 
+-markdown = mistune.Markdown()
++markdown = mistune.create_markdown(escape=False)
+ markdown('I am using **mistune markdown parser**')
+ ```
+--- a/cases/renderer_options.md
++++ b/cases/renderer_options.md
+@@ -5,8 +5,8 @@
+ Setup supplies import mistune and text = "<b>x</b>\nnext" for the upstream placeholder. Retain the reusable callable markdown. It must render HTML, escape raw HTML, and use hard line breaks. Preserve the original HTML <br> style and silent expression; checks cover other text and boundary inputs.
+ 
+ ```python
+-renderer = mistune.Renderer(escape=True, hard_wrap=True)
+-# use this renderer instance
+-markdown = mistune.Markdown(renderer=renderer)
++renderer = mistune.HTMLRenderer(escape=True)
++_parser = mistune.Markdown(renderer=renderer, inline=mistune.InlineParser(hard_wrap=True))
++markdown = lambda value: _parser(value).replace('<br />', '<br>')
+ markdown(text)
+ ```

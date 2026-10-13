@@ -1,0 +1,149 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-13T07:06:53.159126+00:00",
+  "work_directory": "/tmp/exampleproof-v2-clean-package-nkasonrc",
+  "log_directory": "/tmp/exampleproof-v2-clean-package-nkasonrc/logs",
+  "live_model_calls": 0,
+  "excluded_system_pip_artifacts": [
+    {
+      "path": "/tmp/exampleproof-v2-wheels/UNKNOWN-0.0.0-py3-none-any.whl",
+      "sha256": "7d7854794d7004523ad4c593dea86fc73ee92f688f144ffc3e2c1bf7b0639c46",
+      "metadata_name": "UNKNOWN",
+      "metadata_version": "0.0.0",
+      "package_modules": [],
+      "disposition": "explicitly excluded; never installed or used in any passing check"
+    }
+  ],
+  "finished_at": "2026-10-13T07:07:06.843733+00:00",
+  "wheel": "aic_exampleproof-0.1.0-py3-none-any.whl",
+  "wheel_path": "/tmp/exampleproof-v2-clean-package-nkasonrc/dist/aic_exampleproof-0.1.0-py3-none-any.whl",
+  "sha256": "ddda55267bb21ab72074f6750234b9b54b74247ee1d18dd3c3e7950f85adb0bc",
+  "sdist": "aic_exampleproof-0.1.0.tar.gz",
+  "sdist_path": "/tmp/exampleproof-v2-clean-package-nkasonrc/dist/aic_exampleproof-0.1.0.tar.gz",
+  "sdist_sha256": "038ef05f6279ae0fd1b5f5c7d8821ae58e9f5fcfae2f55e2fa9e57bbba7bae47",
+  "module_files_match_workspace": 16,
+  "module_sha256": {
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "benchmark.py": "33e89e7e8bf7c3bf95791f8812ed822359920407a654ec7a36236afa9d1a3f9f",
+    "cli.py": "9ab60224b1bdcf2fbf0ef55533234ab107f293e17142c89afbff171a277dacae",
+    "config.py": "c67e72c56771f1eae85c4322502d5124b17fea84073ee9bdd1d8ca2a2bfb3081",
+    "context.py": "00d30bf5aef2c11b240e294bdec737606b403057bfdbd6cb09f6fc493888b042",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "0333a70c7dd35c4bfe3c1f8c784a97f2e2ca6c4d6504fb0fbb363b46317f943d",
+    "models.py": "25c41ba0b1e5fb4a012e047d39796ac6f11fff3d704603ed3a9cc363a7840933",
+    "pipeline.py": "41e0229f232b5396a34e58764c947642c946d30e6b3be59690aea4868862da51",
+    "providers.py": "48f45dc19649c574195bf14d83776628e41b804d4d0f1b0f4971cf90744316ae",
+    "report.py": "4bc325e222566b4e054083c534634dbea3ea26916a688abb44c9510e1bf50502",
+    "runner.py": "e5cf60ecab4848ac36e68d92e1781964d93a010628cb4afdc921af1b2664bfcc",
+    "semantic_study.py": "83828e2ac4bfba7d7f24e98a760cdba2546cdf698cd4f0327aebff3e7a8e23f8",
+    "stdlib_index.py": "d1b4796ef066a0118608d69c9094e9fcf93418a5d92f953a8907d5919f5d3270",
+    "study.py": "5fee28eb9bea7e02993d7178268011dc91b0fc919d0187f12bfcb6dcd03f0c62"
+  },
+  "wheel_modules_match": true,
+  "sdist_modules_match": true,
+  "installed_modules_match": true,
+  "distribution_licenses": {
+    "wheel_exact_bytes": true,
+    "sdist_exact_bytes": true,
+    "installed_exact_bytes": true,
+    "files_sha256": {
+      "CPython-3.10.12.txt": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "Apache-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "stdlib-attribution.txt": "97c6fc1b0a4cdea31154ccc6078a307c47e28eef36994cb8e13660c2a4c17e56"
+    },
+    "scope": "Complete Apache-2.0, complete CPython license, source-local attribution including public-domain/no-warranty notices; all 153 source modules reviewed.",
+    "reviewed_source_files": 153
+  },
+  "runtime_dependencies": 0,
+  "build_environment": [
+    {
+      "name": "build",
+      "version": "1.6.1"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3"
+    },
+    {
+      "name": "pip",
+      "version": "26.2.1"
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.3.3"
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0"
+    },
+    {
+      "name": "tomli",
+      "version": "2.5.0"
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0"
+    }
+  ],
+  "build_strategy": "Two fresh venvs; modern pip/setuptools/build/wheel, --no-isolation only inside dedicated build venv; no system pip mutation.",
+  "installed_outside_checkout": true,
+  "installed_location": "/tmp/exampleproof-v2-clean-package-nkasonrc/install-venv/lib/python3.10/site-packages/exampleproof",
+  "console_version": "0.1.0",
+  "module_version": "0.1.0",
+  "console_and_module_semantic_v2_help": "passed",
+  "pip_check": "passed",
+  "semantic_v2_replay_parameter_constraint": "Expected exit 2: repair-policy is live-only; replay ran without this flag.",
+  "installed_benchmark": {
+    "baseline_valid": true,
+    "total": 3,
+    "expected_failures": 2,
+    "evaluation_complete": true,
+    "infrastructure_errors": [],
+    "detected_failures": 2,
+    "healthy_controls": 1,
+    "healthy_false_alarms": 0,
+    "verified_repairs": 2,
+    "patch_confirmed_repairs": 2,
+    "repair_rate": 1.0,
+    "healthy_preserved": 1,
+    "all_passed": true,
+    "cases": [
+      {
+        "id": "cases/purge_default.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/purge_named_table.md#1",
+        "expected_before": "failed",
+        "baseline_status": "failed",
+        "baseline_matches": true,
+        "repair_status": "verified_repair",
+        "patched_status": "checked",
+        "attempts": 1
+      },
+      {
+        "id": "cases/healthy_query.md#1",
+        "expected_before": "checked",
+        "baseline_status": "checked",
+        "baseline_matches": true,
+        "repair_status": "checked",
+        "patched_status": "checked",
+        "attempts": 0
+      }
+    ]
+  },
+  "benchmark_kind": "semantic_v2 development TinyDB reference replay; not model inference",
+  "input_project_unchanged": true,
+  "commands": "/tmp/exampleproof-v2-clean-package-nkasonrc/commands.json",
+  "method_lock_sha256": "76087371cf7e09eee4d03c03ce9308597a394d5a1f1dcabdc43098bbd3586fe2",
+  "module_hashes_match_method_lock": true,
+  "exact_ci_package_block": "passed",
+  "licensing_only_change": "Additional distribution license files and package-data; frozen method .py bytes and all experiment inputs unchanged.",
+  "license_review": "/tmp/exampleproof-v2-license-review.json"
+}
