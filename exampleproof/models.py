@@ -22,6 +22,17 @@ class Execution:
 
 
 @dataclass
+class InferenceEvidence:
+    request: dict
+    started_at: str
+    timeout_seconds: float
+    response: dict | None = None
+    response_body: str | None = None
+    response_truncated: bool = False
+    duration_seconds: float = 0.0
+
+
+@dataclass
 class Proposal:
     code: str
     rationale: str
@@ -30,6 +41,18 @@ class Proposal:
     input_tokens: int | None = None
     output_tokens: int | None = None
     duration_seconds: float = 0.0
+    inference_evidence: InferenceEvidence | None = None
+
+
+@dataclass
+class RepairAttempt:
+    number: int
+    status: str
+    proposal: Proposal | None = None
+    after: Execution | None = None
+    rejection: str | None = None
+    diff: str | None = None
+    inference_evidence: InferenceEvidence | None = None
 
 
 @dataclass
@@ -41,6 +64,8 @@ class Result:
     after: Execution | None = None
     rejection: str | None = None
     diff: str | None = None
+    attempts: list[RepairAttempt] = field(default_factory=list)
+    stop_reason: str | None = None
 
     def to_dict(self):
         return asdict(self)

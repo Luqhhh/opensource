@@ -7,7 +7,12 @@ MAX_TOTAL_BYTES = 2_000_000
 
 def safe_path(root: Path, relative: str) -> Path:
     path = PurePosixPath(relative)
-    if path.is_absolute() or not path.parts or any(p in {"..", "."} or p.startswith(".") for p in path.parts):
+    # PurePosixPath normalizes aliases such as './README.md' and repeated
+    # separators. Reject them before selecting inputs so one physical file
+    # cannot acquire several example IDs or conflicting patch headers.
+    if (path.is_absolute() or not path.parts or str(path) != relative
+            or "\\" in relative or any(ord(char) < 32 or ord(char) == 127 for char in relative)
+            or any(p.startswith(".") for p in path.parts)):
         raise ValueError(f"Only explicit, non-hidden relative paths are allowed: {relative}")
     current = root
     for part in path.parts:
@@ -33,7 +38,9 @@ def load_config(root: Path) -> dict:
     config.setdefault("timeout_seconds", 5)
     if not isinstance(config["examples"], dict):
         raise ValueError("examples must be an object keyed by document#block")
-    if not isinstance(config["timeout_seconds"], (int, float)) or not 0.1 <= config["timeout_seconds"] <= 30:
+    if (isinstance(config["timeout_seconds"], bool)
+            or not isinstance(config["timeout_seconds"], (int, float))
+            or not 0.1 <= config["timeout_seconds"] <= 30):
         raise ValueError("timeout_seconds must be between 0.1 and 30")
     total = 0
     for group in ("documents", "source_files"):

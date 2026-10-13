@@ -1,0 +1,54 @@
+name: Tests
+
+"on": [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: Core (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run core tests
+        run: python3 -m unittest discover -s tests -v
+
+  sandbox:
+    name: Bubblewrap integration (system Python)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      EXAMPLEPROOF_SANDBOX_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Install Bubblewrap
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y bubblewrap
+      - name: Run all tests with actual sandbox execution
+        # The runner uses /usr/bin/python3 inside the sandbox. Blocked execution
+        # and skipped tests must fail this job, including unavailable namespaces.
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import sys
+          import unittest
+
+          suite = unittest.defaultTestLoader.discover("tests")
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          if result.skipped:
+              print("Sandbox CI requires every test to run; skips are failures.", file=sys.stderr)
+          sys.exit(0 if result.wasSuccessful() and result.testsRun and not result.skipped else 1)
+          PY

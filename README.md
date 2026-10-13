@@ -35,14 +35,28 @@ python3 -m exampleproof repair examples/tutorial \
 
 输出为 `report.html`、`report.json` 和 `verified.patch`。HTML 为可直接打开的独立文件，不依赖网络或 JavaScript。
 
+支持基于失败反馈的多轮修复，每个失败示例默认尝试 1 轮，可用 `--max-attempts 1..5` 调整。以下演示故意先回放一个错误候选，再回放修正候选：
+
+```sh
+python3 -m exampleproof repair examples/tutorial \
+  --proposals examples/tutorial/proposals.multiround.json \
+  --max-attempts 3 --output artifacts/multiround
+```
+
+每轮都重新检查原始断言并在独立沙箱中复验。拒绝或执行失败会进入下一轮；成功、缺少行为检查、候选重复、候选耗尽、服务错误或执行环境不可用时停止。JSON 和 HTML 保留逐轮候选、拒绝理由、执行结果及停止原因，补丁只包含最终通过检查的候选。候选文件仍是记录回放，不能计为实时模型推理。
+
 已有本地 Ollama 模型时，可改为实时修复（将模型名替换为本机实际安装的名称）：
 
 ```sh
 python3 -m exampleproof repair examples/tutorial \
-  --model YOUR_LOCAL_MODEL --output artifacts/live
+  --model YOUR_LOCAL_MODEL --max-attempts 3 --model-timeout 180 --output artifacts/live
 ```
 
-模型只收到示例、周边文档、错误信息以及明确选择的源文件，不包含配置中的外部检查或预期输出。当前只允许回环地址的 Ollama 服务。模型接口适配有协议单元测试；是否完成真实模型测试以 [验证记录](docs/validation.md) 为准。
+模型收到原始示例、周边文档、明确选择的源文件，以及此前候选的拒绝或执行反馈。外部检查和预期输出不放入请求；配置检查失败、超时或异常退出的反馈会隐藏 evaluator 细节，仅在确认 setup/示例异常时保留详细错误。Ollama 仅支持回环地址，禁用环境代理和 HTTP 重定向。模型接口适配有协议单元测试；是否完成真实模型测试以 [验证记录](docs/validation.md) 为准。
+
+候选 JSON 按示例 ID 映射到 `{"code": "...", "rationale": "..."}`；多轮回放时将该值改成按轮次排列的对象数组。文件上限为 2 MB。JSON 报告当前为 `schema_version: 2`，保留结果级最终候选字段并新增 `attempts`、`stop_reason` 和项目级 `repair` 统计。token 总量仅在所有尝试均提供相应计数时给出，否则为 `null`；服务已返回用量但候选解析失败时也计入统计。
+
+`--model-timeout` 设置 HTTP 连接/读取空闲超时，默认 60 秒，可为冷启动或 CPU 推理调高；它不是整轮墙钟时间上限。每次 Ollama 请求保存实际 payload、响应、UTC 时间、耗时及超时配置，见 `inference_evidence`。失败时也保留可获得的响应或最多 256 KB 的错误正文；HTTP 错误展示模型服务提供的原因。`repair.inference_duration_seconds` 包括有记录的失败请求，`proposal_duration_seconds` 仅统计成功解析的候选。报告含用户选择的源码与文档，分享前应检查内容。
 
 ## 配置一个项目
 
@@ -64,7 +78,9 @@ python3 -m exampleproof repair examples/tutorial \
 }
 ```
 
-`setup` 与 `checks` 由使用者明确配置。示例之间不共享状态。无法独立执行的片段应配置初始化代码或说明跳过原因。只支持普通围栏代码块；列表嵌套、缩进代码块、Notebook、跨代码块自动上下文推导暂未支持。
+`setup` 与 `checks` 由使用者明确配置。示例之间不共享状态。无法独立执行的片段应配置初始化代码或说明跳过原因。普通围栏支持 0–3 个前导空格，提取时移除围栏缩进，输出补丁时恢复；保留文档的 LF/CRLF 和文件末尾无换行状态。候选字符串包含关闭围栏时，自动加长外围围栏。列表嵌套、无围栏的缩进代码块、Notebook、跨代码块自动上下文推导暂未支持。
+
+输入路径必须为规范的相对路径，例如 `docs/guide.md`，不接受 `./docs/guide.md`、重复斜杠、隐藏路径或符号链接。报告以临时文件写入后替换，避免通过既有硬链接改写输入。
 
 退出码：`0` 为没有失败或未验证修复候选（仍应阅读 skipped / runnable_unverified 计数）；`1` 为执行、检查、模型或候选失败；`2` 为配置/隔离环境错误、无示例或全部跳过。
 

@@ -16,14 +16,15 @@ def extract_markdown(text: str, path: str) -> list[Example]:
     for i, line in enumerate(lines):
         stripped = line.rstrip("\r\n")
         if opening is not None:
-            start, fence, language, context = opening
+            start, fence, language, context, indent = opening
             if re.fullmatch(r" {0,3}" + re.escape(fence[0]) + "{" + str(len(fence)) + r",}[ \t]*", stripped):
                 if language in LANGUAGES:
                     index += 1
                     results.append(Example(
                         id=f"{path}#{index}", path=path,
                         start_line=start + 2, end_line=i,
-                        code="".join(lines[start + 1:i]), context=context,
+                        code="".join(re.sub(r"^ {0," + str(indent) + r"}", "", source_line)
+                                     for source_line in lines[start + 1:i]), context=context,
                     ))
                 opening = None
             continue
@@ -36,9 +37,10 @@ def extract_markdown(text: str, path: str) -> list[Example]:
             if fence[0] == "`" and "`" in info:
                 continue
             preceding = "".join(lines[max(0, i - 4):i]).strip()
-            opening = (i, fence, language, (heading + "\n" + preceding)[-1200:])
+            indent = len(stripped) - len(stripped.lstrip(" "))
+            opening = (i, fence, language, (heading + "\n" + preceding)[-1200:], indent)
     if opening is not None:
-        start, _, language, _ = opening
+        start, _, language, _, _ = opening
         if language in LANGUAGES:
             raise ValueError(f"{path}:{start + 1}: unclosed Python code fence")
     return results
