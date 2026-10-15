@@ -10,16 +10,45 @@ import ast
 import math
 import os
 from pathlib import Path
-import resource
 import shutil
 import signal
 import subprocess
+import sys
 import tempfile
 import time
+
+try:
+    import resource
+except ImportError:  # Help, scanning and diagnostics are also usable on Windows.
+    resource = None
 
 from .models import Execution
 
 OUTPUT_LIMIT = 64_000
+
+
+def environment_report(*, probe=True):
+    """Inspect prerequisites; optionally run trusted `pass` in the real sandbox."""
+    bwrap = shutil.which("bwrap")
+    checks = [
+        {"name": "Linux 系统", "ready": sys.platform == "linux",
+         "detail": sys.platform, "hint": "在 Linux 或 Windows 的 WSL Ubuntu 中运行执行命令。"},
+        {"name": "资源限制支持", "ready": resource is not None,
+         "detail": "可用" if resource is not None else "不可用", "hint": "使用 Linux 系统 Python。"},
+        {"name": "Bubblewrap", "ready": bwrap is not None,
+         "detail": bwrap or "未安装", "hint": "Ubuntu 可安装 bubblewrap 软件包。"},
+        {"name": "隔离环境 Python", "ready": Path("/usr/bin/python3").is_file(),
+         "detail": "/usr/bin/python3", "hint": "在 Linux 中安装系统 Python 3。"},
+    ]
+    ready = all(check["ready"] for check in checks)
+    if ready and probe:
+        execution = SandboxRunner({}).run("pass", {})
+        ready = execution.status == "passed"
+        checks.append({"name": "隔离执行探测", "ready": ready,
+                       "detail": "通过" if ready else execution.stderr or execution.status,
+                       "hint": "确认系统允许 Bubblewrap 创建用户和网络命名空间。"})
+    return {"backend": "bubblewrap", "ready": ready, "checks": checks,
+            "probe_performed": probe and len(checks) == 5}
 
 # The receipt is written only after setup, the example and external checks have
 # returned normally. Exit status alone cannot distinguish os._exit(0) from this.
@@ -80,8 +109,9 @@ class SandboxRunner:
             path = Path(name)
             if path.is_absolute() or ".." in path.parts or path == Path("."):
                 return Execution("blocked", stderr=f"Source path must stay inside the workspace: {name!r}", oracle=oracle, failure_kind="environment")
-        if not shutil.which("bwrap") or not Path("/usr/bin/python3").exists():
-            return Execution("blocked", stderr="Requires Linux, bubblewrap and /usr/bin/python3; host execution is disabled", oracle=oracle, failure_kind="environment")
+        if (sys.platform != "linux" or resource is None or not shutil.which("bwrap")
+                or not Path("/usr/bin/python3").exists()):
+            return Execution("blocked", stderr="Requires Linux, bubblewrap and /usr/bin/python3; host execution is disabled. Run 'python -m exampleproof doctor' for setup guidance.", oracle=oracle, failure_kind="environment")
         start = time.monotonic()
         with tempfile.TemporaryDirectory(prefix="exampleproof-") as temporary:
             base = Path(temporary)

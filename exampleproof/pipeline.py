@@ -41,7 +41,7 @@ def unified_diff(original, replacement, fromfile, tofile):
                    for line in difflib.unified_diff(original, replacement, fromfile=fromfile, tofile=tofile))
 
 
-def evaluate_example(example, spec, sources, runner, provider=None, max_attempts=1):
+def evaluate_example(example, spec, sources, runner, provider=None, max_attempts=1, *, progress=None):
     validate_max_attempts(max_attempts)
     if spec.get("skip"):
         return Result(example, Execution("skipped", stderr=spec["skip"]), "skipped")
@@ -55,6 +55,9 @@ def evaluate_example(example, spec, sources, runner, provider=None, max_attempts
         return result
     seen = set()
     for number in range(1, max_attempts + 1):
+        if progress is not None:
+            progress({"stage": "attempt_start", "example_id": example.id,
+                      "attempt": number, "max_attempts": max_attempts})
         attempt = RepairAttempt(number, "provider_error")
         try:
             if result.attempts:
@@ -62,6 +65,8 @@ def evaluate_example(example, spec, sources, runner, provider=None, max_attempts
             else:
                 proposal = provider.propose(example, before, sources)
         except Exception as exc:
+            if getattr(exc, "retryable_candidate_error", False):
+                attempt.status = "candidate_format_error"
             attempt.rejection = f"{type(exc).__name__}: {exc}"
             attempt.inference_evidence = getattr(exc, "inference_evidence", None)
         else:
@@ -99,13 +104,16 @@ def evaluate_example(example, spec, sources, runner, provider=None, max_attempts
                     else:
                         attempt.status = "verified_repair"
         result.attempts.append(attempt)
+        if progress is not None:
+            progress({"stage": "attempt_complete", "example_id": example.id,
+                      "attempt": number, "status": attempt.status})
         if attempt.status == "repeated_candidate":
             result.stop_reason = "repeated_candidate"
             break
         result.status = attempt.status
         result.proposal, result.after = attempt.proposal, attempt.after
         result.rejection, result.diff = attempt.rejection, attempt.diff
-        if attempt.status not in {"rejected", "repair_failed"}:
+        if attempt.status not in {"rejected", "repair_failed", "candidate_format_error"}:
             result.stop_reason = attempt.status
             break
     else:
@@ -113,11 +121,23 @@ def evaluate_example(example, spec, sources, runner, provider=None, max_attempts
     return result
 
 
-def run_project(root: Path, provider=None, runner=None, max_attempts=1):
+def run_project(root: Path, provider=None, runner=None, max_attempts=1, *, progress=None):
     validate_max_attempts(max_attempts)
     config, documents, sources, examples = read_project(root)
     runner = runner or SandboxRunner(sources, config["timeout_seconds"])
-    results = [evaluate_example(example, config["examples"].get(example.id, {}), sources, runner, provider, max_attempts) for example in examples]
+    if progress is not None:
+        progress({"stage": "project_start", "total": len(examples)})
+    results = []
+    for index, example in enumerate(examples, 1):
+        if progress is not None:
+            progress({"stage": "example_start", "index": index, "total": len(examples),
+                      "example_id": example.id})
+        result = evaluate_example(example, config["examples"].get(example.id, {}), sources,
+                                  runner, provider, max_attempts, progress=progress)
+        results.append(result)
+        if progress is not None:
+            progress({"stage": "example_complete", "index": index, "total": len(examples),
+                      "example_id": example.id, "status": result.status})
     patch = []
     for name, original in documents.items():
         lines = original.splitlines(keepends=True)
@@ -199,5 +219,5 @@ def exit_code(report):
     counts = report["summary"]["counts"]
     if not report["summary"]["total"] or counts.get("blocked") or sum(v for k, v in counts.items() if k != "skipped") == 0:
         return 2
-    bad = {"failed", "provider_error", "rejected", "repair_failed", "declined", "candidate_unverified"}
+    bad = {"failed", "provider_error", "candidate_format_error", "rejected", "repair_failed", "declined", "candidate_unverified"}
     return 1 if any(counts.get(key) for key in bad) else 0

@@ -116,7 +116,7 @@ class StudyTests(unittest.TestCase):
         with patch("exampleproof.providers.urlopen", side_effect=[bad, self.response()]):
             outcome, attempts = self.evaluate("source_feedback", runner)
         self.assertEqual(outcome["status"], "verified_repair")
-        self.assertEqual([a.status for a in attempts], ["provider_error", "verified_repair"])
+        self.assertEqual([a.status for a in attempts], ["candidate_format_error", "verified_repair"])
         self.assertFalse(study.infrastructure_failure(attempts[0]))
         self.assertEqual(attempts[0].inference_evidence.response["response"], "{unfinished")
 

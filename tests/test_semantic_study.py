@@ -144,12 +144,12 @@ class SemanticStudyTests(unittest.TestCase):
                     self.example, self.spec, {}, self.before, self.context, self.plan(), arm, 17,
                     "http://127.0.0.1:11434", runner=SequenceRunner(Execution("passed", 0)))
             self.assertEqual(outcome["success_attempt"], 2)
-            self.assertEqual([a.status for a in attempts], ["provider_error", "verified_repair"])
+            self.assertEqual([a.status for a in attempts], ["candidate_format_error", "verified_repair"])
             second = json.loads(attempts[1].proposal.inference_evidence.request["prompt"])
             prior = second["previous_attempts"][0]
             self.assertIsNone(prior["candidate"])
             self.assertIsNone(prior["execution"])
-            self.assertEqual(prior["status"], "provider_error")
+            self.assertEqual(prior["status"], "candidate_format_error")
 
     def test_infrastructure_error_stops_each_arm_without_success_claim(self):
         for arm in self.plan()["design"]["arms"]:

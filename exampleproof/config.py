@@ -31,7 +31,7 @@ def safe_path(root: Path, relative: str) -> Path:
 
 def load_config(root: Path) -> dict:
     config_path = root / "exampleproof.json"
-    config = json.loads(safe_path(root, "exampleproof.json").read_text()) if config_path.exists() else {}
+    config = json.loads(safe_path(root, "exampleproof.json").read_text(encoding="utf-8")) if config_path.exists() else {}
     if not isinstance(config, dict):
         raise ValueError("exampleproof.json must contain an object")
     unknown = set(config) - CONFIG_FIELDS

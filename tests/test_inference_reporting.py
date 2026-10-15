@@ -32,7 +32,7 @@ class InferenceReportingTests(unittest.TestCase):
         response = {'model': 'local-model', 'done': True, 'response': '{broken',
                     'prompt_eval_count': 25, 'eval_count': 8}
         root, report, diff = self.run_with_response(response)
-        self.assertEqual(report['summary']['counts'], {'provider_error': 1})
+        self.assertEqual(report['summary']['counts'], {'candidate_format_error': 1})
         attempt = report['results'][0]['attempts'][0]
         self.assertIsNone(attempt['proposal'])
         self.assertEqual(attempt['inference_evidence']['response'], response)

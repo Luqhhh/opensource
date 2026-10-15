@@ -192,7 +192,39 @@ def _units(sources):
     return units
 
 
-def _project_context(example, before, sources, limit):
+def _index_terms(entries):
+    units = [(entry, Counter(_terms(entry[4]))) for entry in entries]
+    frequencies = Counter(term for _, terms in units for term in terms)
+    average = sum(sum(terms.values()) for _, terms in units) / len(units) if units else 1
+    return units, frequencies, average or 1
+
+
+class SourceContextCache:
+    """Provider-owned cache for one source snapshot; never execute input code.
+
+    Exact contents, not filenames or object identity, invalidate the cache.
+    Rankings are calculated afresh for every task and cannot mutate cached units.
+    """
+
+    def __init__(self):
+        self._snapshot = None
+        self._project_units = None
+        self._standard_terms = None
+
+    def project_units(self, sources):
+        snapshot = tuple(sorted(sources.items()))
+        if snapshot != self._snapshot:
+            self._project_units = _units(sources)
+            self._snapshot = snapshot
+        return self._project_units
+
+    def standard_terms(self):
+        if self._standard_terms is None:
+            self._standard_terms = _index_terms(STDLIB_INDEX)
+        return self._standard_terms
+
+
+def _project_context(example, before, sources, limit, *, units=None):
     """Return relevant, disjoint source slices within a label+text char budget.
 
     Ranking combines saturated inverse-document-frequency term overlap with
@@ -204,7 +236,8 @@ def _project_context(example, before, sources, limit):
     if not limit:
         return {}
     query, called, imported, roots, failed = _query(example, before)
-    units = _units(sources)
+    # Only score dictionaries are mutable; AST nodes and source lines stay read-only.
+    units = _units(sources) if units is None else [dict(unit) for unit in units]
     if not units:
         return {}
     # Resolve annotated return types for a receiver's method, without executing
@@ -305,7 +338,7 @@ def missing_project_import(example, before, sources):
                and any(alias.name == symbol for alias in node.names) for node in ast.walk(tree))
 
 
-def _stdlib_context(example, before, limit, entries=STDLIB_INDEX):
+def _stdlib_context(example, before, limit, entries=STDLIB_INDEX, *, index=None):
     """Rank the complete fixed public-function index without host inspection."""
     if not limit or not entries:
         return {}
@@ -315,9 +348,7 @@ def _stdlib_context(example, before, limit, entries=STDLIB_INDEX):
     for symbol in called - failed:
         for term in _terms(symbol):
             query.pop(term, None)
-    units = [(entry, Counter(_terms(entry[4]))) for entry in entries]
-    frequencies = Counter(term for _, terms in units for term in terms)
-    average = sum(sum(terms.values()) for _, terms in units) / len(units) or 1
+    units, frequencies, average = _index_terms(entries) if index is None else index
     ranked = []
     for entry, terms in units:
         shared = query.keys() & terms.keys()
@@ -359,7 +390,7 @@ def _stdlib_context(example, before, limit, entries=STDLIB_INDEX):
     return contexts
 
 
-def source_context(example, before, sources, limit=6000):
+def source_context(example, before, sources, limit=6000, *, cache=None):
     """Return deterministic real source slices, with a bounded stdlib fallback.
 
     A runtime-confirmed missing project import allocates two thirds to project
@@ -370,8 +401,12 @@ def source_context(example, before, sources, limit=6000):
     """
     if type(limit) is not int or limit < 0:
         raise ValueError("source context limit must be a nonnegative integer")
+    if not limit:
+        return {}
+    project_options = {"units": cache.project_units(sources)} if cache is not None else {}
     if not missing_project_import(example, before, sources):
-        return _project_context(example, before, sources, limit)
+        return _project_context(example, before, sources, limit, **project_options)
     project_limit = limit * 2 // 3
-    return {**_project_context(example, before, sources, project_limit),
-            **_stdlib_context(example, before, limit - project_limit)}
+    standard_options = {"index": cache.standard_terms()} if cache is not None else {}
+    return {**_project_context(example, before, sources, project_limit, **project_options),
+            **_stdlib_context(example, before, limit - project_limit, **standard_options)}

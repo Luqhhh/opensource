@@ -247,13 +247,20 @@ class OllamaProvider:
                 value = result.get(key)
                 if value is not None and (type(value) is not int or value < 0):
                     raise ValueError(f"Ollama {key} must be a non-negative integer")
-            value = json.loads(result["response"])
-            inference.duration_seconds = round(time.monotonic() - start, 4)
-            return parse_proposal(value, provider="ollama", model=self.model,
-                                  input_tokens=result.get("prompt_eval_count"),
-                                  output_tokens=result.get("eval_count"),
-                                  duration_seconds=inference.duration_seconds,
-                                  inference_evidence=inference)
+            try:
+                value = json.loads(result["response"])
+                inference.duration_seconds = round(time.monotonic() - start, 4)
+                return parse_proposal(value, provider="ollama", model=self.model,
+                                      input_tokens=result.get("prompt_eval_count"),
+                                      output_tokens=result.get("eval_count"),
+                                      duration_seconds=inference.duration_seconds,
+                                      inference_evidence=inference)
+            except ValueError as exc:
+                # Only malformed candidate content is retryable. Invalid server
+                # envelopes, HTTP errors and timeouts remain service failures.
+                # Keep the original exception type and the full recorded response.
+                exc.retryable_candidate_error = True
+                raise
         except Exception as exc:
             inference.duration_seconds = round(time.monotonic() - start, 4)
             # Preserve existing error types while allowing reports to retain context.
@@ -266,7 +273,11 @@ class SemanticOllamaProvider(OllamaProvider):
 
     def __init__(self, model, endpoint="http://127.0.0.1:11434", timeout=60):
         super().__init__(model, endpoint, timeout, system_prompt=SYSTEM_V2, feedback_mode="categorized")
+        self._context_cache = None
 
     def propose(self, example, before, sources, *, history=()):
-        from .context import source_context
-        return super().propose(example, before, source_context(example, before, sources, limit=6000), history=history)
+        from .context import SourceContextCache, source_context
+        if self._context_cache is None:
+            self._context_cache = SourceContextCache()
+        context = source_context(example, before, sources, limit=6000, cache=self._context_cache)
+        return super().propose(example, before, context, history=history)

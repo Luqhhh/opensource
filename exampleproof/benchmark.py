@@ -59,7 +59,7 @@ def score_benchmark(manifest, baseline, repaired=None, patched=None):
     valid = all(r["baseline_matches"] for r in rows)
     measurable = {
         "baseline": {"failed", "checked"},
-        "repair": {"failed", "checked", "verified_repair", "repair_failed", "rejected", "declined"},
+        "repair": {"failed", "checked", "verified_repair", "repair_failed", "rejected", "declined", "candidate_format_error"},
         "patched": {"failed", "checked"},
     }
     infrastructure_errors = [
@@ -97,7 +97,7 @@ def _write_json(path, value):
                     encoding="utf-8", errors="backslashreplace")
 
 
-def run_benchmark(root: Path, output: Path, provider, max_attempts=1):
+def run_benchmark(root: Path, output: Path, provider, max_attempts=1, *, progress=None):
     """Never change source inputs or overwrite an earlier evidence directory."""
     validate_max_attempts(max_attempts)
     root, output = root.resolve(), output.resolve()
@@ -127,6 +127,7 @@ def run_benchmark(root: Path, output: Path, provider, max_attempts=1):
         "stage": "snapshot",
     }
     baseline = repaired = patched = None
+    run_options = {"progress": progress} if progress is not None else {}
     code = 2
     try:
         summary["implementation_sha256"] = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
@@ -148,13 +149,17 @@ def run_benchmark(root: Path, output: Path, provider, max_attempts=1):
             project = Path(temporary) / root.name
             shutil.copytree(frozen, project)
             summary["stage"] = "baseline"
-            baseline, _ = run_project(project)
+            if progress is not None:
+                progress({"stage": "phase_start", "phase": "baseline"})
+            baseline, _ = run_project(project, **run_options)
             summary["stage"] = "baseline_report"
             write_report(output / "baseline", baseline, "")
             summary["stage"] = "baseline_validation"
             if score_benchmark(manifest, baseline)["baseline_valid"]:
                 summary["stage"] = "repair"
-                repaired, patch = run_project(project, provider, max_attempts=max_attempts)
+                if progress is not None:
+                    progress({"stage": "phase_start", "phase": "repair"})
+                repaired, patch = run_project(project, provider, max_attempts=max_attempts, **run_options)
                 summary["repair"] = repaired["repair"]
                 summary["stage"] = "repair_report"
                 write_report(output / "repair", repaired, patch)
@@ -168,7 +173,9 @@ def run_benchmark(root: Path, output: Path, provider, max_attempts=1):
                 else:
                     summary["patch_application"] = "no_patch"
                 summary["stage"] = "patched"
-                patched, _ = run_project(project)
+                if progress is not None:
+                    progress({"stage": "phase_start", "phase": "patched"})
+                patched, _ = run_project(project, **run_options)
                 summary["stage"] = "patched_report"
                 write_report(output / "patched", patched, "")
                 metrics = score_benchmark(manifest, baseline, repaired, patched)
