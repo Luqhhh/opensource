@@ -75,7 +75,7 @@ def review_task_edit(document, path, contract, candidate):
     if (not isinstance(candidate, dict) or set(candidate) - required - {"diagnosis_reference"}
             or not required <= candidate.keys() or candidate["schema_version"] != "tutorial-task-edit-1"
             or candidate["document_sha256"] != _hash(document)
-            or not isinstance(candidate["origin"], str) or candidate["origin"] not in {"assistant_authored_candidate", "recorded_candidate"}
+            or not isinstance(candidate["origin"], str) or candidate["origin"] not in {"assistant_authored_candidate", "recorded_candidate", "live_model_candidate", "synthetic_candidate"}
             or any(not isinstance(candidate[k], str) or not candidate[k] or len(candidate[k]) > 32000
                    for k in ("original", "replacement", "rationale"))):
         raise ValueError("Invalid task edit or document hash mismatch")
@@ -100,8 +100,8 @@ def review_task_edit(document, path, contract, candidate):
     return before[selected][0], after[selected][0], changed.encode("utf-8"), patch
 
 
-def validate_tutorial_task(root, contract_path, candidate_path, output):
-    root, output = Path(root).resolve(), Path(output)
+def prepare_task_inputs(root, contract_path):
+    root = Path(root).resolve()
     contract_raw = Path(contract_path).read_bytes()
     if len(contract_raw) > 128000:
         raise ValueError("Task contract exceeds 128 KB")
@@ -129,8 +129,6 @@ def validate_tutorial_task(root, contract_path, candidate_path, output):
     spec = {k: contract[k] for k in ("setup", "checks", "expected_stdout") if k in contract}
     compile(spec.get("setup", ""), "task-setup", "exec")
     compile(spec.get("checks", ""), "task-checks", "exec")
-    if output.exists() or output.is_symlink() or output.resolve().is_relative_to(root):
-        raise ValueError("Task output must be a new directory outside the project")
     support = contract.get("support_files", [])
     if not isinstance(support, list) or len(support) > 100 or any(not isinstance(p, str) for p in support):
         raise ValueError("Support files must be an explicit bounded path list")
@@ -145,6 +143,16 @@ def validate_tutorial_task(root, contract_path, candidate_path, output):
     if contract["block"] > len(old_blocks):
         raise ValueError("Task Python block does not exist")
     old_code = old_blocks[contract["block"] - 1][0]
+    return contract_raw, contract, raw_files, spec, old_code
+
+
+def validate_tutorial_task(root, contract_path, candidate_path, output):
+    root, output = Path(root).resolve(), Path(output)
+    if output.exists() or output.is_symlink() or output.resolve().is_relative_to(root):
+        raise ValueError("Task output must be a new directory outside the project")
+    contract_raw, contract, raw_files, spec, old_code = prepare_task_inputs(root, contract_path)
+    timeout = contract.get("timeout_seconds", 5)
+    sources = {p: raw_files[p].decode("utf-8") for p in contract["source_files"]}
     output.mkdir(parents=True, exist_ok=False)
     (output / "contract.json").write_bytes(contract_raw)
     for p, raw in raw_files.items():

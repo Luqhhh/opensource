@@ -46,7 +46,8 @@ def analysis_coverage(snapshot, count):
 
 
 def review_cloud(snapshot, client, path, approval=None, *, context_chars=12000,
-                 strategies=("lexical",), redact_values=(), max_retrieval_rounds=3):
+                 strategies=("lexical",), redact_values=(), max_retrieval_rounds=3,
+                 max_total_tokens=None, deadline_seconds=None):
     """Write a first preview or validate an already reviewed immutable manifest."""
     from .tutorial import ANALYZE_SYSTEM, SELECT_SYSTEM
     path = Path(path)
@@ -90,6 +91,12 @@ def review_cloud(snapshot, client, path, approval=None, *, context_chars=12000,
                              "search_scope": "all reviewed indexed chunks; no filesystem or network tools"}
         body["initial_candidate_ids"] = [c.id for c in snapshot.candidates]
         body["notice"] += " Iterative retrieval may send any reviewed indexed chunk, including beyond the initial 40 candidates."
+    if snapshot.task is not None:
+        body["task"] = redact(snapshot.task, literals)
+    if max_total_tokens is not None or deadline_seconds is not None:
+        from .tutorial_budget import validate_limits
+        validate_limits(max_total_tokens, deadline_seconds)
+        body["budget"] = {"max_total_tokens": max_total_tokens, "deadline_seconds": deadline_seconds}
     record = {"sha256": _digest(body), "review": body}
     existed = path.exists()
     if existed:
@@ -137,6 +144,12 @@ class ReviewedCloudClient:
         if self.review_record["review"].get("retrieval", {}).get("max_rounds") != value:
             raise ValueError("Cloud approval does not match the retrieval round limit")
 
+    def validate_budget(self, max_total_tokens, deadline_seconds):
+        expected = {"max_total_tokens": max_total_tokens, "deadline_seconds": deadline_seconds}
+        approved = self.review_record["review"].get("budget", {"max_total_tokens": None, "deadline_seconds": None})
+        if approved != expected:
+            raise ValueError("Cloud approval does not match analysis budget")
+
     def _iteration_metadata(self, metadata):
         from .tutorial_retrieval import MAX_REQUESTS, RESULTS_PER_REQUEST, SEARCH_STATUSES
         limit = self.review_record["review"]["retrieval"]["max_rounds"]
@@ -163,7 +176,10 @@ class ReviewedCloudClient:
             if set(evidence) != {"coverage", "evidence", "task", "retrieval"} or evidence["task"] != self._snapshot.task:
                 raise ValueError("Unreviewed cloud iterative payload")
             self._iteration_metadata(evidence["retrieval"])
-        if (system == review["prompts"]["analysis"] and set(evidence) == {"coverage", "evidence"}) or iterative:
+        analysis_keys = {"coverage", "evidence"} | ({"task"} if self._snapshot.task is not None else set())
+        if (system == review["prompts"]["analysis"] and set(evidence) == analysis_keys) or iterative:
+            if not iterative and evidence.get("task") != self._snapshot.task:
+                raise ValueError("Unreviewed task query")
             chunks = evidence["evidence"]
             if evidence["coverage"] != analysis_coverage(self._snapshot, len(chunks)):
                 raise ValueError("Unreviewed cloud coverage metadata")
@@ -172,6 +188,8 @@ class ReviewedCloudClient:
             payload = {"coverage": evidence["coverage"], "evidence": [self._redacted[c["id"]] for c in chunks]}
             if len(json.dumps(payload["evidence"], ensure_ascii=False)) > review["context_chars"]:
                 raise ValueError("Cloud evidence exceeds approved context budget")
+            if not iterative and self._snapshot.task is not None:
+                payload["task"] = review["task"]
             if iterative:
                 payload.update(task=review["retrieval"]["task"], retrieval=evidence["retrieval"])
         elif system == review["prompts"]["selection"] and set(evidence) == {"candidates"}:
@@ -185,3 +203,46 @@ class ReviewedCloudClient:
             self._next_round += 1
             self._previous_requests = reply.value.get("evidence_requests", []) if isinstance(reply.value, dict) else []
         return reply
+
+
+class ReviewedPayloadClient:
+    """Permit one exact redacted task-proposal request, bound to the private contract hash."""
+    def __init__(self, client, system, payload, record):
+        self._client, self._system, self._payload = client, system, payload
+        self.review_record = record
+        self.provider, self.model, self.evidence_kind = client.provider, client.model, client.evidence_kind
+        self.used = False
+
+    def complete(self, system, payload):
+        model = self.review_record["review"]["model"]
+        if (self.used or system != self._system or payload != self._payload
+                or {"provider": self._client.provider, "name": self._client.model, "endpoint": self._client.endpoint} != model
+                or _digest(self.review_record["review"]) != self.review_record["sha256"]):
+            raise ValueError("Task proposal does not match the reviewed request")
+        self.used = True
+        return self._client.complete(system, self.review_record["review"]["payload"])
+
+
+def review_payload(client, system, payload, binding, path, approval=None, *, redact_values=()):
+    """Review exact proposal payload; never include evaluator setup, checks or expected output."""
+    path = Path(path)
+    if path.is_symlink() or client.provider != "deepseek":
+        raise ValueError("Exact request review requires DeepSeek and a regular review file")
+    if not isinstance(redact_values, (list, tuple)) or any(not isinstance(v, str) or not v for v in redact_values):
+        raise ValueError("Redaction values must be nonempty strings")
+    literals = tuple(redact_values) + ((client._key,) if getattr(client, "_key", None) else ())
+    body = {"schema_version": "tutorial-proposal-cloud-review-1", "binding": binding,
+            "model": {"provider": client.provider, "name": client.model, "endpoint": client.endpoint},
+            "system": system, "payload": _redact_value(payload, literals), "max_requests": 1,
+            "notice": "Review all project text and diagnosis; task oracle contents are withheld."}
+    record = {"review": body, "sha256": _digest(body)}
+    existed = path.exists()
+    if existed and json.loads(path.read_text()) != record:
+        raise ValueError("Proposal review changed; select a new review path")
+    if not existed:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("x", encoding="utf-8") as stream:
+            json.dump(record, stream, ensure_ascii=False, indent=2)
+    if not existed or approval != record["sha256"]:
+        raise ValueError(f"Review {path}, then pass --approve-cloud {record['sha256']}; no model call was sent")
+    return ReviewedPayloadClient(client, system, payload, record)

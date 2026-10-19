@@ -102,7 +102,12 @@ def search_index(snapshot, request, seen=(), render=asdict):
                      "matched_chunks": len(hits), "returned_ids": [c.id for c in results]}
 
 
-def explore(snapshot, client, selected, used, before_budget, context_chars, max_rounds, calls, warnings):
+def explore(snapshot, client, selected, used, before_budget, context_chars, max_rounds, calls, warnings, *,
+            max_total_tokens=None, deadline_seconds=None, requirements=None):
+    import time
+    from .tutorial_budget import token_state
+    from .tutorial_coverage import _covered
+    started = time.monotonic()
     validate_round_limit(max_rounds)
     render = client.render_chunk if hasattr(client, "render_chunk") else asdict
     seen = {c.id for c in selected}
@@ -110,7 +115,17 @@ def explore(snapshot, client, selected, used, before_budget, context_chars, max_
     prior_search = []
     last = {"value": None, "selected": selected, "used": used, "before_budget": before_budget}
     stop_reason, unresolved = "no_evidence", []
+    previous_covered, cumulative_covered = set(), set()
+    spans = [s for case in requirements["cases"] for s in case["required"]] if requirements else []
     for number in range(max_rounds + 1):
+        limit = token_state(calls, max_total_tokens)
+        if limit["stop_reason"]:
+            stop_reason = limit["stop_reason"]
+            unresolved = [s["request"] for s in prior_search]
+            break
+        if deadline_seconds is not None and time.monotonic() - started >= deadline_seconds:
+            stop_reason = "deadline"
+            break
         payload = {"coverage": {"indexed_files": len(snapshot.files), "indexed_chunks": len(snapshot.chunks),
                                 "selected_chunks": len(selected), "skipped": snapshot.skipped},
                    "task": snapshot.task, "evidence": [asdict(c) for c in selected],
@@ -119,9 +134,16 @@ def explore(snapshot, client, selected, used, before_budget, context_chars, max_
         calls[-1]["retrieval_round"] = number
         record = {"round": number, "context_ids": [c.id for c in selected], "used_chars": used,
                   "requests": [], "searches": [], "retain_ids": [], "next_context_ids": [], "stop_reason": None}
+        covered = {i for i, span in enumerate(spans) if _covered(span, selected)}
+        record["necessary_evidence"] = ({"status": "measured", "total_spans": len(spans),
+             "covered_spans": len(covered), "newly_covered_spans": len(covered - cumulative_covered),
+             "lost_since_previous_round": len(previous_covered - covered),
+             "annotation_kind": requirements["evidence_kind"]} if requirements else {"status": "not_measured"})
+        previous_covered = covered
+        cumulative_covered.update(covered)
         rounds.append(record)
         if value is None:
-            stop_reason = "model_error"
+            stop_reason = "deadline" if "wall-clock deadline exceeded" in calls[-1].get("error", "") else "model_error"
             unresolved = [s["request"] for s in prior_search]
             break
         try:
@@ -173,8 +195,11 @@ def explore(snapshot, client, selected, used, before_budget, context_chars, max_
         unresolved = []
     else:
         warnings.append(f"补充检索停止：{stop_reason}；剩余证据缺口未经验证，不能据此判断项目缺失。")
-    rounds[-1]["stop_reason"] = stop_reason
+    if rounds:
+        rounds[-1]["stop_reason"] = stop_reason
     trace = {"schema_version": "tutorial-retrieval-1", "max_rounds": max_rounds,
+             "budget": token_state(calls, max_total_tokens) | {"deadline_seconds": deadline_seconds,
+                        "elapsed_seconds": time.monotonic() - started},
              "max_model_requests": max_rounds + 1, "rounds": rounds, "stop_reason": stop_reason,
              "unresolved_requests": unresolved, "retrieved_ids": sorted(retrieved_ids),
              "initial_candidate_ids": [c.id for c in snapshot.candidates],

@@ -292,24 +292,34 @@ def _call(client, system, payload, stage, calls):
 
 
 def analyze_project(root, provenance, *, client=None, strategy="lexical", context_chars=12000,
-                    scope=None, evidence_requirements=None, task=None, max_retrieval_rounds=3):
-    if task is not None and strategy != "iterative":
-        raise ValueError("A task query currently requires the iterative strategy")
+                    scope=None, evidence_requirements=None, task=None, max_retrieval_rounds=3,
+                    max_total_tokens=None, deadline_seconds=None):
     return analyze_snapshot(prepare_project(root, provenance, scope=scope, task=task), client=client,
                             strategy=strategy, context_chars=context_chars, evidence_requirements=evidence_requirements,
-                            max_retrieval_rounds=max_retrieval_rounds)
+                            max_retrieval_rounds=max_retrieval_rounds, max_total_tokens=max_total_tokens,
+                            deadline_seconds=deadline_seconds)
 
 
 def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars=12000, evidence_requirements=None,
-                     max_retrieval_rounds=3):
+                     max_retrieval_rounds=3, max_total_tokens=None, deadline_seconds=None, task_comparison=False):
+    if snapshot.task is not None and strategy != "iterative" and not task_comparison:
+        raise ValueError("A task query currently requires the iterative strategy outside frozen evaluation")
+    from .tutorial_budget import deadline, validate_limits
+    validate_limits(max_total_tokens, deadline_seconds)
+    with deadline(deadline_seconds):
+        return _analyze_snapshot(snapshot, client=client, strategy=strategy, context_chars=context_chars,
+                                 evidence_requirements=evidence_requirements, max_retrieval_rounds=max_retrieval_rounds,
+                                 max_total_tokens=max_total_tokens, deadline_seconds=deadline_seconds)
+
+
+def _analyze_snapshot(snapshot, *, client, strategy, context_chars, evidence_requirements,
+                      max_retrieval_rounds, max_total_tokens, deadline_seconds):
     if strategy not in {"lexical", "ai", "iterative"}:
         raise ValueError("Unknown context strategy")
     if type(context_chars) is not int or not 2000 <= context_chars <= 48000:
         raise ValueError("Context budget must be 2000..48000 characters")
     if strategy in {"ai", "iterative"} and client is None:
         raise ValueError("AI/iterative context selection requires an explicit model provider")
-    if snapshot.task is not None and strategy != "iterative":
-        raise ValueError("A task query currently requires the iterative strategy")
     if strategy == "iterative":
         from .tutorial_retrieval import validate_round_limit
         validate_round_limit(max_retrieval_rounds)
@@ -320,6 +330,7 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
         client.validate_project(snapshot, strategy, context_chars)
         if strategy == "iterative":
             client.validate_iteration_limit(max_retrieval_rounds)
+        client.validate_budget(max_total_tokens, deadline_seconds)
     from .tutorial_coverage import measure_coverage, validate_requirements
     if evidence_requirements is not None:
         validate_requirements(evidence_requirements, snapshot)
@@ -378,10 +389,13 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
         if strategy == "iterative":
             from .tutorial_retrieval import explore
             result = explore(snapshot, client, selected, used, before_budget, context_chars,
-                             max_retrieval_rounds, calls, warnings)
+                             max_retrieval_rounds, calls, warnings, max_total_tokens=max_total_tokens,
+                             deadline_seconds=deadline_seconds, requirements=evidence_requirements)
             value, selected, used = result["value"], result["selected"], result["used"]
             before_budget, retrieval = result["before_budget"], result["trace"]
         else:
+            if snapshot.task is not None:
+                payload["task"] = snapshot.task
             value = _call(client, ANALYZE_SYSTEM, payload, "analysis", calls)
         if isinstance(value, dict):
             proposed_edits = value.get("edits", [])

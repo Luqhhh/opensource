@@ -91,3 +91,21 @@ analysis.json 保留全部模型调用、实际请求和用量。新增 retrieva
 新增合成工程测试验证跨出 40 候选的连续两次缺口查询、路径/符号/文本查询、任务排序、原文一致性、预算内替换、轮数与重复停止、文件变化后的冻结索引、错误恢复、引用校验以及云端跨轮脱敏和确认绑定。没有执行输入项目或模型命令，没有发送真实模型请求，没有新增第三方依赖、模型或语料。
 
 当前已实现检索闭环；真实项目的必要证据召回率、建议准确率、读者效率和相对成本仍需独立评测。既有实时模型或历史兼容性结果未重新运行，不能用它们作为新策略的成绩。
+
+## 累计用量、硬时限与逐轮增益（本轮工程更新）
+
+默认策略继续为 lexical，iterative 保持显式选择。新增两个可选参数：
+
+```sh
+python3 -m exampleproof analyze /path/to/project --provider ollama --model YOUR_LOCAL_MODEL \
+  --context-strategy iterative --task '完成首次配置' \
+  --max-total-tokens 32000 --deadline-seconds 120 --output /tmp/bounded-analysis
+```
+
+max-total-tokens 是模型返回的累计输入＋输出 token 停止阈值：达到阈值后不再发送下一请求，缺少任一用量也停止追加请求并保留 null。它不是服务计费硬上限，正在进行的一次请求可能超出阈值；不依赖未知分词器估算来保证收费。原有每次输出上限、字符上限与轮次上限仍保留。
+
+deadline-seconds 是 CLI 输入获取、索引与分析过程的墙钟时限，使用 POSIX 主线程计时器中断阻塞请求。非 POSIX 或非主线程显式拒绝该选项，不静默退回无界等待。库函数 analyze_snapshot 的时限从分析入口开始，输入冻结时间由调用方另计。没有配置该参数时保持既有 socket 超时行为。模型阶段超时保留可用失败证据和上轮结果；输入准备阶段超时返回 2，不生成成功报告。到期后允许有限的失败记录清理/导出，不表示服务器已停止计费或工作。
+
+云端审阅 SHA 同时绑定 token 阈值和时限；改变限制需新清单。retrieval.json 增加累计已知用量、停止原因和 elapsed_seconds。存在必要证据标注时，每轮记录当前覆盖、首次覆盖和相对上一轮丢失的跨度数；无标注则保持 not_measured，不能把新片段数当作有效证据增益。
+
+这些约束由合成响应和阻塞调用测试验证，未作为新的真实任务收益结果。公平任务对照入口见 [任务评测](task-evaluation/README.md)，其中 lexical 与 iterative 使用相同任务和范围；普通 analyze 的 --task 仍限定于 iterative。

@@ -6,6 +6,14 @@
 
 仓库：<https://github.com/Luqhhh/opensource>
 
+## 本轮交付优化
+
+新增 [task-improve](docs/task-improvement.md) 将已有建议与冻结任务合同连接，生成候选后进行隔离验证和补丁应用复查。默认云端发送需要精确请求清单确认；也可显式回放候选。已有 TinyDB 回放通过，未新增实时模型成功结果。
+
+[小规模任务评测](docs/task-evaluation/README.md) 已准备两个新项目、四个任务的草稿协议与评阅模板。独立人工评阅前不运行正式模型对照，准确性、召回率与读者任务结果保持未知。lexical 默认不变；iterative 增加累计用量停止阈值、POSIX 硬时限和逐轮必要证据覆盖统计，见 [限制说明](docs/iterative-retrieval.md)。
+
+发布校验改为从实际源码生成清单，逐字节核对 wheel/sdist/安装目录及许可证，并在仓库外检查新增命令。历史实验采用持久归档与逐文件摘要，见 [交付验证与证据索引](docs/delivery-validation.md)。
+
 ## 项目级教程分析
 
 `analyze` 自动发现项目文档、源码及依赖声明，无需先编写 `exampleproof.json`。默认从 GitHub 地址或 `OWNER/REPO` 获取公开仓库，也支持本地目录。默认使用 DeepSeek `deepseek-flash`＋规则检索（`lexical`，AST＋关键词），需预先在环境中配置 `DEEPSEEK_API_KEY`。不需要本地模型或 Bubblewrap，不会运行项目代码或安装依赖。云端会接收选中的项目内容；无密钥或服务失败时明确报错，不自动切换服务或静态模式。以下命令的输出目录必须尚不存在，且位于被分析项目之外。

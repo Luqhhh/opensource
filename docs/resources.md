@@ -221,3 +221,13 @@ AI 独立采集者完成上述两个新项目的来源采集、机械提取、�
 MIT 原版权与许可见[LICENSE.tinydb](evidence/tutorial-task-tinydb-20261019/LICENSE.tinydb)。案例审阅包复制 README.rst、pyproject.toml、原 LICENSE 和九个运行模块，保持原字节与记录摘要；可选 mypy_plugin.py 未供给运行。包内上游源码、补丁上下文、候选及录制诊断中的同源文字仍按 TinyDB MIT 许可保留归属，不视为 ExampleProof 自主实现。源码补丁只保存必要案例记录及许可证，完整运行输入在单独审阅包中。[来源清单](evidence/tutorial-task-tinydb-20261019/provenance.json)记录全部文件与摘要。
 
 任务检查和候选均由助手编写，检查先冻结；负控制是明确合成的内存存储候选。这些有限检查不代表独立人工审核、真实读者实验或维护者接受。开发中的负控制提示符构造失败保留，修正时没有改合同、正例候选或上游原件，详见[案例说明](real-tutorial-task.md)。
+
+## 本轮交付优化新增资源（2026-10-19）
+
+| 资源 | 固定来源与许可 | 使用方式及边界 |
+| --- | --- | --- |
+| python-dotenv v1.1.0 | [6a02ef5a](https://github.com/theskumar/python-dotenv/tree/6a02ef5a1034d66338811757df07a113a1169af6)，BSD-3-Clause | 固定文档、源码、测试、LICENSE 进入仓库外任务评阅包；只静态读取，不安装或在宿主导入。保留版权、许可、免责及不背书条款。 |
+| platformdirs 4.3.8 | [22089f1e](https://github.com/tox-dev/platformdirs/tree/22089f1e1ff477037cd7b3e03ad38ae2bf251031)，MIT | 同上，用于 Linux 示例和目录创建任务；保留完整 LICENSE。项目没有因其在评测中出现而获得维护者认可。 |
+| PyPA build 及构建环境依赖 | build 1.6.1（MIT）、packaging 26.3（Apache-2.0 OR BSD-2-Clause）、pyproject_hooks 1.3.3（MIT）、tomli 2.5.0（MIT）；本机元数据及版本记录见交付包 build-tool-versions.txt | 仅用于 wheel/sdist 构建检查，不是 ExampleProof 运行依赖；未复制工具源码进项目。既有 setuptools/pip/venv 分发工具仍用于安装检查。 |
+
+四个任务与必要证据由助手起草，人工评阅尚未完成；未发送新的真实模型请求。两个项目没有出现在此前教程对照，但本轮选题阅读后不能称为未来未见项目。任务包中的第三方文件不改标为 ExampleProof 的 MIT 自主代码。既有 Flash/Qwen 请求、TinyDB 候选和许可证仅作原字节归档及回放，不计作新的模型、数据集效果或采纳结果。新增实现使用 Python 标准库，运行依赖仍为空。

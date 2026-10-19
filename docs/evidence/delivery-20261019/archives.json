@@ -1,0 +1,50 @@
+[
+  {
+    "archive": "flash-comparison-failed-20261019.tar.gz",
+    "archive_sha256": "2d3986e2c5be8a0145581be5c32a4a217eff6399c8a507546915274df8abe2b5",
+    "evidence_kind": "recorded_live_model_study",
+    "files": 41,
+    "index": "flash-comparison-failed-20261019.tar.gz.index.json",
+    "index_sha256": "9de527e77447a7966f4690f73aea39f9286131059b5a654be80ff38793d24b7b"
+  },
+  {
+    "archive": "flash-comparison-valid-20261019.tar.gz",
+    "archive_sha256": "c6df85595e9f0ffdc17ce6656229dcab92b5f3866b2170b93bce0c740227b165",
+    "evidence_kind": "recorded_live_model_study",
+    "files": 41,
+    "index": "flash-comparison-valid-20261019.tar.gz.index.json",
+    "index_sha256": "ce92e01f736dff05394ccf207f8964e33701bd8eaab9966ba8a1caadbf2fe3dd"
+  },
+  {
+    "archive": "task-evaluation-v1.tar.gz",
+    "archive_sha256": "6b86bf66b73b1a1a62f30e4007af70e0c886a6f1e1ad91247b90ebe6992f5700",
+    "evidence_kind": "pending_task_evaluation",
+    "files": 87,
+    "index": "task-evaluation-v1.tar.gz.index.json",
+    "index_sha256": "993e9a155e3c11c7585518f79724de4dcf5e7bb4c29ec93d3c616db5fcc4e7b4"
+  },
+  {
+    "archive": "tinydb-bridge-final.tar.gz",
+    "archive_sha256": "56ffaf899beff1e55724af16d7319bfaf207425078bf5cd8e86a112f9e95cc3c",
+    "evidence_kind": "recorded_candidate_replay",
+    "files": 126,
+    "index": "tinydb-bridge-final.tar.gz.index.json",
+    "index_sha256": "7616a8ea6daf965eb8f950fc799f140db63963baa6598788f5d685d734b0f794"
+  },
+  {
+    "archive": "tinydb-first-run-20261019.tar.gz",
+    "archive_sha256": "595daa0164aa8852cc9ff01ad773e2be1a216f0cf34acc66421475f5ab77c9f7",
+    "evidence_kind": "recorded_candidate_replay",
+    "files": 115,
+    "index": "tinydb-first-run-20261019.tar.gz.index.json",
+    "index_sha256": "a6c1c9f8160aae01181ed86728f33a66f1acd9994f061af1f3e1470e5792126c"
+  },
+  {
+    "archive": "tutorial-factorial-20261019.tar.gz",
+    "archive_sha256": "fb3b05faa6df119e5562ffd9517c43545164669f27bf261477327faa3e27e175",
+    "evidence_kind": "recorded_live_model_study",
+    "files": 610,
+    "index": "tutorial-factorial-20261019.tar.gz.index.json",
+    "index_sha256": "b42c07ed6ad2a84ae2c4d60838ec037ea14fb3d4fb61deb8c0f2692428b966f4"
+  }
+]

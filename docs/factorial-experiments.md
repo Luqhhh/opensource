@@ -47,7 +47,7 @@ Flash 也有被原文反驳的判断，例如把 Schedule 的条件时区依赖�
 
 ## 复现与证据
 
-临时审阅产物中的 `study/protocol.json` 为全局协议，`runtime.json` 为环境与摘要；`runs/项目/供应商/重复/` 保存子协议、实现归档、输入快照及两种策略的原始请求/响应、报告和审计；`blind-review.json`、`quality-review.json`、`review-revisions.json` 保存评阅及修订；`results.json`、`report.html` 保存逐次和汇总结果。第三方源码和模型权重未复制进本源码补丁，资源与许可见 [resources.md](resources.md)。
+持久证据包 `tutorial-factorial-20261019.tar.gz` 中的 `protocol.json` 为全局协议，`runtime.json` 为环境与摘要；`runs/项目/供应商/重复/` 保存子协议、实现归档、输入快照及两种策略的原始请求/响应、报告和审计；`blind-review.json`、`quality-review.json`、`review-revisions.json` 保存评阅及修订；`results.json`、`report.html` 保存逐次和汇总结果。第三方源码随独立证据包保留并携带许可证，模型权重未纳入证据包或源码补丁。逐文件摘要及归档复核见 [交付验证](delivery-validation.md)，资源与许可见 [resources.md](resources.md)。
 
 复现需自行运行对应 Ollama 模型并配置 `DEEPSEEK_API_KEY`，输出目录必须全新且位于输入项目之外：
 

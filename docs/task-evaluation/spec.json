@@ -1,0 +1,150 @@
+{
+  "schema_version": "tutorial-task-evaluation-1",
+  "annotation_status": "assistant_draft_pending_independent_human_review",
+  "sampling": "Two projects absent from previous project-level study; purposive tasks, not randomized or independently blind holdout.",
+  "projects": {
+    "python-dotenv": {
+      "root": "inputs/python-dotenv",
+      "provenance": {
+        "kind": "github",
+        "url": "https://github.com/theskumar/python-dotenv",
+        "ref": "v1.1.0",
+        "commit": "6a02ef5a1034d66338811757df07a113a1169af6",
+        "snapshot_policy": "eligible text files only; symlinks and excluded paths omitted",
+        "snapshot": {
+          "archive_entries": 48,
+          "copied_files": 29,
+          "omitted_eligible_paths": [
+            "docs/changelog.md",
+            "docs/contributing.md",
+            "docs/index.md",
+            "docs/license.md"
+          ]
+        }
+      }
+    },
+    "platformdirs": {
+      "root": "inputs/platformdirs",
+      "provenance": {
+        "kind": "github",
+        "url": "https://github.com/tox-dev/platformdirs",
+        "ref": "4.3.8",
+        "commit": "22089f1e1ff477037cd7b3e03ad38ae2bf251031",
+        "snapshot_policy": "eligible text files only; symlinks and excluded paths omitted",
+        "snapshot": {
+          "archive_entries": 40,
+          "copied_files": 22,
+          "omitted_eligible_paths": []
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "dotenv-precedence",
+      "project": "python-dotenv",
+      "task": "在隔离的开发环境已有 a=c、配置文件含 a=b 时，按教程加载配置并保留外部环境变量的优先级。",
+      "acceptance": "读者说明默认不覆盖；显式路径或 stream 加载后 a 仍为 c，其他配置项可读。只测该任务，不声称安装流程通过。",
+      "required_evidence": [
+        {
+          "path": "README.md",
+          "start_line": 35,
+          "end_line": 45
+        },
+        {
+          "path": "src/dotenv/main.py",
+          "start_line": 325,
+          "end_line": 362
+        },
+        {
+          "path": "tests/test_main.py",
+          "start_line": 260,
+          "end_line": 277
+        }
+      ],
+      "gold_issues": []
+    },
+    {
+      "id": "dotenv-values",
+      "project": "python-dotenv",
+      "task": "从配置文件读取 USER 和 EMAIL 为字典，保持调用前的 os.environ 不变。",
+      "acceptance": "读者选择 dotenv_values，字典包含文件值，调用前后环境变量内容一致；不以 load_dotenv 的副作用替代要求。",
+      "required_evidence": [
+        {
+          "path": "README.md",
+          "start_line": 76,
+          "end_line": 86
+        },
+        {
+          "path": "src/dotenv/main.py",
+          "start_line": 365,
+          "end_line": 398
+        }
+      ],
+      "gold_issues": []
+    },
+    {
+      "id": "platformdirs-linux-copy",
+      "project": "platformdirs",
+      "task": "在新的 Linux Python 会话复制 README 的 Linux 示例，运行到 XDG_CONFIG_DIRS 设置及 site_config_dir 查询。",
+      "acceptance": "读者能识别 Linux 示例的会话前提并完成目录查询；不得删去环境变量设置步骤或把另一个操作系统的输出当作当前输出。需独立评阅者复核缺失导入判断。",
+      "required_evidence": [
+        {
+          "path": "README.rst",
+          "start_line": 133,
+          "end_line": 160
+        },
+        {
+          "path": "src/platformdirs/__init__.py",
+          "start_line": 593,
+          "end_line": 631
+        }
+      ],
+      "gold_issues": [
+        {
+          "id": "linux-os-import",
+          "description": "助手待评阅判断：Linux 代码块使用 os.environ，但该块只 from platformdirs import *，__all__ 没有 os；新的会话需要显式 import os。"
+        }
+      ]
+    },
+    {
+      "id": "platformdirs-create",
+      "project": "platformdirs",
+      "task": "获取应用用户数据目录并确保父目录已创建，再保存一个本地配置文件。",
+      "acceptance": "读者区分返回路径与创建目录，选择 ensure_exists=True 或明确创建父目录。需用隔离环境验证写入，不能从字符串路径推断目录存在。",
+      "required_evidence": [
+        {
+          "path": "README.rst",
+          "start_line": 36,
+          "end_line": 55
+        },
+        {
+          "path": "src/platformdirs/__init__.py",
+          "start_line": 52,
+          "end_line": 74
+        },
+        {
+          "path": "src/platformdirs/api.py",
+          "start_line": 73,
+          "end_line": 93
+        }
+      ],
+      "gold_issues": []
+    }
+  ],
+  "scope": {
+    "include_tests": true,
+    "include_paths": [],
+    "exclude_paths": []
+  },
+  "context_chars": 12000,
+  "model": {
+    "provider": "deepseek",
+    "name": "deepseek-flash"
+  },
+  "limits": {
+    "max_retrieval_rounds": 3,
+    "max_total_tokens": 32000,
+    "deadline_seconds": 120
+  }
+}

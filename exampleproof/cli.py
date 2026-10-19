@@ -43,6 +43,20 @@ def positive_seconds(value):
 
 
 def main(argv=None):
+    # Start the CLI deadline before input acquisition/indexing as well as HTTP.
+    from .tutorial_budget import deadline
+    preflight = argparse.ArgumentParser(add_help=False)
+    preflight.add_argument("--deadline-seconds", type=positive_seconds)
+    known, _ = preflight.parse_known_args(argv)
+    try:
+        with deadline(known.deadline_seconds):
+            return _main(argv)
+    except ValueError as exc:
+        print(f"exampleproof: {exc}", file=sys.stderr)
+        return 2
+
+
+def _main(argv=None):
     parser = argparse.ArgumentParser(prog="exampleproof", description="例证：分析开源项目教程质量，验证 Python 示例与修复。")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -64,6 +78,8 @@ def main(argv=None):
     analyze.add_argument("--task", help="iterative 的具体读者任务，最多 2000 字符")
     analyze.add_argument("--max-retrieval-rounds", type=int, choices=range(1, 6), default=3,
                          help="iterative 最多补充检索轮数（1–5，默认 3）；模型请求最多轮数＋1")
+    analyze.add_argument("--max-total-tokens", type=int, help="累计输入＋输出 token 停止阈值；单次请求可能超出")
+    analyze.add_argument("--deadline-seconds", type=positive_seconds, help="分析端到端硬时限；需要 POSIX 主线程")
     analyze.add_argument("--context-chars", type=int, default=12000, help="最终证据字符预算 2000..48000")
     compare = commands.add_parser("compare", help="固定同一项目快照，对照两种上下文策略（最多三次模型请求）")
     compare.add_argument("project", help="GitHub URL、OWNER/REPO 或本地项目目录")
@@ -90,6 +106,20 @@ def main(argv=None):
     task_check.add_argument("--contract", type=Path, required=True)
     task_check.add_argument("--candidate", type=Path, required=True)
     task_check.add_argument("--output", type=Path, required=True)
+    improve_parser = commands.add_parser("task-improve", help="把已有建议转换为候选，按冻结任务验证并导出补丁")
+    improve_parser.add_argument("project", type=Path)
+    improve_parser.add_argument("--analysis", type=Path, required=True)
+    improve_parser.add_argument("--finding", type=int, required=True, help="analysis.json 中从 0 开始的 finding 索引")
+    improve_parser.add_argument("--contract", type=Path, required=True)
+    improve_parser.add_argument("--output", type=Path, required=True)
+    improve_parser.add_argument("--proposal", type=Path, help="回放 original/replacement/rationale JSON；不调用模型")
+    improve_parser.add_argument("--provider", choices=("deepseek", "ollama"), default="deepseek")
+    improve_parser.add_argument("--model")
+    improve_parser.add_argument("--endpoint")
+    improve_parser.add_argument("--model-timeout", type=positive_seconds, default=60)
+    improve_parser.add_argument("--cloud-review", type=Path)
+    improve_parser.add_argument("--approve-cloud")
+    improve_parser.add_argument("--redact-values", type=Path)
     scan = commands.add_parser("scan", help="只提取示例，不执行")
     scan.add_argument("project", type=Path)
     for name in ("check", "repair", "benchmark"):
@@ -112,6 +142,33 @@ def main(argv=None):
                                  help="每个失败示例的候选轮数上限（1–5，默认 1）；失败反馈用于下一轮")
     args = parser.parse_args(argv)
     try:
+        if args.command == "task-improve":
+            from .tutorial_improve import SYSTEM, improve, prepare_improvement
+            from .model_api import JSONClient
+            from .tutorial_privacy import review_payload
+            if args.output.exists() or args.output.resolve().is_relative_to(args.project.resolve()):
+                raise ValueError("Improvement output must be new and outside the input project")
+            prepared = prepare_improvement(args.project, args.analysis, args.contract, args.finding)
+            client = None
+            if args.proposal:
+                if args.model or args.endpoint or args.approve_cloud or args.cloud_review or args.redact_values:
+                    raise ValueError("Recorded proposals cannot be mixed with model or cloud options")
+            else:
+                client = JSONClient(args.provider, args.model or ("deepseek-flash" if args.provider == "deepseek" else ""),
+                                    endpoint=args.endpoint, timeout=args.model_timeout)
+                if args.provider == "deepseek":
+                    path = args.cloud_review or args.output.with_name(args.output.name + "-cloud-review.json")
+                    if path.resolve().is_relative_to(args.project.resolve()):
+                        raise ValueError("Cloud review must be outside the input project")
+                    values = json.loads(args.redact_values.read_text()) if args.redact_values else ()
+                    client = review_payload(client, SYSTEM, prepared["payload"], prepared["binding"], path,
+                                            args.approve_cloud, redact_values=values)
+                elif args.cloud_review or args.approve_cloud or args.redact_values:
+                    raise ValueError("Cloud review applies only to DeepSeek")
+            result = improve(args.project, args.analysis, args.contract, args.finding, args.output,
+                             client=client, proposal_path=args.proposal, prepared=prepared)
+            print(json.dumps(result, ensure_ascii=False))
+            return 0 if result["status"] == "task_validation_passed" else 2
         if args.command == "task-check":
             from .tutorial_task import validate_tutorial_task
             report = validate_tutorial_task(args.project, args.contract, args.candidate, args.output)
@@ -150,7 +207,15 @@ def main(argv=None):
                 raise ValueError("--task requires --context-strategy iterative")
             if task is not None and (not task.strip() or len(task) > 2000):
                 raise ValueError("Task must be a non-empty string of at most 2000 characters")
-            iterative_options = {"task": task, "max_retrieval_rounds": args.max_retrieval_rounds} if iterative else {}
+            limits = {"max_total_tokens": getattr(args, "max_total_tokens", None),
+                      "deadline_seconds": getattr(args, "deadline_seconds", None)}
+            from .tutorial_budget import validate_limits
+            validate_limits(**limits)
+            if args.command == "analyze" and args.context_strategy == "ai" and any(v is not None for v in limits.values()):
+                raise ValueError("Budget controls currently support lexical and iterative analysis")
+            iterative_options = {"task": task, **limits}
+            if iterative:
+                iterative_options["max_retrieval_rounds"] = args.max_retrieval_rounds
             if not 2000 <= args.context_chars <= 48000:
                 raise ValueError("Context budget must be 2000..48000 characters")
             provider = args.provider or "deepseek"
@@ -170,7 +235,7 @@ def main(argv=None):
                 if getattr(client, "provider", None) == "deepseek":
                     from .tutorial import prepare_project
                     from .tutorial_privacy import review_cloud
-                    snapshot = prepare_project(root, provenance, scope=scope, **({"task": task} if iterative else {}))
+                    snapshot = prepare_project(root, provenance, scope=scope, task=task)
                     if requirements is not None:
                         from .tutorial_coverage import validate_requirements
                         validate_requirements(requirements, snapshot)
@@ -179,7 +244,7 @@ def main(argv=None):
                         raise ValueError("Cloud review must be outside the input project")
                     values = json.loads(args.redact_values.read_text(encoding="utf-8")) if args.redact_values else ()
                     client = review_cloud(snapshot, client, review_path, args.approve_cloud,
-                                          context_chars=args.context_chars, redact_values=values,
+                                          context_chars=args.context_chars, redact_values=values, **limits,
                                           **({"max_retrieval_rounds": args.max_retrieval_rounds} if iterative else {}),
                                           strategies=("lexical", "ai") if args.command == "compare" else (args.context_strategy,))
                 if args.command == "compare":
@@ -191,7 +256,7 @@ def main(argv=None):
                 if snapshot is not None:
                     from .tutorial import analyze_snapshot
                     report = analyze_snapshot(snapshot, client=client, strategy=args.context_strategy,
-                                              context_chars=args.context_chars, evidence_requirements=requirements,
+                                              context_chars=args.context_chars, evidence_requirements=requirements, **limits,
                                               **({"max_retrieval_rounds": args.max_retrieval_rounds} if iterative else {}))
                 else:
                     report = analyze_project(root, provenance, client=client, scope=scope,

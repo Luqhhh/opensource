@@ -1,0 +1,54 @@
+{
+  "generated_at_utc": "2026-10-19T11:50:24.617299+00:00",
+  "status": "draft",
+  "checks": {
+    "title_characters": 15,
+    "abstract_characters": 249,
+    "pdf_total_pages_including_appendix": 13,
+    "pdf_bytes": 441493,
+    "total_pages_within_15": true,
+    "size_within_10_mb_decimal": true,
+    "chinese_text_extraction": true,
+    "team_review_complete": false,
+    "video_complete": false,
+    "submitted": false
+  },
+  "tools": {
+    "pandoc": "pandoc 2.9.2.1\nCompiled with pandoc-types 1.20, texmath 0.12.0.2, skylighting 0.8.5\nDefault user data directory: /home/lux1/.local/share/pandoc or /home/lux1/.pandoc\nCopyright (C) 2006-2020 John MacFarlane\nWeb:  https://pandoc.org\nThis is free software; see the source for copying conditions.\nThere is no warranty, not even for merchantability or fitness\nfor a particular purpose.",
+    "xelatex": "XeTeX 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian)\nkpathsea version 6.3.4/dev\nCopyright 2021 SIL International, Jonathan Kew and Khaled Hosny.\nThere is NO warranty.  Redistribution of this software is\ncovered by the terms of both the XeTeX copyright and\nthe Lesser GNU General Public License.\nFor more information about these matters, see the file\nnamed COPYING and the XeTeX source.\nPrimary author of XeTeX: Jonathan Kew.\nCompiled with ICU version 70.1; using 70.1\nCompiled with zlib version 1.2.11; using 1.3.2\nCompiled with FreeType2 version 2.11.1; using 2.11.1\nCompiled with Graphite2 version 1.3.14; using 1.3.14\nCompiled with HarfBuzz version 2.7.4; using 2.7.4\nCompiled with libpng version 1.6.37; using 1.6.37\nCompiled with pplib version v2.05 less toxic i hope\nCompiled with fontconfig version 2.13.1; using 2.13.1"
+  },
+  "source_sha256": {
+    "docs/submission/technical-report.md": "c93f23d45a61e131806f9b9d9e84d4399141ff7ae9cf983930267f9befc4ae1c",
+    "docs/resources.md": "f93c9fa7653c30208bca6f10c272a744a18d4b06777904ace3bb2112fc1f624c",
+    "docs/submission/abstract.txt": "e1aa0dc77ac6b1afe4460aaeb11f60b3a4cde34e80701d7b888b6cc7d1f682b4",
+    "docs/submission/pdf-header.tex": "251f1634fb935d1d550a2ccb2049a8f7bb8025a5ac5744619441b2fd1be9025b",
+    "docs/submission/pdf-filter.lua": "3a2beacd947bbcec461ce457a1a38185b89ddd7e7b4cbb61743e1fac2694bb84",
+    "scripts/build_submission.py": "05a9955e319c58cf5ddc56c4b9773fe3699cc393f1803d396f2e81d011525809"
+  },
+  "output_sha256": {
+    "technical-report-draft.pdf": "a3dbff32e8d223826bd265c13fa8f24df72287f6b019182e8426400e6e20f9e9"
+  },
+  "command": [
+    "pandoc",
+    "/home/lux1/exampleproof-deliverables-20261019/submission-push/technical-report-with-resources.md",
+    "--standalone",
+    "--from=markdown",
+    "--pdf-engine=xelatex",
+    "--pdf-engine-opt=-no-shell-escape",
+    "--variable=documentclass:ctexart",
+    "--variable=classoption:fontset=fandol",
+    "--variable=fontsize:10pt",
+    "--variable=geometry:margin=20mm",
+    "--variable=papersize:a4",
+    "--lua-filter",
+    "/home/lux1/exampleproof/docs/submission/pdf-filter.lua",
+    "--variable=colorlinks:true",
+    "--variable=urlcolor:blue",
+    "--include-in-header",
+    "/home/lux1/exampleproof/docs/submission/pdf-header.tex",
+    "--output",
+    "/home/lux1/exampleproof-deliverables-20261019/submission-push/technical-report-draft.pdf"
+  ],
+  "limits_note": "All PDF pages including appendix are checked against 15 pages; rules recommend 15 for body only.",
+  "reproducibility_note": "Font/tool versions and timestamps can change PDF bytes. This manifest identifies this build only."
+}
