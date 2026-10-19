@@ -2,6 +2,8 @@
 
 开源项目教程质量分析与改进工具，帮助读者理解教程、完成首次运行并有效使用项目。保留 Python 文档示例的隔离验证与修复能力。面向 AIC 2026「AI+开源」主题赛的 **AI开发工具与开源协作** 方向。
 
+已完成[首条真实教程任务改进闭环](docs/real-tutorial-task.md)：复用 TinyDB 固定提交的既有真实诊断，由助手编写明确 RST 候选，验证原始首次运行失败、修改后持久化任务通过、补丁应用复查通过，并拒绝仅使用内存数据库的负例。新增 `task-check` 承接明确候选与冻结任务合同；这是助手参与的单例工程结果，独立人工评审和上游采纳仍待完成，不改写旧对照的零文字补丁记录。
+
 仓库：<https://github.com/Luqhhh/opensource>
 
 ## 项目级教程分析
@@ -9,8 +11,12 @@
 `analyze` 自动发现项目文档、源码及依赖声明，无需先编写 `exampleproof.json`。默认从 GitHub 地址或 `OWNER/REPO` 获取公开仓库，也支持本地目录。默认使用 DeepSeek `deepseek-flash`＋规则检索（`lexical`，AST＋关键词），需预先在环境中配置 `DEEPSEEK_API_KEY`。不需要本地模型或 Bubblewrap，不会运行项目代码或安装依赖。云端会接收选中的项目内容；无密钥或服务失败时明确报错，不自动切换服务或静态模式。以下命令的输出目录必须尚不存在，且位于被分析项目之外。
 
 ```sh
-# 默认 Flash＋规则检索；也可传完整 https://github.com/OWNER/REPO
+# 默认 Flash＋规则检索；首次仅生成清单，不发送模型请求
 python3 -m exampleproof analyze OWNER/REPO --output /tmp/tutorial-flash
+
+# 检查 /tmp/tutorial-flash-cloud-review.json 的文件与脱敏原文后确认
+python3 -m exampleproof analyze OWNER/REPO --output /tmp/tutorial-flash \
+  --approve-cloud REVIEW_SHA256
 
 # 本地项目
 python3 -m exampleproof analyze /path/to/project --output /tmp/tutorial-local
@@ -29,6 +35,23 @@ python3 -m exampleproof analyze /path/to/project --provider ollama \
 
 输出 `analysis.html`、`analysis.json`、`suggestions.md`，以及仅供审阅的 `suggestions.patch` 和 `edits.json`。静态模式当前检查 Markdown 本地链接目标；模型模式进一步分析安装前提、步骤顺序、概念解释、跨文件一致性和错误处理。文字补丁限于精确匹配的 Markdown 正文段落，保护代码块、行内代码和链接，不自动应用；没有合格修改时补丁为空。AI 建议均标记为未经验证；证据引用只确认指向原文，不证明判断正确。报告不表示学习效率已提升，也不自动生成已验证的教程补丁。
 
+DeepSeek 教程分析（含 `compare`）首次只生成 `OUTPUT-cloud-review.json` 并退出 2。清单列出候选文件、摘要及脱敏后的完整可发送片段；人工检查后传 `--approve-cloud` 和清单中的 `sha256`。可用 `--cloud-review PATH` 指定清单位置，用 `--redact-values PATH` 读取额外敏感值的 JSON 字符串数组。自动脱敏覆盖常见凭据赋值、Bearer、URL 凭据及私钥块，仍需逐项人工检查。确认绑定快照、模型、范围、提示词及预算；内容变化后需用新清单重新审阅，原清单保持只读。首次预览仍需有效的模型配置和密钥；获取 GitHub 输入会联网，模型请求在确认前不会发送。此机制适用于教程 `analyze/compare`；原有 `repair/benchmark` 流程保持独立。
+
+教程范围默认增加 `Dockerfile`、`Containerfile`、`Makefile`、`GNUmakefile`。`--include-tests` 纳入普通测试目录，`--include-path '.github/**'` 可显式纳入隐藏路径，`--exclude-path 'docs/archive/**'` 优先排除；Git 元数据、`.env`、已知敏感文件名和 evaluator 配置仍被排除。本地读取与 GitHub 快照使用相同范围；这些参数不改变原有修复器的输入策略。
+
+`lexical` 和 `ai` 保留最多 40 个初始候选及一次选择。新增 `--context-strategy iterative`：AI 在分析中描述证据缺口，程序按文件路径、Python 符号或关键词检索完整的合格静态索引，将新增原文送回下一轮分析，可以超出初始候选集合。默认最多补充 3 轮、最多 4 次模型请求；`--max-retrieval-rounds 1..5` 控制上限。每轮仍受 `--context-chars` 限制，不执行仓库代码或模型命令。详情见[按证据缺口继续检索](docs/iterative-retrieval.md)。
+
+```sh
+# 本地模型；将任务词项用于初始排序，并允许按证据缺口补充检索
+python3 -m exampleproof analyze /path/to/project --provider ollama --model YOUR_LOCAL_MODEL \
+  --context-strategy iterative --task '配置项目并调用需要该配置的 API' \
+  --include-tests --max-retrieval-rounds 3 --output /tmp/tutorial-iterative
+```
+
+云端使用相同策略时，首次清单覆盖整个合格索引中的可检索片段；审阅后再用 `--approve-cloud SHA256` 确认。确认绑定任务的脱敏视图和检索轮数，后续轮次也只发送清单允许的脱敏内容。输出增加 `retrieval.json`，记录每轮缺口、命中、上下文和停止原因。`--task` 目前只用于 `iterative`，无需任务时仍可基于通用上下文发现缺口。
+
+`--evidence-requirements PATH` 按独立标注测量必要证据覆盖，输出 `evidence-coverage.json`；无标注时保持 `not_measured`。迭代模式额外记录检索到的片段及扩展后的可用证据。按任务、测试/文档/源码等路径角色统计遗漏，原因不明时保留未知。标注中的 `task` 是评测说明，不会代替显式 `--task` 或发送标注答案。工程测试验证流程，不证明建议正确或真实任务召回率提高。
+
 默认的 `--context-strategy lexical` 使用 AST 与关键词候选直接选择原文；`ai` 先让模型选择候选 ID，再分析原文，最多两次模型请求。两种策略分别配置模型供应商；字符预算不等于 token 总预算。云端模式会发送选中的项目内容，名称过滤无法保证清除全部秘密。DeepSeek 默认模型为 `deepseek-flash`，可用 `--model` 替换；密钥只从环境读取，不写入请求证据或日志。详细范围、成本口径和公平对照要求见[下一阶段基线](docs/next-stage.md)。
 
 可以用同一个项目快照直接对照两种策略，调用前保存协议及输入摘要，最多发起三次模型请求：
@@ -42,7 +65,7 @@ python3 -m exampleproof compare-audit /tmp/tutorial-comparison
 
 已完成[模型与上下文选择的 2×2 对照](docs/factorial-experiments.md)：三个公开项目、每组合两次，共 36 次正式模型请求；Flash 与本机 Qwen 7B 的原始结果、助手原文核对及局限分别保存，不以生成数量替代准确率。
 
-上述默认配置适用于项目级 `analyze`，`compare` 默认用 Flash 对照两种上下文策略。`--static` 不可与模型、服务地址或 AI 选择参数混用。
+上述默认配置适用于项目级 `analyze`，`compare` 仍只对照 lexical 与 ai，历史结果不包含新迭代模式。`--static` 不可与模型、服务地址或 AI/iterative 策略混用。
 
 下面保留的 v0.1 描述、实验数字和复现命令属于历史 Python 示例验证链路，不代表新教程分析功能的效果评测。`repair` / `benchmark` 保持原有 Ollama 默认及候选回放语义；需要云端修复时显式传入 `--provider deepseek`。
 

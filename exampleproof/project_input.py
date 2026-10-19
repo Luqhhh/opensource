@@ -23,14 +23,20 @@ TEXT_SUFFIXES = {".md", ".mdx", ".rst", ".py", ".js", ".jsx", ".ts", ".tsx", ".g
 SENSITIVE_NAME = re.compile(r"(?:secret|credential|password|token|private[_-]?key)", re.I)
 
 
-def eligible(path):
+def eligible(path, scope=None):
     path = PurePosixPath(path)
-    if (any(p.startswith(".") or p in SKIP_DIRS for p in path.parts)
+    if (path.is_absolute() or ".." in path.parts or "\\" in str(path)
+            or (not scope.allows(path) if scope is not None else
+                any(p.startswith(".") or p in SKIP_DIRS for p in path.parts))
             or any(ord(c) < 32 or ord(c) == 127 for c in str(path))
             or SENSITIVE_NAME.search(path.name)
             or path.name in {"exampleproof.json", "metadata.json", "proposals.json", "negative_proposals.json"}
             or path.name.endswith((".pem", ".key", ".lock"))):
         return False
+    if scope is not None:
+        from .tutorial_scope import BUILD_NAMES
+        if path.name.lower() in BUILD_NAMES or scope.explicitly_includes(path):
+            return True
     return (path.suffix.lower() in TEXT_SUFFIXES or path.name.lower() in {"go.mod", "license", "notice", "copying"}
             or path.name.lower().startswith(("license.", "notice.", "copying.")))
 
@@ -63,7 +69,7 @@ def github_repository(value):
     return value
 
 
-def unpack_snapshot(data, destination):
+def unpack_snapshot(data, destination, scope=None):
     """Copy selected regular files only; validate all archive paths first."""
     if len(data) > MAX_ARCHIVE_BYTES:
         raise ValueError("GitHub archive exceeds download limit")
@@ -96,8 +102,8 @@ def unpack_snapshot(data, destination):
         for info in entries:
             relative = PurePosixPath(info.filename).parts[1:]
             if (not relative or info.is_dir() or stat.S_ISLNK(info.external_attr >> 16)
-                    or not eligible(PurePosixPath(*relative)) or info.file_size > 256_000):
-                if relative and not info.is_dir() and eligible(PurePosixPath(*relative)):
+                    or not eligible(PurePosixPath(*relative), scope) or info.file_size > 256_000):
+                if relative and not info.is_dir() and eligible(PurePosixPath(*relative), scope):
                     omitted_paths.append(PurePosixPath(*relative).as_posix())
                 continue
             target = destination.joinpath(*relative)
@@ -113,7 +119,10 @@ def unpack_snapshot(data, destination):
 
 
 @contextmanager
-def project_input(value, *, ref=None):
+def project_input(value, *, ref=None, scope=None):
+    if scope is None:
+        from .tutorial_scope import EvidenceScope
+        scope = EvidenceScope()
     local = Path(value).expanduser()
     if local.is_dir():
         if ref is not None:
@@ -134,7 +143,7 @@ def project_input(value, *, ref=None):
     archive = fetch(f"https://codeload.github.com/{repository}/zip/{commit}", MAX_ARCHIVE_BYTES)
     with tempfile.TemporaryDirectory(prefix="exampleproof-github-") as temporary:
         root = Path(temporary)
-        snapshot = unpack_snapshot(archive, root)
+        snapshot = unpack_snapshot(archive, root, scope)
         yield root, {"kind": "github", "url": f"https://github.com/{repository}",
                      "ref": selected_ref, "commit": commit,
                      "snapshot_policy": "eligible text files only; symlinks and excluded paths omitted",

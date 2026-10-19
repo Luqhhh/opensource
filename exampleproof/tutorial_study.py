@@ -15,7 +15,8 @@ def _dump(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", errors="backslashreplace")
 
 
-def run_comparison(root, provenance, output, client, *, context_chars=12000, arm_order=("lexical", "ai")):
+def run_comparison(root, provenance, output, client, *, context_chars=12000, arm_order=("lexical", "ai"),
+                   scope=None, snapshot=None, evidence_requirements=None):
     if client is None:
         raise ValueError("A model provider is required for context comparison")
     if type(context_chars) is not int or not 2000 <= context_chars <= 48000:
@@ -25,7 +26,18 @@ def run_comparison(root, provenance, output, client, *, context_chars=12000, arm
     root, output = Path(root).resolve(), Path(output)
     if output.exists() or output.is_symlink() or output.resolve().is_relative_to(root):
         raise ValueError("Comparison output must be a new directory outside the input project")
-    snapshot = tutorial.prepare_project(root, provenance)
+    snapshot = snapshot or tutorial.prepare_project(root, provenance, scope=scope)
+    if snapshot.task is not None:
+        raise ValueError("The lexical/ai comparison requires a snapshot without an iterative task query")
+    if getattr(client, "provider", None) == "deepseek":
+        from .tutorial_privacy import ReviewedCloudClient
+        if not isinstance(client, ReviewedCloudClient):
+            raise ValueError("Cloud comparison requires a reviewed cloud manifest and explicit approval")
+        for strategy in arm_order:
+            client.validate_project(snapshot, strategy, context_chars)
+    if evidence_requirements is not None:
+        from .tutorial_coverage import validate_requirements
+        validate_requirements(evidence_requirements, snapshot)
     output.mkdir(parents=True, exist_ok=False)
     snapshot_record = {"schema_version": "tutorial-snapshot-1", "snapshot_id": snapshot.snapshot_id,
                        "project": snapshot.provenance, "files": snapshot.files,
@@ -52,11 +64,14 @@ def run_comparison(root, provenance, output, client, *, context_chars=12000, arm
                 "generation_token_limit_per_call": 2048, "max_model_requests": 3,
                 "budget_matching": "same final evidence character limit; total token costs are measured, not matched",
                 "quality_evaluation": "unreviewed; no quality or learning-efficiency winner can be inferred",
+                "evidence_scope": snapshot.evidence_scope, "evidence_requirements": evidence_requirements,
+                "cloud_review": client.review_record if getattr(client, "provider", None) == "deepseek" else None,
                 "project_code_execution": False}
     _dump(output / "protocol.json", protocol)
-    arms, reviews = {}, []
+    arms, reviews, edit_reviews = {}, [], []
     for strategy in protocol["arm_order"]:
-        report = tutorial.analyze_snapshot(snapshot, client=client, strategy=strategy, context_chars=context_chars)
+        report = tutorial.analyze_snapshot(snapshot, client=client, strategy=strategy, context_chars=context_chars,
+                                           evidence_requirements=evidence_requirements)
         tutorial.write_analysis(output / strategy, report)
         selected = report["context"]["selected"]
         findings = [f for f in report["findings"] if f["origin"] != "static"]
@@ -69,6 +84,7 @@ def run_comparison(root, provenance, output, client, *, context_chars=12000, arm
                           "usage": report["usage"], "suggestions": len(findings),
                           "prose_edits_for_review": len(report["improvements"]["accepted"]),
                           "warnings": report["warnings"],
+                          "necessary_evidence_coverage": report["necessary_evidence_coverage"],
                           "failed_requests": sum(c["status"] == "error" for c in report["calls"])}
         for number, finding in enumerate(findings, 1):
             reviews.append({"review_id": f"{strategy}-{number}", "arm": strategy,
@@ -76,6 +92,10 @@ def run_comparison(root, provenance, output, client, *, context_chars=12000, arm
                             "impact": finding["impact"], "suggestion": finding["suggestion"],
                             "human_correct": None, "human_evidence_supports_claim": None,
                             "human_actionable": None, "reviewer": None, "notes": ""})
+        for number, edit in enumerate(report["improvements"]["accepted"], 1):
+            edit_reviews.append({"review_id": f"{strategy}-edit-{number}", "arm": strategy, "edit": edit,
+                                 "human_correct": None, "human_preserves_meaning": None,
+                                 "human_actionable": None, "reviewer": None, "notes": ""})
     lexical, ai = set(arms["lexical"]["selected_ids"]), set(arms["ai"]["selected_ids"])
     summary = {"schema_version": "tutorial-comparison-1", "evidence_kind": kind,
                "completed_at": datetime.now(timezone.utc).isoformat(), "snapshot_id": snapshot.snapshot_id,
@@ -89,7 +109,8 @@ def run_comparison(root, provenance, output, client, *, context_chars=12000, arm
                                "单次运行顺序已记录；未控制服务端缓存和采样波动。",
                                "发现数量及补丁数量不是准确率；需要独立人工标注和读者任务评估。"]}
     _dump(output / "comparison.json", summary)
-    _dump(output / "review-template.json", {"status": "unreviewed", "evidence_kind": kind, "items": reviews})
+    _dump(output / "review-template.json", {"status": "unreviewed", "evidence_kind": kind,
+                                           "items": reviews, "edits": edit_reviews})
     rows = []
     for name, arm in arms.items():
         usage = arm["usage"]
@@ -115,10 +136,11 @@ def run_comparison(root, provenance, output, client, *, context_chars=12000, arm
 
 def audit_comparison(output):
     try:
-        return _audit_comparison(output)
+        result = _audit_comparison(output)
     except (OSError, ValueError, KeyError, TypeError, AttributeError, UnicodeError):
-        return {"status": "failed", "problems": ["Incomplete or malformed comparison evidence"],
-                "scope": "Internal consistency only; not an independent quality evaluation"}
+        result = {"status": "failed", "problems": ["Incomplete or malformed comparison evidence"],
+                  "scope": "Internal consistency only; not an independent quality evaluation"}
+    return result | {"quality_review_status": "not_assessed_by_audit", "quality_passed": None}
 
 
 def _audit_comparison(output):
@@ -151,10 +173,31 @@ def _audit_comparison(output):
     requests, reference_candidates = 0, None
     for strategy in ("lexical", "ai"):
         report = json.loads((output / strategy / "analysis.json").read_text())
+        review = report.get("cloud_review")
+        if review:
+            from .tutorial_privacy import _digest
+            if (review != protocol.get("cloud_review") or _digest(review["review"]) != review["sha256"]
+                    or review["review"]["snapshot_id"] != snapshot_id):
+                problems.append(f"{strategy}: cloud approval record differs")
         calls = report["calls"]
         requests += len(calls)
         arm = summary["arms"][strategy]
         candidates = report["context"]["candidate_ids"]
+        if protocol.get("evidence_requirements") is not None:
+            from .tutorial_coverage import measure_coverage
+            chunks = tuple(tutorial.Chunk(**c) for c in snapshot["chunks"])
+            by_id = {c.id: c for c in chunks}
+            frozen = tutorial.ProjectSnapshot(snapshot["project"], snapshot["files"], snapshot["skipped"],
+                                              chunks, tuple(by_id[i] for i in candidates), (), False, snapshot_id,
+                                              protocol.get("evidence_scope", {}))
+            selected = [by_id[c["id"]] for c in report["context"]["selected"]]
+            before_budget = [by_id[i] for i in report["context"]["pre_budget_ids"]]
+            expected_coverage = measure_coverage(frozen, selected, protocol["evidence_requirements"],
+                                                 report["context"].get("selector_shown_ids"),
+                                                 before_budget=before_budget, actual_strategy=report["context"]["actual"])
+            if (report.get("necessary_evidence_coverage") != expected_coverage or
+                    arm.get("necessary_evidence_coverage") != expected_coverage):
+                problems.append(f"{strategy}: necessary evidence coverage differs from frozen annotations")
         if reference_candidates is None:
             reference_candidates = candidates
         elif candidates != reference_candidates:
@@ -195,9 +238,11 @@ def _audit_comparison(output):
         if protocol["evidence_kind"] != report["mode"]:
             problems.append(f"{strategy}: evidence kind differs")
         for call in calls:
-            if protocol["evidence_kind"] != "live_model" or not call.get("inference"):
+            if not call.get("inference"):
                 continue
             payload = call["inference"]["request"]
+            if protocol["evidence_kind"] != "live_model" and "model" not in payload:
+                continue
             if payload.get("model") != protocol["model"]["name"]:
                 problems.append(f"{strategy}: requested model differs")
             messages = payload.get("messages")
@@ -208,8 +253,20 @@ def _audit_comparison(output):
             if call["stage"] == "analysis":
                 prompt = messages[1].get("content") if messages else payload.get("prompt")
                 sent = json.loads(prompt)
-                if sent.get("evidence") != report["context"]["selected"]:
+                expected_evidence = report["context"]["selected"]
+                if review:
+                    permitted = {c["id"]: c for c in review["review"]["permitted_evidence"]}
+                    expected_evidence = [permitted[c["id"]] for c in expected_evidence]
+                if sent.get("evidence") != expected_evidence:
                     problems.append(f"{strategy}: analysis request evidence differs from report")
+            elif call["stage"] == "selection" and review:
+                from .tutorial_privacy import selection_summary
+                prompt = messages[1].get("content") if messages else payload.get("prompt")
+                permitted = {c["id"]: c for c in review["review"]["permitted_evidence"]}
+                shown = set(report["context"].get("selector_shown_ids") or ())
+                expected_summaries = [selection_summary(permitted[i]) for i in candidates if i in shown]
+                if json.loads(prompt).get("candidates") != expected_summaries:
+                    problems.append(f"{strategy}: selection request differs from approved excerpts")
     if requests != summary["model_requests"] or requests > protocol["max_model_requests"]:
         problems.append("Model request totals differ or exceed frozen limit")
     return {"status": "failed" if problems else "passed", "problems": problems,

@@ -1,0 +1,14 @@
+{
+  "kind": "assistant_recorded_development_history",
+  "attempt_1": {
+    "positive_task": "before failed, after and patch replay passed",
+    "negative_control_stage": "candidate review rejected before executing the negative replacement",
+    "error": "ValueError: Other Python blocks and recorded expected outputs must remain unchanged",
+    "cause": "The assistant's negative fixture inserted an import without the required REPL prompt; the extractor treated the line as changed expected output"
+  },
+  "correction": "Add the missing >>> prompt to the synthetic negative candidate only",
+  "unchanged": ["frozen task contract", "positive candidate", "upstream input bytes", "expected task outputs"],
+  "attempt_2": "Completed positive task and negative persistence control in a new output directory",
+  "original_artifacts": "The separate case and case-v2 directories are retained in the complete review archive",
+  "scope": "Development summary from actual tool results, not a new model run or independent quality label"
+}

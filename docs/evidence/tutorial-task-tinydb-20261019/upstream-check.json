@@ -1,0 +1,12 @@
+{
+  "kind": "public_upstream_byte_verification",
+  "commit": "edff96aeb2616402e9489d46e90a592c05565621",
+  "method": "HTTPS GET of raw.githubusercontent.com at the pinned commit; compare SHA-256 with the archived study input",
+  "all_compared_files_match": true,
+  "files": {
+    "README.rst": "de3d8a8d643f743f0a7d2165e2eed31604e4d8c33b419f540cd81efdc7ccbe0e",
+    "tinydb/storages.py": "2b0e9ef20afe320e0832010b42e4778336c3d9b0151505eefdd704787dac28cb",
+    "LICENSE": "b0e2a2d39271e3d96b717d7be8235ac413d74797bf7f742f0801cfaad6c8c912"
+  },
+  "scope": "Only these three files were freshly fetched; all selected runtime files were also checked against the existing study protocol"
+}

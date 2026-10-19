@@ -34,7 +34,10 @@ class JSONReply:
 
 
 class JSONClient:
-    """A single request, with no hidden retries or fallback to another service."""
+    """Single-request transport; tutorial uploads require tutorial_privacy review.
+
+    The transport's API-key scrubber is not a repository-secret detector.
+    """
 
     evidence_kind = "live_model"
 

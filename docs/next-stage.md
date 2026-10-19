@@ -8,7 +8,7 @@
 - `analyze OWNER/REPO` 或 `analyze https://github.com/OWNER/REPO` 为 GitHub 入口；已有本地目录直接使用。目录存在时优先识别为本地；不存在的绝对路径、`./`、`../`、`~` 路径会报错而非触发下载。
 - GitHub 先解析指定 ref（默认 HEAD）到 commit SHA，再下载该提交的 ZIP。只支持公开仓库；暂无 GitHub Token、私有仓库、子模块及 Git LFS 内容获取。ref 用 `--ref` 指定，报告记录 commit。
 - 本地项目只读取，不执行 Git 命令、安装脚本或仓库源码；按读到的原始字节记录文件 SHA-256。当前读取不提供并发修改下的原子快照保证。
-- 项目级 `analyze` 默认 `deepseek-flash`＋规则检索（`--context-strategy lexical`）；需配置 `DEEPSEEK_API_KEY`。`compare` 默认同一 Flash 模型，对照 lexical 与 ai。`--provider ollama --model MODEL` 可切换本地服务，`--context-strategy ai` 显式启用 AI 选择。
+- 项目级 `analyze` 默认 `deepseek-flash`＋规则检索（`--context-strategy lexical`）；需配置 `DEEPSEEK_API_KEY`。DeepSeek 教程分析首次仅生成候选文件及脱敏原文清单，必须人工审阅后用 `--approve-cloud SHA256` 确认；没有确认就不会发出模型请求。`compare` 同样遵循此流程，默认同一 Flash 模型，对照 lexical 与 ai。`--provider ollama --model MODEL` 可切换本地服务，`--context-strategy ai` 显式启用 AI 选择。详见[风险控制及标注格式](tutorial-risk-controls.md)。
 - `analyze --static` 仅做静态检查，无需密钥，不发起模型调用；不可与 `--provider`、`--model`、`--endpoint` 或 `--context-strategy ai` 同用。缺少密钥或服务失败均报错；不自动切换服务、静态模式，不自动重试付费请求。底层 `analyze_project(client=None)` 仍为静态库接口；旧 `repair` / `benchmark` 维持原有默认和回放语义。
 - DeepSeek 使用官方 HTTPS API；`DEEPSEEK_API_KEY` 通过 Authorization 头发送，不写入推理证据。已知密钥还会从服务返回正文及错误中替换为 `[REDACTED]`。本轮按用户指定选用 `deepseek-flash`，默认配置也使用 Flash；模型名仍可配置，不锁定服务的长期模型名称或价格。
 - Ollama 保持回环地址、禁用环境代理和重定向。DeepSeek 与 GitHub 的外部 HTTPS 请求遵循用户环境代理配置，禁用 HTTP 重定向。
@@ -40,14 +40,16 @@
 | 方面 | AST + 关键词直接选择（lexical） | 静态索引 + AI 选择（ai） |
 | --- | --- | --- |
 | 选择方式 | 从标题、符号、正文词项及文件类型排序，交错保留文档和源码候选 | 对同一候选集的有界摘要做一次模型选择，再读取对应原文 |
-| 优势 | 稳定、易审计，无额外选择调用 | 可按读者任务判断关联，有机会找到词面关联较弱的前提 |
-| 局限 | 同义表达和隐含跨文件关系容易遗漏 | 候选之外的内容仍然不可见，可能误选且增加成本 |
+| 优势 | 稳定、易审计，无额外选择调用 | 可在同一有界候选集中根据摘要调整选择 |
+| 局限 | 该策略的查询由通用词项和文档标题构成，未使用用户具体任务 | 该策略只能做一次筛选，不能请求候选外的函数或在分析后继续检索；可能误选且增加成本 |
 | 模型调用上限 | 仅分析阶段 1 次 | 选择 1 次、分析 1 次 |
 | 失败处理 | 保留静态结果和错误记录 | 选择失败或 ID 无效时显式回到 lexical，仍使用同一服务 |
 
 `analyze` 两种策略复用 `_terms` 与 `_units`，增加文档标题、文件角色与项目级候选排序。中文标题和正文使用标准库实现的字对分词，不增加第三方分词依赖；`go.mod`、无扩展名的 LICENSE/NOTICE/COPYING 也可发现。候选集先交错保留文档与源码，再补齐到上限。它们不是既有 `semantic-v2` 修复检索器的完全同一排序；旧实验结论不能直接用于新分析器。
 
-当前每次项目分析只有一个有界上下文，不做递归代理式探索。候选最多 40 个；AI 可选 1–12 个已展示的 ID，并保留一个教程锚点。最终证据数组按序列化 JSON 字符数限制（含标签、分隔符及原文），默认 12000 字符，可配置 2000–48000。AI 选择摘要数组也受同一字符上限约束。系统提示词、覆盖范围字段和服务协议额外占用 token；这不是整次调用的 token 上限。每次生成最多 2048 token。
+lexical 与 ai 每次只生成一个有界上下文。初始候选最多 40 个；ai 可选 1–12 个已展示的 ID，并保留一个教程锚点。最终证据数组按序列化 JSON 字符数限制（含标签、分隔符及原文），默认 12000 字符，可配置 2000–48000。AI 选择摘要数组也受同一字符上限约束。系统提示词、覆盖范围字段和服务协议额外占用 token；这不是整次调用的 token 上限。每次生成最多 2048 token。
+
+新增独立策略 iterative，按分析中的证据缺口搜索完整冻结索引，支持 path/symbol/text 查询，可以超出初始 40 候选；可选 --task 提供任务词项。默认最多补充 3 轮、最多 4 次模型请求，每轮仍受相同证据字符上限约束。云端先确认整个可检索索引的脱敏清单及轮数，再发送各轮子集。策略、停止和失败语义见[迭代检索说明](iterative-retrieval.md)。原有成对比较和历史成绩不包含这个新策略。
 
 报告记录所选原文、候选 ID、请求及响应、失败正文、UTC 时间、耗时、各阶段 token 和合计；任一请求的用量未知时，对应总量为 null。失败调用也计入请求数，服务已返回的有效用量会保留。选择成功不保证分析成功，也不保证更好的质量。
 
@@ -55,7 +57,7 @@
 
 - GitHub ZIP 下载最多 20 MB，展开大小合计最多 64 MB，最多 20000 个归档条目。先校验所有路径，再手动复制合格普通文件；拒绝越界和重复路径，不创建归档符号链接。
 - 本地发现最多访问 20000 个文件条目；最多索引 1000 个 UTF-8 文本文件、原始字节合计 8 MB、单文件 256 KB。上下文最多 4000 个片段，每片段不超过 80 行及 4000 字符；超长单行会省略并标记覆盖不完整。
-- 排除隐藏路径、测试目录、历史 evidence、构建产物、依赖副本及已知包含 evaluator 检查的 `exampleproof.json`、`metadata.json`、候选 JSON。按名称过滤 secret/credential/password/token/private-key 及证书私钥。文件名过滤无法识别所有内嵌凭据，云端分析前需检查项目内容。
+- 教程使用独立 `EvidenceScope`，默认还识别 Dockerfile、Containerfile、Makefile 和 GNUmakefile。隐藏路径、测试目录、历史 evidence、构建产物及依赖副本默认排除；可以用 `--include-tests`、`--include-path` 及 `--exclude-path` 显式调整。Git 元数据、`.env`、已知包含 evaluator 检查的配置、候选 JSON、敏感名称及证书私钥不可通过纳入选项覆盖。云端清单先自动及按自定义值脱敏，仍需逐项人工确认，启发式规则不能保证识别全部敏感内容。
 - 覆盖范围、文件摘要、跳过原因以及 GitHub 快照中未复制的合格路径写入报告；“未发现问题”不表示完整覆盖或教程正确。
 - 输出必须在被分析项目目录之外，且使用全新目录，避免改写输入或旧证据。
 - 原有 Python 执行仍只通过 fail-closed Bubblewrap runner；无法隔离就标记 blocked，绝不回退宿主执行。当前 `analyze` 不执行，原 `scan/check/repair/benchmark` 仍接收配置指定的本地项目路径。

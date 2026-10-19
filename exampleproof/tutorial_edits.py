@@ -35,7 +35,9 @@ def _tokens(text):
 
 
 def review_edits(snapshot, selected, proposals):
-    result = {"status": "unverified_prose_edits", "accepted": [], "rejected": [], "patch": ""}
+    result = {"status": "unverified_prose_edits", "quality_review_status": "not_reviewed",
+              "validation_scope": "Exact paragraph match and protected-content guards only",
+              "accepted": [], "rejected": [], "patch": ""}
     if not isinstance(proposals, list) or len(proposals) > 2:
         result["rejected"].append({"index": None, "reason": "Expected at most two prose edits"})
         return result

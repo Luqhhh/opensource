@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from exampleproof.model_api import JSONClient
 from exampleproof.project_input import project_input
 from exampleproof.tutorial import prepare_project
+from exampleproof.tutorial_privacy import review_cloud
 from exampleproof.tutorial_study import audit_comparison, run_comparison
 
 
@@ -87,7 +88,7 @@ def client_for(provider, repetition):
                       ollama_options={"temperature": 0, "seed": SEEDS[repetition], "num_ctx": 8192, "num_predict": 2048})
 
 
-def run(output):
+def run(output, *, cloud_approvals=None):
     protocol = json.loads((output / "protocol.json").read_text())
     source = Path(__file__).resolve().parents[1] / "exampleproof"
     if any(hashlib.sha256((source / name).read_bytes()).hexdigest() != expected
@@ -95,6 +96,26 @@ def run(output):
         raise ValueError("Implementation changed after freeze")
     if hashlib.sha256(Path(__file__).read_bytes()).hexdigest() != protocol["script_sha256"]:
         raise ValueError("Study script changed after freeze")
+    approvals = json.loads(cloud_approvals.read_text()) if cloud_approvals else {}
+    if not isinstance(approvals, dict) or any(not isinstance(v, str) for v in approvals.values()):
+        raise ValueError("Cloud approvals must map project names to reviewed SHA-256 strings")
+    # Complete every cloud preflight before starting either provider's requests.
+    # Existing experiment protocols still require their original archived code.
+    cloud_clients = {}
+    review_problems = []
+    if "deepseek" in protocol["providers"]:
+        for name, project in protocol["projects"].items():
+            current = prepare_project(output / "inputs" / name, project["project"])
+            if current.snapshot_id != project["snapshot_id"]:
+                raise ValueError("Frozen input changed")
+            try:
+                cloud_clients[name] = (current, review_cloud(
+                    current, client_for("deepseek", 0), output / "cloud-reviews" / f"{name}.json",
+                    approvals.get(name), context_chars=protocol["context_chars"], strategies=("lexical", "ai")))
+            except ValueError as exc:
+                review_problems.append(str(exc))
+        if review_problems:
+            raise ValueError("\n".join(review_problems) + "\nSupply reviewed hashes with --cloud-approvals PATH; no model calls started.")
     def stream(provider):
         for name, project in protocol["projects"].items():
             for repetition in range(protocol["repetitions"]):
@@ -107,7 +128,10 @@ def run(output):
                     raise ValueError("Refusing to overwrite or rerun an existing result")
                 print(json.dumps({"event": "starting", "project": name, "provider": provider,
                                   "repetition": repetition + 1}), flush=True)
-                result = run_comparison(root, project["project"], destination, client_for(provider, repetition),
+                selected_client = client_for(provider, repetition) if provider != "deepseek" else cloud_clients[name][1]
+                if provider == "deepseek":
+                    current = cloud_clients[name][0]
+                result = run_comparison(root, project["project"], destination, selected_client, snapshot=current,
                                         context_chars=protocol["context_chars"],
                                         arm_order=("lexical", "ai") if repetition == 0 else ("ai", "lexical"))
                 audit = audit_comparison(destination)
@@ -125,8 +149,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("freeze", "run"))
     parser.add_argument("output", type=Path)
+    parser.add_argument("--cloud-approvals", type=Path, help="JSON mapping of project names to reviewed cloud manifest hashes")
     args = parser.parse_args()
-    (freeze if args.command == "freeze" else run)(args.output)
+    if args.command == "freeze":
+        freeze(args.output)
+    else:
+        run(args.output, cloud_approvals=args.cloud_approvals)
 
 
 if __name__ == "__main__":

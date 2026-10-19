@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "returncode": 21,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    db = TinyDB('/path/to/db.json')\n  File \"/workspace/tinydb/database.py\", line 95, in __init__\n    self._storage: Storage = storage(*args, **kwargs)\n  File \"/workspace/tinydb/storages.py\", line 117, in __init__\n    touch(path, create_dirs=create_dirs)\n  File \"/workspace/tinydb/storages.py\", line 32, in touch\n    with open(path, 'a'):\nFileNotFoundError: [Errno 2] No such file or directory: '/path/to/db.json'\n",
+  "duration_seconds": 0.0345,
+  "oracle": "configured_behavior_checks",
+  "failure_kind": "example_exception"
+}

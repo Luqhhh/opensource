@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "stdout": "first-run-persistence-ok\n",
+  "stderr": "",
+  "duration_seconds": 0.0672,
+  "oracle": "configured_behavior_checks",
+  "failure_kind": "none"
+}

@@ -2,7 +2,7 @@
 
 from collections import Counter
 from copy import deepcopy
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 import hashlib
 from html import escape
@@ -14,8 +14,9 @@ import re
 from urllib.parse import unquote, urlparse
 
 from .context import _terms, _units
-from .project_input import MAX_ENTRIES, SKIP_DIRS, eligible
+from .project_input import MAX_ENTRIES, eligible
 from .providers import response_token_count
+from .tutorial_scope import EvidenceScope
 
 
 MAX_FILES = 1000
@@ -68,25 +69,31 @@ class ProjectSnapshot:
     static_observations: tuple
     chunk_truncated: bool
     snapshot_id: str
+    evidence_scope: dict = field(default_factory=dict)
+    task: str | None = None
 
 
-def prepare_project(root, provenance):
+def prepare_project(root, provenance, *, scope=None, task=None):
     """Freeze discovery and filesystem observations before any model request."""
-    files, skipped = discover(root)
+    scope = scope or EvidenceScope()
+    if task is not None and (not isinstance(task, str) or not task.strip() or len(task) > 2000):
+        raise ValueError("Task must be a non-empty string of at most 2000 characters")
+    files, skipped = discover(root, scope=scope)
     chunks, truncated = build_chunks(files)
-    candidates = ranked_candidates(chunks)
-    static = static_findings(root, files, provenance.get("snapshot", {}).get("omitted_eligible_paths", ()))
+    candidates = ranked_candidates(chunks, task=task)
+    static = static_findings(root, files, provenance.get("snapshot", {}).get("omitted_eligible_paths", ()), scope=scope)
     hashes = {path: f["sha256"] for path, f in sorted(files.items())}
     snapshot_id = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
     return ProjectSnapshot(deepcopy(provenance), files, skipped, tuple(chunks), tuple(candidates),
-                           tuple(static), truncated, snapshot_id)
+                           tuple(static), truncated, snapshot_id, scope.record(), task)
 
 
-def discover(root):
+def discover(root, *, scope=None):
     """Read each selected file once, preserving its bytes for hashes and evidence."""
+    scope = scope or EvidenceScope()
     files, skipped, total, visited = {}, Counter(), 0, 0
     for current, directories, names in os.walk(root, followlinks=False):
-        kept = sorted(d for d in directories if not d.startswith(".") and d not in SKIP_DIRS
+        kept = sorted(d for d in directories if scope.allows((Path(current) / d).relative_to(root).as_posix(), directory=True)
                       and not (Path(current) / d).is_symlink())
         skipped["excluded_directories"] += len(directories) - len(kept)
         directories[:] = kept
@@ -97,7 +104,7 @@ def discover(root):
                 return files, dict(skipped)
             path = Path(current) / name
             relative = path.relative_to(root).as_posix()
-            if not eligible(relative):
+            if not eligible(relative, scope):
                 skipped["excluded"] += 1
                 continue
             if path.is_symlink() or not path.is_file():
@@ -167,7 +174,7 @@ def build_chunks(files):
     return chunks, truncated
 
 
-def static_findings(root, files, omitted_paths=()):
+def static_findings(root, files, omitted_paths=(), *, scope=None):
     findings = []
     for path, item in sorted(files.items()):
         if Path(path).suffix.lower() not in {".md", ".mdx"}:
@@ -203,7 +210,7 @@ def static_findings(root, files, omitted_paths=()):
                     continue
                 # GitHub snapshots intentionally omit binaries and excluded files.
                 # Only report missing targets that the input policy could include.
-                if not eligible(relative):
+                if not eligible(relative, scope):
                     continue
                 findings.append({"origin": "static", "status": "static_observation",
                                  "title": "本地文档链接目标不可用", "category": "navigation",
@@ -217,15 +224,17 @@ def static_findings(root, files, omitted_paths=()):
     return findings
 
 
-def ranked_candidates(chunks):
+def ranked_candidates(chunks, *, task=None):
     documents = [c for c in chunks if c.kind == "document"]
     query = Counter(_terms("installation setup configuration quickstart tutorial example prerequisite dependency error"))
     for chunk in documents:
         query.update(_tutorial_terms(chunk.title))
     query = Counter(dict(query.most_common(200)))
+    task_terms = Counter(_tutorial_terms(task or ""))
     def score(chunk):
         terms = Counter(_tutorial_terms(chunk.title + " " + chunk.text))
         overlap = sum(min(query[t], 3) * min(terms[t], 3) for t in query.keys() & terms.keys())
+        overlap += 12 * sum(min(task_terms[t], 3) * min(terms[t], 3) for t in task_terms.keys() & terms.keys())
         priority = 30 if chunk.kind == "document" else 0
         if PurePosixPath(chunk.path).name.lower() in {"pyproject.toml", "package.json", "requirements.txt", "cargo.toml", "go.mod"}:
             priority += 25
@@ -257,10 +266,10 @@ def _tutorial_terms(text):
     return terms
 
 
-def pack_context(chunks, budget):
+def pack_context(chunks, budget, render=asdict):
     selected, used = [], 2  # JSON array brackets; labels and separators count too.
     for chunk in chunks:
-        size = len(json.dumps(asdict(chunk), ensure_ascii=False)) + (2 if selected else 0)
+        size = len(json.dumps(render(chunk), ensure_ascii=False)) + (2 if selected else 0)
         if used + size <= budget:
             selected.append(chunk)
             used += size
@@ -282,25 +291,51 @@ def _call(client, system, payload, stage, calls):
     return reply.value
 
 
-def analyze_project(root, provenance, *, client=None, strategy="lexical", context_chars=12000):
-    return analyze_snapshot(prepare_project(root, provenance), client=client,
-                            strategy=strategy, context_chars=context_chars)
+def analyze_project(root, provenance, *, client=None, strategy="lexical", context_chars=12000,
+                    scope=None, evidence_requirements=None, task=None, max_retrieval_rounds=3):
+    if task is not None and strategy != "iterative":
+        raise ValueError("A task query currently requires the iterative strategy")
+    return analyze_snapshot(prepare_project(root, provenance, scope=scope, task=task), client=client,
+                            strategy=strategy, context_chars=context_chars, evidence_requirements=evidence_requirements,
+                            max_retrieval_rounds=max_retrieval_rounds)
 
 
-def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars=12000):
-    if strategy not in {"lexical", "ai"}:
+def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars=12000, evidence_requirements=None,
+                     max_retrieval_rounds=3):
+    if strategy not in {"lexical", "ai", "iterative"}:
         raise ValueError("Unknown context strategy")
     if type(context_chars) is not int or not 2000 <= context_chars <= 48000:
         raise ValueError("Context budget must be 2000..48000 characters")
-    if strategy == "ai" and client is None:
-        raise ValueError("AI context selection requires an explicit model provider")
+    if strategy in {"ai", "iterative"} and client is None:
+        raise ValueError("AI/iterative context selection requires an explicit model provider")
+    if snapshot.task is not None and strategy != "iterative":
+        raise ValueError("A task query currently requires the iterative strategy")
+    if strategy == "iterative":
+        from .tutorial_retrieval import validate_round_limit
+        validate_round_limit(max_retrieval_rounds)
+    if getattr(client, "provider", None) == "deepseek":
+        from .tutorial_privacy import ReviewedCloudClient
+        if not isinstance(client, ReviewedCloudClient):
+            raise ValueError("DeepSeek tutorial analysis requires a reviewed cloud manifest and explicit approval")
+        client.validate_project(snapshot, strategy, context_chars)
+        if strategy == "iterative":
+            client.validate_iteration_limit(max_retrieval_rounds)
+    from .tutorial_coverage import measure_coverage, validate_requirements
+    if evidence_requirements is not None:
+        validate_requirements(evidence_requirements, snapshot)
     provenance, files, skipped = snapshot.provenance, snapshot.files, snapshot.skipped
     chunks, candidates, truncated = snapshot.chunks, snapshot.candidates, snapshot.chunk_truncated
     calls, warnings = [], []
     evidence_kind = getattr(client, "evidence_kind", "custom_provider_unverified") if client else "static_analysis"
     proposed_edits = []
-    selected, used = pack_context(candidates, context_chars)
+    render = client.render_chunk if hasattr(client, "render_chunk") else asdict
+    selected, used = pack_context(candidates, context_chars, render)
+    before_budget = candidates
+    shown_ids = None
     selection = {"requested": strategy, "actual": "lexical", "fallback_reason": None}
+    retrieval = None
+    if strategy == "iterative":
+        selection["actual"] = "iterative"
     if strategy == "ai":
         # Bounded summaries; the model can select IDs, never arbitrary paths.
         summaries = []
@@ -308,7 +343,8 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
             summary = {"id": c.id, "path": c.path, "start_line": c.start_line,
                        "end_line": c.end_line, "kind": c.kind, "title": c.title,
                        "preview": c.text[:240]}
-            if len(json.dumps(summaries + [summary], ensure_ascii=False)) <= context_chars:
+            displayed = client.render_summaries(summaries + [summary]) if hasattr(client, "render_summaries") else summaries + [summary]
+            if len(json.dumps(displayed, ensure_ascii=False)) <= context_chars:
                 summaries.append(summary)
         value = _call(client, SELECT_SYSTEM, {"candidates": summaries}, "selection", calls)
         ids = value.get("selected_ids") if isinstance(value, dict) else None
@@ -325,7 +361,8 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
             anchor = next((c for c in candidates if c.kind == "document"), None)
             if anchor and anchor not in chosen:
                 chosen.insert(0, anchor)
-            selected, used = pack_context(chosen, context_chars)
+            selected, used = pack_context(chosen, context_chars, render)
+            before_budget = chosen
             selection["actual"] = "ai"
     findings = deepcopy(list(snapshot.static_observations))
     if not files:
@@ -334,11 +371,18 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
         warnings.append("没有发现支持的教程文档（Markdown、MDX、reStructuredText）。")
     if chunks and not selected:
         warnings.append("没有完整证据片段能放入当前上下文预算。")
-    if client and selected:
+    if client and (selected or strategy == "iterative" and chunks):
         payload = {"coverage": {"indexed_files": len(files), "indexed_chunks": len(chunks),
                                 "selected_chunks": len(selected), "skipped": skipped},
                    "evidence": [asdict(c) for c in selected]}
-        value = _call(client, ANALYZE_SYSTEM, payload, "analysis", calls)
+        if strategy == "iterative":
+            from .tutorial_retrieval import explore
+            result = explore(snapshot, client, selected, used, before_budget, context_chars,
+                             max_retrieval_rounds, calls, warnings)
+            value, selected, used = result["value"], result["selected"], result["used"]
+            before_budget, retrieval = result["before_budget"], result["trace"]
+        else:
+            value = _call(client, ANALYZE_SYSTEM, payload, "analysis", calls)
         if isinstance(value, dict):
             proposed_edits = value.get("edits", [])
         items = value.get("findings") if isinstance(value, dict) else None
@@ -372,10 +416,23 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
             "project": deepcopy(provenance), "mode": evidence_kind,
             "model": {"provider": client.provider, "name": client.model} if client else None,
             "coverage": {"snapshot_id": snapshot.snapshot_id,
+                         "evidence_scope": snapshot.evidence_scope,
                          "indexed_files": len(files), "indexed_chunks": len(chunks),
                          "chunk_limit_or_long_line_omitted": truncated, "skipped": skipped,
                          "files": {p: {k: v for k, v in f.items() if k != "text"} for p, f in files.items()}},
+            "necessary_evidence_coverage": measure_coverage(snapshot, selected, evidence_requirements, shown_ids,
+                                                             before_budget=before_budget, actual_strategy=selection["actual"],
+                                                             retrieved=[c for c in chunks if retrieval and c.id in retrieval["retrieved_ids"]]
+                                                             if strategy == "iterative" else None),
+            "retrieval": retrieval,
+            "cloud_review": client.review_record if getattr(client, "provider", None) == "deepseek" else None,
+            "quality_review_status": "not_reviewed",
             "context": selection | {"budget_chars": context_chars, "used_chars": used,
+                                     "pre_budget_ids": [c.id for c in before_budget],
+                                     "query_basis": "task_terms_and_generic_terms" if snapshot.task else "generic_terms_and_document_titles",
+                                     "task": snapshot.task, "task_conditioned": snapshot.task is not None,
+                                     "outside_candidate_search": strategy == "iterative",
+                                     "selector_shown_ids": sorted(shown_ids) if shown_ids is not None else None,
                                      "candidate_ids": [c.id for c in candidates],
                                      "selected": [asdict(c) for c in selected]},
             "findings": findings, "improvements": improvements, "warnings": warnings, "calls": calls,
@@ -385,7 +442,8 @@ def analyze_snapshot(snapshot, *, client=None, strategy="lexical", context_chars
             "execution": {"performed": False, "verified_repairs": 0},
             "limitations": ["只分析有界输入；被排除、超限及未检索的内容不代表项目缺失。",
                             "AI 建议未经独立验证；未执行代码、安装依赖或测量学习效率。",
-                            "名称过滤不能保证移除源码中的所有秘密；启用云端分析前应检查项目内容。"]}
+                            "名称过滤和自动脱敏不能保证移除全部敏感内容；云端清单仍需逐项人工审阅。",
+                            "必要证据覆盖与记录审计均不代表建议正确；保留独立人工质量评审。"]}
 
 
 def write_analysis(output, report):
@@ -400,6 +458,16 @@ def write_analysis(output, report):
                            for e in finding["evidence"])
         sections.append(f'<article><h2>{escape(finding["title"])}</h2><p>{escape(finding["status"])}</p>'
                         f'<p>{escape(finding["impact"])}</p><p>{escape(finding["suggestion"])}</p><ul>{evidence}</ul></article>')
+    retrieval_section = ""
+    if report.get("retrieval"):
+        trace = report["retrieval"]
+        labels = {"model_finished": "模型结束检索（未经独立验证）", "round_limit": "达到轮数上限",
+                  "no_new_evidence": "没有新的索引证据", "context_budget_exhausted": "上下文预算不足",
+                  "model_error": "模型请求失败", "invalid_evidence_request": "检索请求无效"}
+        searches = sum(bool(r["searches"]) for r in trace["rounds"])
+        retrieval_section = (f'<p>补充检索：{searches} 轮 · '
+                             f'{escape(labels.get(trace["stop_reason"], trace["stop_reason"]))} · '
+                             f'待确认缺口：{len(trace["unresolved_requests"])}。详见 retrieval.json。</p>')
     html = ('<!doctype html><html lang="zh-CN"><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; script-src \'none\'">'
@@ -408,15 +476,21 @@ def write_analysis(output, report):
             'pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5f6;padding:12px}</style>'
             '<h1>教程质量分析</h1><p>静态观察与 AI 建议；本报告未执行项目代码。</p>'
             f'<p>索引文件：{report["coverage"]["indexed_files"]} · 发现：{len(report["findings"])}</p>'
+            + retrieval_section
             + ''.join(f'<p>{escape(w)}</p>' for w in report["warnings"])
             + ''.join(sections) + '<footer>' + '<br>'.join(escape(v) for v in report["limitations"]) + '</footer></html>')
     (output / "analysis.html").write_text(html, encoding="utf-8", errors="backslashreplace")
+    if report.get("retrieval") is not None:
+        (output / "retrieval.json").write_text(json.dumps(report["retrieval"], ensure_ascii=False, indent=2) + "\n",
+                                              encoding="utf-8", errors="backslashreplace")
     # Suggestions are intentionally not presented as verified source edits.
     review = "# 教程改进建议（未验证）\n\n本文件用于人工审阅，不代表已验证补丁。\n\n"
     for number, finding in enumerate(report["findings"], 1):
         review += f'{number}. {finding["title"]}\n\n   {finding["suggestion"]}\n\n'
     (output / "suggestions.md").write_text(review, encoding="utf-8", errors="backslashreplace")
     improvements = report.get("improvements", {})
+    (output / "evidence-coverage.json").write_text(json.dumps(report.get("necessary_evidence_coverage"),
+                                                              ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (output / "suggestions.patch").write_text(improvements.get("patch", ""), encoding="utf-8", newline="")
     (output / "edits.json").write_text(json.dumps({k: v for k, v in improvements.items() if k != "patch"},
                                                   ensure_ascii=False, indent=2) + "\n", encoding="utf-8", errors="backslashreplace")

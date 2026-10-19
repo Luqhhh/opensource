@@ -1,0 +1,62 @@
+{
+  "schema_version": "tinydb-first-run-case-1",
+  "status": "task_validation_passed",
+  "project": "TinyDB",
+  "commit": "edff96aeb2616402e9489d46e90a592c05565621",
+  "version": "4.9.0",
+  "case_type": "same_revision_first_run_usability",
+  "diagnosis_kind": "recorded_live_model_diagnosis_reuse",
+  "candidate_kind": "assistant_authored_candidate",
+  "new_model_requests": 0,
+  "diagnosis_title": "入门示例使用占位路径且未说明文件创建行为",
+  "task": "从空的可写工作目录复制 README 首个示例，写入原有两条记录，关闭重开后核对持久化及查询",
+  "before": {
+    "status": "failed",
+    "returncode": 21,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 9, in <module>\n    namespace = runpy.run_path(\"/work/example.py\", init_globals=namespace)\n  File \"/usr/lib/python3.10/runpy.py\", line 289, in run_path\n    return _run_module_code(code, init_globals, run_name,\n  File \"/usr/lib/python3.10/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/work/example.py\", line 2, in <module>\n    db = TinyDB('/path/to/db.json')\n  File \"/workspace/tinydb/database.py\", line 95, in __init__\n    self._storage: Storage = storage(*args, **kwargs)\n  File \"/workspace/tinydb/storages.py\", line 117, in __init__\n    touch(path, create_dirs=create_dirs)\n  File \"/workspace/tinydb/storages.py\", line 32, in touch\n    with open(path, 'a'):\nFileNotFoundError: [Errno 2] No such file or directory: '/path/to/db.json'\n",
+    "duration_seconds": 0.0345,
+    "oracle": "configured_behavior_checks",
+    "failure_kind": "example_exception"
+  },
+  "after": {
+    "status": "passed",
+    "returncode": 0,
+    "stdout": "first-run-persistence-ok\n",
+    "stderr": "",
+    "duration_seconds": 0.0351,
+    "oracle": "configured_behavior_checks",
+    "failure_kind": "none"
+  },
+  "patch_replay": {
+    "status": "passed",
+    "returncode": 0,
+    "stdout": "first-run-persistence-ok\n",
+    "stderr": "",
+    "duration_seconds": 0.0672,
+    "oracle": "configured_behavior_checks",
+    "failure_kind": "none"
+  },
+  "negative_control": {
+    "kind": "synthetic_candidate",
+    "execution": {
+      "status": "failed",
+      "returncode": 22,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 5, in <module>\nAssertionError: Task requires JSON persistence\n",
+      "duration_seconds": 0.0673,
+      "oracle": "configured_behavior_checks",
+      "failure_kind": "behavior_check"
+    }
+  },
+  "contract_sha256": "1fc251e279190784cecef1c5f8df0a933668197fa07e857adf65dc48b788a8e4",
+  "adoption_status": "human_review_pending",
+  "independent_human_review": false,
+  "selection": "Post-hoc selected from known development-project findings; not an unseen evaluation sample",
+  "limitations": [
+    "Copy-and-run task assumes a fresh writable directory and takes the original placeholder literally.",
+    "Experienced readers who already replace the placeholder may not encounter this obstacle.",
+    "No package-install, RST-rendering, reader-efficiency or maintainer-adoption result.",
+    "The same assistant wrote checks and the candidate; checks were frozen first, but not independently human authored."
+  ]
+}

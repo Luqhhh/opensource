@@ -59,8 +59,11 @@ def main(argv=None):
     analyze.add_argument("--model", help="DeepSeek 默认 deepseek-flash；Ollama 需指定本地模型")
     analyze.add_argument("--endpoint", help="官方 DeepSeek HTTPS 或本地 Ollama 回环地址")
     analyze.add_argument("--model-timeout", type=positive_seconds, default=60)
-    analyze.add_argument("--context-strategy", choices=("lexical", "ai"), default="lexical",
-                         help="默认 lexical（AST＋关键词规则检索）；ai 额外调用模型选择上下文")
+    analyze.add_argument("--context-strategy", choices=("lexical", "ai", "iterative"), default="lexical",
+                         help="lexical 规则检索；ai 一次选择；iterative 按证据缺口继续检索")
+    analyze.add_argument("--task", help="iterative 的具体读者任务，最多 2000 字符")
+    analyze.add_argument("--max-retrieval-rounds", type=int, choices=range(1, 6), default=3,
+                         help="iterative 最多补充检索轮数（1–5，默认 3）；模型请求最多轮数＋1")
     analyze.add_argument("--context-chars", type=int, default=12000, help="最终证据字符预算 2000..48000")
     compare = commands.add_parser("compare", help="固定同一项目快照，对照两种上下文策略（最多三次模型请求）")
     compare.add_argument("project", help="GitHub URL、OWNER/REPO 或本地项目目录")
@@ -72,8 +75,21 @@ def main(argv=None):
     compare.add_argument("--endpoint")
     compare.add_argument("--model-timeout", type=positive_seconds, default=60)
     compare.add_argument("--context-chars", type=int, default=12000)
+    for command in (analyze, compare):
+        command.add_argument("--include-tests", action="store_true", help="将普通 test/tests 目录纳入教程证据")
+        command.add_argument("--include-path", action="append", default=[], help="显式纳入相对路径或 glob；可重复")
+        command.add_argument("--exclude-path", action="append", default=[], help="排除相对路径或 glob；可重复，优先于纳入")
+        command.add_argument("--evidence-requirements", type=Path, help="冻结快照的必要证据标注 JSON；仅测覆盖")
+        command.add_argument("--cloud-review", type=Path, help="云端清单 JSON；默认 OUTPUT-cloud-review.json")
+        command.add_argument("--approve-cloud", help="审阅清单后显式传入其中 sha256，允许发送所列脱敏证据")
+        command.add_argument("--redact-values", type=Path, help="额外脱敏值的 JSON 字符串数组；仅在本地读取")
     audit = commands.add_parser("compare-audit", help="核对已保存对照的快照、代码及用量；不调用模型")
     audit.add_argument("output", type=Path)
+    task_check = commands.add_parser("task-check", help="按冻结的读者任务验证明确候选，并导出待审阅文档补丁")
+    task_check.add_argument("project", type=Path)
+    task_check.add_argument("--contract", type=Path, required=True)
+    task_check.add_argument("--candidate", type=Path, required=True)
+    task_check.add_argument("--output", type=Path, required=True)
     scan = commands.add_parser("scan", help="只提取示例，不执行")
     scan.add_argument("project", type=Path)
     for name in ("check", "repair", "benchmark"):
@@ -96,6 +112,12 @@ def main(argv=None):
                                  help="每个失败示例的候选轮数上限（1–5，默认 1）；失败反馈用于下一轮")
     args = parser.parse_args(argv)
     try:
+        if args.command == "task-check":
+            from .tutorial_task import validate_tutorial_task
+            report = validate_tutorial_task(args.project, args.contract, args.candidate, args.output)
+            print(json.dumps({"status": report["status"], "adoption_status": report["adoption_status"]}, ensure_ascii=False))
+            print(f"教程任务验证：{args.output / 'task-report.html'}")
+            return 0 if report["status"] == "task_validation_passed" else 2
         if args.command == "doctor":
             report = environment_report()
             if args.json:
@@ -120,25 +142,61 @@ def main(argv=None):
             if args.output.exists() or args.output.is_symlink():
                 raise ValueError("Analysis output must be a new directory")
             static = getattr(args, "static", False)
-            if static and (args.model or args.endpoint or args.context_strategy == "ai"):
-                raise ValueError("--static cannot be combined with --model, --endpoint or --context-strategy ai")
+            if static and (args.model or args.endpoint or args.context_strategy != "lexical"):
+                raise ValueError("--static cannot be combined with model options or AI/iterative context strategies")
+            task = getattr(args, "task", None)
+            iterative = args.command == "analyze" and args.context_strategy == "iterative"
+            if task is not None and not iterative:
+                raise ValueError("--task requires --context-strategy iterative")
+            if task is not None and (not task.strip() or len(task) > 2000):
+                raise ValueError("Task must be a non-empty string of at most 2000 characters")
+            iterative_options = {"task": task, "max_retrieval_rounds": args.max_retrieval_rounds} if iterative else {}
             if not 2000 <= args.context_chars <= 48000:
                 raise ValueError("Context budget must be 2000..48000 characters")
             provider = args.provider or "deepseek"
+            if (static or provider != "deepseek") and (args.cloud_review or args.approve_cloud or args.redact_values):
+                raise ValueError("Cloud review options apply only to DeepSeek tutorial analysis")
+            from .tutorial_scope import EvidenceScope
+            scope = EvidenceScope(args.include_tests, tuple(args.include_path), tuple(args.exclude_path))
+            requirements = json.loads(args.evidence_requirements.read_text(encoding="utf-8")) if args.evidence_requirements else None
             client = None if static else JSONClient(
                 provider, args.model or ("deepseek-flash" if provider == "deepseek" else ""),
                 endpoint=args.endpoint, timeout=args.model_timeout)
-            with project_input(args.project, ref=args.ref) as (root, provenance):
+            with project_input(args.project, ref=args.ref, scope=scope) as (root, provenance):
                 # Keep generated artifacts entirely outside analyzed input trees.
                 if args.output.resolve().is_relative_to(root.resolve()):
                     raise ValueError("Analysis output must be outside the input project")
+                snapshot = None
+                if getattr(client, "provider", None) == "deepseek":
+                    from .tutorial import prepare_project
+                    from .tutorial_privacy import review_cloud
+                    snapshot = prepare_project(root, provenance, scope=scope, **({"task": task} if iterative else {}))
+                    if requirements is not None:
+                        from .tutorial_coverage import validate_requirements
+                        validate_requirements(requirements, snapshot)
+                    review_path = args.cloud_review or args.output.with_name(args.output.name + "-cloud-review.json")
+                    if review_path.resolve().is_relative_to(root.resolve()):
+                        raise ValueError("Cloud review must be outside the input project")
+                    values = json.loads(args.redact_values.read_text(encoding="utf-8")) if args.redact_values else ()
+                    client = review_cloud(snapshot, client, review_path, args.approve_cloud,
+                                          context_chars=args.context_chars, redact_values=values,
+                                          **({"max_retrieval_rounds": args.max_retrieval_rounds} if iterative else {}),
+                                          strategies=("lexical", "ai") if args.command == "compare" else (args.context_strategy,))
                 if args.command == "compare":
                     from .tutorial_study import run_comparison
-                    result = run_comparison(root, provenance, args.output, client, context_chars=args.context_chars)
+                    result = run_comparison(root, provenance, args.output, client, context_chars=args.context_chars,
+                                            scope=scope, snapshot=snapshot, evidence_requirements=requirements)
                     print(f"上下文对照报告：{args.output / 'comparison.html'}")
                     return 0 if result["run_status"] == "completed" else 2
-                report = analyze_project(root, provenance, client=client,
-                                         strategy=args.context_strategy, context_chars=args.context_chars)
+                if snapshot is not None:
+                    from .tutorial import analyze_snapshot
+                    report = analyze_snapshot(snapshot, client=client, strategy=args.context_strategy,
+                                              context_chars=args.context_chars, evidence_requirements=requirements,
+                                              **({"max_retrieval_rounds": args.max_retrieval_rounds} if iterative else {}))
+                else:
+                    report = analyze_project(root, provenance, client=client, scope=scope,
+                                             strategy=args.context_strategy, context_chars=args.context_chars,
+                                             evidence_requirements=requirements, **iterative_options)
             write_analysis(args.output, report)
             print(f"教程质量报告：{args.output / 'analysis.html'}")
             print(f"发现 {len(report['findings'])} 项；项目代码未执行。")

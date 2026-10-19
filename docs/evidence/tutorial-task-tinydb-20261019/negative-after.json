@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "returncode": 22,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/work/harness.py\", line 14, in <module>\n    exec(compile(open(\"/work/checks.py\").read(), \"external-checks\", \"exec\"), namespace)\n  File \"external-checks\", line 5, in <module>\nAssertionError: Task requires JSON persistence\n",
+  "duration_seconds": 0.0673,
+  "oracle": "configured_behavior_checks",
+  "failure_kind": "behavior_check"
+}

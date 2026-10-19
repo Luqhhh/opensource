@@ -1,0 +1,26 @@
+{
+  "schema_version": "tutorial-task-1",
+  "task": "从空的可写工作目录复制 README 首个示例，写入原有两条记录，关闭重开后核对持久化及查询",
+  "source_revision": "edff96aeb2616402e9489d46e90a592c05565621",
+  "document": "README.rst",
+  "block": 1,
+  "source_files": [
+    "tinydb/__init__.py",
+    "tinydb/database.py",
+    "tinydb/middlewares.py",
+    "tinydb/operations.py",
+    "tinydb/queries.py",
+    "tinydb/storages.py",
+    "tinydb/table.py",
+    "tinydb/utils.py",
+    "tinydb/version.py"
+  ],
+  "support_files": [
+    "LICENSE",
+    "pyproject.toml"
+  ],
+  "checks": "from pathlib import Path\nfrom tinydb.storages import JSONStorage\nexpected = [{'int': 1, 'char': 'a'}, {'int': 1, 'char': 'b'}]\nassert isinstance(db, TinyDB), 'Task must use TinyDB'\nassert isinstance(db._storage, JSONStorage), 'Task requires JSON persistence'\nassert Path(db._storage._handle.name).name == 'db.json', 'Use the documented relative database file'\nassert db.all() == expected, 'Both original documents must be stored unchanged'\nassert db.search(Query().char == 'b') == [expected[1]], 'The stored data must remain queryable'\ndb.close()\nassert Path('db.json').is_file(), 'The example must create the database file'\nwith TinyDB('db.json') as reopened:\n    assert reopened.all() == expected, 'Both documents must survive close and reopen'\n    assert reopened.search(Query().char == 'a') == [expected[0]]\nprint('first-run-persistence-ok')\n",
+  "checks_author": "assistant-authored evaluator contract, frozen before candidate construction; not independent human review",
+  "expected_stdout": "first-run-persistence-ok\n",
+  "timeout_seconds": 5
+}

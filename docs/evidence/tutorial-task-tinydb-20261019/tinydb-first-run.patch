@@ -1,0 +1,18 @@
+--- a/README.rst
++++ b/README.rst
+@@ -65,10 +65,14 @@
+ Example Code
+ ************
+ 
++Run this example in an empty, writable working directory. It creates
++``db.json`` there and reuses that file on later runs. If you use another
++path, create its parent directory first.
++
+ .. code-block:: python
+ 
+     >>> from tinydb import TinyDB, Query
+-    >>> db = TinyDB('/path/to/db.json')
++    >>> db = TinyDB('db.json')
+     >>> db.insert({'int': 1, 'char': 'a'})
+     >>> db.insert({'int': 1, 'char': 'b'})
+ 
