@@ -12,6 +12,7 @@ from .extract import extract_markdown
 from .guard import validate_candidate
 from .models import Execution, RepairAttempt, Result
 from .runner import SandboxRunner
+from .providers import response_token_count
 
 
 def fingerprint(text: str) -> str:
@@ -179,13 +180,12 @@ def run_project(root: Path, provider=None, runner=None, max_attempts=1, *, progr
     evidence = [item for item in evidence if item is not None]
     def token_total(field):
         values = []
-        response_field = {"input_tokens": "prompt_eval_count", "output_tokens": "eval_count"}[field]
         for attempt in attempts:
             if attempt.proposal is not None:
                 value = getattr(attempt.proposal, field)
             else:
                 response = attempt.inference_evidence.response if attempt.inference_evidence else None
-                value = response.get(response_field) if response else None
+                value = response_token_count(response, field)
             if type(value) is not int or value < 0:
                 return None
             values.append(value)

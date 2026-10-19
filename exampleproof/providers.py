@@ -140,6 +140,20 @@ def parse_proposal(value, **metadata):
     return Proposal(code=value["code"], rationale=value["rationale"], **metadata)
 
 
+def response_token_count(response, field):
+    """Read known usage envelopes, including failed candidate parsing."""
+    if not isinstance(response, dict):
+        return None
+    local_field = {"input_tokens": "prompt_eval_count", "output_tokens": "eval_count"}[field]
+    if local_field in response:
+        value = response[local_field]
+    else:
+        usage = response.get("usage")
+        api_field = {"input_tokens": "prompt_tokens", "output_tokens": "completion_tokens"}[field]
+        value = usage.get(api_field) if isinstance(usage, dict) else None
+    return value if type(value) is int and value >= 0 else None
+
+
 def _read_response(response, inference):
     data = response.read(MAX_RESPONSE_BYTES + 1)
     # Malformed responses remain inspectable without retaining two full copies.
@@ -281,3 +295,37 @@ class SemanticOllamaProvider(OllamaProvider):
             self._context_cache = SourceContextCache()
         context = source_context(example, before, sources, limit=6000, cache=self._context_cache)
         return super().propose(example, before, context, history=history)
+
+
+class DeepSeekProvider:
+    """Live API repair using the same candidate guard, runner and oracles."""
+
+    def __init__(self, model="deepseek-flash", endpoint="https://api.deepseek.com", timeout=60,
+                 *, semantic=False):
+        from .model_api import JSONClient
+        self.client = JSONClient("deepseek", model, endpoint=endpoint, timeout=timeout)
+        self.model, self.semantic = model, semantic
+
+    def propose(self, example, before, sources, *, history=()):
+        if self.semantic:
+            from .context import source_context
+            sources = source_context(example, before, sources, limit=6000)
+        feedback = execution_feedback(before)
+        evidence = {"example_id": example.id, "context": example.context, "code": example.code,
+                    "execution": feedback, "sources": sources}
+        if history:
+            evidence["previous_attempts"] = [
+                {"number": attempt.number, "status": attempt.status,
+                 "candidate": {"code": attempt.proposal.code, "rationale": attempt.proposal.rationale}
+                 if attempt.proposal else None,
+                 "execution": (categorized_feedback if self.semantic else execution_feedback)(attempt.after),
+                 "rejection": attempt.rejection} for attempt in history]
+        reply = self.client.complete(SYSTEM_V2 if self.semantic else SYSTEM, evidence)
+        try:
+            return parse_proposal(reply.value, provider="deepseek", model=self.model,
+                                  input_tokens=reply.input_tokens, output_tokens=reply.output_tokens,
+                                  duration_seconds=reply.inference.duration_seconds,
+                                  inference_evidence=reply.inference)
+        except ValueError as exc:
+            exc.inference_evidence = reply.inference
+            raise

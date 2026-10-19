@@ -1,5 +1,9 @@
 # v0.1 架构
 
+项目级教程分析的新增入口与基线见 [next-stage.md](next-stage.md)。`project_input.py` 获取公开 GitHub 的固定提交快照或只读本地目录，`tutorial.py` 发现文档、源码及依赖声明，复用 AST/词项索引生成候选，再直接选择或由 AI 选择证据，输出未经验证的建议。`model_api.py` 提供 DeepSeek 与本地 Ollama 的有界 JSON 调用。`analyze` 不调用 runner，不生成已验证补丁。下述 v0.1 执行边界继续适用于原有 Python 示例验证链路；项目级 `analyze` 默认调用官方 DeepSeek HTTPS 云端 Flash 模型并使用规则检索，`--static` 显式关闭模型调用；`compare` 默认使用 Flash。缺少密钥时直接报错，不自动降级。旧 `repair` / `benchmark` 保持原有默认；Ollama 保持回环限制。
+
+`tutorial_edits.py` 从已冻结原文导出有代码保护的文字审阅补丁；`tutorial_study.py` 在调用模型前冻结同一输入与方法，再运行两个上下文策略，并提供无模型调用的一致性审计。文字补丁与 Python 运行验证使用不同状态，片段位置按原文逐行核对。`compare` 不重读两次本地输入，不改变原始断言、检查或预期输出。
+
 `extract.py` 提取围栏示例；`config.py` 读取输入清单与外部行为检查；`runner.py` 用 Bubblewrap 执行；`providers.py` 生成或导入候选；`guard.py` 检查断言完整性；`pipeline.py` 复验与汇总；`report.py` 输出报告。
 
 `benchmark.py` 读取独立案例清单，冻结选定输入，验证原始状态，再执行修复、临时副本中的 Git 补丁应用和完整文档复查。报告分别保存三阶段证据；不符预期的基线不会进入模型调用，环境与模型服务错误不折算成修复率。评测输出必须新建，避免覆盖失败记录。详情见 [评测协议](benchmark.md)。

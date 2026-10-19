@@ -11,7 +11,7 @@ import time
 
 from .config import safe_path
 from .pipeline import read_project, run_project, validate_max_attempts
-from .providers import FileProvider, OllamaProvider
+from .providers import DeepSeekProvider, FileProvider, OllamaProvider
 from .report import write_report
 
 
@@ -119,7 +119,7 @@ def run_benchmark(root: Path, output: Path, provider, max_attempts=1, *, progres
         "schema_version": 1, "suite_id": manifest["suite_id"],
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "mode": "recorded_candidates" if isinstance(provider, FileProvider) else
-                "live_model" if isinstance(provider, OllamaProvider) else "custom_provider",
+                "live_model" if isinstance(provider, (OllamaProvider, DeepSeekProvider)) else "custom_provider",
         "model": getattr(provider, "model", None), "max_attempts": max_attempts,
         "manifest_sha256": hashlib.sha256(manifest_raw).hexdigest(), "manifest": manifest,
         "scope": "Historical reproductions or declared fixtures only; finite configured checks, not semantic equivalence or a cross-project success rate.",

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "aic-exampleproof"
 version = "0.1.0"
-description = "Execute Python documentation examples and verify evidence-backed repair proposals."
+description = "Analyze open-source project tutorials and verify Python documentation repair proposals."
 requires-python = ">=3.10"
 license = {text = "MIT"}
 dependencies = []

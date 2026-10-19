@@ -1,8 +1,50 @@
 # 例证 · ExampleProof
 
-开源文档示例验证与修复助手。面向 AIC 2026「AI+开源」主题赛的 **AI开发工具与开源协作** 方向。
+开源项目教程质量分析与改进工具，帮助读者理解教程、完成首次运行并有效使用项目。保留 Python 文档示例的隔离验证与修复能力。面向 AIC 2026「AI+开源」主题赛的 **AI开发工具与开源协作** 方向。
 
 仓库：<https://github.com/Luqhhh/opensource>
+
+## 项目级教程分析
+
+`analyze` 自动发现项目文档、源码及依赖声明，无需先编写 `exampleproof.json`。默认从 GitHub 地址或 `OWNER/REPO` 获取公开仓库，也支持本地目录。默认使用 DeepSeek `deepseek-flash`＋规则检索（`lexical`，AST＋关键词），需预先在环境中配置 `DEEPSEEK_API_KEY`。不需要本地模型或 Bubblewrap，不会运行项目代码或安装依赖。云端会接收选中的项目内容；无密钥或服务失败时明确报错，不自动切换服务或静态模式。以下命令的输出目录必须尚不存在，且位于被分析项目之外。
+
+```sh
+# 默认 Flash＋规则检索；也可传完整 https://github.com/OWNER/REPO
+python3 -m exampleproof analyze OWNER/REPO --output /tmp/tutorial-flash
+
+# 本地项目
+python3 -m exampleproof analyze /path/to/project --output /tmp/tutorial-local
+
+# 纯静态检查：无需密钥，不调用模型
+python3 -m exampleproof analyze OWNER/REPO --static --output /tmp/tutorial-static
+
+# 可选 AI 上下文选择，额外发起一次选择请求
+python3 -m exampleproof analyze OWNER/REPO \
+  --context-strategy ai --output /tmp/tutorial-ai
+
+# 保留本地 Ollama，模型必须已安装
+python3 -m exampleproof analyze /path/to/project --provider ollama \
+  --model YOUR_LOCAL_MODEL --output /tmp/tutorial-ollama
+```
+
+输出 `analysis.html`、`analysis.json`、`suggestions.md`，以及仅供审阅的 `suggestions.patch` 和 `edits.json`。静态模式当前检查 Markdown 本地链接目标；模型模式进一步分析安装前提、步骤顺序、概念解释、跨文件一致性和错误处理。文字补丁限于精确匹配的 Markdown 正文段落，保护代码块、行内代码和链接，不自动应用；没有合格修改时补丁为空。AI 建议均标记为未经验证；证据引用只确认指向原文，不证明判断正确。报告不表示学习效率已提升，也不自动生成已验证的教程补丁。
+
+默认的 `--context-strategy lexical` 使用 AST 与关键词候选直接选择原文；`ai` 先让模型选择候选 ID，再分析原文，最多两次模型请求。两种策略分别配置模型供应商；字符预算不等于 token 总预算。云端模式会发送选中的项目内容，名称过滤无法保证清除全部秘密。DeepSeek 默认模型为 `deepseek-flash`，可用 `--model` 替换；密钥只从环境读取，不写入请求证据或日志。详细范围、成本口径和公平对照要求见[下一阶段基线](docs/next-stage.md)。
+
+可以用同一个项目快照直接对照两种策略，调用前保存协议及输入摘要，最多发起三次模型请求：
+
+```sh
+python3 -m exampleproof compare OWNER/REPO --output /tmp/tutorial-comparison
+python3 -m exampleproof compare-audit /tmp/tutorial-comparison
+```
+
+`comparison.html` 比较实际上下文、耗时与 token，`review-template.json` 留待独立评审。快照和实现源码随协议归档，审计命令不调用模型。固定最终字符上限并不意味着总 token 成本相同；建议数量不代表准确率。已完成的小规模 Flash 实测及失败记录见[Flash 对照记录](docs/flash-comparison.md)。
+
+已完成[模型与上下文选择的 2×2 对照](docs/factorial-experiments.md)：三个公开项目、每组合两次，共 36 次正式模型请求；Flash 与本机 Qwen 7B 的原始结果、助手原文核对及局限分别保存，不以生成数量替代准确率。
+
+上述默认配置适用于项目级 `analyze`，`compare` 默认用 Flash 对照两种上下文策略。`--static` 不可与模型、服务地址或 AI 选择参数混用。
+
+下面保留的 v0.1 描述、实验数字和复现命令属于历史 Python 示例验证链路，不代表新教程分析功能的效果评测。`repair` / `benchmark` 保持原有 Ollama 默认及候选回放语义；需要云端修复时显式传入 `--provider deepseek`。
 
 **当前状态：v0.1 原型。** 提取 Markdown 中的 Python 示例，在 Linux Bubblewrap 隔离环境中执行，接收修复候选并复验，生成 JSON、HTML 报告及统一补丁。支持本地 Ollama；工具不自动下载模型。随附候选回放演示**不代表实时模型推理结果或真实项目修复成功率**。已有 [Qwen2.5-Coder 7B 开发验证](docs/evidence/ollama-20261013/README.md)、[三个真实项目的历史文档迁移证据](benchmarks/real_projects/README.md) 与 [冻结三组对照](docs/evidence/real-projects-20261013/README.md)。本轮新增 [多输入语义开发集 v2](benchmarks/semantic_v2/development/README.md) 和可选的 `semantic-v2` 修复策略；新版五组实验与旧结果分开保存，见 [新版实验记录](docs/evidence/semantic-v2-20261013/README.md)。
 
