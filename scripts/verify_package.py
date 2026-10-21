@@ -21,6 +21,11 @@ assert wheel.name == "aic_exampleproof-0.1.0-py3-none-any.whl", wheel.name
 modules = {p.relative_to("exampleproof").as_posix(): p.read_bytes()
            for p in Path("exampleproof").rglob("*.py")}
 assert modules, "Source module manifest must not be empty"
+assets = {p.relative_to("exampleproof").as_posix(): p.read_bytes() for p in Path("exampleproof/web").glob("*") if p.is_file()}
+assert set(assets) == {"web/index.html", "web/workbench.css", "web/workbench.js"}
+learner_assets = {p.relative_to("exampleproof").as_posix(): p.read_bytes() for p in Path("exampleproof/learner_web").glob("*") if p.is_file()}
+assert set(learner_assets) == {"learner_web/index.html", "learner_web/app.css", "learner_web/app.js"}
+assets.update(learner_assets)
 licenses = {p.name: p.read_bytes() for p in Path("exampleproof/licenses").glob("*.txt")}
 assert set(licenses) == {"Apache-2.0.txt", "CPython-3.10.12.txt", "stdlib-attribution.txt"}
 assert hashlib.sha256(licenses["Apache-2.0.txt"]).hexdigest() == "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
@@ -31,7 +36,7 @@ with zipfile.ZipFile(wheel) as archive:
     names = archive.namelist()
     assert {"exampleproof/benchmark.py", "exampleproof/study.py", "exampleproof/context.py", "exampleproof/semantic_study.py", "exampleproof/cli.py", "exampleproof/__main__.py"} <= set(names)
     assert {name.removeprefix("exampleproof/") for name in names if name.startswith("exampleproof/") and name.endswith(".py")} == set(modules)
-    for name, data in modules.items():
+    for name, data in (modules | assets).items():
         assert archive.read("exampleproof/" + name) == data, name
     for name, data in licenses.items():
         assert archive.read("exampleproof/licenses/" + name) == data, name
@@ -49,7 +54,7 @@ with zipfile.ZipFile(wheel) as archive:
 sdists = list(wheel.parent.glob("*.tar.gz"))
 assert len(sdists) == 1, sdists
 with tarfile.open(sdists[0], "r:gz") as archive:
-    for name, data in modules.items():
+    for name, data in (modules | assets).items():
         members = [m for m in archive.getmembers() if m.isfile() and m.name.endswith("/exampleproof/" + name)]
         assert len(members) == 1 and archive.extractfile(members[0]).read() == data, name
     for name, data in licenses.items():
@@ -66,7 +71,7 @@ with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
     subprocess.run([python, "-m", "pip", "install", "--no-deps", str(wheel)], cwd=outside, check=True)
     subprocess.run([python, "-m", "pip", "check"], cwd=outside, check=True)
     installed = Path(subprocess.check_output([python, "-I", "-c", "import exampleproof,pathlib; print(pathlib.Path(exampleproof.__file__).parent)"], cwd=outside, text=True).strip())
-    for name, data in modules.items():
+    for name, data in (modules | assets).items():
         assert (installed / name).read_bytes() == data, name
     for name, data in licenses.items():
         assert (installed / "licenses" / name).read_bytes() == data, name
@@ -76,7 +81,7 @@ with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
         help_text = subprocess.check_output([*invocation, "benchmark", "--help"], cwd=outside, text=True)
         assert "--proposals" in help_text and "--max-attempts" in help_text, help_text
         assert "--repair-policy" in help_text and "semantic-v2" in help_text, help_text
-        for name in ("analyze", "compare", "compare-audit", "task-check", "task-improve"):
+        for name in ("analyze", "compare", "compare-audit", "task-check", "task-improve", "task-init", "task-diagnose", "learn"):
             help_text = subprocess.check_output([*invocation, name, "--help"], cwd=outside, text=True)
             assert "usage:" in help_text, name
         project = outside / ("project-" + ("module" if len(invocation) > 1 else "console"))

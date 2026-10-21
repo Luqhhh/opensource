@@ -31,9 +31,15 @@ def prepare_improvement(root, analysis_path, contract_path, finding_index):
     if len(analysis_raw) > 16_000_000:
         raise ValueError("Analysis exceeds 16 MB")
     analysis = json.loads(analysis_raw)
-    if analysis.get("schema_version") != "tutorial-analysis-1" or type(finding_index) is not int or finding_index < 0:
+    if (analysis.get("schema_version") != "tutorial-analysis-1" or
+            not (type(finding_index) is int and finding_index >= 0 or isinstance(finding_index, str))):
         raise ValueError("Expected recorded tutorial analysis and nonnegative finding index")
     findings = analysis.get("findings", [])
+    if isinstance(finding_index, str):
+        matching = [i for i, item in enumerate(findings) if item.get("id") == finding_index]
+        if len(matching) != 1:
+            raise ValueError("Finding ID must match exactly one recorded finding")
+        finding_index = matching[0]
     if finding_index >= len(findings):
         raise ValueError("Finding index does not exist")
     finding = findings[finding_index]
@@ -70,6 +76,7 @@ def prepare_improvement(root, analysis_path, contract_path, finding_index):
     return {"contract_raw": contract_raw, "contract": contract, "raw_files": raw_files, "spec": spec,
             "code": code, "analysis_raw": analysis_raw, "payload": payload, "diagnosis_files": diagnosis_files,
             "binding": {"analysis_sha256": sha(analysis_raw), "finding_index": finding_index,
+                        "finding_id": finding.get("id"),
                         "contract_sha256": sha(contract_raw), "document_sha256": sha(raw_files[document]),
                         "snapshot_id": analysis["coverage"]["snapshot_id"]}}
 
@@ -99,7 +106,17 @@ def improve(root, analysis_path, contract_path, finding_index, output, *, client
     shutil.copytree(Path(__file__).parent, output / "implementation/exampleproof",
                     ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
     contract = task["contract"]
-    sources = {p: task["raw_files"][p].decode("utf-8") for p in contract["source_files"]}
+    from .tutorial_task_tools import runtime_sources, prerequisite_check
+    sources = runtime_sources(contract, task["raw_files"])
+    prerequisite = prerequisite_check(task["code"], sources, contract.get("timeout_seconds", 5))
+    _dump(output / "environment.json", prerequisite)
+    if prerequisite["status"] == "environment_unprepared":
+        result = {"schema_version": "tutorial-improvement-1", "binding": task["binding"],
+                  "status": "environment_unprepared", "environment": prerequisite, "model_requests": 0,
+                  "candidate_origin": None, "task_validated_patches": 0, "adoption_status": "not_evaluated",
+                  "independent_quality_review": False}
+        _dump(output / "improvement.json", result)
+        return result
     before = SandboxRunner(sources, contract.get("timeout_seconds", 5)).run(task["code"], task["spec"])
     _dump(output / "before.json", asdict(before))
     result = {"schema_version": "tutorial-improvement-1", "binding": task["binding"],

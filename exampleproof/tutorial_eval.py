@@ -67,6 +67,10 @@ def freeze(spec, output):
     validate_limits(limits["max_total_tokens"], limits["deadline_seconds"])
     for name in spec["projects"]:
         _id(name)
+    strategies = spec.get("strategies", ["lexical", "iterative"])
+    if (not isinstance(strategies, list) or len(set(strategies)) != len(strategies) or not strategies
+            or not set(strategies) <= {"lexical", "iterative", "direct", "documentation_only"}):
+        raise ValueError("Invalid or duplicate evaluation strategies")
     roots = {name: Path(item["root"]).resolve() for name, item in spec["projects"].items()}
     if any(output.resolve().is_relative_to(root) for root in roots.values()):
         raise ValueError("Evaluation output must be outside all projects")
@@ -116,9 +120,12 @@ def freeze(spec, output):
         shutil.copyfile(license_path, output / "implementation/LICENSE")
     protocol = {"schema_version": "tutorial-task-evaluation-1", "frozen_at": datetime.now(timezone.utc).isoformat(),
                 "annotation_origin": "assistant_draft_pending_independent_human_review",
+                "review_schema": spec.get("review_schema", 1),
                 "scope": scope.record(), "cases": cases,
                 "projects": {n: {"provenance": s.provenance, "snapshot_id": s.snapshot_id} for n, s in snapshots.items()},
-                "strategies": ["lexical", "iterative"], "context_chars": context_chars,
+                "strategies": strategies, "context_chars": context_chars,
+                "controls": {"direct": "Same task, candidate excerpts and character cap as lexical; generic prompt, no static rules or counter-evidence triage.",
+                             "documentation_only": "Document subset of lexical candidates; same grounded prompt. Source/config omitted; actual token differences reported."},
                 "model": spec.get("model", {"provider": "deepseek", "name": "deepseek-flash"}),
                 "limits": limits, "request_settings": {"temperature": 0, "max_output_tokens": 2048, "socket_timeout_seconds": 60},
                 "review": "Independent reviewer must approve the frozen tasks, evidence and complete gold issue inventory before model calls.",
@@ -130,19 +137,29 @@ def freeze(spec, output):
     return {"seal": verify(output), "cases": len(cases), "status": "independent_review_pending"}
 
 
-def check_review(review, expected_seal):
+def check_review(review, expected_seal, cases=None):
     if (review.get("seal") != expected_seal or review.get("approved") is not True
             or review.get("independent_human") is not True or review.get("authored_candidates_or_annotations") is not False
             or not isinstance(review.get("reviewer"), str) or not review["reviewer"].strip()
             or review.get("complete_gold_inventory") is not True):
         raise ValueError("Independent human preflight review of this seal is required; no model calls started")
+    if cases is not None:
+        records = review.get("cases", [])
+        expected = {c["id"] for c in cases}
+        if len(records) != len(expected) or {r.get("id") for r in records} != expected:
+            raise ValueError("Human preflight must cover every task exactly once")
+        for record in records:
+            if (any(record.get(k) is not True for k in ("task_valid", "evidence_sufficient", "gold_inventory_complete", "source_reviewed"))
+                    or not isinstance(record.get("rationale"), str) or not record["rationale"].strip()
+                    or record.get("amendments", "")):
+                raise ValueError("Each task needs explicit source, task, evidence and complete gold review with rationale")
 
 
 def run(frozen, output, review, client_factory):
     frozen, output = Path(frozen), Path(output)
     identity = verify(frozen)
-    check_review(review, identity)
     protocol = json.loads((frozen / "protocol.json").read_text())
+    check_review(review, identity, protocol["cases"] if protocol.get("review_schema") == 2 else None)
     current = {p.name: digest(p.read_bytes()) for p in Path(__file__).parent.glob("*.py")}
     for name, expected in protocol.get("implementation_scripts_sha256", {}).items():
         script = Path(__file__).parent.parent / "scripts" / name
@@ -189,7 +206,8 @@ def run(frozen, output, review, client_factory):
     dump(output / "protocol.json", protocol)
     rows, review_rows = [], []
     for index, (case, snapshot, requirements, clients) in enumerate(prepared):
-        order = protocol["strategies"] if index % 2 == 0 else list(reversed(protocol["strategies"]))
+        offset = index % len(protocol["strategies"])
+        order = protocol["strategies"][offset:] + protocol["strategies"][:offset]
         for strategy in order:
             started = time.monotonic()
             report = analyze_snapshot(snapshot, client=clients[strategy], strategy=strategy,
@@ -202,8 +220,9 @@ def run(frozen, output, review, client_factory):
                          "warnings": report["warnings"], "coverage": report["necessary_evidence_coverage"],
                          "report_sha256": digest(report_path.read_bytes())})
             review_rows.append({"case": case["id"], "strategy": strategy,
-                                "findings": [{"index": i, "judgment": None, "gold_ids": [], "reason": None}
-                                             for i in range(len(report["findings"]))],
+                                "findings": [{"index": i, "finding_id": finding.get("id"), "judgment": None,
+                                              "gold_ids": [], "reason": None, "factual_relation": None}
+                                             for i, finding in enumerate(report["findings"])],
                                 "reader_task": {"completed": None, "elapsed_seconds": None, "participant": None}})
     dump(output / "results.json", {"seal": identity, "status": "quality_review_pending", "rows": rows})
     dump(output / "quality-review-template.json", {"reviewer": None, "independent_human": False, "rows": review_rows})
@@ -211,7 +230,7 @@ def run(frozen, output, review, client_factory):
     return {"status": "quality_review_pending", "runs": len(rows)}
 
 
-def summarize(frozen, run_dir, review=None):
+def summarize(frozen, run_dir, review=None, observations=None):
     verify(Path(frozen))
     verify(Path(run_dir))
     protocol = json.loads((Path(frozen) / "protocol.json").read_text())
@@ -220,8 +239,10 @@ def summarize(frozen, run_dir, review=None):
         raise ValueError("Run does not belong to this evaluation")
     empty = {"status": "independent_quality_review_pending", "support_rate": None, "unsupported_rate": None,
              "issue_recall": None, "reader_task_completion_rate": None}
+    operations = operational_metrics(protocol, result, run_dir)
+    readers = reader_metrics(protocol, result["seal"], observations)
     if review is None:
-        return empty
+        return empty | {"operational_metrics": operations, "reader_observations": readers}
     if review.get("independent_human") is not True or not isinstance(review.get("reviewer"), str) or not review["reviewer"].strip():
         raise ValueError("Quality scores require an identified independent human reviewer")
     rows = review.get("rows", [])
@@ -234,7 +255,7 @@ def summarize(frozen, run_dir, review=None):
         judgments, matched, gold_count, tasks, durations = [], 0, 0, [], []
         unavailable = 0
         for row in (r for r in rows if r["strategy"] == strategy):
-            report_path = safe_path(Path(run_dir), f"{row['case']}/{strategy}/analysis.json")
+            report_path = safe_path(Path(run_dir), f"{row['case']}/{strategy}/analysis.json", max_bytes=16_000_000)
             report = json.loads(report_path.read_text())
             if digest(report_path.read_bytes()) != expected[(row["case"], strategy)]["report_sha256"]:
                 raise ValueError("Reviewed report changed")
@@ -251,6 +272,12 @@ def summarize(frozen, run_dir, review=None):
                         or not isinstance(finding.get("reason"), str) or not finding["reason"].strip()
                         or not set(finding["gold_ids"]) <= gold[row["case"]]):
                     raise ValueError("Every judgment needs rationale and valid frozen gold identifiers")
+                from .tutorial_findings import MISSING
+                actual = report["findings"][finding["index"]]
+                absence_claim = bool(MISSING.search(" ".join(actual.get(k, "") for k in ("title", "impact", "suggestion"))))
+                if (absence_claim and finding.get("factual_relation") in {"already_documented", "contradicted"}
+                        and judgment == "supported"):
+                    raise ValueError("An absence claim contradicted by existing documentation cannot be supported")
                 judgments.append(judgment)
                 if judgment == "supported":
                     found.update(finding["gold_ids"])
@@ -264,7 +291,7 @@ def summarize(frozen, run_dir, review=None):
                     raise ValueError("Reader observation needs participant, completion and finite measured duration")
                 tasks.append(observation["completed"])
                 durations.append(elapsed)
-        metrics[strategy] = {"findings": len(judgments), "unavailable_runs": unavailable,
+        metrics[strategy] = {**operations[strategy], "findings": len(judgments), "unavailable_runs": unavailable,
                              "quality_denominators_complete": unavailable == 0,
                              "support_rate": judgments.count("supported") / len(judgments) if judgments and not unavailable else None,
                              "unsupported_rate": judgments.count("unsupported") / len(judgments) if judgments and not unavailable else None,
@@ -275,4 +302,67 @@ def summarize(frozen, run_dir, review=None):
                              "reader_task_completion_rate": sum(tasks) / len(tasks) if tasks else None,
                              "reader_task_mean_seconds": sum(durations) / len(durations) if durations else None}
     return {"status": "human_review_recorded", "reviewer": review["reviewer"], "metrics": metrics,
+            "reader_observations": readers,
             "limits": "Reviewer declarations are not identity authentication; small sample, no statistical or population claim."}
+
+
+def reader_metrics(protocol, seal, record=None):
+    """Keep actual human observations separate from model costs and machine checks."""
+    empty = {"status": "not_observed", "by_condition": {}, "observations": []}
+    if record is None:
+        return empty
+    if (record.get("schema_version") != "reader-observations-1" or record.get("seal") != seal
+            or record.get("origin") != "human_observation" or not isinstance(record.get("observations"), list)):
+        raise ValueError("Reader observations must identify the frozen study and actual human observation")
+    valid_cases = {c["id"] for c in protocol["cases"]}
+    grouped, identities = {}, set()
+    for row in record["observations"]:
+        duration, help_count = row.get("elapsed_seconds"), row.get("help_count")
+        if (row.get("case") not in valid_cases or row.get("condition") not in {"original", "tool_assisted", "candidate"}
+                or type(row.get("completed")) is not bool
+                or type(duration) not in {int, float} or not math.isfinite(duration) or duration <= 0
+                or type(help_count) is not int or help_count < 0
+                or any(not isinstance(row.get(k), str) or not row[k].strip() for k in ("participant", "notes", "observed_at"))):
+            raise ValueError("Reader observations need a known task, condition, participant, measured duration and notes")
+        identity = (row["participant"], row["case"], row["condition"], row["observed_at"])
+        if identity in identities:
+            raise ValueError("Duplicate reader observation")
+        identities.add(identity)
+        grouped.setdefault(row["condition"], []).append(row)
+    if not identities:
+        return empty
+    return {"status": "human_observations_recorded", "observations": record["observations"],
+            "by_condition": {condition: {"observations": len(rows),
+                "participants": len({r["participant"] for r in rows}),
+                "completion_rate": sum(r["completed"] for r in rows) / len(rows),
+                "mean_elapsed_seconds": sum(r["elapsed_seconds"] for r in rows) / len(rows),
+                "mean_help_count": sum(r["help_count"] for r in rows) / len(rows)} for condition, rows in grouped.items()},
+            "limits": "Descriptive observations only; conditions and repeated participants are not randomized."}
+
+
+def operational_metrics(protocol, result, run_dir):
+    """Always report measured cost/latency; unreviewed quality remains unknown."""
+    metrics = {}
+    expected_pairs = {(c["id"], s) for c in protocol["cases"] for s in protocol["strategies"]}
+    rows = result["rows"]
+    if len(rows) != len(expected_pairs) or {(r["case"], r["strategy"]) for r in rows} != expected_pairs:
+        raise ValueError("Evaluation run is missing or duplicates task/strategy results")
+    for strategy in protocol["strategies"]:
+        selected = [r for r in rows if r["strategy"] == strategy]
+        for row in selected:
+            path = safe_path(Path(run_dir), f"{row['case']}/{strategy}/analysis.json", max_bytes=16_000_000)
+            if digest(path.read_bytes()) != row["report_sha256"]:
+                raise ValueError("Evaluation report changed")
+        def total(key):
+            values = [r["usage"].get(key) for r in selected]
+            return sum(values) if values and all(type(v) is int and v >= 0 for v in values) else None
+        metrics[strategy] = {"task_runs": len(selected), "requests": total("requests"),
+            "input_tokens": total("input_tokens"), "output_tokens": total("output_tokens"),
+            "total_tokens": total("input_tokens") + total("output_tokens") if total("input_tokens") is not None and total("output_tokens") is not None else None,
+            "analysis_total_seconds": sum(r["elapsed_seconds"] for r in selected),
+            "analysis_mean_seconds": sum(r["elapsed_seconds"] for r in selected) / len(selected),
+            "per_task": [{"case": r["case"], "usage": r["usage"], "elapsed_seconds": r["elapsed_seconds"],
+                          "warnings": r["warnings"], "necessary_evidence_coverage": r["coverage"]} for r in selected],
+            "support_rate": None, "unsupported_rate": None, "issue_recall": None,
+            "reader_task_completion_rate": None, "reader_task_mean_seconds": None}
+    return metrics

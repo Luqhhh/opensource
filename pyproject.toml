@@ -17,4 +17,4 @@ exampleproof = "exampleproof.cli:main"
 include = ["exampleproof*"]
 
 [tool.setuptools.package-data]
-exampleproof = ["licenses/*.txt"]
+exampleproof = ["licenses/*.txt", "web/*.html", "web/*.css", "web/*.js", "learner_web/*.html", "learner_web/*.css", "learner_web/*.js"]

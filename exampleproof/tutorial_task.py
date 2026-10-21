@@ -34,11 +34,12 @@ def extract_task_blocks(text, path):
         raise ValueError("Task validation currently supports Markdown and explicit RST Python code blocks")
     lines, blocks, index = text.splitlines(keepends=True), [], 0
     while index < len(lines):
-        match = re.fullmatch(r"( *)\.\. code-block:: (python|pycon)\s*\n?", lines[index])
-        if not match:
+        match = re.fullmatch(r"( *)\.\. (?:code-block|code|sourcecode):: (python|pycon)\s*\n?", lines[index])
+        literal = not match and lines[index].rstrip().endswith("::") and not lines[index].lstrip().startswith(".. ")
+        if not match and not literal:
             index += 1
             continue
-        indent = len(match[1])
+        indent = len(match[1]) if match else len(lines[index]) - len(lines[index].lstrip(" "))
         index += 1
         content = []
         while index < len(lines):
@@ -52,8 +53,12 @@ def extract_task_blocks(text, path):
             raise ValueError("Empty RST Python code block")
         margin = min(nonblank)
         content = [line[margin:] if line.strip() else line for line in content]
-        if any(line.startswith(":") for line in content if line.strip()):
-            raise ValueError("RST code-block options require explicit support")
+        while content and (not content[0].strip() or content[0].startswith(":")):
+            option = content.pop(0).strip()
+            if option and not re.fullmatch(r":(?:linenos|number-lines|caption|name):[^\r\n]*", option):
+                raise ValueError("Unsupported RST code-block option")
+        if literal and not any(line.startswith(">>> ") for line in content):
+            continue
         pycon = any(line.startswith(">>> ") for line in content)
         code, outputs = [], []
         for line in content:
@@ -93,7 +98,10 @@ def review_task_edit(document, path, contract, candidate):
     old_directives = re.findall(r"^\s*\.\. [\w-]+::[^\n]*", original, re.M)
     if old_directives != re.findall(r"^\s*\.\. [\w-]+::[^\n]*", changed, re.M):
         raise ValueError("RST directives must remain unchanged")
-    rejection = validate_candidate(before[selected][0], after[selected][0])
+    old_options = re.findall(r"^\s*:(?:linenos|number-lines|caption|name):[^\n]*", original, re.M)
+    if old_options != re.findall(r"^\s*:(?:linenos|number-lines|caption|name):[^\n]*", changed, re.M):
+        raise ValueError("RST rendering options must remain unchanged")
+    rejection = validate_candidate(before[selected][0], after[selected][0], preserve_existing_mutations=True)
     if rejection:
         raise ValueError(rejection)
     patch = unified_diff(original.splitlines(keepends=True), changed.splitlines(keepends=True), f"a/{path}", f"b/{path}")
@@ -107,7 +115,7 @@ def prepare_task_inputs(root, contract_path):
         raise ValueError("Task contract exceeds 128 KB")
     contract = json.loads(contract_raw)
     allowed = {"schema_version", "task", "document", "block", "source_files", "checks", "setup", "expected_stdout",
-               "timeout_seconds", "source_revision", "checks_author", "support_files"}
+               "timeout_seconds", "source_revision", "checks_author", "support_files", "import_root"}
     if (not isinstance(contract, dict) or set(contract) - allowed
             or contract.get("schema_version") != "tutorial-task-1"
             or not isinstance(contract.get("task"), str) or not contract["task"].strip()
@@ -138,7 +146,8 @@ def prepare_task_inputs(root, contract_path):
     raw_files = {p: safe_path(root, p).read_bytes() for p in paths}
     if sum(map(len, raw_files.values())) > MAX_TOTAL_BYTES:
         raise ValueError("Task input exceeds 2 MB")
-    sources = {p: raw_files[p].decode("utf-8") for p in contract["source_files"]}
+    from .tutorial_task_tools import runtime_sources
+    runtime_sources(contract, raw_files)
     old_blocks = extract_task_blocks(raw_files[contract["document"]].decode("utf-8"), contract["document"])
     if contract["block"] > len(old_blocks):
         raise ValueError("Task Python block does not exist")
@@ -152,7 +161,8 @@ def validate_tutorial_task(root, contract_path, candidate_path, output):
         raise ValueError("Task output must be a new directory outside the project")
     contract_raw, contract, raw_files, spec, old_code = prepare_task_inputs(root, contract_path)
     timeout = contract.get("timeout_seconds", 5)
-    sources = {p: raw_files[p].decode("utf-8") for p in contract["source_files"]}
+    from .tutorial_task_tools import runtime_sources, prerequisite_check, render_preview
+    sources = runtime_sources(contract, raw_files)
     output.mkdir(parents=True, exist_ok=False)
     (output / "contract.json").write_bytes(contract_raw)
     for p, raw in raw_files.items():
@@ -171,6 +181,14 @@ def validate_tutorial_task(root, contract_path, candidate_path, output):
         "implementation_sha256": {p.name: _hash(p.read_bytes()) for p in sorted(Path(__file__).parent.glob("*.py"))},
         "oracle_source": "caller-supplied frozen contract; no independent human review inferred"})
     runner = SandboxRunner(sources, timeout)
+    prerequisite = prerequisite_check(old_code, sources, timeout)
+    _dump(output / "environment.json", prerequisite)
+    if prerequisite["status"] == "environment_unprepared":
+        report = {"schema_version": "tutorial-task-result-1", "status": "environment_unprepared",
+                  "environment": prerequisite, "task": contract["task"], "contract_sha256": _hash(contract_raw),
+                  "model_requests": 0, "adoption_status": "not_evaluated", "independent_human_review": False}
+        _dump(output / "task-report.json", report)
+        return report
     before = runner.run(old_code, spec)
     _dump(output / "before.json", asdict(before))
     candidate_raw = Path(candidate_path).read_bytes()
@@ -198,9 +216,11 @@ def validate_tutorial_task(root, contract_path, candidate_path, output):
         if patched != changed:
             raise ValueError("Applied document bytes differ from the reviewed candidate")
         replay_blocks = extract_task_blocks(patched.decode("utf-8"), contract["document"])
-        replay_sources = {p: (copied / p).read_bytes().decode("utf-8") for p in contract["source_files"]}
+        replay_sources = runtime_sources(contract, {p: (copied / p).read_bytes() for p in contract["source_files"]})
         replay = SandboxRunner(replay_sources, timeout).run(replay_blocks[contract["block"] - 1][0], spec)
     _dump(output / "replay.json", asdict(replay))
+    (output / "document-before.html").write_text(render_preview(raw_files[contract["document"]].decode("utf-8"), contract["document"]), encoding="utf-8")
+    (output / "document-after.html").write_text(render_preview(changed.decode("utf-8"), contract["document"]), encoding="utf-8")
     unchanged = all(safe_path(root, p).read_bytes() == raw for p, raw in raw_files.items())
     passed = before.status in {"failed", "timeout"} and after.status == replay.status == "passed" and unchanged
     status = "task_validation_passed" if passed else "blocked" if "blocked" in {before.status, after.status, replay.status} else "task_validation_failed"

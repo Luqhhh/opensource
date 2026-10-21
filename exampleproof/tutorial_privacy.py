@@ -49,7 +49,7 @@ def review_cloud(snapshot, client, path, approval=None, *, context_chars=12000,
                  strategies=("lexical",), redact_values=(), max_retrieval_rounds=3,
                  max_total_tokens=None, deadline_seconds=None):
     """Write a first preview or validate an already reviewed immutable manifest."""
-    from .tutorial import ANALYZE_SYSTEM, SELECT_SYSTEM
+    from .tutorial import ANALYZE_SYSTEM, SELECT_SYSTEM, DIRECT_SYSTEM
     path = Path(path)
     local_root = snapshot.provenance.get("path") if snapshot.provenance.get("kind") == "local" else None
     if path.is_symlink() or local_root and path.resolve().is_relative_to(Path(local_root).resolve()):
@@ -91,6 +91,8 @@ def review_cloud(snapshot, client, path, approval=None, *, context_chars=12000,
                              "search_scope": "all reviewed indexed chunks; no filesystem or network tools"}
         body["initial_candidate_ids"] = [c.id for c in snapshot.candidates]
         body["notice"] += " Iterative retrieval may send any reviewed indexed chunk, including beyond the initial 40 candidates."
+    if "direct" in strategies:
+        body["prompts"]["direct"] = DIRECT_SYSTEM
     if snapshot.task is not None:
         body["task"] = redact(snapshot.task, literals)
     if max_total_tokens is not None or deadline_seconds is not None:
@@ -177,7 +179,7 @@ class ReviewedCloudClient:
                 raise ValueError("Unreviewed cloud iterative payload")
             self._iteration_metadata(evidence["retrieval"])
         analysis_keys = {"coverage", "evidence"} | ({"task"} if self._snapshot.task is not None else set())
-        if (system == review["prompts"]["analysis"] and set(evidence) == analysis_keys) or iterative:
+        if (system in {review["prompts"]["analysis"], review["prompts"].get("direct")} and set(evidence) == analysis_keys) or iterative:
             if not iterative and evidence.get("task") != self._snapshot.task:
                 raise ValueError("Unreviewed task query")
             chunks = evidence["evidence"]

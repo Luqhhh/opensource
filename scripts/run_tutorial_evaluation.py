@@ -29,6 +29,7 @@ def main():
     summary.add_argument("frozen", type=Path)
     summary.add_argument("run", type=Path)
     summary.add_argument("--review", type=Path)
+    summary.add_argument("--observations", type=Path, help="独立记录的真实读者观察 JSON")
     args = parser.parse_args()
     try:
         if args.command in {"freeze", "prepare"}:
@@ -61,10 +62,15 @@ def main():
                         project["root"] = str((args.spec.parent / project["root"]).resolve())
             result = tutorial_eval.freeze(specification, args.output)
             template = args.output.with_name(args.output.name + "-preflight-review-template.json")
+            review_template = {"seal": result["seal"], "approved": False, "reviewer": None,
+                              "independent_human": False, "authored_candidates_or_annotations": None,
+                              "complete_gold_inventory": False}
+            if specification.get("review_schema") == 2:
+                review_template["cases"] = [{"id": c["id"], "task_valid": False, "evidence_sufficient": False,
+                    "gold_inventory_complete": False, "source_reviewed": False, "rationale": "", "amendments": ""}
+                    for c in specification["cases"]]
             with template.open("x", encoding="utf-8") as stream:
-                json.dump({"seal": result["seal"], "approved": False, "reviewer": None,
-                           "independent_human": False, "authored_candidates_or_annotations": None,
-                           "complete_gold_inventory": False}, stream, indent=2)
+                json.dump(review_template, stream, indent=2)
         elif args.command == "run":
             approvals = json.loads(args.cloud_approvals.read_text()) if args.cloud_approvals else {}
             if args.cloud_reviews.resolve().is_relative_to(args.frozen.resolve()):
@@ -80,7 +86,8 @@ def main():
             result = tutorial_eval.run(args.frozen, args.output, json.loads(args.review.read_text()), factory)
         else:
             review = json.loads(args.review.read_text()) if args.review else None
-            result = tutorial_eval.summarize(args.frozen, args.run, review)
+            observations = json.loads(args.observations.read_text()) if args.observations else None
+            result = tutorial_eval.summarize(args.frozen, args.run, review, observations)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except (ValueError, OSError, KeyError) as exc:

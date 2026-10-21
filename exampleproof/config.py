@@ -7,7 +7,9 @@ CONFIG_FIELDS = {"documents", "source_files", "examples", "timeout_seconds"}
 EXAMPLE_FIELDS = {"skip", "setup", "checks", "expected_stdout"}
 
 
-def safe_path(root: Path, relative: str) -> Path:
+def safe_path(root: Path, relative: str, *, max_bytes: int = MAX_FILE_BYTES) -> Path:
+    if type(max_bytes) is not int or not 1 <= max_bytes <= 16_000_000:
+        raise ValueError("File size bound must be 1..16000000 bytes")
     path = PurePosixPath(relative)
     # PurePosixPath normalizes aliases such as './README.md' and repeated
     # separators. Reject them before selecting inputs so one physical file
@@ -24,8 +26,8 @@ def safe_path(root: Path, relative: str) -> Path:
     target = current.resolve()
     if not target.is_relative_to(root.resolve()) or not target.is_file():
         raise ValueError(f"Not a regular project file: {relative}")
-    if target.stat().st_size > MAX_FILE_BYTES:
-        raise ValueError(f"Input exceeds {MAX_FILE_BYTES} bytes: {relative}")
+    if target.stat().st_size > max_bytes:
+        raise ValueError(f"Input exceeds {max_bytes} bytes: {relative}")
     return target
 
 

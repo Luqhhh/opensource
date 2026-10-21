@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="research">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>例证 · 教程证据工作台</title><link rel="stylesheet" href="workbench.css"></head>
+<body>
+<aside class="sidebar"><a class="brand" href="#overview"><span class="brand-icon">例</span><span>例证<small>EXAMPLEPROOF</small></span></a>
+<div class="workspace">本地证据工作台<span class="dot"></span></div>
+<nav aria-label="主要功能"><button data-page="overview" class="active">◈ <span>工作总览</span></button><button data-page="review">▤ <span>任务与原文</span></button><button data-page="compare">⇄ <span>证据对照</span></button><button data-page="validation">✓ <span>改进案例</span></button><button data-page="reader">◷ <span>读者场景</span></button><button data-page="ideas">◇ <span>方案与边界</span></button></nav>
+<div class="sidebar-bottom"><strong>原文 → 判断 → 验证</strong><p>每一个结论，都能回到依据。</p><span id="seal-label" class="mono"></span></div></aside>
+<div class="app"><header><div><span class="eyebrow">TUTORIAL EVIDENCE LAB</span><p>从读者的下一步，找到教程的改进点。</p></div><span class="pill">本地证据演示</span></header>
+<main id="content" tabindex="-1"></main><footer><span>原文只读 · 真实记录 · 无自动上传</span><span>ExampleProof · 教程证据工作台</span></footer></div>
+<div id="toast" role="status" class="toast" hidden></div>
+<script type="application/json" id="evidence-data">__EVIDENCE_DATA__</script><script src="workbench.js" defer></script>
+</body></html>

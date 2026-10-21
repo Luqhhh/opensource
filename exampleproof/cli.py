@@ -60,6 +60,11 @@ def _main(argv=None):
     parser = argparse.ArgumentParser(prog="exampleproof", description="例证：分析开源项目教程质量，验证 Python 示例与修复。")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
+    learn = commands.add_parser("learn", help="启动本机项目学习入口：上传 ZIP、导入 GitHub、生成入门路线")
+    learn.add_argument("--port", type=int, default=8765)
+    learn.add_argument("--data", type=Path, default=Path.home() / ".local/share/exampleproof-learning")
+    learn.add_argument("--provider", choices=("auto", "none", "deepseek", "ollama"), default="auto")
+    learn.add_argument("--model")
     doctor = commands.add_parser("doctor", help="检查隔离执行环境，不调用模型")
     doctor.add_argument("--json", action="store_true", help="输出结构化环境检查结果")
     analyze = commands.add_parser("analyze", help="分析完整项目教程；默认 Flash＋规则检索，不执行代码")
@@ -109,7 +114,9 @@ def _main(argv=None):
     improve_parser = commands.add_parser("task-improve", help="把已有建议转换为候选，按冻结任务验证并导出补丁")
     improve_parser.add_argument("project", type=Path)
     improve_parser.add_argument("--analysis", type=Path, required=True)
-    improve_parser.add_argument("--finding", type=int, required=True, help="analysis.json 中从 0 开始的 finding 索引")
+    finding_group = improve_parser.add_mutually_exclusive_group(required=True)
+    finding_group.add_argument("--finding", type=int, help="兼容旧记录的从 0 开始索引；优先使用稳定 ID")
+    finding_group.add_argument("--finding-id", help="analysis.json 中 f- 开头的稳定建议 ID")
     improve_parser.add_argument("--contract", type=Path, required=True)
     improve_parser.add_argument("--output", type=Path, required=True)
     improve_parser.add_argument("--proposal", type=Path, help="回放 original/replacement/rationale JSON；不调用模型")
@@ -120,6 +127,16 @@ def _main(argv=None):
     improve_parser.add_argument("--cloud-review", type=Path)
     improve_parser.add_argument("--approve-cloud")
     improve_parser.add_argument("--redact-values", type=Path)
+    task_init = commands.add_parser("task-init", help="生成待评测者填写的任务合同模板；不执行代码")
+    task_init.add_argument("project", type=Path)
+    task_init.add_argument("--document", required=True)
+    task_init.add_argument("--block", type=int, required=True)
+    task_init.add_argument("--task", required=True)
+    task_init.add_argument("--import-root", default=".")
+    task_init.add_argument("--output", required=True, type=Path)
+    task_diagnose = commands.add_parser("task-diagnose", help="隔离检查任务导入前提；不生成候选或修改原件")
+    task_diagnose.add_argument("project", type=Path)
+    task_diagnose.add_argument("--contract", type=Path, required=True)
     scan = commands.add_parser("scan", help="只提取示例，不执行")
     scan.add_argument("project", type=Path)
     for name in ("check", "repair", "benchmark"):
@@ -142,13 +159,20 @@ def _main(argv=None):
                                  help="每个失败示例的候选轮数上限（1–5，默认 1）；失败反馈用于下一轮")
     args = parser.parse_args(argv)
     try:
+        if args.command == "learn":
+            from .learn_server import serve
+            if not 0 <= args.port <= 65535:
+                raise ValueError("Port must be between 0 and 65535")
+            serve(args.data, args.port, args.provider, args.model)
+            return 0
         if args.command == "task-improve":
             from .tutorial_improve import SYSTEM, improve, prepare_improvement
             from .model_api import JSONClient
             from .tutorial_privacy import review_payload
             if args.output.exists() or args.output.resolve().is_relative_to(args.project.resolve()):
                 raise ValueError("Improvement output must be new and outside the input project")
-            prepared = prepare_improvement(args.project, args.analysis, args.contract, args.finding)
+            finding = args.finding_id if args.finding_id is not None else args.finding
+            prepared = prepare_improvement(args.project, args.analysis, args.contract, finding)
             client = None
             if args.proposal:
                 if args.model or args.endpoint or args.approve_cloud or args.cloud_review or args.redact_values:
@@ -165,10 +189,22 @@ def _main(argv=None):
                                             args.approve_cloud, redact_values=values)
                 elif args.cloud_review or args.approve_cloud or args.redact_values:
                     raise ValueError("Cloud review applies only to DeepSeek")
-            result = improve(args.project, args.analysis, args.contract, args.finding, args.output,
+            result = improve(args.project, args.analysis, args.contract, finding, args.output,
                              client=client, proposal_path=args.proposal, prepared=prepared)
             print(json.dumps(result, ensure_ascii=False))
             return 0 if result["status"] == "task_validation_passed" else 2
+        if args.command == "task-init":
+            from .tutorial_task_tools import create_template
+            print(json.dumps(create_template(args.project, args.document, args.block, args.task, args.output,
+                                             import_root=args.import_root), ensure_ascii=False))
+            return 0
+        if args.command == "task-diagnose":
+            from .tutorial_task import prepare_task_inputs
+            from .tutorial_task_tools import runtime_sources, prerequisite_check
+            _, contract, raw, _, code = prepare_task_inputs(args.project, args.contract)
+            result = prerequisite_check(code, runtime_sources(contract, raw), contract.get("timeout_seconds", 5))
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return 0 if result["status"] in {"ready", "not_required"} else 2
         if args.command == "task-check":
             from .tutorial_task import validate_tutorial_task
             report = validate_tutorial_task(args.project, args.contract, args.candidate, args.output)

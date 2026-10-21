@@ -1,5 +1,15 @@
 # 开源及第三方资源使用清单
 
+## 2026-10-21 工程补强新增资源
+
+- **离线工作台：** 自编 HTML/CSS/JavaScript，默认浅色深蓝＋青绿；无第三方前端框架、图标库、外部字体、图片或运行依赖。显示公开冻结项目原文时随导出文件保留各项目许可证。工作台和测试由 Codex 辅助编写，不等于独立人工评阅。
+- **Docutils 0.21.2（可选隔离渲染工具）：** [PyPI 固定版本](https://pypi.org/project/docutils/0.21.2/)，wheel SHA256 `dafca5b9e384f0e419294eb4d2ff9fa826435bf15f15b7bd45723e8ad76811b2`。仅从用户明确提供的官方 wheel 提取文本到临时隔离工作区，不在宿主安装、不随 ExampleProof wheel 分发；核心 dependencies 仍为空。大部分文件为 public domain，部分文件有 BSD/GPL 等许可例外，以 wheel 自带 `COPYING.txt` 和逐文件声明为准；渲染输出保留该许可说明。禁用文件包含和 raw 指令，未声称 Sphinx 构建支持。
+- **platformdirs 4.3.8 官方构建文件：** [PyPI 4.3.8](https://pypi.org/project/platformdirs/4.3.8/)，wheel SHA256 `ff7059bb7eb1179e2685604f4aaf157cfd9535242bd23742eadc3c13542139b4`。工程案例核对 7 个已有 Python 模块与固定源码快照字节一致，仅在新的临时案例副本补入 wheel 的 `src/platformdirs/version.py`；不改变旧冻结输入、不伪造构建文件、不执行安装脚本。源码及构建文件遵守上游 MIT，原许可证随案例保留。
+- **2026-10-21 实时工程调用：** `deepseek-flash` 对 TinyDB 和 platformdirs 两个公开固定输入完成 6 次分析和 2 次候选生成，服务端实际 token 合计 42,790。两项候选均通过预先冻结的有限任务与补丁复查；不是独立质量评测、读者实验或赛事结果。直接模型与 lexical 最终用户输入逐字节一致，提示词不同；仅文档组实际输入不同。完整错误主张和失败前置探测均保留。两项任务合同由助手预先编写，不冒充独立评阅。此次数据仍属于开发工程样例。
+- **四任务正式基线：** 在用户逐项预审后沿用旧冻结实现完成 8 次真实分析，实际 token 共 38,105；用户随后逐条核对并确认 38 条质评。首批网络沙箱失败尝试单独保留，未知用量不填零。没有真实读者实验。
+- **隔离打包工具：** 本轮仅在外部 `/tmp` 虚拟环境使用 setuptools 80.9.0、wheel 0.45.1、build 1.2.2.post1、packaging 25.0、pyproject-hooks 1.2.0、tomli 2.2.1；均来自固定 PyPI wheel，用于构建/检查，不随产品分发，不加入运行依赖。既有构建工具资源说明继续适用。
+- **浏览器验证：** 调用本机 Microsoft Edge 检查离线页面的桌面和手机宽度，不分发浏览器，不引入浏览器自动化运行依赖。
+
 记录日期：2026-10-13。本清单作为技术报告附件；“已核对”仅表示查阅了所列来源或本机记录，不代替团队权属、服务条款及最终发布审核。版本按实测环境或配置分别标记，未知项不写成已确认。本仓库应用代码为MIT，第三方资源仍遵守各自许可。
 
 ## 2026-10-19 下一阶段新增服务与实现资源
@@ -231,3 +241,8 @@ MIT 原版权与许可见[LICENSE.tinydb](evidence/tutorial-task-tinydb-20261019
 | PyPA build 及构建环境依赖 | build 1.6.1（MIT）、packaging 26.3（Apache-2.0 OR BSD-2-Clause）、pyproject_hooks 1.3.3（MIT）、tomli 2.5.0（MIT）；本机元数据及版本记录见交付包 build-tool-versions.txt | 仅用于 wheel/sdist 构建检查，不是 ExampleProof 运行依赖；未复制工具源码进项目。既有 setuptools/pip/venv 分发工具仍用于安装检查。 |
 
 四个任务与必要证据由助手起草，人工评阅尚未完成；未发送新的真实模型请求。两个项目没有出现在此前教程对照，但本轮选题阅读后不能称为未来未见项目。任务包中的第三方文件不改标为 ExampleProof 的 MIT 自主代码。既有 Flash/Qwen 请求、TinyDB 候选和许可证仅作原字节归档及回放，不计作新的模型、数据集效果或采纳结果。新增实现使用 Python 标准库，运行依赖仍为空。
+# 2026-10-21 学习入口补充
+
+本机学习入口使用 Python 标准库 HTTP/线程/ZIP、原有模型客户端和原生 HTML/CSS/JavaScript；无新增运行时第三方依赖、外部字体、图像或前端库。提示与结构校验为本项目新增代码。
+
+端到端开发验证使用 python-dotenv 公开提交 `6a02ef5a1034d66338811757df07a113a1169af6`（原资源说明中的 BSD-3-Clause 项目）与配置的 DeepSeek `deepseek-flash`，属于真实模型工程试用，不是未见数据效果评测。ZIP/浏览器测试使用明确标注的合成小项目。Microsoft Edge 仅用于开发界面检查，不随软件分发；已有构建工具只用于安装包验证。

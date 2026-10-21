@@ -27,11 +27,12 @@ def _plain_paragraph(text):
             and not re.search(r"\n\s*\n|[<>\x00-\x08\x0b\x0c\x0e-\x1f]", text)
             and not re.search(r"\b(?:assert|expected_stdout|stdout|stderr)\b", text)
             and re.search(r"[A-Za-z\u3400-\u9fff]", text) is not None
-            and all(not re.match(r"^\s*(?:[#>*|+~`-]|\d+[.)]\s| {4}|\t)", line) for line in text.splitlines()))
+            and all(not re.match(r"^\s*(?:[#>*|+~`-]|\.\.\s|:[\w-]+:|\d+[.)]\s| {4}|\t)", line) for line in text.splitlines())
+            and not text.endswith("::"))
 
 
 def _tokens(text):
-    return re.findall(r"`+[^\r\n]*?`+|!?\[[^\]\r\n]*\]\([^\)\r\n]*\)", text)
+    return re.findall(r"(?::[\w:-]+:)?`+[^\r\n]*?`+_?|!?\[[^\]\r\n]*\]\([^\)\r\n]*\)|\b\w+__?\b", text)
 
 
 def review_edits(snapshot, selected, proposals):
@@ -48,8 +49,8 @@ def review_edits(snapshot, selected, proposals):
             if not isinstance(proposal, dict) or not isinstance(proposal.get("evidence_id"), str):
                 raise ValueError("Invalid edit structure")
             chunk = available.get(proposal["evidence_id"])
-            if chunk is None or not chunk.path.endswith(".md"):
-                raise ValueError("Edit must cite a selected Markdown document")
+            if chunk is None or not chunk.path.endswith((".md", ".rst")):
+                raise ValueError("Edit must cite a selected Markdown or RST document")
             original, replacement = proposal.get("original"), proposal.get("replacement")
             if not _plain_paragraph(original) or not _plain_paragraph(replacement) or original == replacement:
                 raise ValueError("Only changed, complete prose paragraphs are eligible")
@@ -66,8 +67,11 @@ def review_edits(snapshot, selected, proposals):
             last = first + original.count("\n")
             if _protected_lines(text) & set(range(first, last + 1)):
                 raise ValueError("Code blocks and indented code are protected")
+            if chunk.path.endswith(".rst") and (re.search(r"^\s*[:.\\]", replacement, re.M)
+                    or re.search(r"^[=~^\"'#*+_-]{3,}\s*$", replacement, re.M)):
+                raise ValueError("RST directives, roles and section structure cannot be introduced")
             if _tokens(original) != _tokens(replacement):
-                raise ValueError("Inline code and Markdown links must remain unchanged")
+                raise ValueError("Inline code, roles and links must remain unchanged")
             if any(a < end and start < b for a, b, _ in grouped[chunk.path]):
                 raise ValueError("Overlapping prose edits are not allowed")
             # Preserve the input document's newline convention.

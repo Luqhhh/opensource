@@ -15,7 +15,7 @@ def is_local_target(node: ast.AST) -> bool:
     return False
 
 
-def validate_candidate(original: str, candidate: str) -> str | None:
+def validate_candidate(original: str, candidate: str, *, preserve_existing_mutations=False) -> str | None:
     if not candidate.strip():
         return "Empty replacement"
     if len(candidate.encode()) > 32_000:
@@ -23,7 +23,7 @@ def validate_candidate(original: str, candidate: str) -> str | None:
     try:
         old = ast.parse(original)
         new = ast.parse(candidate)
-        return _validate_structure(old, new)
+        return _validate_structure(old, new, preserve_existing_mutations=preserve_existing_mutations)
     except SyntaxError as exc:
         return f"Cannot structurally validate code: {exc.msg}"
     except RecursionError:
@@ -33,7 +33,7 @@ def validate_candidate(original: str, candidate: str) -> str | None:
         return "Cannot structurally validate code: AST exceeds the supported recursion limit"
 
 
-def _validate_structure(old: ast.Module, new: ast.Module) -> str | None:
+def _validate_structure(old: ast.Module, new: ast.Module, *, preserve_existing_mutations=False) -> str | None:
     # The first release accepts only repairs of straight-line examples. This
     # prevents moving a preserved assertion under `if False` or `try/except`.
     allowed = (ast.Import, ast.ImportFrom, ast.Assign, ast.AnnAssign, ast.Expr, ast.Assert)
@@ -46,6 +46,8 @@ def _validate_structure(old: ast.Module, new: ast.Module) -> str | None:
     banned_calls = {"exit", "quit", "eval", "exec", "compile", "__import__", "setattr", "delattr"}
     banned_attrs = {"exit", "_exit", "abort", "kill", "killpg", "_getframe", "settrace"}
     banned_references = banned_calls | banned_attrs
+    preserved = {ast.dump(n, include_attributes=False) for n in old.body
+                 if isinstance(n, (ast.Assign, ast.AnnAssign))} if preserve_existing_mutations else set()
     for node in ast.walk(new):
         if isinstance(node, ast.Name) and node.id.startswith("__"):
             return "Dunder access is outside the supported repair scope"
@@ -61,6 +63,6 @@ def _validate_structure(old: ast.Module, new: ast.Module) -> str | None:
             return "Dynamic execution or process-control imports are outside the repair scope"
         if isinstance(node, (ast.Assign, ast.AnnAssign)):
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-            if any(not is_local_target(target) for target in targets):
+            if any(not is_local_target(target) for target in targets) and ast.dump(node, include_attributes=False) not in preserved:
                 return "Mutation of attributes or indexed values is outside the repair scope"
     return None
