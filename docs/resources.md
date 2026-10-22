@@ -1,5 +1,12 @@
 # 开源及第三方资源使用清单
 
+## 2026-10-22 B「纸感青绿」视觉精修候选
+
+- **设计选择：** 用户从三张视觉概念图中选择 B；概念图由内置 imagegen 生成，仅用于确定视觉方向，不是已实现页面、评测结果或产品运行素材。原图保留在仓库外，未随产品分发。
+- **实现：** 使用现有 HTML/CSS/JavaScript 和系统字体，复用仓库既有自编 SVG 图标；未安装或新增前端框架、字体、图片、插件、模型运行依赖。纸面层次、留白和青绿状态用 CSS 实现。
+- **调研来源：** [Impeccable](https://github.com/pbakaus/impeccable)、[UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)、[Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design)、[Vercel Web Design Guidelines](https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines)。只阅读公开说明与设计原则，没有安装或复制其代码、规则库或其他资源；默认分支未固定为依赖版本。
+- **验证边界：** 在仓库外候选副本运行原有核心测试和浏览器检查；预览使用标明的合成项目与模拟模型服务，不调用真实模型、不读取或修改用户学习记录。新增视觉检查属于助手编写的工程验证，不是独立评测。隔离 runner 与既有测试断言保持不变。
+
 ## 2026-10-22 学习工作台第二版设计候选
 
 - **范围：** 在原版学习工作台上减少重复文案，保留卡片结构，并通过纸面背景、深色项目导航、当前步骤强调和渐进展开形成层次。候选在仓库外制作，独立于未采用的第一版补丁。
