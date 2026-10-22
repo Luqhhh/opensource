@@ -1,5 +1,12 @@
 # 开源及第三方资源使用清单
 
+## 2026-10-22 学习工作台第二版设计候选
+
+- **范围：** 在原版学习工作台上减少重复文案，保留卡片结构，并通过纸面背景、深色项目导航、当前步骤强调和渐进展开形成层次。候选在仓库外制作，独立于未采用的第一版补丁。
+- **实现与素材：** HTML/CSS/JavaScript、线条 SVG 图标和文档叠层图形均由助手直接编写；没有复制上游代码、图标、字体、图片或规则库，没有安装技能、插件、前端库或新增运行依赖。
+- **既有调研参考：** 已阅读 [Impeccable](https://github.com/pbakaus/impeccable)（[Apache-2.0](https://github.com/pbakaus/impeccable/blob/main/LICENSE)）、[UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)（[MIT](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/LICENSE)）、[Primer CSS](https://github.com/primer/css)（[MIT](https://github.com/primer/css/blob/main/LICENSE)）、[Tabler](https://github.com/tabler/tabler)（[MIT](https://github.com/tabler/tabler/blob/dev/LICENSE)）、[JupyterLab](https://github.com/jupyterlab/jupyterlab)（[BSD-3-Clause](https://github.com/jupyterlab/jupyterlab/blob/main/LICENSE)）的说明与许可。它们仅用于此前的设计调研；未安装、未运行其命令、未引入其资源。默认分支内容未固定为依赖版本。
+- **证据：** 原有核心测试保持不变，在独立候选副本运行。Microsoft Edge 浏览器预览使用助手编写的合成项目与模拟 API，完成状态仍表示用户自行记录；新增交互检查不是独立评测、真实模型输出或学习效果证据。未修改隔离 runner。
+
 ## 2026-10-21 工程补强新增资源
 
 - **离线工作台：** 自编 HTML/CSS/JavaScript，默认浅色深蓝＋青绿；无第三方前端框架、图标库、外部字体、图片或运行依赖。显示公开冻结项目原文时随导出文件保留各项目许可证。工作台和测试由 Codex 辅助编写，不等于独立人工评阅。
