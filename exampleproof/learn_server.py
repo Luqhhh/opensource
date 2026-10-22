@@ -15,7 +15,9 @@ import threading
 from urllib.parse import parse_qs, urlparse
 import zipfile
 
-from .learning import LEVELS, SYSTEM, guide_text, local_guide, model_guide, model_payload
+from .learning import LEVELS, SYSTEM, LEGACY_SYSTEM, guide_text, local_guide, model_guide, model_payload
+from .learning_tasks import outline
+from .learning_workspace import StudyWorkspace, StudyConflict
 from .model_api import JSONClient
 from .project_input import MAX_ARCHIVE_BYTES, MAX_ENTRIES, MAX_EXPANDED_BYTES, eligible, github_repository, project_input
 from .tutorial import prepare_project
@@ -92,6 +94,7 @@ class LearningApp:
         self.csrf = secrets.token_urlsafe(32)
         self.lock = threading.RLock()
         self.pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='learner')
+        self.workspace = StudyWorkspace(self)
         for path in self.data.glob('*/record.json'):
             try:
                 record = json.loads(path.read_text())
@@ -123,7 +126,7 @@ class LearningApp:
 
     def public(self, record):
         from .tutorial_privacy import _redact_value
-        value = {k: v for k, v in record.items() if k not in {'provenance', 'payload', 'binding'}}
+        value = {k: v for k, v in record.items() if k not in {'provenance', 'payload', 'binding', 'review_file', 'regenerate_ready', 'route_system'}}
         return _redact_value(value, tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY')] if v))
 
     def list(self):
@@ -177,6 +180,7 @@ class LearningApp:
             if not snapshot.files:
                 raise ValueError('项目中没有可读取的 UTF-8 文档或源码。请上传源码项目，避免仅上传安装包或二进制文件。')
             record['guide'] = local_guide(snapshot, record['name'], record['goal'], record['level'])
+            record['guide_revision'] = 1
             record['snapshot_id'] = snapshot.snapshot_id
             record['import_summary'] = provenance.get('snapshot', {})
             if self.provider != 'none':
@@ -198,8 +202,11 @@ class LearningApp:
         client = self.factory()
         payload = model_payload(snapshot, record['name'], record['goal'], record['level'], tuple(v for v in [getattr(client, '_key', None)] if v))
         record['payload'] = payload
-        record['binding'] = {'snapshot_id': snapshot.snapshot_id, 'goal': record['goal'], 'level': record['level']}
-        path = self.folder(record['id']) / 'cloud-review.json'
+        record['route_system'] = SYSTEM
+        record['binding'] = {'snapshot_id': snapshot.snapshot_id, 'goal': record['goal'], 'level': record['level'],
+                             'guide_revision': record.get('guide_revision', 1), 'nonce': secrets.token_hex(12)}
+        record['review_file'] = 'cloud-review-' + record['binding']['nonce'] + '.json'
+        path = self.folder(record['id']) / record['review_file']
         if self.provider == 'deepseek':
             try:
                 review_payload(client, SYSTEM, payload, record['binding'], path)
@@ -213,16 +220,29 @@ class LearningApp:
         record['ai_preview'] = {'approval': manifest['sha256'], 'provider': self.provider, 'model': self.model,
                                 'files': sorted({e['path'] for e in payload['evidence']}), 'excerpts': len(payload['evidence'])}
 
-    def analyze(self, identifier, approval):
+    def regenerate_preview(self, identifier):
+        with self.lock:
+            record = self.read(identifier)
+            if record['status'] != 'ready' or self.provider == 'none':
+                raise ValueError('请等待项目就绪并配置模型。')
+            self._preview(record, prepare_project(self.folder(identifier)/'input', record['provenance'], task=record['goal']))
+            record['regenerate_ready'] = True
+            self.save(record)
+            return {'payload': record['payload'], 'preview': record['ai_preview']}
+
+    def analyze(self, identifier, approval, regenerate=False):
         with self.lock:
             record = self.read(identifier)
             if record['status'] != 'ready' or not record.get('ai_preview'):
                 raise ValueError('项目尚未就绪，或 AI 服务未配置。')
-            if record['guide']['mode'] == 'ai':
+            if type(regenerate) is not bool or regenerate and not record.get('regenerate_ready'):
+                raise ValueError('请先查看重新规划的发送内容。')
+            if record['guide']['mode'] == 'ai' and not regenerate:
                 raise ValueError('该项目已生成 AI 路线，无需重复请求。')
             if not isinstance(approval, str) or not secrets.compare_digest(approval, record['ai_preview']['approval']):
                 raise ValueError('发送内容已变化，请刷新项目后重新确认。')
             record.update(status='analyzing', stage='围绕你的目标生成学习路线', error=None)
+            record['regenerate_ready'] = False
             self.save(record)
             self.pool.submit(self._analyze, identifier, approval)
             return self.public(record)
@@ -236,15 +256,19 @@ class LearningApp:
             if snapshot.snapshot_id != record['snapshot_id']:
                 raise ValueError('导入文件已发生变化，请重新导入项目。')
             client = self.factory()
+            system = record.get('route_system', LEGACY_SYSTEM)
             if self.provider == 'deepseek':
-                client = review_payload(client, SYSTEM, record['payload'], record['binding'], folder / 'cloud-review.json', approval)
-            reply = client.complete(SYSTEM, record['payload'])
+                client = review_payload(client, system, record['payload'], record['binding'], folder / record.get('review_file', 'cloud-review.json'), approval)
+            reply = client.complete(system, record['payload'])
             # Save attempts before validation, including invalid model outputs.
             attempt = {'kind': 'live_model' if getattr(client, 'evidence_kind', '') == 'live_model' else 'test_provider',
                        'value': reply.value, 'input_tokens': reply.input_tokens, 'output_tokens': reply.output_tokens,
                        'inference': asdict(reply.inference), 'received_at': now()}
             (folder / ('attempt-' + secrets.token_hex(6) + '.json')).write_text(json.dumps(attempt, ensure_ascii=False, indent=2))
-            record['guide'] = model_guide(snapshot, record['guide'], record['payload'], reply)
+            new_guide = model_guide(snapshot, record['guide'], record['payload'], reply)
+            self.workspace.archive(record)
+            record['guide'] = new_guide
+            record['guide_revision'] = record.get('guide_revision', 1) + 1
             record['completed_steps'] = []
             record['stage'] = '你的学习路线已生成'
         except Exception as exc:
@@ -306,7 +330,7 @@ class Handler(BaseHTTPRequestHandler):
                 if self.headers.get('Transfer-Encoding'):
                     raise ValueError('不支持该上传编码。')
                 size = int(self.headers.get('Content-Length', '0'))
-                limit = MAX_ARCHIVE_BYTES if path == '/api/projects/upload' else 20000
+                limit = MAX_ARCHIVE_BYTES if path == '/api/projects/upload' else 64000
                 if not 0 < size <= limit:
                     raise ValueError('上传为空或超过大小限制（ZIP 最大 20 MB）。')
                 self.connection.settimeout(30)
@@ -329,11 +353,25 @@ class Handler(BaseHTTPRequestHandler):
             if path == '/api/projects/upload' and post:
                 query = parse_qs(url.query)
                 return self.respond(app.create(name=query.get('name', ['我的项目'])[0], goal=query.get('goal', [''])[0], level=query.get('level', ['beginner'])[0], upload=body), 202)
-            match = re.fullmatch(r'/api/projects/([a-f0-9]{32})(?:/(analyze|preview|progress|source|export))?', path)
+            match = re.fullmatch(r'/api/projects/([a-f0-9]{32})(?:/(analyze|preview|progress|source|export|workspace|journal|help-prepare|help-send|help-status|regenerate-preview|run-check))?', path)
             if match:
                 identifier, action = match.groups()
                 if post and action == 'analyze':
-                    return self.respond(app.analyze(identifier, body.get('approval')), 202)
+                    return self.respond(app.analyze(identifier, body.get('approval'), body.get('regenerate', False)), 202)
+                if action == 'workspace':
+                    return self.respond(app.workspace.mutate(identifier, body) if post else app.workspace.view(identifier))
+                if not post and action == 'journal':
+                    return self.respond(app.workspace.export(identifier).encode(), kind='text/plain; charset=utf-8')
+                if post and action == 'regenerate-preview':
+                    return self.respond(app.regenerate_preview(identifier))
+                if post and action == 'help-prepare':
+                    return self.respond(app.workspace.prepare(identifier, body))
+                if post and action == 'help-send':
+                    return self.respond(app.workspace.send(identifier, body.get('request_id'), body.get('approval')), 202)
+                if post and action == 'run-check':
+                    return self.respond(app.workspace.run_check(identifier, body))
+                if not post and action == 'help-status':
+                    return self.respond(app.workspace.status(identifier, parse_qs(url.query).get('id', [''])[0]))
                 if post and action == 'progress':
                     return self.respond(app.progress(identifier, body.get('completed_steps')))
                 if post:
@@ -348,14 +386,19 @@ class Handler(BaseHTTPRequestHandler):
                     snapshot = prepare_project(app.folder(identifier) / 'input', r['provenance'])
                     if file not in snapshot.files:
                         raise ValueError('此文件不在已导入的分析范围内。')
-                    return self.respond({'path': file, 'text': redact(snapshot.files[file]['text'], tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY')] if v))})
+                    text = redact(snapshot.files[file]['text'], tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY')] if v))
+                    return self.respond({'path': file, 'text': text, 'outline': outline(file, text),
+                                         'kind': next((f['kind'] for f in r['guide']['files'] if f['path'] == file), 'source')})
                 if action == 'export':
                     return self.respond(guide_text(r).encode(), kind='text/plain; charset=utf-8')
-            assets = {'/': ('index.html', 'text/html; charset=utf-8'), '/app.js': ('app.js', 'text/javascript; charset=utf-8'), '/app.css': ('app.css', 'text/css; charset=utf-8')}
+            assets = {'/': ('index.html', 'text/html; charset=utf-8'), '/app.js': ('app.js', 'text/javascript; charset=utf-8'), '/app.css': ('app.css', 'text/css; charset=utf-8'),
+                      '/study.js': ('study.js', 'text/javascript; charset=utf-8'), '/study.css': ('study.css', 'text/css; charset=utf-8')}
             if not post and path in assets:
                 name, kind = assets[path]
                 return self.respond((Path(__file__).parent / 'learner_web' / name).read_bytes(), kind=kind)
             return self.respond({'error': '页面或项目不存在。'}, 404)
+        except StudyConflict as exc:
+            return self.respond({'error': str(exc)}, 409)
         except (ValueError, KeyError, TypeError, UnicodeError, OSError) as exc:
             return self.respond({'error': app.safe_error(exc)}, 400)
 

@@ -1,6 +1,6 @@
 'use strict';
 const $=s=>document.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state={config:null,project:null,tab:'route',timer:null,file:null,importMode:'github',busy:false};
+const state={config:null,project:null,tab:'route',timer:null,file:null,importMode:'github',busy:false,selectedStep:null,reader:null,sourceRequest:0,focus:false,progressBusy:false,notes:new Map(),noteFailures:new Set()};
 const levels={beginner:'刚开始',familiar:'有基础',experienced:'深入源码'};
 let toastTimer;
 function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4500);}
@@ -15,6 +15,10 @@ const icons={
   book:'<path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4V4Zm9 3a3 3 0 0 1 3-3h5v15h-4a4 4 0 0 0-4 2"/>',
   upload:'<path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/>',
   github:'<circle cx="12" cy="12" r="9"/><path d="m9 8-4 4 4 4m6-8 4 4-4 4"/>',
+  focus:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
+  chevron:'<path d="m6 9 6 6 6-6"/>',
+  check:'<path d="m5 12 4 4L19 6"/>',
+  edit:'<path d="m15 4 5 5-10 10-6 1 1-6L15 4ZM12 7l5 5"/>',
   spark:'<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/>'
 };
 const icon=name=>`<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]||icons.source}</svg>`;
@@ -49,40 +53,93 @@ async function projects(){
   $('#main').innerHTML=`<div class="page-head collection-head"><div><div class="entry-label"><span></span>我的空间</div><h1>学习项目 <span class="collection-count">${projects.length}</span></h1></div><a href="#/new" class="button primary">导入项目 ${icon('arrow')}</a></div>${projects.length?`<div class="project-grid">${projects.map(p=>`<a class="project-card ${p.status==='failed'?'project-failed':''}" href="#/project/${p.id}"><div class="project-card-top"><span class="project-symbol">${icon('files')}</span><span class="pill ${p.status==='failed'?'warn':p.mode==='ai'?'':'local'}">${p.status==='failed'?'导入失败':p.status==='ready'?(p.mode==='ai'?'AI 路线':'基础路线'):'处理中'}</span></div><h3>${esc(p.name)}</h3><p>${esc(p.goal)}</p><div class="card-bottom"><span>${(p.completed_steps||[]).length} / ${p.step_count} 步</span><span>${p.status==='failed'?'查看详情':'继续学习'} ${icon('arrow')}</span></div></a>`).join('')}</div>`:`<div class="empty"><span class="empty-symbol">${icon('files')}</span><h2>还没有学习项目</h2><p>导入 GitHub 仓库或源码 ZIP。</p><a class="button primary" href="#/new">导入项目 ${icon('arrow')}</a></div>`}`;
 }
 
-function routeView(p){
-  const g=p.guide, next=g.steps.findIndex(s=>!p.completed_steps.includes(s.id));
-  return `<section class="panel overview-panel"><div class="section-heading"><span class="section-symbol">${icon('book')}</span><h2>项目概览</h2></div><p class="overview-text">${esc(g.overview)}</p>${refs(g.overview_evidence)}</section><div class="route-heading"><h2>学习路线</h2><span>${g.steps.length} 个步骤</span></div>${g.mode==='ai'?'<p class="route-origin">AI 生成，请结合原文核对。</p>':''}<div class="route-steps">${g.steps.map((s,i)=>{const done=p.completed_steps.includes(s.id),current=i===next;return `<article class="step ${done?'done':''} ${current?'current-step':''}"><div class="step-number">${done?'✓':String(i+1).padStart(2,'0')}</div><div class="step-body"><div class="step-heading"><h3>${esc(s.title)}</h3>${current?'<span class="next-label">下一步</span>':''}</div><p>${esc(s.action)}</p><div class="checkpoint"><strong>完成标志</strong><span>${esc(s.checkpoint)}</span></div><div class="step-bottom">${refs(s.evidence)}<button class="complete-button" data-action="complete" data-step="${s.id}" aria-pressed="${done}">${done?'✓ 已完成 · 撤销':'标记完成'}</button></div></div></article>`;}).join('')}</div>${g.commands.length?`<section class="panel commands-panel"><div class="section-heading"><span class="section-symbol">${icon('source')}</span><h2>原文命令</h2></div><p class="tiny muted">未执行。运行前请核对环境与位置。</p><div class="commands">${g.commands.map(c=>`<code>${esc(c.text)}</code>${refs(c.evidence)}`).join('')}</div></section>`:''}`;
-}
-
 function enhancementView(p){
-  if(p.guide.mode==='ai')return '';
+  if(p.guide.mode==='ai')return '<details class="assist-panel"><summary>路线与记录</summary><p>重新规划后，旧笔记和学习记录仍会保留。</p><button class="button small" data-action="regenerate">重新规划路线</button></details>';
   if(!p.ai_preview)return '<details class="assist-panel"><summary>关于基础路线</summary><p>由本地原文整理。配置模型后，可在新导入的项目中启用 AI 细化。</p></details>';
   return `<details class="assist-panel"><summary><span>${icon('spark')}AI 细化路线</span></summary><div class="assist-content"><p>向 ${esc(p.ai_preview.provider)} 发送 ${p.ai_preview.excerpts} 段经自动脱敏的内容。</p><button class="text-button" data-action="preview">查看发送内容</button><button class="button primary full" data-action="analyze">用 AI 细化学习路线 ${icon('arrow')}</button></div></details>`;
 }
 
-function projectView(p){
-  state.project=p;
-  if(p.status==='failed'){$('#main').innerHTML=`<div class="empty"><h2>导入未完成</h2><p role="alert">${esc(p.error)}</p><a href="#/new" class="button primary">重新导入 ${icon('arrow')}</a></div>`;return;}
-  if(p.status!=='ready'){progressView(p);return;}
-  const g=p.guide,completed=p.completed_steps.length;
-  $('#main').innerHTML=`<div class="breadcrumb"><a href="#/projects">学习项目</a><span>/</span>${esc(p.name)}</div><div class="page-head project-head"><div><div class="row"><h1>${esc(p.name)}</h1><span class="pill ${g.mode==='ai'?'':'local'}">${g.mode==='ai'?'AI 路线':'基础路线'}</span></div><p class="project-goal">${esc(p.goal)}<span class="learner-level">${esc(levels[p.level])}</span></p></div><button class="button export-button" data-action="export">${icon('upload')}导出指南</button></div>${p.error?`<div class="notice" role="alert">${esc(p.error)} 基础路线仍可使用。</div>`:''}${g.warnings.map(w=>`<div class="notice">${esc(w)}</div>`).join('')}<div class="workspace"><aside class="side-stack"><div class="side-panel"><div class="sidebar-heading">项目导航</div><nav class="project-menu" aria-label="项目内容">${[['route','学习路线'],['assessment','项目评估'],['files','项目文件']].map(([t,label])=>`<button class="${state.tab===t?'active':''}" data-action="project-tab" data-tab="${t}" aria-current="${state.tab===t?'page':'false'}">${icon(t)}<span>${label}</span>${state.tab===t?'<i></i>':''}</button>`).join('')}</nav><div class="side-info"><div class="progress-label">学习进度 <span>自己记录</span></div><strong><b>${completed}</b><span>/ ${g.steps.length}</span></strong><progress class="full" value="${completed}" max="${g.steps.length||1}" aria-label="自己记录的学习进度"></progress></div></div>${enhancementView(p)}</aside><div id="project-content">${state.tab==='route'?routeView(p):state.tab==='assessment'?assessmentView(p):filesView(p)}</div></div>`;
+function selectedStep(p){
+  return p.guide.steps.find(s=>s.id===state.selectedStep)||p.guide.steps.find(s=>!p.completed_steps.includes(s.id))||p.guide.steps[0];
 }
+
+function courseOutline(p){
+  const current=selectedStep(p);
+  return `<details class="course-outline" ${window.innerWidth>760?'open':''}><summary><span>学习目录</span><span>${p.guide.steps.length} 步</span></summary><ol>${p.guide.steps.map((s,i)=>{
+    const done=p.completed_steps.includes(s.id),active=s.id===current?.id,task=state.study?.tasks.find(t=>t.id===s.id),pref=preference(task?.key)?.preference;
+    return `<li><button data-action="select-step" data-step="${esc(s.id)}" class="course-step ${active?'selected':''} ${done?'is-complete':''}" ${active?'aria-current="step"':''}><span class="course-number" aria-hidden="true">${done?'✓':String(i+1).padStart(2,'0')}</span><span class="course-label">${esc(s.title)}<small>${labelPreference(pref)||(done?'自报完成':active?'正在学习':'')}</small></span></button></li>`;
+  }).join('')}</ol></details>`;
+}
+
+function noteKey(p,step){return 'exampleproof-note:'+JSON.stringify([p.id,p.snapshot_id||'',p.guide.mode,step.id,step.title,step.action]);}
+function readNote(p,step){
+  const key=noteKey(p,step);
+  if(state.notes.has(key))return state.notes.get(key);
+  try{return localStorage.getItem(key)||'';}catch{return '';}
+}
+function noteStatus(p,step){
+  if(state.noteFailures.has(noteKey(p,step)))return '浏览器存储不可用，笔记暂存于本页；关闭前请复制保存。';
+  return readNote(p,step)?'已恢复笔记；仅保存在此浏览器。':'自动保存到此浏览器，不随项目导出。';
+}
+
+function routeView(p){return studyRoute(p);}
+
+function sourceMarkup(reader){return rawSourceMarkup(reader);}
+
+function readerView(){return studyReaderView();}
+
+function renderReader(){renderStudyReader();}
+
+function projectView(p){
+  const readerScroll=$('#source-reader .reader-scroll')?.scrollTop??null;
+  if(state.project&&state.studyProject!==p.id&&(state.project.id!==p.id||state.project.guide?.mode!==p.guide?.mode)){
+    state.selectedStep=null;state.reader=null;++state.sourceRequest;
+  }
+  state.project=p;
+  if(p.status==='failed'){$('#main').classList.remove('learning-main');$('#main').innerHTML=`<div class="empty"><h2>导入未完成</h2><p role="alert">${esc(p.error)}</p><a href="#/new" class="button primary">重新导入 ${icon('arrow')}</a></div>`;return;}
+  if(p.status!=='ready'){$('#main').classList.remove('learning-main');progressView(p);return;}
+  $('#main').classList.add('learning-main');
+  const g=p.guide,completed=g.steps.filter(s=>p.completed_steps.includes(s.id)).length;
+  $('#main').innerHTML=`<div class="breadcrumb"><a href="#/projects">学习项目</a><span>/</span>${esc(p.name)}<span>/</span>学习空间</div>
+    <div class="page-head project-head"><div class="project-identity"><h1>${esc(p.name)}</h1><details class="project-goal"><summary>学习目标 ${icon('chevron')}</summary><div><p>${esc(p.goal)}</p><span>${esc(levels[p.level])}</span></div></details></div><button class="text-button export-button" data-action="export">${icon('upload')} 导出指南</button></div>
+    <nav class="workspace-tabs" aria-label="项目内容">${[['route','学习路线'],['files','项目文件'],['journal','学习记录'],['assessment','项目评估']].map(([t,label])=>`<button class="${state.tab===t?'active':''}" data-action="project-tab" data-tab="${t}" aria-current="${state.tab===t?'page':'false'}">${label}</button>`).join('')}</nav>
+    ${p.error?`<div class="notice" role="alert">${esc(p.error)} 基础路线仍可使用。</div>`:''}${g.warnings.map(w=>`<div class="notice">${esc(w)}</div>`).join('')}
+    <div class="workspace study-workspace ${state.focus&&state.tab==='route'?'is-focused':''}"><aside class="side-stack"><div class="side-panel"><div class="route-progress"><span>我的进度 <small>自己记录</small></span><strong>${completed}<small> / ${g.steps.length}</small></strong><progress class="full" value="${completed}" max="${g.steps.length||1}" aria-label="自己记录的学习进度"></progress></div>${courseOutline(p)}</div>${enhancementView(p)}</aside>
+    <div id="project-content">${state.tab==='route'?routeView(p):state.tab==='assessment'?assessmentView(p):state.tab==='journal'?journalView():filesView(p)}</div><aside id="source-reader" class="source-reader" aria-label="原文阅读区">${readerView()}</aside></div>`;
+  renderStudyReader(readerScroll);
+  resumeStudyReader(p);
+  if(state.tab==='route')showStudyTool(state.studyTool);
+}
+
+async function source(button,reveal=true){return readStudySource(button,reveal);}
+
+function selectStep(id){selectStudyStep(id);}
+
+async function completeStep(button){return completeStudyStep(button);}
 
 function progressView(p){$('#main').innerHTML=`<div class="breadcrumb"><a href="#/projects">我的学习项目</a> / ${esc(p.name)}</div><div class="loading"><span class="spinner"></span><h1>${p.status==='importing'?'正在导入项目':'正在生成学习路线'}</h1><p id="job-stage" role="status">${esc(p.stage)}</p><div class="loading-flow"><span>读取项目</span><span>→</span><span>梳理文档与源码</span><span>→</span><span>整理入门步骤</span></div><p class="tiny">可离开此页，稍后在学习项目中继续。</p><a class="button" href="#/projects">返回我的项目</a></div>`;}
 function assessmentView(p){const g=p.guide;return `<div class="stats"><div class="stat"><strong>${g.coverage.documents}</strong><span>文档文件</span></div><div class="stat"><strong>${g.coverage.files}</strong><span>纳入分析的文件</span></div><div class="stat"><strong>${g.findings.length}</strong><span>注意事项</span></div></div><section class="panel"><h2>环境与前提</h2>${g.prerequisites.length?g.prerequisites.map(r=>`<div class="finding"><h3>${esc(r.title)}</h3><p>${esc(r.detail)}</p>${refs(r.evidence)}</div>`).join(''):'<p class="muted tiny">尚未定位到明确的环境说明，可从项目文件查看安装入口。</p>'}</section><section class="panel"><h2>注意事项</h2><p class="muted tiny">静态观察与 AI 建议分别标记；未执行项目代码。</p>${g.findings.length?g.findings.map(f=>`<article class="finding"><span class="pill ${f.origin==='ai'?'warn':'local'}">${f.origin==='ai'?'AI 建议 · 待确认':'原文静态观察'}</span><h3>${esc(f.title)}</h3><p>${esc(f.impact)}</p><p><strong>建议：</strong>${esc(f.suggestion)}</p>${refs(f.evidence)}${f.source_search?.hits?.length?`<details><summary class="tiny muted">相关原文</summary>${refs(f.source_search.hits)}</details>`:''}</article>`).join(''):'<div class="checkpoint">当前检查没有提出事项，不代表项目已经完整验证。可以沿入门路线继续核对。</div>'}</section><p class="inline-note">敏感文件名、依赖目录、二进制和超大文件会跳过。ZIP 导入跳过 ${Number(p.import_summary?.skipped_files||0)} 个文件；分析期间另有 ${Object.values(g.coverage.skipped||{}).reduce((a,b)=>a+Number(b||0),0)} 条跳过记录（含目录）。</p>`;}
 function filesView(p){return `<section class="panel"><h2>项目文件</h2><label><span class="sr-only">搜索项目文件</span><input class="search" id="file-search" placeholder="搜索文件名…"></label><div class="file-list" id="file-list">${fileRows(p.guide.files)}</div></section>`;}
 function fileRows(files){return files.map(f=>`<button class="file-row" data-action="source" data-path="${esc(f.path)}" data-line="1" data-end="1"><span class="file-icon">${f.kind==='document'?'文':'〈〉'}</span><span>${esc(f.path)}</span></button>`).join('')||'<p class="muted tiny">没有匹配的文件。</p>';}
-async function openProject(id){const p=await api('/api/projects/'+id);if(location.hash!=='#/project/'+id)return;projectView(p);if(['importing','analyzing'].includes(p.status))state.timer=setTimeout(()=>openProject(id).catch(e=>toast(e.message)),1200);}
-async function navigate(){document.querySelectorAll('.topbar nav a').forEach(a=>{const current=a.hash===(location.hash.startsWith('#/project/')?'#/projects':location.hash||'#/new');if(current)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});clearTimeout(state.timer);state.project=null;state.tab='route';const route=location.hash||'#/new';try{if(route.startsWith('#/project/'))await openProject(route.slice(10));else if(route==='#/projects')await projects();else home();}catch(e){$('#main').innerHTML=`<div class="empty"><h2>暂时无法打开</h2><p>${esc(e.message)}</p><a href="#/projects" class="button">返回我的项目</a></div>`;}window.scrollTo(0,0);}
+async function openProject(id){
+  const p=await api('/api/projects/'+id);
+  if(location.hash!=='#/project/'+id)return;
+  if(p.status==='ready'&&(!state.study||state.studyProject!==id||state.project?.guide_revision!==p.guide_revision)){
+    if(!await loadStudy(p))return;
+  }
+  projectView(p);
+  if(['importing','analyzing'].includes(p.status))state.timer=setTimeout(()=>openProject(id).catch(e=>toast(e.message)),1200);
+}
+
+async function navigate(){document.querySelectorAll('.topbar nav a').forEach(a=>{const current=a.hash===(location.hash.startsWith('#/project/')?'#/projects':location.hash||'#/new');if(current)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});clearTimeout(state.timer);void flushStudyNote();clearTimeout(state.helpPoll);state.study=null;state.studyProject=null;state.helpPending=null;state.restoreReader=null;state.selection=null;state.project=null;state.tab='route';state.selectedStep=null;state.reader=null;state.focus=false;++state.sourceRequest;$('#main').classList.remove('learning-main');const route=location.hash||'#/new';try{if(route.startsWith('#/project/'))await openProject(route.slice(10));else if(route==='#/projects')await projects();else home();}catch(e){$('#main').innerHTML=`<div class="empty"><h2>暂时无法打开</h2><p>${esc(e.message)}</p><a href="#/projects" class="button">返回我的项目</a></div>`;}window.scrollTo(0,0);}
 function openDialog(title,html){$('#dialog-title').textContent=title;$('#dialog-body').innerHTML=html;if(!$('#detail-dialog').open)$('#detail-dialog').showModal();}
-async function source(button){const path=button.dataset.path,first=Number(button.dataset.line||1),last=Number(button.dataset.end||first);openDialog(path,'<p class="muted">正在读取原文…</p>');const data=await api(`/api/projects/${state.project.id}/source?path=${encodeURIComponent(path)}`);$('#dialog-body').innerHTML=`<p class="tiny muted">高亮部分为当前引用。</p><pre class="source-code">${data.text.split('\n').map((s,i)=>`<span class="source-line ${i+1>=first&&i+1<=last?'current':''}"><span class="line-no">${i+1}</span>${esc(s)}</span>`).join('')}</pre>`;$('.source-code .current')?.scrollIntoView({block:'center'});}
 async function preview(){openDialog('AI 将使用哪些内容？','<p class="muted">正在读取发送内容…</p>');const {payload,preview}=await api(`/api/projects/${state.project.id}/preview`);$('#dialog-body').innerHTML=`<p class="tiny muted">仅在你点击“用 AI 细化学习路线”后发送给 ${esc(preview.provider)}。自动脱敏不能识别所有敏感内容，请确认这些片段适合发送。</p><div class="checkpoint"><strong>你的目标</strong>${esc(payload.learner.goal)} · ${esc(payload.learner.level)}</div>${payload.evidence.map(e=>`<section class="preview-item"><h3>${esc(e.path)}:${e.start_line}–${e.end_line}</h3><pre>${esc(e.text)}</pre></section>`).join('')}`;}
 function selectFile(file){if(!file)return;if(!file.name.toLowerCase().endsWith('.zip')||file.size>20000000){toast('请选择不超过 20 MB 的 ZIP 项目文件。');return;}state.file=file;$('#file-name').textContent=file.name;}
 document.addEventListener('submit',async e=>{if(e.target.id!=='import-form')return;e.preventDefault();if(state.busy)return;const goal=$('#goal').value.trim(),level=$('input[name=level]:checked').value;state.busy=true;$('#import-submit').disabled=true;$('#form-error').textContent='';try{let result;if(state.importMode==='zip'){if(!state.file)throw Error('请先选择项目 ZIP。');const query=new URLSearchParams({name:state.file.name.replace(/\.zip$/i,''),goal,level});result=await api('/api/projects/upload?'+query,{method:'POST',headers:{'Content-Type':'application/zip'},body:state.file});}else{result=await api('/api/projects',{method:'POST',json:{repository:$('#repository').value.trim(),ref:$('#ref').value.trim()||null,goal,level}});}location.hash='#/project/'+result.id;}catch(error){$('#form-error').textContent=error.message;}finally{state.busy=false;if($('#import-submit'))$('#import-submit').disabled=false;}});
-document.addEventListener('click',async e=>{const b=e.target.closest('[data-action]');if(!b)return;const action=b.dataset.action;try{if(action==='import-mode'){state.importMode=b.dataset.mode;$('#github-input').hidden=state.importMode!=='github';$('#zip-input').hidden=state.importMode!=='zip';document.querySelectorAll('[data-action=import-mode]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-selected',String(x===b));});}if(action==='goal')$('#goal').value=b.dataset.goal;if(action==='project-tab'){state.tab=b.dataset.tab;projectView(state.project);}if(action==='close-dialog')$('#detail-dialog').close();if(action==='source')await source(b);if(action==='preview')await preview();if(action==='analyze'){b.disabled=true;const p=await api(`/api/projects/${state.project.id}/analyze`,{method:'POST',json:{approval:state.project.ai_preview.approval}});projectView(p);await openProject(p.id);}if(action==='complete'){b.disabled=true;const p=state.project,done=p.completed_steps.includes(b.dataset.step),steps=done?p.completed_steps.filter(s=>s!==b.dataset.step):[...p.completed_steps,b.dataset.step];const updated=await api(`/api/projects/${p.id}/progress`,{method:'POST',json:{completed_steps:steps}});projectView(updated);toast(done?'已撤销这一步':'已记录，继续下一步。');}if(action==='export'){const response=await fetch(`/api/projects/${state.project.id}/export`);if(!response.ok)throw Error('导出未完成，请重试。');const url=URL.createObjectURL(await response.blob()),a=document.createElement('a');a.href=url;a.download=state.project.name.replace(/[\\/]/g,'-')+'-入门指南.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}}catch(error){toast(error.message);b.disabled=false;}});
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-action]');if(!b)return;const action=b.dataset.action;try{if(action==='import-mode'){state.importMode=b.dataset.mode;$('#github-input').hidden=state.importMode!=='github';$('#zip-input').hidden=state.importMode!=='zip';document.querySelectorAll('[data-action=import-mode]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-selected',String(x===b));});}if(action==='select-step')selectStep(b.dataset.step);if(action==='focus'){state.focus=!state.focus;$('.study-workspace').classList.toggle('is-focused',state.focus);b.setAttribute('aria-pressed',String(state.focus));b.innerHTML=(state.focus?'退出专注':'专注阅读')+' '+icon('focus');}if(action==='expand-source'&&state.reader?.text!==undefined){openDialog(state.reader.path,sourceMarkup(state.reader));const code=$('#dialog-body .source-code'),line=code.querySelector('.current');if(line)code.scrollTop+=line.getBoundingClientRect().top-code.getBoundingClientRect().top-code.clientHeight/3;}if(action==='goal')$('#goal').value=b.dataset.goal;if(action==='project-tab'){await flushStudyNote();state.tab=b.dataset.tab;projectView(state.project);}if(action==='close-dialog')$('#detail-dialog').close();if(action==='source')await source(b);if(action==='preview')await preview();if(action==='analyze'){b.disabled=true;const p=await api(`/api/projects/${state.project.id}/analyze`,{method:'POST',json:{approval:state.project.ai_preview.approval}});if(state.project?.id===p.id){state.study=null;state.reader=null;state.selectedStep=null;projectView(p);await openProject(p.id);}}if(action==='complete')await completeStep(b);if(action==='export'){const response=await fetch(`/api/projects/${state.project.id}/export`);if(!response.ok)throw Error('导出未完成，请重试。');const url=URL.createObjectURL(await response.blob()),a=document.createElement('a');a.href=url;a.download=state.project.name.replace(/[\\/]/g,'-')+'-入门指南.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}}catch(error){toast(error.message);b.disabled=false;}});
 document.addEventListener('input',e=>{if(e.target.id==='file-search')$('#file-list').innerHTML=fileRows(state.project.guide.files.filter(f=>f.path.toLowerCase().includes(e.target.value.toLowerCase())));});
 document.addEventListener('change',e=>{if(e.target.id==='zip-file')selectFile(e.target.files[0]);});
 document.addEventListener('keydown',e=>{if(e.target.id==='dropzone'&&(e.key==='Enter'||e.key===' ')){e.preventDefault();$('#zip-file').click();}});
 for(const event of ['dragover','dragleave','drop'])document.addEventListener(event,e=>{const zone=e.target.closest('#dropzone');if(!zone)return;e.preventDefault();zone.classList.toggle('dragging',event==='dragover');if(event==='drop')selectFile(e.dataTransfer.files[0]);});
 window.addEventListener('hashchange',navigate);
-api('/api/config').then(config=>{state.config=config;return navigate();}).catch(()=>{$('#main').innerHTML='<div class="empty"><h2>学习服务尚未连接</h2><p>请保持本机 ExampleProof 服务运行，然后刷新此页面。</p></div>';});
+window.addEventListener('DOMContentLoaded',()=>api('/api/config').then(config=>{state.config=config;return navigate();}).catch(()=>{$('#main').innerHTML='<div class="empty"><h2>学习服务尚未连接</h2><p>请保持本机 ExampleProof 服务运行，然后刷新此页面。</p></div>';}));
