@@ -137,7 +137,11 @@ class LearningApp:
                 'step_count': len(r.get('guide', {}).get('steps', [])), 'mode': r.get('guide', {}).get('mode', 'local')})
         return sorted(result, key=lambda r: r['created_at'], reverse=True)
 
-    def create(self, *, name, goal, level, upload=None, repository=None, ref=None):
+    def create(self, *, name, goal, level, upload=None, repository=None, ref=None, auto_ai=False):
+        # The import form selects AI by default and submits this choice explicitly.
+        # Older callers and saved projects keep their preview-first behavior.
+        if type(auto_ai) is not bool:
+            raise ValueError('请选择是否自动生成 AI 学习路线。')
         if not isinstance(goal, str) or not 1 <= len(goal.strip()) <= 2000:
             raise ValueError('请用 1–2000 个字符描述你想完成的事。')
         if level not in LEVELS:
@@ -157,7 +161,8 @@ class LearningApp:
             identifier = secrets.token_hex(16)
             record = {'id': identifier, 'name': name.strip(), 'goal': goal.strip(), 'level': level,
                       'created_at': now(), 'status': 'importing', 'stage': '读取项目文件', 'error': None,
-                      'completed_steps': [], 'source': 'github' if repository else 'zip'}
+                      'completed_steps': [], 'source': 'github' if repository else 'zip',
+                      'auto_ai': auto_ai and self.provider != 'none'}
             self.save(record)
             self.pool.submit(self._import, identifier, upload, repository, ref)
         return self.public(record)
@@ -186,8 +191,17 @@ class LearningApp:
             if self.provider != 'none':
                 try:
                     self._preview(record, snapshot)
-                except ValueError:
+                except Exception as exc:
+                    record['error'] = self.safe_error(exc)
                     record['guide']['warnings'].append('AI 服务尚未准备好，基础路线仍可使用。')
+            if record['auto_ai'] and record.get('ai_preview'):
+                # Continue in this worker, without publishing a transient ready
+                # state or relying on the browser to start the model request.
+                record.update(status='analyzing', stage='AI 正在围绕你的目标细化学习路线')
+                record['ai_trigger'] = 'import_choice'
+                self.save(record)
+                self._analyze(identifier, record['ai_preview']['approval'])
+                return
             record.update(status='ready', stage='基础评估已就绪')
         except Exception as exc:
             record.update(status='failed', error=self.safe_error(exc), stage='导入未完成')
@@ -242,6 +256,7 @@ class LearningApp:
             if not isinstance(approval, str) or not secrets.compare_digest(approval, record['ai_preview']['approval']):
                 raise ValueError('发送内容已变化，请刷新项目后重新确认。')
             record.update(status='analyzing', stage='围绕你的目标生成学习路线', error=None)
+            record['ai_trigger'] = 'manual_request'
             record['regenerate_ready'] = False
             self.save(record)
             self.pool.submit(self._analyze, identifier, approval)
@@ -349,10 +364,13 @@ class Handler(BaseHTTPRequestHandler):
                 repo = body.get('repository')
                 if not isinstance(repo, str):
                     raise ValueError('请输入公开 GitHub 仓库地址。')
-                return self.respond(app.create(name=repo.strip('/').split('/')[-1], goal=body.get('goal'), level=body.get('level'), repository=repo, ref=body.get('ref')), 202)
+                return self.respond(app.create(name=repo.strip('/').split('/')[-1], goal=body.get('goal'), level=body.get('level'), repository=repo, ref=body.get('ref'), auto_ai=body.get('auto_ai', False)), 202)
             if path == '/api/projects/upload' and post:
                 query = parse_qs(url.query)
-                return self.respond(app.create(name=query.get('name', ['我的项目'])[0], goal=query.get('goal', [''])[0], level=query.get('level', ['beginner'])[0], upload=body), 202)
+                auto_ai = query.get('auto_ai', ['false'])
+                if auto_ai not in (['true'], ['false']):
+                    raise ValueError('请选择是否自动生成 AI 学习路线。')
+                return self.respond(app.create(name=query.get('name', ['我的项目'])[0], goal=query.get('goal', [''])[0], level=query.get('level', ['beginner'])[0], upload=body, auto_ai=auto_ai == ['true']), 202)
             match = re.fullmatch(r'/api/projects/([a-f0-9]{32})(?:/(analyze|preview|progress|source|export|workspace|journal|help-prepare|help-send|help-status|regenerate-preview|run-check))?', path)
             if match:
                 identifier, action = match.groups()
@@ -392,7 +410,8 @@ class Handler(BaseHTTPRequestHandler):
                 if action == 'export':
                     return self.respond(guide_text(r).encode(), kind='text/plain; charset=utf-8')
             assets = {'/': ('index.html', 'text/html; charset=utf-8'), '/app.js': ('app.js', 'text/javascript; charset=utf-8'), '/app.css': ('app.css', 'text/css; charset=utf-8'),
-                      '/study.js': ('study.js', 'text/javascript; charset=utf-8'), '/study.css': ('study.css', 'text/css; charset=utf-8')}
+                      '/study.js': ('study.js', 'text/javascript; charset=utf-8'), '/study.css': ('study.css', 'text/css; charset=utf-8'),
+                      '/code_highlight.js': ('code_highlight.js', 'text/javascript; charset=utf-8')}
             if not post and path in assets:
                 name, kind = assets[path]
                 return self.respond((Path(__file__).parent / 'learner_web' / name).read_bytes(), kind=kind)

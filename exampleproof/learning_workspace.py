@@ -296,13 +296,27 @@ class StudyWorkspace:
             evidence.append(dict(ref, id='e'+str(len(evidence)+1), text=text))
         if not evidence:
             raise ValueError('没有可供回答的原文，请先选择项目中的引用。')
-        history = [d for d in self.load(record)['discussions'] if d['step_key'] == step['key']][-4:]
+        discussions = [d for d in self.load(record)['discussions'] if d['step_key'] == step['key']]
+        history = discussions[-4:]
+        reply_to = body.get('reply_to')
+        if reply_to is not None:
+            parent = next((d for d in discussions if d['id'] == reply_to and d['intent'] != 'feedback'), None)
+            if not isinstance(reply_to, str) or parent is None:
+                raise ValueError('要追问的回答不属于当前步骤，请重新选择。')
+            # Keep the selected answer in the bounded context, even when it is
+            # older than the latest four exchanges. Preserve chronological order.
+            recent = [d for d in discussions if d['id'] != reply_to][-3:]
+            included = {d['id'] for d in recent} | {reply_to}
+            history = [d for d in discussions if d['id'] in included]
         payload = {'learner': {'goal': record['goal'], 'level': record['level']},
                    'step': {k: step[k] for k in ['title', 'action', 'checkpoint']},
                    'intent': intent, 'question': question, 'environment': environment, 'command': command, 'error': error,
                    'exercise': next((e for e in step['exercises'] if e['id'] == exercise), None),
                    'conversation': [{'question': d['question'][:2000], 'answer': d['response']['answer'][:2000]} for d in history],
                    'evidence': evidence}
+        if reply_to is not None:
+            payload['reply_to'] = {'id': reply_to, 'question': parent['question'][:2000],
+                                  'answer': parent['response']['answer'][:2000]}
         return _redact_value(payload, literals), step
 
     def local_answer(self, payload):
@@ -356,7 +370,11 @@ class StudyWorkspace:
         return self.app.folder(identifier)/('help-'+request_id+'.json')
 
     def request_public(self, item):
-        return {k: item[k] for k in ('id', 'status', 'step_key', 'route_id', 'response', 'error', 'discussion_id') if k in item}
+        result = {k: item[k] for k in ('id', 'status', 'step_key', 'route_id', 'response', 'error', 'discussion_id') if k in item}
+        payload = item.get('payload', {})
+        result['draft'] = {k: payload.get(k, '') for k in ('question', 'intent', 'environment', 'command', 'error')}
+        result['draft']['reply_to'] = payload.get('reply_to', {}).get('id')
+        return result
 
     def prepare(self, identifier, body):
         with self.app.lock:
@@ -416,7 +434,8 @@ class StudyWorkspace:
         discussion = {'id': item['id'], 'route_id': item['route_id'], 'step_key': item['step_key'], 'title': item['title'],
                       'at': now(), 'intent': payload['intent'], 'question': payload['question'],
                       'exercise': payload['exercise'], 'environment': payload['environment'],
-                      'command': payload['command'], 'error': payload['error'], 'response': item['response'], 'resolved': False}
+                      'command': payload['command'], 'error': payload['error'], 'response': item['response'], 'resolved': False,
+                      'reply_to': payload.get('reply_to', {}).get('id')}
         if not any(d['id'] == item['id'] for d in store['discussions']):
             store['discussions'].append(discussion)
         self.save(record, store)
