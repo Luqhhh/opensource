@@ -1,0 +1,17 @@
+# Replace this example domain with the domain pointing at your server.
+ai.example.org {
+    request_body {
+        max_size 96000
+    }
+    @gateway path /health /v1/complete
+    handle @gateway {
+        reverse_proxy 127.0.0.1:8787 {
+            transport http {
+                response_header_timeout 75s
+            }
+        }
+    }
+    handle {
+        respond "Not found" 404
+    }
+}

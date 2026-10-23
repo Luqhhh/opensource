@@ -1,0 +1,24 @@
+[Unit]
+Description=ExampleProof shared inference gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=exampleproof
+Group=exampleproof
+WorkingDirectory=/opt/exampleproof
+EnvironmentFile=/etc/exampleproof-gateway.env
+ExecStart=/opt/exampleproof/.venv/bin/exampleproof gateway --data /var/lib/exampleproof-gateway --daily-limit 50 --hourly-limit 10 --total-limit 500 --concurrency 2
+Restart=on-failure
+RestartSec=5
+StateDirectory=exampleproof-gateway
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

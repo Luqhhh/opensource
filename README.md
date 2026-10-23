@@ -25,6 +25,8 @@ exampleproof learn --provider none
 
 ## AI学习支持
 
+维护者也可通过共享代理统一提供额度，克隆者无需 DeepSeek API Key：设置 `EXAMPLEPROOF_GATEWAY_URL` 为维护者提供的 HTTPS 地址，邀请码模式再设置 `EXAMPLEPROOF_GATEWAY_TOKEN`，然后运行 `exampleproof learn`。维护者部署、调用限额及随仓库发布默认服务地址的步骤见[共享 AI 代理](docs/shared-gateway.md)。当前仓库未配置公共代理地址，不能据此认为服务已经上线。
+
 在启动服务的终端配置自己的 `DEEPSEEK_API_KEY` 后运行 `exampleproof learn`。本地模型使用：
 
 ```sh

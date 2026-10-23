@@ -398,7 +398,7 @@ class StudyWorkspace:
                 if len(list(self.app.folder(identifier).glob('help-*.json'))) >= 1200:
                     raise ValueError('提问草稿已达到上限，请导出并新建项目。')
                 review = self.app.folder(identifier)/('help-review-'+identifier_request+'.json')
-                if self.app.provider == 'deepseek':
+                if self.app.provider in {'deepseek', 'gateway'}:
                     try:
                         review_payload(client, HELP_SYSTEM, payload, item['binding'], review)
                     except ValueError:
@@ -455,7 +455,7 @@ class StudyWorkspace:
             client = self.app.factory()
             if client.provider != item['provider'] or client.model != item['model']:
                 raise ValueError('模型配置已变化，请重新查看发送内容。')
-            if client.provider == 'deepseek':
+            if client.provider in {'deepseek', 'gateway'}:
                 client = review_payload(client, HELP_SYSTEM, item['payload'], item['binding'],
                                         self.app.folder(identifier)/('help-review-'+request_id+'.json'), item['approval'])
             reply = client.complete(HELP_SYSTEM, item['payload'])

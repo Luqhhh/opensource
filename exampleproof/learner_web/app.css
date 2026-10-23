@@ -29,6 +29,9 @@
   --space-5: 24px;
   --space-6: 32px;
   --space-7: 48px;
+  --text-caption: 12px;
+  --text-label: 13px;
+  --text-body: 15px;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -655,4 +658,55 @@ body:has(.learning-main) .topbar { height: 88px; padding-inline: max(36px, calc(
 }
 @media (forced-colors:active) {
   .workspace-emblem { display:none; }
+}
+
+/* Import: keep the primary action within a comfortable laptop viewport. */
+body:has(.hero) .topbar { height:72px; }
+main:has(.hero) { padding-top:24px; padding-bottom:36px; }
+.hero { gap:56px; padding-block:0; }
+.hero-copy { padding-top:0; }
+.hero .entry-label { margin-bottom:16px; }
+.hero h1 { font-size:clamp(34px,3.2vw,44px); line-height:1.4; margin-bottom:16px; }
+.source-visual { margin-top:24px; }
+.source-art { height:282px; }
+.art-scene { --scene-scale:.82; }
+.import-card { padding:24px 28px; border-radius:var(--radius-card); box-shadow:var(--shadow); }
+.import-title { margin-bottom:16px; }
+.import-title h2 { font-size:22px; }
+.import-card .tabs { margin-bottom:16px; }
+.import-card .field { margin:14px 0; gap:6px; }
+.import-card .field input, .import-card .field textarea { padding:10px 12px; }
+.import-card .field textarea { min-height:72px; }
+.import-card .version-options { margin-top:-4px; }
+.import-card .examples { margin-top:-6px; }
+.import-card .examples button { min-height:32px; }
+.import-card .level-field { margin:16px 0; }
+.import-card .level-field legend { margin-bottom:8px; }
+.import-card .levels span { padding:9px 4px; }
+.import-card .ai-import-hint { margin:7px 0 14px; font-size:var(--text-caption); line-height:1.7; overflow-wrap:anywhere; }
+#dialog-body { overflow-wrap:anywhere; }
+.import-card .dropzone { min-height:112px; }
+@media (min-width:761px) and (max-width:1050px) {
+  .hero { gap:32px; }
+  .hero h1 { font-size:34px; }
+  .art-scene { --scene-scale:.72; }
+  .source-art { height:248px; }
+  .import-card { padding:22px; }
+}
+@media (max-width:760px) {
+  body:has(.hero) .topbar { height:64px; }
+  main:has(.hero) { padding:20px 18px 32px; }
+  .hero-copy { margin-bottom:20px; }
+  .hero .entry-label { margin-bottom:8px; }
+  .hero h1 { font-size:28px; margin-bottom:8px; }
+  .hero h1 br { display:none; }
+  .import-card { padding:20px; }
+  .import-title h2 { font-size:20px; }
+  .import-card .field input, .import-card .field textarea { font-size:16px; }
+  .import-card .ai-import-option { font-size:13px; }
+}
+@media (max-width:380px) {
+  main:has(.hero) { padding-inline:14px; }
+  .import-card { padding:16px; }
+  .hero h1 { font-size:25px; }
 }

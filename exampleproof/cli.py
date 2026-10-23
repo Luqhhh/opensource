@@ -63,8 +63,18 @@ def _main(argv=None):
     learn = commands.add_parser("learn", help="启动本机项目学习入口：上传 ZIP、导入 GitHub、生成入门路线")
     learn.add_argument("--port", type=int, default=8765)
     learn.add_argument("--data", type=Path, default=Path.home() / ".local/share/exampleproof-learning")
-    learn.add_argument("--provider", choices=("auto", "none", "deepseek", "ollama"), default="auto")
+    learn.add_argument("--provider", choices=("auto", "none", "deepseek", "ollama", "gateway"), default="auto")
     learn.add_argument("--model")
+    learn.add_argument("--gateway-url", help="维护者共享服务 HTTPS 地址；也可设置 EXAMPLEPROOF_GATEWAY_URL")
+    gateway = commands.add_parser("gateway", help="启动共享 AI 代理，由维护者统一提供调用额度")
+    gateway.add_argument("--port", type=int, default=8787)
+    gateway.add_argument("--data", type=Path, default=Path.home()/".local/share/exampleproof-gateway")
+    gateway.add_argument("--model", default="deepseek-flash")
+    gateway.add_argument("--public", action="store_true", help="显式开放公共额度，不要求邀请码")
+    gateway.add_argument("--daily-limit", type=int, default=50)
+    gateway.add_argument("--hourly-limit", type=int, default=10)
+    gateway.add_argument("--total-limit", type=int, default=500)
+    gateway.add_argument("--concurrency", type=int, default=2)
     doctor = commands.add_parser("doctor", help="检查隔离执行环境，不调用模型")
     doctor.add_argument("--json", action="store_true", help="输出结构化环境检查结果")
     analyze = commands.add_parser("analyze", help="分析完整项目教程；默认 Flash＋规则检索，不执行代码")
@@ -163,7 +173,15 @@ def _main(argv=None):
             from .learn_server import serve
             if not 0 <= args.port <= 65535:
                 raise ValueError("Port must be between 0 and 65535")
-            serve(args.data, args.port, args.provider, args.model)
+            serve(args.data, args.port, args.provider, args.model, gateway_endpoint=args.gateway_url)
+            return 0
+        elif args.command == "gateway":
+            from .gateway import serve_gateway
+            if not 0 <= args.port <= 65535:
+                raise ValueError("Port must be between 0 and 65535")
+            serve_gateway(args.data, port=args.port, model=args.model, public=args.public,
+                          daily_limit=args.daily_limit, hourly_limit=args.hourly_limit,
+                          total_limit=args.total_limit, concurrency=args.concurrency)
             return 0
         if args.command == "task-improve":
             from .tutorial_improve import SYSTEM, improve, prepare_improvement

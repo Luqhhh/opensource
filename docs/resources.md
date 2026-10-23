@@ -1,5 +1,12 @@
 # 开源及第三方资源使用清单
 
+## 2026-10-23 共享 AI 代理候选
+
+- **应用与本地验证：** 共享代理、HTTPS 客户端、SQLite 用量计数和合成检查由本项目实现，使用既有 Python 标准库，不新增 Python 运行依赖、模型或数据集。继续使用已有 DeepSeek HTTP 适配；本轮不调用真实模型。
+- **Caddy（可选服务器部署组件）：** 提供项目自编的反向代理配置模板，参考官方[HTTPS 反向代理指南](https://caddyserver.com/docs/quick-starts/reverse-proxy)与[请求大小限制](https://caddyserver.com/docs/caddyfile/directives/request_body)。Caddy 仅用于部署端 TLS 入口，不随 Python 包分发；本轮未安装、未在公网验证，部署者需核对目标版本与配置。不复制 Caddy 实现代码。
+- **systemd（可选 Linux 服务管理）：** 提供项目自编服务单元模板，用于非 root 进程、私有状态目录和服务重启；使用服务器已有 systemd，不分发其二进制。未在本轮安装服务或修改系统配置。
+- **证据边界：** 新增检查为助手编写的合成工程验证，不是独立评测。公共域名、TLS、真实计费调用和公网负载验证尚未完成，配置中的 `ai.example.org` 仅为占位地址。
+
 ## 2026-10-23 学习交付与真实读者试用材料
 
 - **范围：** 当前报告、简介和答辩材料以学习工作台与真实读者体验为主；历史原始记录不改写。提交附件为 `docs/submission/resource-list.md`，本文件继续保留完整资源来源。

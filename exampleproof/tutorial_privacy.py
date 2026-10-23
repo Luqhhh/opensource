@@ -228,8 +228,8 @@ class ReviewedPayloadClient:
 def review_payload(client, system, payload, binding, path, approval=None, *, redact_values=()):
     """Review exact proposal payload; never include evaluator setup, checks or expected output."""
     path = Path(path)
-    if path.is_symlink() or client.provider != "deepseek":
-        raise ValueError("Exact request review requires DeepSeek and a regular review file")
+    if path.is_symlink() or client.provider not in {"deepseek", "gateway"}:
+        raise ValueError("Exact request review requires a cloud provider and a regular review file")
     if not isinstance(redact_values, (list, tuple)) or any(not isinstance(v, str) or not v for v in redact_values):
         raise ValueError("Redaction values must be nonempty strings")
     literals = tuple(redact_values) + ((client._key,) if getattr(client, "_key", None) else ())

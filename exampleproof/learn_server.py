@@ -85,12 +85,28 @@ def now():
 
 
 class LearningApp:
-    def __init__(self, data, provider='auto', model=None, client_factory=None):
+    def __init__(self, data, provider='auto', model=None, client_factory=None, *, gateway_endpoint=None):
         self.data = Path(data).resolve()
         self.data.mkdir(parents=True, exist_ok=True, mode=0o700)
-        self.provider = ('deepseek' if os.environ.get('DEEPSEEK_API_KEY') else 'none') if provider == 'auto' else provider
-        self.model = model or ('deepseek-flash' if self.provider == 'deepseek' else '')
-        self.factory = client_factory or (lambda: JSONClient(self.provider, self.model, timeout=60))
+        from . import shared_service
+        if gateway_endpoint and provider not in {'auto', 'gateway'}:
+            raise ValueError('共享服务地址不能与直接模型配置混用。')
+        configured_gateway = gateway_endpoint or os.environ.get('EXAMPLEPROOF_GATEWAY_URL')
+        if provider == 'auto':
+            self.provider = ('gateway' if configured_gateway else 'deepseek' if os.environ.get('DEEPSEEK_API_KEY')
+                             else 'gateway' if shared_service.SERVICE_URL else 'none')
+        else:
+            self.provider = provider
+        gateway_endpoint = configured_gateway or shared_service.SERVICE_URL
+        self.model = model or (shared_service.MODEL if self.provider == 'gateway'
+                              else 'deepseek-flash' if self.provider == 'deepseek' else '')
+        self.gateway_endpoint = None
+        if self.provider == 'gateway':
+            from .gateway_client import GatewayClient, gateway_url
+            self.gateway_endpoint = gateway_url(gateway_endpoint or '')
+            self.factory = client_factory or (lambda: GatewayClient(self.model, endpoint=self.gateway_endpoint))
+        else:
+            self.factory = client_factory or (lambda: JSONClient(self.provider, self.model, timeout=60))
         self.csrf = secrets.token_urlsafe(32)
         self.lock = threading.RLock()
         self.pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix='learner')
@@ -127,7 +143,7 @@ class LearningApp:
     def public(self, record):
         from .tutorial_privacy import _redact_value
         value = {k: v for k, v in record.items() if k not in {'provenance', 'payload', 'binding', 'review_file', 'regenerate_ready', 'route_system'}}
-        return _redact_value(value, tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY')] if v))
+        return _redact_value(value, tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY'), os.environ.get('EXAMPLEPROOF_GATEWAY_TOKEN')] if v))
 
     def list(self):
         result = []
@@ -209,7 +225,7 @@ class LearningApp:
 
     def safe_error(self, exc):
         if isinstance(exc, (ValueError, zipfile.BadZipFile)):
-            return redact(str(exc), tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY')] if v))[:500]
+            return redact(str(exc), tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY'), os.environ.get('EXAMPLEPROOF_GATEWAY_TOKEN')] if v))[:500]
         return '处理未完成。GitHub 项目请确认地址、公开访问权限和网络；ZIP 请检查文件格式后重试。'
 
     def _preview(self, record, snapshot):
@@ -221,7 +237,7 @@ class LearningApp:
                              'guide_revision': record.get('guide_revision', 1), 'nonce': secrets.token_hex(12)}
         record['review_file'] = 'cloud-review-' + record['binding']['nonce'] + '.json'
         path = self.folder(record['id']) / record['review_file']
-        if self.provider == 'deepseek':
+        if self.provider in {'deepseek', 'gateway'}:
             try:
                 review_payload(client, SYSTEM, payload, record['binding'], path)
             except ValueError:
@@ -272,7 +288,7 @@ class LearningApp:
                 raise ValueError('导入文件已发生变化，请重新导入项目。')
             client = self.factory()
             system = record.get('route_system', LEGACY_SYSTEM)
-            if self.provider == 'deepseek':
+            if self.provider in {'deepseek', 'gateway'}:
                 client = review_payload(client, system, record['payload'], record['binding'], folder / record.get('review_file', 'cloud-review.json'), approval)
             reply = client.complete(system, record['payload'])
             # Save attempts before validation, including invalid model outputs.
@@ -357,7 +373,8 @@ class Handler(BaseHTTPRequestHandler):
                     if not isinstance(body, dict):
                         raise ValueError('请求内容格式错误。')
             if not post and path == '/api/config':
-                return self.respond({'csrf': app.csrf, 'ai_available': app.provider != 'none', 'provider': app.provider, 'model': app.model})
+                return self.respond({'csrf': app.csrf, 'ai_available': app.provider != 'none', 'provider': app.provider, 'model': app.model,
+                                     'gateway_url': app.gateway_endpoint})
             if path == '/api/projects' and not post:
                 return self.respond({'projects': app.list()})
             if path == '/api/projects' and post:
@@ -404,7 +421,7 @@ class Handler(BaseHTTPRequestHandler):
                     snapshot = prepare_project(app.folder(identifier) / 'input', r['provenance'])
                     if file not in snapshot.files:
                         raise ValueError('此文件不在已导入的分析范围内。')
-                    text = redact(snapshot.files[file]['text'], tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY')] if v))
+                    text = redact(snapshot.files[file]['text'], tuple(v for v in [os.environ.get('DEEPSEEK_API_KEY'), os.environ.get('EXAMPLEPROOF_GATEWAY_TOKEN')] if v))
                     return self.respond({'path': file, 'text': text, 'outline': outline(file, text),
                                          'kind': next((f['kind'] for f in r['guide']['files'] if f['path'] == file), 'source')})
                 if action == 'export':
@@ -428,10 +445,10 @@ class Handler(BaseHTTPRequestHandler):
         self.route(True)
 
 
-def serve(data, port=8765, provider='auto', model=None):
+def serve(data, port=8765, provider='auto', model=None, *, gateway_endpoint=None):
     if provider == 'ollama' and not model:
         raise ValueError('本地 Ollama 需要指定 --model。')
-    app = LearningApp(data, provider, model)
+    app = LearningApp(data, provider, model, gateway_endpoint=gateway_endpoint)
     server = ThreadingHTTPServer(('127.0.0.1', port), Handler)
     server.daemon_threads = True
     server.app = app
