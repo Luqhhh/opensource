@@ -1,5 +1,17 @@
 # 开源及第三方资源使用清单
 
+## 2026-10-23 学习交付与真实读者试用材料
+
+- **范围：** 当前报告、简介和答辩材料以学习工作台与真实读者体验为主；历史原始记录不改写。提交附件为 `docs/submission/resource-list.md`，本文件继续保留完整资源来源。
+- **试用项目：** TinyDB固定提交 `edff96aeb2616402e9489d46e90a592c05565621` 和Schedule固定提交 `82a43db1b938d8fdf60103bd41f329e06c8d3651`，来源分别为 [TinyDB](https://github.com/msiemens/tinydb/tree/edff96aeb2616402e9489d46e90a592c05565621)、[Schedule](https://github.com/dbader/schedule/tree/82a43db1b938d8fdf60103bd41f329e06c8d3651)。两者MIT；桌面试用包复制官方固定提交ZIP，保留原LICENSE文件，不修改上游内容。SHA与下载地址随项目包记录。主持人参考操作仅在既有Bubblewrap执行器中运行。
+- **当前演示：** 新建独立本机数据目录，使用现有DeepSeek配置生成路线与回答，通过真实HTTP接口保存笔记和运行结果，再恢复页面。画面为自动操作的实际应用截图剪辑，不作为真实读者记录；路线与回答保留本次真实调用来源。视频中的旁白由系统语音合成，不冒充成员或受访者的声音。
+- **websocket-client 1.9.2：** [PyPI](https://pypi.org/project/websocket-client/1.9.2/)，Apache-2.0。仅在仓库外工具环境连接独立Microsoft Edge的本机调试端口，未加入应用依赖或随应用分发。
+- **Pillow 12.2.0：** [官方许可](https://github.com/python-pillow/Pillow/blob/12.2.0/LICENSE)，本机发行包元数据为MIT-CMU，附属资源按包内声明。调用已有环境生成自编架构图和材料预览，不复制外来图像；不作为应用依赖。图中字形使用已登记Fandol字体。
+- **FFmpeg 4.4：** 复用已有conda缓存 `ffmpeg-4.4.0-hca11adc_2`，构建启用GPL与version3；[FFmpeg许可说明](https://ffmpeg.org/legal.html)。仅编码自己的应用画面和配音，不分发FFmpeg二进制。既有libx264、libvpx、OpenH264与LAME仅供该工具动态链接，各按原许可保留；不复制进产品或交付包。
+- **Microsoft Edge与System.Speech：** 调用本机已安装浏览器与Windows系统语音服务，采用账户/系统适用条款。配音为Microsoft Huihui Desktop zh-CN。未上传声音训练数据、未仿制真人、未使用音乐素材；不分发浏览器、语音引擎或字体文件。
+- **构建工具：** 仓库外环境使用build 1.6.1、setuptools 84.2.1、wheel 0.48.0（各MIT），不改变Python运行依赖。Pandoc、XeLaTeX、Poppler、Fandol与Latin Modern继续按下方原条目使用。
+- **自主部分：** 学习工作台、试用文案、记录表、架构图、演示编排与校验逻辑由团队安排、AI辅助制作。新增素材和工具的用途、原许可与自研边界分别披露；空白表和自动操作不计作受访者反馈。
+
 ## 2026-10-22 B「纸感青绿」视觉精修候选
 
 - **设计选择：** 用户从三张视觉概念图中选择 B；概念图由内置 imagegen 生成，仅用于确定视觉方向，不是已实现页面、评测结果或产品运行素材。原图保留在仓库外，未随产品分发。

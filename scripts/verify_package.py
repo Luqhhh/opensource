@@ -10,6 +10,11 @@ import tarfile
 import tempfile
 import venv
 import zipfile
+import json
+import socket
+import time
+from urllib.request import Request, urlopen
+from urllib.parse import urlencode
 
 parser = argparse.ArgumentParser(description="Verify built artifacts against the source manifest and installed commands.")
 parser.add_argument("artifacts", type=Path)
@@ -21,11 +26,14 @@ assert wheel.name == "aic_exampleproof-0.1.0-py3-none-any.whl", wheel.name
 modules = {p.relative_to("exampleproof").as_posix(): p.read_bytes()
            for p in Path("exampleproof").rglob("*.py")}
 assert modules, "Source module manifest must not be empty"
-assets = {p.relative_to("exampleproof").as_posix(): p.read_bytes() for p in Path("exampleproof/web").glob("*") if p.is_file()}
-assert set(assets) == {"web/index.html", "web/workbench.css", "web/workbench.js"}
-learner_assets = {p.relative_to("exampleproof").as_posix(): p.read_bytes() for p in Path("exampleproof/learner_web").glob("*") if p.is_file()}
-assert set(learner_assets) == {"learner_web/index.html", "learner_web/app.css", "learner_web/app.js"}
-assets.update(learner_assets)
+assets = {p.relative_to("exampleproof").as_posix(): p.read_bytes()
+          for folder in ("web", "learner_web")
+          for p in (Path("exampleproof") / folder).rglob("*") if p.is_file()}
+required_assets = {"web/index.html", "web/workbench.css", "web/workbench.js",
+                   "learner_web/index.html", "learner_web/app.css", "learner_web/app.js",
+                   "learner_web/study.css", "learner_web/study.js", "learner_web/code_highlight.js"}
+assert required_assets <= set(assets), "Required UI resources are missing from source"
+assert all(Path(name).suffix in {".html", ".css", ".js"} for name in assets), "Unexpected web resource type"
 licenses = {p.name: p.read_bytes() for p in Path("exampleproof/licenses").glob("*.txt")}
 assert set(licenses) == {"Apache-2.0.txt", "CPython-3.10.12.txt", "stdlib-attribution.txt"}
 assert hashlib.sha256(licenses["Apache-2.0.txt"]).hexdigest() == "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
@@ -34,6 +42,9 @@ for marker in (b"stdlib/doctest.py", b"stdlib/inspect.py", b"stdlib/tabnanny.py"
     assert marker in licenses["stdlib-attribution.txt"], marker
 with zipfile.ZipFile(wheel) as archive:
     names = archive.namelist()
+    assert {name.removeprefix("exampleproof/") for name in names
+            if name.startswith(("exampleproof/web/", "exampleproof/learner_web/"))
+            and not name.endswith("/")} == set(assets), "Wheel UI resource inventory differs from source"
     assert {"exampleproof/benchmark.py", "exampleproof/study.py", "exampleproof/context.py", "exampleproof/semantic_study.py", "exampleproof/cli.py", "exampleproof/__main__.py"} <= set(names)
     assert {name.removeprefix("exampleproof/") for name in names if name.startswith("exampleproof/") and name.endswith(".py")} == set(modules)
     for name, data in (modules | assets).items():
@@ -54,6 +65,9 @@ with zipfile.ZipFile(wheel) as archive:
 sdists = list(wheel.parent.glob("*.tar.gz"))
 assert len(sdists) == 1, sdists
 with tarfile.open(sdists[0], "r:gz") as archive:
+    packaged_assets = {m.name.split("/exampleproof/", 1)[1] for m in archive.getmembers()
+                       if m.isfile() and ("/exampleproof/web/" in m.name or "/exampleproof/learner_web/" in m.name)}
+    assert packaged_assets == set(assets), "Source distribution UI resource inventory differs from source"
     for name, data in (modules | assets).items():
         members = [m for m in archive.getmembers() if m.isfile() and m.name.endswith("/exampleproof/" + name)]
         assert len(members) == 1 and archive.extractfile(members[0]).read() == data, name
@@ -90,3 +104,68 @@ with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
         output = project.with_name(project.name + "-analysis")
         subprocess.run([*invocation, "analyze", str(project), "--static", "--output", str(output)], cwd=outside, check=True)
         assert (output / "analysis.json").is_file()
+
+    # Exercise the installed app, not modules imported from this checkout. The
+    # uploaded fixture is data only; its Python contents must never be executed.
+    with socket.socket() as reservation:
+        reservation.bind(("127.0.0.1", 0))
+        port = reservation.getsockname()[1]
+    base_url = f"http://127.0.0.1:{port}"
+    process = subprocess.Popen([command, "learn", "--provider", "none", "--port", str(port),
+                                "--data", str(outside / "learning-data")], cwd=outside,
+                               stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    try:
+        for _ in range(100):
+            if process.poll() is not None:
+                raise AssertionError("Installed app exited: " + process.stderr.read().decode())
+            try:
+                with urlopen(base_url + "/api/config", timeout=2) as response:
+                    config = json.load(response)
+                break
+            except OSError:
+                time.sleep(.1)
+        else:
+            raise AssertionError("Installed learning app did not start")
+        assert config["provider"] == "none"
+        for name, data in assets.items():
+            if name.startswith("learner_web/"):
+                route = "/" if name.endswith("/index.html") else "/" + name.split("/", 1)[1]
+                with urlopen(base_url + route, timeout=5) as response:
+                    assert response.read() == data, "Installed HTTP asset differs: " + name
+        fixture = outside / "learning-fixture.zip"
+        with zipfile.ZipFile(fixture, "w") as archive:
+            archive.writestr("README.md", "# Learning fixture\n\n## Start\n\nRead the function below.\n\n```python\nprint('hello')\n```\n")
+            archive.writestr("example.py", "raise RuntimeError('Uploaded source must not execute')\n")
+
+        def api(path, body=None, raw=False):
+            request = Request(base_url + path,
+                              data=body if raw else json.dumps(body).encode() if body is not None else None,
+                              headers={"Content-Type": "application/zip" if raw else "application/json",
+                                       "X-ExampleProof-Token": config["csrf"]})
+            with urlopen(request, timeout=10) as response:
+                return json.load(response)
+
+        query = urlencode({"name": "Installed package check", "goal": "Read an example", "level": "beginner", "auto_ai": "false"})
+        record = api("/api/projects/upload?" + query, fixture.read_bytes(), raw=True)
+        identifier = record["id"]
+        for _ in range(100):
+            record = api("/api/projects/" + identifier)
+            if record["status"] in {"ready", "failed"}:
+                break
+            time.sleep(.05)
+        assert record["status"] == "ready", record
+        step = record["guide"]["steps"][0]["id"]
+        api("/api/projects/" + identifier + "/progress", {"completed_steps": [step]})
+        assert api("/api/projects/" + identifier)["completed_steps"] == [step]
+        assert api("/api/projects/" + identifier + "/workspace")["tasks"]
+        with urlopen(base_url + "/api/projects/" + identifier + "/export", timeout=5) as response:
+            assert response.read(), "Installed app guide export is empty"
+        print(json.dumps({"installed_app": "passed", "asset_count": len(assets),
+                          "upload_progress_export": "passed", "model_requests": 0}))
+    finally:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -52,7 +53,7 @@ def main() -> int:
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     report = SOURCE / "technical-report.md"
-    resources = ROOT / "docs/resources.md"
+    resources = SOURCE / "resource-list.md"
     header = SOURCE / "pdf-header.tex"
     pdf_filter = SOURCE / "pdf-filter.lua"
     combined = output / "technical-report-with-resources.md"
@@ -72,6 +73,7 @@ def main() -> int:
         "--variable=papersize:a4", "--lua-filter", str(pdf_filter),
         "--variable=colorlinks:true", "--variable=urlcolor:blue",
         "--include-in-header", str(header), "--output", str(pdf),
+        "--resource-path", os.pathsep.join((str(SOURCE), str(ROOT))),
     ]
     result = run(command, cwd=ROOT)
     (output / "build.log").write_text(result.stdout + result.stderr, encoding="utf-8")
@@ -91,9 +93,6 @@ def main() -> int:
         "total_pages_within_15": pages <= 15,
         "size_within_10_mb_decimal": byte_count <= 10_000_000,
         "chinese_text_extraction": True,
-        "team_review_complete": False,
-        "video_complete": False,
-        "submitted": False,
     }
     versions = {}
     for name in ["pandoc", "xelatex"]:
@@ -106,7 +105,8 @@ def main() -> int:
         "tools": versions,
         "source_sha256": {
             str(path.relative_to(ROOT)): digest(path)
-            for path in [report, resources, abstract_path, header, pdf_filter, Path(__file__).resolve()]
+            for path in [report, resources, abstract_path, header, pdf_filter, Path(__file__).resolve(),
+                         *sorted((SOURCE / "figures").glob("*.png"))]
         },
         "output_sha256": {pdf.name: digest(pdf)},
         "command": command,
