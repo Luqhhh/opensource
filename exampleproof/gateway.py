@@ -101,7 +101,7 @@ class Gateway:
 
 
 class GatewayHandler(BaseHTTPRequestHandler):
-    server_version = 'ExampleProofGateway'
+    server_version = 'RepoPathGateway'
 
     def setup(self):
         super().setup()

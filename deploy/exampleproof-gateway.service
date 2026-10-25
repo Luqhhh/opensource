@@ -1,5 +1,5 @@
 [Unit]
-Description=ExampleProof shared inference gateway
+Description=RepoPath shared inference gateway
 After=network-online.target
 Wants=network-online.target
 

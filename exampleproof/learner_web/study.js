@@ -14,8 +14,11 @@ const labelPreference=p=>({known:'已会 · 跳过',later:'稍后再学',hard:'�
 function layoutControls(){
   return `<div class="workspace-controls" aria-label="学习布局"><button class="button small" data-action="toggle-outline" aria-controls="study-outline" aria-expanded="${state.layout.outline}">${icon('route')}<span>${state.layout.outline?'收起目录':'显示目录'}</span></button><div class="compact-reader-links"><button class="text-button" data-action="jump-task">当前任务</button><button class="text-button" data-action="jump-reader">查看原文 ↓</button></div><span id="position-status" class="save-state" role="status" aria-live="polite"></span><button class="text-button" data-action="retry-position" hidden>重试保存位置</button></div>`;
 }
-function applyStudyLayout(persist=false){
+function applyStudyLayout(persist=false,animate=false){
   const workspace=$('.study-workspace');if(!workspace)return;
+  const panels=animate?[...workspace.querySelectorAll(':scope > #project-content,:scope > #study-outline,:scope > #source-reader')]:[];
+  const before=panels.map(element=>({element,rect:element.getBoundingClientRect(),visible:!!element.getClientRects().length}));
+  panels.forEach(element=>stopInterfaceMotion(element));
   const focused=state.focus&&state.tab==='route';
   workspace.classList.toggle('outline-collapsed',!state.layout.outline);
   workspace.classList.toggle('is-focused',focused);
@@ -27,6 +30,12 @@ function applyStudyLayout(persist=false){
   const focus=$('[data-action="focus"]');if(focus){focus.setAttribute('aria-pressed',String(state.focus));focus.innerHTML=(state.focus?'退出专注':'专注任务')+' '+icon('focus');}
   if(persist)try{localStorage.setItem(layoutKey,JSON.stringify(state.layout));}catch{toast('布局已调整；浏览器无法记住设置，下次打开将使用默认布局。');}
   renderPositionStatus();
+  for(const {element,rect,visible} of before){
+    if(!element.getClientRects().length)continue;
+    if(!visible){revealInterface([element]);continue;}
+    const next=element.getBoundingClientRect(),clamp=value=>Math.max(-18,Math.min(18,value)),x=clamp(rect.left-next.left),y=clamp(rect.top-next.top);
+    if(x||y)animateInterface(element,[{transform:`translate(${x}px, ${y}px)`},{transform:'translate(0, 0)'}]);
+  }
 }
 function resizeReader(value,persist=false){state.layout.reader=Math.max(25,Math.min(65,value));applyStudyLayout(persist);}
 function renderPositionStatus(){
@@ -140,8 +149,8 @@ async function completeStudyStep(button){
     state.progressBusy=false;projectView(updated);saveStudyPosition();
     if(!done){
       const completed=[...document.querySelectorAll('.course-step')].find(step=>step.dataset.step===id);
-      animateInterface(completed?.querySelector('.course-number'),[{transform:'scale(.8)'},{transform:'scale(1.15)',offset:.55},{transform:'scale(1)'}],{duration:480});
-      animateInterface($('#progress-status'),[{backgroundColor:'#d8eddd'},{backgroundColor:'transparent'}],{duration:900});
+      animateInterface(completed?.querySelector('.course-number'),[{transform:'scale(.9)'},{transform:'scale(1.06)',offset:.6},{transform:'scale(1)'}],{duration:280});
+      animateInterface($('#progress-status'),[{backgroundColor:'#d8eddd'},{backgroundColor:'transparent'}],{duration:600});
     }
   }catch(error){if(state.project?.id===p.id){state.progressFeedback={kind:'error',text:'进度未保存：'+error.message+'。请重试。'};if(status){status.textContent=state.progressFeedback.text;status.dataset.state='error';}}}
   finally{state.progressBusy=false;button.innerHTML=original;button.removeAttribute('aria-busy');document.querySelectorAll('[data-action="complete"]').forEach(b=>b.disabled=false);}
@@ -175,7 +184,7 @@ function showStudyTool(name,scroll=false,animate=true){
   const opening=document.querySelector(`[data-study-panel="${name}"]`)?.hidden;
   state.studyTool=name;
   if(name==='help')state.helpOpen=true;
-  document.querySelectorAll('[data-study-panel]').forEach(panel=>panel.hidden=panel.dataset.studyPanel!==name);
+  document.querySelectorAll('[data-study-panel]').forEach(panel=>{panel.hidden=panel.dataset.studyPanel!==name;if(panel.hidden)stopInterfaceMotion(panel);});
   document.querySelectorAll('[data-action="study-tool"]').forEach(button=>button.setAttribute('aria-expanded',String(button.dataset.tool===name)));
   const panel=document.querySelector(`[data-study-panel="${name}"]`);
   if(panel){const details=panel.querySelector('.study-help,.exercise-panel,.lesson-notes');if(details)details.open=true;if(scroll)panel.scrollIntoView({block:'nearest',behavior:'auto'});}
@@ -254,9 +263,13 @@ function renderHelpRegion(scroll=false){
   const field=region.contains(document.activeElement)?document.activeElement:null;
   const selection=field&&'selectionStart' in field?{id:field.id,start:field.selectionStart,end:field.selectionEnd}:null;
   const previous=$('.conversation-thread'),position=previous?.dataset.positioned?previous.scrollTop:state.helpScroll.get(task.key);
+  const previousAnswer=region.querySelector('.conversation-turn:last-child')?.id;
+  stopInterfaceMotion(region);
   region.innerHTML=helpView(task);syncHelpControls();
   const thread=$('.conversation-thread');if(thread&&state.studyTool==='help'){thread.scrollTop=scroll?thread.scrollHeight:position??thread.scrollHeight;thread.dataset.positioned='true';}
   if(selection){const input=document.getElementById(selection.id);if(input){input.focus({preventScroll:true});input.setSelectionRange(selection.start,selection.end);}}
+  const answer=region.querySelector('.conversation-turn:last-child');
+  if(state.studyTool==='help'&&answer&&answer.id!==previousAnswer)revealInterface([answer.querySelector('.chat-answer')]);
 }
 function helpView(task){
   const key=task.key,draft=state.helpDrafts.get(key)||{},intent=draft.intent||state.helpIntent;
@@ -410,15 +423,15 @@ function applyReaderScope(){
     if(el.matches('pre'))el.querySelectorAll('code > [data-source-line]').forEach(line=>line.hidden=!all&&(Number(line.dataset.sourceLine)<range.first||Number(line.dataset.sourceLine)>range.last));
   }
 }
-function jumpReader(line){
+function jumpReader(line,animate=true){
   if(state.reader?.text&&state.readerScope!=='full'){const range=readerBounds(state.reader);if(line<range.first||line>range.last){state.readerScope='full';renderStudyReader(0);}}
   const box=$('#source-reader .reader-scroll');if(!box)return;
   const blocks=[...box.querySelectorAll('[data-source-line]')].filter(el=>!el.hidden&&!el.closest('[hidden]')),target=blocks.find(el=>Number(el.dataset.sourceLine)>=line)||blocks.at(-1);
-  if(target){box.scrollTop+=target.getBoundingClientRect().top-box.getBoundingClientRect().top-box.clientHeight/4;box.querySelector('.search-target')?.classList.remove('search-target');target.classList.add('search-target');}saveStudyPosition();
+  if(target){box.scrollTop+=target.getBoundingClientRect().top-box.getBoundingClientRect().top-box.clientHeight/4;const previous=box.querySelector('.search-target');if(previous&&previous!==target){stopInterfaceMotion(previous);previous.classList.remove('search-target');}target.classList.add('search-target');if(animate)emphasizeReference(target);}saveStudyPosition();
 }
 function renderStudyReader(restore=null){
-  const pane=$('#source-reader');if(!pane)return;pane.innerHTML=studyReaderView();applyReaderScope();
-  if(state.reader&&!state.reader.loading&&!state.reader.error){if(restore!==null){const box=pane.querySelector('.reader-scroll');if(box)box.scrollTop=restore;}else jumpReader(state.reader.first);}
+  const pane=$('#source-reader');if(!pane)return;stopInterfaceMotion(pane);pane.innerHTML=studyReaderView();applyReaderScope();
+  if(state.reader&&!state.reader.loading&&!state.reader.error){if(restore!==null){const box=pane.querySelector('.reader-scroll');if(box)box.scrollTop=restore;}else jumpReader(state.reader.first,false);}
 }
 async function readStudySource(button,reveal=true,options={}){
   const p=state.project;if(!p)return;
@@ -433,6 +446,7 @@ async function readStudySource(button,reveal=true,options={}){
     if(state.project?.id!==p.id||state.sourceRequest!==request)return;
     state.reader={...data,first,last,loading:false};state.readerMode=options.mode||(data.kind==='document'?'document':'source');
     renderStudyReader(options.scroll??null);
+    if(reveal)emphasizeReference($('#source-reader .search-target'));
     if(button.dataset.anchor){const slug=s=>s.toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu,'').replace(/\s+/g,'-');const heading=data.outline?.find(h=>slug(h.title)===button.dataset.anchor);if(heading)jumpReader(heading.line);}
     saveStudyPosition();
   }catch(error){if(state.project?.id!==p.id||state.sourceRequest!==request)return;state.reader={path,first,last,error:error.message,loading:false};renderStudyReader();}
@@ -482,10 +496,10 @@ document.addEventListener('submit',async e=>{
 document.addEventListener('click',async e=>{
   const b=e.target.closest('[data-action]');if(!b)return;const action=b.dataset.action;
   try{
-    if(action==='focus')applyStudyLayout();
-    if(action==='toggle-outline'){state.layout.outline=$('.study-workspace').classList.contains('is-focused')?true:!state.layout.outline;state.focus=false;applyStudyLayout(true);}
-    if(action==='jump-reader'){state.focus=false;applyStudyLayout();$('#source-reader')?.scrollIntoView({block:'start',behavior:'smooth'});}
-    if(action==='jump-task'||action==='resume-task'){state.resumed=false;$('.resume-banner')?.remove();$('#study-title')?.focus({preventScroll:true});$('#project-content')?.scrollIntoView({block:'start',behavior:'smooth'});}
+    if(action==='focus'){applyStudyLayout();revealInterface([$('#project-content')]);}
+    if(action==='toggle-outline'){state.layout.outline=$('.study-workspace').classList.contains('is-focused')?true:!state.layout.outline;state.focus=false;applyStudyLayout(true,true);}
+    if(action==='jump-reader'){state.focus=false;applyStudyLayout();scrollInterface($('#source-reader'),{block:'start'});}
+    if(action==='jump-task'||action==='resume-task'){state.resumed=false;$('.resume-banner')?.remove();$('#study-title')?.focus({preventScroll:true});scrollInterface($('#project-content'),{block:'start'});}
     if(action==='retry-position')saveStudyPosition();
     if(action==='study-tool')showStudyTool(state.studyTool===b.dataset.tool?null:b.dataset.tool,true);
     if(action==='close-study-tool'){const name=state.studyTool;showStudyTool(null);document.querySelector(`[data-action=study-tool][data-tool="${name}"]`)?.focus({preventScroll:true});}
@@ -505,7 +519,7 @@ document.addEventListener('click',async e=>{
     if(action==='run-error-help'){
       const run=state.study.run_checks.find(r=>r.id===b.dataset.id);if(!run)return;
       const task=state.study.tasks.find(t=>t.key===run.step_key);if(task)selectStudyStep(task.id);else{state.tab='route';projectView(state.project);}
-      state.helpDrafts.set(studyTask().key,{question:'请根据这次实际隔离运行结果，给出下一项检查操作。',environment:'ExampleProof Bubblewrap / 系统 Python / 无网络 / 无第三方依赖安装',command:'运行已提交的 Python 示例',error:((run.execution.stderr||run.execution.status).slice(0,3500)+'\n提交代码（可能截断）：\n'+run.code.slice(0,2300))});state.helpIntent='error';state.helpOpen=true;$('#help-region').innerHTML=helpView(studyTask());showStudyTool('help');$('#help-region').scrollIntoView({block:'center'});
+      state.helpDrafts.set(studyTask().key,{question:'请根据这次实际隔离运行结果，给出下一项检查操作。',environment:'RepoPath Bubblewrap / 系统 Python / 无网络 / 无第三方依赖安装',command:'运行已提交的 Python 示例',error:((run.execution.stderr||run.execution.status).slice(0,3500)+'\n提交代码（可能截断）：\n'+run.code.slice(0,2300))});state.helpIntent='error';state.helpOpen=true;$('#help-region').innerHTML=helpView(studyTask());showStudyTool('help');$('#help-region').scrollIntoView({block:'center'});
     }
     if(action==='note-anchor'){
       const entry=noteEntry(),ref=currentSelection();if(!ref){toast('先打开一处原文。');return;}entry.evidence=[ref];entry.dirty=true;backupNote(entry);if($('#note-refs'))$('#note-refs').innerHTML=refs(entry.evidence);await flushStudyNote();showStudyTool('notes',true);toast('已将当前原文关联到笔记。');

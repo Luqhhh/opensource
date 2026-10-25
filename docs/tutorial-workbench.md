@@ -1,5 +1,7 @@
 # 教程任务工作台与验证范围
 
+此处为源途 · RepoPath 的维护者教程证据工作台；面向学习者的入口见[学习工作台](learning-app.md)。当前界面使用源途路径标识，已有冻结输入与证据记录保持原样。
+
 正式界面采用 A：浅色背景 `#f4f7fa`、深蓝导航 `#142d3a`、青绿操作色 `#087e80`。按用户要求，前端仅面向用户展示，不包含人工审批或评分表单。页面为离线 HTML/CSS/JavaScript，无前端框架、外部字体或网络请求。
 
 ## 从读者卡点开始
@@ -37,15 +39,15 @@ python3 scripts/run_tutorial_evaluation.py summarize /path/to/frozen /path/to/ru
 ## 从任务模板到补丁
 
 ```sh
-python3 -m exampleproof task-init PROJECT --document README.rst --block 3 \
+python3 -m repopath task-init PROJECT --document README.rst --block 3 \
   --task '在新 Linux 会话中查询用户与站点目录' --import-root src --output /tmp/task-draft
 ```
 
 模板列出源码、选中代码块和运行边界，但检查留空。由使用者或评测者填写并冻结 setup/checks/expected_stdout，然后：
 
 ```sh
-python3 -m exampleproof task-diagnose PROJECT --contract /tmp/task-draft/task.json
-python3 -m exampleproof task-improve PROJECT --analysis /path/to/analysis.json \
+python3 -m repopath task-diagnose PROJECT --contract /tmp/task-draft/task.json
+python3 -m repopath task-improve PROJECT --analysis /path/to/analysis.json \
   --contract /tmp/task-draft/task.json --finding-id f-REPLACE \
   --provider deepseek --output /tmp/task-attempt --cloud-review /tmp/proposal-review.json
 # 核对生成的确切发送清单后，按命令输出提供 --approve-cloud SHA256。

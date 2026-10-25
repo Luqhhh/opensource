@@ -20,18 +20,18 @@ flowchart TD
 
 ```sh
 # Ollama：模型必须已在本地安装
-python3 -m exampleproof analyze /path/to/project \
+python3 -m repopath analyze /path/to/project \
   --provider ollama --model YOUR_LOCAL_MODEL --context-strategy iterative \
   --task '完成首次配置并调用依赖该配置的 API' \
   --include-tests --max-retrieval-rounds 3 --output /tmp/tutorial-local
 
 # DeepSeek：首次只生成清单，不发送模型请求
-python3 -m exampleproof analyze /path/to/project --context-strategy iterative \
+python3 -m repopath analyze /path/to/project --context-strategy iterative \
   --task '完成首次配置并调用依赖该配置的 API' \
   --include-tests --max-retrieval-rounds 3 --output /tmp/tutorial-cloud
 
 # 人工审阅 /tmp/tutorial-cloud-cloud-review.json 后重跑相同配置
-python3 -m exampleproof analyze /path/to/project --context-strategy iterative \
+python3 -m repopath analyze /path/to/project --context-strategy iterative \
   --task '完成首次配置并调用依赖该配置的 API' \
   --include-tests --max-retrieval-rounds 3 --output /tmp/tutorial-cloud \
   --approve-cloud REVIEW_SHA256
@@ -97,7 +97,7 @@ analysis.json 保留全部模型调用、实际请求和用量。新增 retrieva
 默认策略继续为 lexical，iterative 保持显式选择。新增两个可选参数：
 
 ```sh
-python3 -m exampleproof analyze /path/to/project --provider ollama --model YOUR_LOCAL_MODEL \
+python3 -m repopath analyze /path/to/project --provider ollama --model YOUR_LOCAL_MODEL \
   --context-strategy iterative --task '完成首次配置' \
   --max-total-tokens 32000 --deadline-seconds 120 --output /tmp/bounded-analysis
 ```

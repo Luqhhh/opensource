@@ -42,22 +42,22 @@ def positive_seconds(value):
     return seconds
 
 
-def main(argv=None):
+def main(argv=None, *, prog="exampleproof"):
     # Start the CLI deadline before input acquisition/indexing as well as HTTP.
     from .tutorial_budget import deadline
-    preflight = argparse.ArgumentParser(add_help=False)
+    preflight = argparse.ArgumentParser(prog=prog, add_help=False)
     preflight.add_argument("--deadline-seconds", type=positive_seconds)
     known, _ = preflight.parse_known_args(argv)
     try:
         with deadline(known.deadline_seconds):
-            return _main(argv)
+            return _main(argv, prog=prog)
     except ValueError as exc:
-        print(f"exampleproof: {exc}", file=sys.stderr)
+        print(f"{prog}: {exc}", file=sys.stderr)
         return 2
 
 
-def _main(argv=None):
-    parser = argparse.ArgumentParser(prog="exampleproof", description="例证：分析开源项目教程质量，验证 Python 示例与修复。")
+def _main(argv=None, *, prog="exampleproof"):
+    parser = argparse.ArgumentParser(prog=prog, description="源途 · RepoPath：面向开源项目的 AI 学习工作台。按目标逐步阅读、实践与记录，也提供教程分析和受限示例验证。")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
     learn = commands.add_parser("learn", help="启动本机项目学习入口：上传 ZIP、导入 GitHub、生成入门路线")
@@ -369,5 +369,5 @@ def _main(argv=None):
         print(f"通过检查的补丁：{output / 'verified.patch'}")
         return exit_code(report)
     except (ValueError, OSError, SyntaxError) as exc:
-        print(f"exampleproof: {exc}", file=sys.stderr)
+        print(f"{prog}: {exc}", file=sys.stderr)
         return 2

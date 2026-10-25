@@ -1,5 +1,5 @@
 ---
-title: "例证——开源项目学习助手"
+title: "源途——开源项目 AI 学习工作台"
 subtitle: "AI开发工具与开源协作"
 author: "忧郁蜂蜜水 · AIC-2026-19649058"
 date: "路庆浩 · 肖金诺"
@@ -9,21 +9,23 @@ date: "路庆浩 · 肖金诺"
 
 学习者需要知道从哪里开始、原文如何对应当前步骤、遇到错误怎样继续，以及下次如何接着学。
 
-例证把目标、任务、原文和学习记录放在同一个空间。
+源途 · RepoPath 把目标、任务、原文和学习记录放在同一个空间。
+
+从读懂源码，到动手完成。
 
 # 完整学习流程
 
-![导入、行动、核对、记录与恢复](figures/workflow.png)
+![导入、行动、核对、记录与恢复](figures/repopath-workflow.png)
 
-# 实际工作台
+# 学习工作台预览
 
-![学习任务与原文并排阅读](figures/workspace.png)
+![合成项目界面预览，无真实模型调用；不属于用户研究](figures/repopath-workspace.png){height=48mm}
 
 任务动作、完成标志与原文一起呈现；笔记、问答和阅读位置可以恢复。
 
 # AI与开源如何结合
 
-![结构与边界](figures/architecture.png)
+![结构与边界](figures/repopath-architecture.png){height=46mm}
 
 模型理解目标并提供路线与解释；程序提供真实片段、引用绑定、持久记录和受限执行。
 

@@ -505,7 +505,7 @@ def write_analysis(output, report):
     html = ('<!doctype html><html lang="zh-CN"><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; script-src \'none\'">'
-            '<title>ExampleProof 教程质量分析</title><style>body{max-width:960px;margin:40px auto;padding:0 24px;'
+            '<title>源途 · RepoPath · 教程质量分析</title><style>body{max-width:960px;margin:40px auto;padding:0 24px;'
             'font:16px/1.6 system-ui;color:#172a35}article{border-top:1px solid #ccc;padding:20px 0}'
             'pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5f6;padding:12px}</style>'
             '<h1>教程质量分析</h1><p>静态观察与 AI 建议；本报告未执行项目代码。</p>'

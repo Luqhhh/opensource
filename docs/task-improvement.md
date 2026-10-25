@@ -3,7 +3,7 @@
 新增 task-improve 将一条已有分析建议、明确文档候选和调用者冻结的任务合同关联起来。它支持现有 Markdown Python 围栏和有限 RST Python/pycon 块；优先用于局部路径配置、初始化顺序和简单 API 用法。不会替用户或模型生成、放宽任务检查。
 
 ```sh
-python3 -m exampleproof task-improve /path/to/project \
+python3 -m repopath task-improve /path/to/project \
   --analysis /path/to/analysis.json --finding 1 \
   --contract /path/to/task.json --output /tmp/task-improvement
 ```
@@ -17,7 +17,7 @@ finding 从 0 开始。默认 DeepSeek；首次生成精确请求的 cloud-revie
 也可以明确回放原先记录的候选：
 
 ```sh
-python3 -m exampleproof task-improve /path/to/project \
+python3 -m repopath task-improve /path/to/project \
   --analysis /path/to/analysis.json --finding 1 --contract /path/to/task.json \
   --proposal /path/to/recorded-proposal.json --output /tmp/task-replay
 ```

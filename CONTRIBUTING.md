@@ -1,13 +1,13 @@
 # 参与开发与案例贡献
 
-ExampleProof 接受功能修复、文档改进和可复现案例。先阅读 [架构与边界](docs/architecture.md)，保持运行时只依赖 Python 标准库。执行示例必须经过隔离执行器，原项目仅导出补丁供审核。
+源途 · RepoPath 接受功能修复、文档改进和可复现案例。先阅读 [架构与边界](docs/architecture.md)，保持运行时只依赖 Python 标准库。执行示例必须经过隔离执行器，原项目仅导出补丁供审核。
 
 ## 本地验证
 
 ```sh
 python3 -m unittest discover -s tests -v
 EXAMPLEPROOF_SANDBOX_TESTS=1 python3 -m unittest discover -s tests -v
-python3 -m exampleproof benchmark benchmarks/compatibility \
+python3 -m repopath benchmark benchmarks/compatibility \
   --proposals benchmarks/compatibility/proposals.json --output artifacts/contribution-check
 git diff --check
 ```
@@ -27,3 +27,5 @@ git diff --check
 ## 维护约定
 
 JSON 报告的字段变更需要保留旧字段含义或明确提高 schema 版本；新增 CLI 行为应更新安装使用说明。合并前检查核心测试、真实沙箱测试、兼容性案例回放和补丁复查，修复失败时保留证据。模型成功率、用户反馈、上游贡献与参赛进展仅记录真实完成且可核验的结果。
+
+面向用户的名称统一为「源途 · RepoPath」，现行命令示例优先使用 `repopath`。内部 `exampleproof` 包、旧命令、配置及数据标识按[兼容约定](docs/branding.md)保留；历史证据、冻结输入、许可归属和原始记录不做品牌替换。

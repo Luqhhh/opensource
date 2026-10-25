@@ -1,4 +1,4 @@
-# 例证试用主持人手册
+# 源途 · RepoPath 试用主持人手册
 
 按相同流程观察真实学习者。优先记录具体行为与原话，避免引导受访者肯定产品。参与者只拿到受访者说明；本手册与检查参考由主持人保管。
 
@@ -7,13 +7,13 @@
 使用交付包中的源码或安装包，记录作品提交号、Python版本、浏览器、项目commit、模型模式。需要AI时使用主持人自己的服务配置，不向受访者收集密钥。
 
 ```sh
-# 在已安装例证的环境中启动，每人换一个目录
-exampleproof learn --data /tmp/exampleproof-reader-P01 --port 8765
+# 在已安装源途的环境中启动，每人换一个目录
+repopath learn --data /tmp/repopath-reader-P01 --port 8765
 # 无模型时明确记录基础路线模式
-exampleproof learn --provider none --data /tmp/exampleproof-reader-P01 --port 8765
+repopath learn --provider none --data /tmp/repopath-reader-P01 --port 8765
 ```
 
-Windows阅读与问答可以使用本机 Python；运行示例使用预先准备的Linux/WSL和Bubblewrap。先运行 `exampleproof doctor --json`，再由主持人在隔离入口测试项目可导入。禁止宿主执行回退。
+Windows阅读与问答可以使用本机 Python；运行示例使用预先准备的Linux/WSL和Bubblewrap。先运行 `repopath doctor --json`，再由主持人在隔离入口测试项目可导入。禁止宿主执行回退。
 
 TinyDB适合字典与条件查询入门，Schedule适合函数与回调入门。若已熟悉其中一个，优先分配另一个；两者都熟悉时记录熟悉程度，不当作陌生项目入门。
 

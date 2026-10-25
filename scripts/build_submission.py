@@ -85,7 +85,7 @@ def main() -> int:
     text_path = output / "technical-report-draft.txt"
     run(["pdftotext", "-layout", str(pdf), str(text_path)])
     extracted = text_path.read_text(encoding="utf-8")
-    if "开源及第三方资源使用清单" not in extracted or "例证" not in extracted:
+    if "开源及第三方资源使用清单" not in extracted or "源途" not in extracted:
         raise ValueError("Chinese title or resource appendix missing from extracted PDF text")
     checks = {
         **lengths, "pdf_total_pages_including_appendix": pages,

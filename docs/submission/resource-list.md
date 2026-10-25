@@ -1,6 +1,6 @@
 # 开源及第三方资源使用清单
 
-本表对应当前学习工作台和交付材料。自主代码采用MIT；复制的第三方文件继续遵守原许可。开发使用的服务与作品运行时调用的模型分开列明。完整来源、历史复制文件和许可文本见仓库 `docs/resources.md` 及各材料中的LICENSE/NOTICE。
+本表对应源途 · RepoPath 学习工作台和交付材料。自主代码采用MIT；复制的第三方文件继续遵守原许可。开发使用的服务与作品运行时调用的模型分开列明。完整来源、历史复制文件和许可文本见仓库 `docs/resources.md` 及各材料中的LICENSE/NOTICE。
 
 ## 运行资源与可选服务
 
@@ -28,6 +28,8 @@
 | --- | --- | --- |
 | Codex，AI开发辅助服务 | 本次开发会话；具体服务记录由账户保存 | 账户适用服务条款；辅助实现、测试、文档和演示。AI生成内容需核查，不当然视为独占原创 |
 | 图像生成概念参考 | 既有工作台视觉方向概念图 | 仅供设计参考，未随产品分发；当前页面、图示为自编CSS/图形 |
+| 源途品牌路径标识 | 本项目内联 SVG 与 CSS | 自编代码实现，随自主代码采用MIT；无新增第三方图标、字体、图片或前端库 |
+| 源途架构、流程与界面预览 | `figures/repopath-architecture.svg`、`repopath-workflow.svg` 及对应PNG；`repopath-home.png`、`repopath-workspace.png` | 自主SVG源图、关闭AI的本机导入页截图及合成工作台夹具截图，随自主材料采用MIT；截图无真实模型调用，不属于用户研究，旧图保留原样 |
 | setuptools、build、wheel | 84.2.1、1.6.1、0.48.0；PyPI官方包 | MIT；只在独立构建环境使用，不增加运行依赖 |
 | Pandoc、XeLaTeX/TeX Live | 本机版本见build-manifest；pandoc.org、tug.org | Pandoc GPL-2.0-or-later，XeTeX及TeX组件各自许可；仅调用工具生成材料 |
 | Fandol、Latin Modern字体 | 系统字体；CTAN | Fandol GPL及字体嵌入例外、Latin Modern GUST Font License；PDF嵌入字形，不另发字体 |

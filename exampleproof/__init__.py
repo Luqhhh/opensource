@@ -1,3 +1,3 @@
-"""ExampleProof: executable evidence for documentation repairs."""
+"""RepoPath learning workspace; this package name remains for compatibility."""
 
 __version__ = "0.1.0"

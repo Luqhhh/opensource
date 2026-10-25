@@ -1,8 +1,14 @@
-# 例证 · ExampleProof
+# 源途 · RepoPath
 
-**把开源项目原文变成可以逐步完成的学习任务。** 导入公开 GitHub 仓库或源码 ZIP，填写学习目标，在同一个工作台查看路线、阅读原文与源码、提问排错、记录笔记，并在下次打开时继续学习。
+**面向开源项目的 AI 学习工作台。** 从读懂源码，到动手完成。
+
+把开源项目原文变成可以逐步完成的学习任务。导入公开 GitHub 仓库或源码 ZIP，填写学习目标，在同一个工作台查看路线、阅读原文与源码、提问排错、记录笔记，并在下次打开时继续学习。
 
 面向 AIC 2026「AI+开源」的 **AI开发工具与开源协作** 方向。公开仓库：<https://github.com/Luqhhh/opensource>。自主代码采用MIT；第三方材料保留原许可证。
+
+![源途 RepoPath 导入页：从一个开源项目开始学习](docs/submission/figures/repopath-home.png)
+
+界面图来自关闭 AI 的本机应用导入页，仅展示产品界面；没有真实模型调用，也不属于用户研究。
 
 ## 快速开始
 
@@ -16,21 +22,23 @@ python3 -m venv .venv
 . .venv/bin/activate
 # Windows PowerShell 使用 .venv\Scripts\Activate.ps1
 python -m pip install .
-exampleproof learn --provider none
+repopath learn --provider none
 ```
 
 打开 <http://127.0.0.1:8765/>。上传项目ZIP或填写公开仓库地址，输入具体目标，例如“用TinyDB保存两条记录，按条件查询并验证重新打开后仍有数据”。基础路线无需模型，支持原文阅读、笔记、进度和导出。
 
-在源码目录也可直接运行 `python3 -m exampleproof learn --provider none`，无需安装第三方Python运行依赖。
+在源码目录也可直接运行 `python3 -m repopath learn --provider none`，无需安装第三方Python运行依赖。
+
+项目已由「例证 · ExampleProof」更名为「源途 · RepoPath」，安装包名称为 `aic-repopath`。已有环境升级时，先卸载 `aic-exampleproof`，再安装当前源码或新 wheel，避免两个安装包共享内部文件。旧的 `exampleproof` 命令仍可使用；学习数据目录、配置文件和 `EXAMPLEPROOF_*` 环境变量继续沿用，已有记录无需搬迁。详见[品牌与升级说明](docs/branding.md)。
 
 ## AI学习支持
 
-维护者也可通过共享代理统一提供额度，克隆者无需 DeepSeek API Key：设置 `EXAMPLEPROOF_GATEWAY_URL` 为维护者提供的 HTTPS 地址，邀请码模式再设置 `EXAMPLEPROOF_GATEWAY_TOKEN`，然后运行 `exampleproof learn`。维护者部署、调用限额及随仓库发布默认服务地址的步骤见[共享 AI 代理](docs/shared-gateway.md)。当前仓库未配置公共代理地址，不能据此认为服务已经上线。
+维护者也可通过共享代理统一提供额度，克隆者无需 DeepSeek API Key：设置 `EXAMPLEPROOF_GATEWAY_URL` 为维护者提供的 HTTPS 地址，邀请码模式再设置 `EXAMPLEPROOF_GATEWAY_TOKEN`，然后运行 `repopath learn`。维护者部署、调用限额及随仓库发布默认服务地址的步骤见[共享 AI 代理](docs/shared-gateway.md)。当前仓库未配置公共代理地址，不能据此认为服务已经上线。
 
-在启动服务的终端配置自己的 `DEEPSEEK_API_KEY` 后运行 `exampleproof learn`。本地模型使用：
+在启动服务的终端配置自己的 `DEEPSEEK_API_KEY` 后运行 `repopath learn`。本地模型使用：
 
 ```sh
-exampleproof learn --provider ollama --model YOUR_LOCAL_MODEL
+repopath learn --provider ollama --model YOUR_LOCAL_MODEL
 ```
 
 配置云端模型后，导入页的“自动用AI细化学习路线”会使用目标和经脱敏的项目片段。可取消勾选，仅生成基础路线。问答、排错和重新规划各自显示发送预览，确认后才发出请求。不要把密钥写进项目、目标或截图。
@@ -63,11 +71,11 @@ exampleproof learn --provider ollama --model YOUR_LOCAL_MODEL
 保留教程静态分析、受限任务验证和补丁导出，不自动改写原项目：
 
 ```sh
-exampleproof doctor --json
-exampleproof analyze /path/to/project --static --output /tmp/exampleproof-analysis
-exampleproof task-init --help
-exampleproof task-check --help
-exampleproof task-improve --help
+repopath doctor --json
+repopath analyze /path/to/project --static --output /tmp/repopath-analysis
+repopath task-init --help
+repopath task-check --help
+repopath task-improve --help
 ```
 
 模型候选与调用者冻结的检查分开；既有断言和预期输出受到保护。通过有限检查的补丁仍需人工审阅。高级命令见 [教程分析](docs/next-stage.md)、[任务验证](docs/task-improvement.md)。

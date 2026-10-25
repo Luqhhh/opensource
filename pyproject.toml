@@ -3,18 +3,20 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aic-exampleproof"
+name = "aic-repopath"
 version = "0.1.0"
-description = "Analyze open-source project tutorials and verify Python documentation repair proposals."
+description = "RepoPath: a source-grounded learning workspace for open-source projects."
+readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 dependencies = []
 
 [project.scripts]
+repopath = "repopath.cli:main"
 exampleproof = "exampleproof.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["exampleproof*"]
+include = ["exampleproof*", "repopath*"]
 
 [tool.setuptools.package-data]
 exampleproof = ["licenses/*.txt", "web/*.html", "web/*.css", "web/*.js", "learner_web/*.html", "learner_web/*.css", "learner_web/*.js"]

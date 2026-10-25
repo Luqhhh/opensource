@@ -1,20 +1,22 @@
 # 安装复现与维护计划
 
-供首次接触例证的人从安装开始完成一次可记录的复现。基础功能无需模型和第三方Python运行依赖；AI由本机使用者配置自己的服务。
+供首次接触源途 · RepoPath 的人从安装开始完成一次可记录的复现。基础功能无需模型和第三方Python运行依赖；AI由本机使用者配置自己的服务。
 
 ## 安装与首次使用
 
 从公开仓库下载固定提交的源码，或使用交付包中的wheel。建立新虚拟环境，在源码目录之外启动已安装程序，避免误用工作区模块。
 
 ```sh
-python3 -m venv exampleproof-env
-exampleproof-env/bin/python -m pip install /path/to/aic_exampleproof-0.1.0-py3-none-any.whl
-exampleproof-env/bin/exampleproof learn --provider none --data /tmp/exampleproof-reproduction
+python3 -m venv repopath-env
+repopath-env/bin/python -m pip install /path/to/aic_repopath-0.1.0-py3-none-any.whl
+repopath-env/bin/repopath learn --provider none --data /tmp/repopath-reproduction
 ```
 
-Windows程序位于 `exampleproof-env\Scripts\`。打开 <http://127.0.0.1:8765/>，上传试用包的TinyDB或Schedule ZIP，输入具体目标。打开原文、写笔记、关闭后恢复记录并导出指南。AI问答单独验证，记录实际模式。
+Windows程序位于 `repopath-env\Scripts\`。打开 <http://127.0.0.1:8765/>，上传试用包的TinyDB或Schedule ZIP，输入具体目标。打开原文、写笔记、关闭后恢复记录并导出指南。AI问答单独验证，记录实际模式。
 
-可选执行需要Linux/WSL和Bubblewrap。用 `exampleproof doctor --json` 检查；隔离不可用时使用阅读与问答，不能改为宿主执行。示例必须完整，每次独立，无网络与自动安装。
+已有环境升级需先卸载 `aic-exampleproof`，再安装新包；完整步骤见[品牌与升级说明](branding.md)。旧学习目录和 `--data` 路径继续沿用，无需搬迁记录。使用旧交付 wheel 复现历史版本时仍按该交付清单中的原命令操作。
+
+可选执行需要Linux/WSL和Bubblewrap。用 `repopath doctor --json` 检查；隔离不可用时使用阅读与问答，不能改为宿主执行。示例必须完整，每次独立，无网络与自动安装。
 
 实际复现者填写 [外部复现表](user-study/external-reproduction.csv)。开发者安装验证、自动操作录像和外部人员复现分别记录。
 

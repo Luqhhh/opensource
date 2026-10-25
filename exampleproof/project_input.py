@@ -47,7 +47,7 @@ class _NoRedirect(HTTPRedirectHandler):
 
 
 def fetch(url, limit):
-    request = Request(url, headers={"User-Agent": "ExampleProof", "Accept": "application/vnd.github+json"})
+    request = Request(url, headers={"User-Agent": "RepoPath", "Accept": "application/vnd.github+json"})
     with build_opener(_NoRedirect()).open(request, timeout=30) as response:
         data = response.read(limit + 1)
     if len(data) > limit:

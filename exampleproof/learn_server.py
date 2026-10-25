@@ -327,7 +327,7 @@ class LearningApp:
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = 'ExampleProof'
+    server_version = 'RepoPath'
 
     def log_message(self, format, *args):
         # Avoid recording goals/source URLs in HTTP access logs.
@@ -452,7 +452,7 @@ def serve(data, port=8765, provider='auto', model=None, *, gateway_endpoint=None
     server = ThreadingHTTPServer(('127.0.0.1', port), Handler)
     server.daemon_threads = True
     server.app = app
-    print(f'例证学习入口：http://127.0.0.1:{server.server_port}', flush=True)
+    print(f'源途 · RepoPath 学习入口：http://127.0.0.1:{server.server_port}', flush=True)
     print(f'项目存储：{app.data}；AI：{app.provider}。上传的项目代码不会被执行。', flush=True)
     try:
         server.serve_forever()

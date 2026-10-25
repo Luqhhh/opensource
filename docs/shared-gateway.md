@@ -1,5 +1,7 @@
 # 维护者统一提供 AI 额度
 
+源途 · RepoPath 使用 `repopath` 启动入口；下述 `EXAMPLEPROOF_*` 变量、内部模块与部署路径为保留的兼容标识，更名无需调整既有服务数据。安装包升级见[品牌与升级说明](branding.md)。
+
 克隆者的浏览器连接自己的本机工作台，本机 Python 后端再经 HTTPS 请求维护者的共享代理，由代理使用维护者的 DeepSeek API Key 调用模型。克隆者无需 DeepSeek 密钥。代理仅转发模型请求，不接收整个仓库，也不执行项目代码。
 
 本实现尚未部署到公共地址。下面的 `ai.example.org` 是占位域名，不是可用服务。
@@ -26,7 +28,7 @@ read -rsp 'DeepSeek API Key: ' DEEPSEEK_API_KEY
 export DEEPSEEK_API_KEY
 read -rsp '共享邀请码（至少 24 字符）: ' EXAMPLEPROOF_GATEWAY_TOKEN
 export EXAMPLEPROOF_GATEWAY_TOKEN
-python3 -m exampleproof gateway --daily-limit 50 --hourly-limit 10 --total-limit 500
+python3 -m repopath gateway --daily-limit 50 --hourly-limit 10 --total-limit 500
 ```
 
 服务固定监听 `127.0.0.1:8787`。`GET /health` 仅检查代理进程和配置，不调用模型；它不证明密钥余额充足或供应商可用。真实请求只有调用 `/v1/complete` 时发生。
@@ -37,7 +39,7 @@ python3 -m exampleproof gateway --daily-limit 50 --hourly-limit 10 --total-limit
 export EXAMPLEPROOF_GATEWAY_URL='http://127.0.0.1:8787'
 read -rsp '共享邀请码: ' EXAMPLEPROOF_GATEWAY_TOKEN
 export EXAMPLEPROOF_GATEWAY_TOKEN
-python3 -m exampleproof learn
+python3 -m repopath learn
 ```
 
 以上回环地址只用于同机联调。远程用户应填写你部署好的 `https://` 地址。公共模式不需要设置邀请码。Windows PowerShell 使用 `$env:EXAMPLEPROOF_GATEWAY_URL='https://你的域名'` 等环境配置；请避免在共享终端历史中留下真实凭据。
@@ -54,7 +56,7 @@ Python 标准库 HTTP 服务仅作为回环后端，连接数与推理并发均�
 
 ## 让 clone 后自动接入
 
-完成部署并核对 HTTPS 地址后，在 `exampleproof/shared_service.py` 中仅填写公开地址 `SERVICE_URL` 和服务端一致的 `MODEL`，再把这两个非秘密配置随代码发布。这样克隆者运行 `python3 -m exampleproof learn` 就会自动选择共享服务；邀请码模式仍需各自设置邀请码。
+完成部署并核对 HTTPS 地址后，在 `exampleproof/shared_service.py` 中仅填写公开地址 `SERVICE_URL` 和服务端一致的 `MODEL`，再把这两个非秘密配置随代码发布。这样克隆者运行 `python3 -m repopath learn` 就会自动选择共享服务；邀请码模式仍需各自设置邀请码。
 
 选择优先级为：显式指定 provider；自动模式下，命令行/环境变量共享地址优先，其次个人 `DEEPSEEK_API_KEY`，然后仓库的公开共享地址，最后基础路线。可以用 `--provider none` 禁用 AI，用 `--provider deepseek` 使用自己的密钥。`--gateway-url` 覆盖默认共享地址，`--model` 覆盖默认模型。
 

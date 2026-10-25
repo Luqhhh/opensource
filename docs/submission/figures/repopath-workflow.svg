@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700" role="img" aria-labelledby="title description">
+  <title id="title">源途 RepoPath：一次学习如何进行</title>
+  <desc id="description">让下一步、相关原文和已有记录始终相连。学习过程依次包括说明目标、开始行动、核对与求助、记录与恢复。用户完成标记、AI反馈与实际运行分别保存，真实体验另行观察。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 8 5 1 9" fill="none" stroke="#226b59" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1600" height="700" fill="#f7f6ef"/>
+  <g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="66" y="90" fill="#173c35" font-size="46" font-weight="700">一次学习如何进行</text>
+    <text x="66" y="140" fill="#536b61" font-size="24">让下一步、相关原文和已有记录始终相连。</text>
+    <path d="M66 177H144a14 14 0 0 0 14-14" fill="none" stroke="#b9cdbd" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="66" cy="177" r="4" fill="#b49c73"/>
+    <g fill="#fffefb" stroke="#c6d6cc" stroke-width="1.5">
+      <rect x="66" y="218" width="320" height="300" rx="18"/>
+      <rect x="451" y="218" width="320" height="300" rx="18"/>
+      <rect x="836" y="218" width="320" height="300" rx="18"/>
+      <rect x="1221" y="218" width="320" height="300" rx="18"/>
+    </g>
+    <g fill="#e7f1e9">
+      <path d="M84 218H368a18 18 0 0 1 18 18V300H66V236a18 18 0 0 1 18-18Z"/>
+      <path d="M469 218H753a18 18 0 0 1 18 18V300H451V236a18 18 0 0 1 18-18Z"/>
+      <path d="M854 218H1138a18 18 0 0 1 18 18V300H836V236a18 18 0 0 1 18-18Z"/>
+      <path d="M1239 218H1523a18 18 0 0 1 18 18V300H1221V236a18 18 0 0 1 18-18Z"/>
+    </g>
+    <g fill="#226b59"><circle cx="108" cy="261" r="19"/><circle cx="493" cy="261" r="19"/><circle cx="878" cy="261" r="19"/><circle cx="1263" cy="261" r="19"/></g>
+    <g fill="#fffefb" font-size="16" font-weight="600" text-anchor="middle"><text x="108" y="267">01</text><text x="493" y="267">02</text><text x="878" y="267">03</text><text x="1263" y="267">04</text></g>
+    <g fill="#173c35" font-size="29" font-weight="650"><text x="141" y="272">说明目标</text><text x="526" y="272">开始行动</text><text x="911" y="272">核对与求助</text><text x="1296" y="272">记录与恢复</text></g>
+    <g fill="#3f5b4f" font-size="23">
+      <text x="90" y="350">导入公开项目</text><text x="90" y="395">选择基础水平</text><text x="90" y="440">创建学习路线</text>
+      <text x="475" y="350">查看现在做什么</text><text x="475" y="395">打开关联原文</text><text x="475" y="440">完成一个小任务</text>
+      <text x="860" y="350">解释选中片段</text><text x="860" y="395">提交实际报错</text><text x="860" y="440">可选完整示例运行</text>
+      <text x="1245" y="350">保存笔记与进度</text><text x="1245" y="395">调整或跳过步骤</text><text x="1245" y="440">重开后继续学习</text>
+    </g>
+    <g fill="none" stroke="#226b59" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"><path d="M397 368H435"/><path d="M782 368H820"/><path d="M1167 368H1205"/></g>
+    <text x="66" y="585" fill="#3f6655" font-size="25">用户完成标记、AI 反馈与实际运行分别保存；真实体验另行观察。</text>
+    <path d="M66 610H1541" stroke="#dde6dc"/>
+    <g transform="translate(66 631)"><rect width="34" height="34" rx="9" fill="#173c35"/><g transform="translate(-1 -1)"><path d="M10 27V20a4 4 0 0 1 4-4h8a5 5 0 0 0 0-10h-4" fill="none" stroke="#f5f6ee" stroke-width="2.3" stroke-linecap="round"/><circle cx="10" cy="27" r="2.8" fill="#d7bc83"/><circle cx="18" cy="6" r="2.8" fill="#f5f6ee"/></g></g>
+    <text x="113" y="655" fill="#173c35" font-size="20" font-weight="600">源途 · RepoPath</text>
+    <text x="296" y="655" fill="#657f71" font-size="18">｜ 自绘学习流程</text>
+    <text x="1541" y="655" fill="#657f71" font-size="18" text-anchor="end">从读懂源码，到动手完成。</text>
+  </g>
+</svg>

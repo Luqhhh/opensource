@@ -22,10 +22,13 @@ args = parser.parse_args()
 wheels = list(args.artifacts.glob("*.whl"))
 assert len(wheels) == 1, wheels
 wheel = wheels[0].resolve()
-assert wheel.name == "aic_exampleproof-0.1.0-py3-none-any.whl", wheel.name
+assert wheel.name == "aic_repopath-0.1.0-py3-none-any.whl", wheel.name
 modules = {p.relative_to("exampleproof").as_posix(): p.read_bytes()
            for p in Path("exampleproof").rglob("*.py")}
 assert modules, "Source module manifest must not be empty"
+public_modules = {p.relative_to("repopath").as_posix(): p.read_bytes()
+                  for p in Path("repopath").rglob("*.py")}
+assert {"__init__.py", "__main__.py", "cli.py"} <= set(public_modules)
 assets = {p.relative_to("exampleproof").as_posix(): p.read_bytes()
           for folder in ("web", "learner_web")
           for p in (Path("exampleproof") / folder).rglob("*") if p.is_file()}
@@ -47,6 +50,9 @@ with zipfile.ZipFile(wheel) as archive:
             and not name.endswith("/")} == set(assets), "Wheel UI resource inventory differs from source"
     assert {"exampleproof/benchmark.py", "exampleproof/study.py", "exampleproof/context.py", "exampleproof/semantic_study.py", "exampleproof/cli.py", "exampleproof/__main__.py"} <= set(names)
     assert {name.removeprefix("exampleproof/") for name in names if name.startswith("exampleproof/") and name.endswith(".py")} == set(modules)
+    assert {name.removeprefix("repopath/") for name in names if name.startswith("repopath/") and name.endswith(".py")} == set(public_modules)
+    for name, data in public_modules.items():
+        assert archive.read("repopath/" + name) == data, name
     for name, data in (modules | assets).items():
         assert archive.read("exampleproof/" + name) == data, name
     for name, data in licenses.items():
@@ -54,17 +60,21 @@ with zipfile.ZipFile(wheel) as archive:
     metadata_files = [name for name in names if name.endswith(".dist-info/METADATA")]
     assert len(metadata_files) == 1, metadata_files
     metadata = Parser().parsestr(archive.read(metadata_files[0]).decode("utf-8"))
-    assert metadata["Name"] == "aic-exampleproof", metadata["Name"]
+    assert metadata["Name"] == "aic-repopath", metadata["Name"]
     assert metadata["Version"] == "0.1.0", metadata["Version"]
     assert metadata["Requires-Python"] == ">=3.10", metadata["Requires-Python"]
     assert not metadata.get_all("Requires-Dist"), metadata.get_all("Requires-Dist")
     entries = configparser.ConfigParser()
     entries.read_string(archive.read(metadata_files[0].rsplit("/", 1)[0] + "/entry_points.txt").decode("utf-8"))
     assert entries.get("console_scripts", "exampleproof") == "exampleproof.cli:main"
+    assert entries.get("console_scripts", "repopath") == "repopath.cli:main"
 
 sdists = list(wheel.parent.glob("*.tar.gz"))
 assert len(sdists) == 1, sdists
 with tarfile.open(sdists[0], "r:gz") as archive:
+    for name, data in public_modules.items():
+        members = [m for m in archive.getmembers() if m.isfile() and m.name.endswith("/repopath/" + name)]
+        assert len(members) == 1 and archive.extractfile(members[0]).read() == data, name
     packaged_assets = {m.name.split("/exampleproof/", 1)[1] for m in archive.getmembers()
                        if m.isfile() and ("/exampleproof/web/" in m.name or "/exampleproof/learner_web/" in m.name)}
     assert packaged_assets == set(assets), "Source distribution UI resource inventory differs from source"
@@ -76,20 +86,28 @@ with tarfile.open(sdists[0], "r:gz") as archive:
         assert len(members) == 1, name
         assert archive.extractfile(members[0]).read() == data, name
 
-with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
+with tempfile.TemporaryDirectory(prefix="repopath-installed-") as temporary:
     outside = Path(temporary)
     environment = outside / "venv"
     venv.EnvBuilder(with_pip=True).create(environment)
     python = str(environment / "bin/python")
-    command = str(environment / "bin/exampleproof")
+    command = str(environment / "bin/repopath")
+    legacy_command = str(environment / "bin/exampleproof")
     subprocess.run([python, "-m", "pip", "install", "--no-deps", str(wheel)], cwd=outside, check=True)
     subprocess.run([python, "-m", "pip", "check"], cwd=outside, check=True)
     installed = Path(subprocess.check_output([python, "-I", "-c", "import exampleproof,pathlib; print(pathlib.Path(exampleproof.__file__).parent)"], cwd=outside, text=True).strip())
+    public_installed = Path(subprocess.check_output([python, "-I", "-c", "import repopath,pathlib; print(pathlib.Path(repopath.__file__).parent)"], cwd=outside, text=True).strip())
+    assert public_installed.parent == installed.parent
+    for name, data in public_modules.items():
+        assert (public_installed / name).read_bytes() == data, name
     for name, data in (modules | assets).items():
         assert (installed / name).read_bytes() == data, name
     for name, data in licenses.items():
         assert (installed / "licenses" / name).read_bytes() == data, name
-    for invocation in ([python, "-I", "-m", "exampleproof"], [command]):
+    for label, invocation in (("repopath-module", [python, "-I", "-m", "repopath"]),
+                              ("repopath-console", [command]),
+                              ("legacy-module", [python, "-I", "-m", "exampleproof"]),
+                              ("legacy-console", [legacy_command])):
         version = subprocess.check_output([*invocation, "--version"], cwd=outside, text=True).strip()
         assert version == "0.1.0", version
         help_text = subprocess.check_output([*invocation, "benchmark", "--help"], cwd=outside, text=True)
@@ -98,7 +116,7 @@ with tempfile.TemporaryDirectory(prefix="exampleproof-installed-") as temporary:
         for name in ("analyze", "compare", "compare-audit", "task-check", "task-improve", "task-init", "task-diagnose", "learn"):
             help_text = subprocess.check_output([*invocation, name, "--help"], cwd=outside, text=True)
             assert "usage:" in help_text, name
-        project = outside / ("project-" + ("module" if len(invocation) > 1 else "console"))
+        project = outside / ("project-" + label)
         project.mkdir()
         (project / "README.md").write_text("# Quick start\n\nRead this tutorial.\n", encoding="utf-8")
         output = project.with_name(project.name + "-analysis")

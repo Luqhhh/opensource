@@ -3,7 +3,7 @@ const $=s=>document.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,c=
 const state={config:null,project:null,tab:'route',timer:null,file:null,importMode:'github',busy:false,selectedStep:null,reader:null,sourceRequest:0,focus:false,progressBusy:false,notes:new Map(),noteFailures:new Set()};
 const levels={beginner:'刚开始',familiar:'有基础',experienced:'深入源码'};
 let toastTimer;
-function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4500);}
+function toast(message){const element=$('#toast');element.textContent=message;element.hidden=false;animateInterface(element,[{opacity:0,transform:'translate(-50%, 6px)'},{opacity:1,transform:'translate(-50%, 0)'}],{duration:180});clearTimeout(toastTimer);toastTimer=setTimeout(()=>{stopInterfaceMotion(element);element.hidden=true;},4500);}
 async function api(path,options={}){const headers={...(options.headers||{})};if(options.method==='POST')headers['X-ExampleProof-Token']=state.config.csrf;if(options.json){headers['Content-Type']='application/json';options.body=JSON.stringify(options.json);delete options.json;}const response=await fetch(path,{...options,headers});const value=await response.json();if(!response.ok)throw Error(value.error||'请求未完成，请重试。');return value;}
 const refs=items=>`<div class="refs">${(items||[]).map(e=>`<button class="ref" data-action="source" data-path="${esc(e.path)}" data-line="${e.start_line}" data-end="${e.end_line}">↗ ${esc(e.path)}:${e.start_line}</button>`).join('')}</div>`;
 const icons={
@@ -22,35 +22,72 @@ const icons={
   spark:'<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/>'
 };
 const icon=name=>`<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]||icons.source}</svg>`;
-const motionPreference=matchMedia('(prefers-reduced-motion:reduce)'),motionAnimations=new Set();
-const motionAllowed=()=>!motionPreference.matches;
-function stopInterfaceMotion(){for(const animation of motionAnimations)animation.cancel();motionAnimations.clear();}
-motionPreference.addEventListener('change',event=>{if(event.matches)stopInterfaceMotion();});
+const motionPreference=matchMedia('(prefers-reduced-motion:reduce)'),motionContrast=matchMedia('(forced-colors:active)'),motionAnimations=new Set(),elementMotion=new WeakMap();
+const motionAllowed=()=>!motionPreference.matches&&!motionContrast.matches&&!document.hidden;
+function stopInterfaceMotion(root=null){
+  for(const animation of [...motionAnimations]){
+    const target=animation.effect?.target;
+    if(!root||!target?.isConnected||root===target||root.contains(target)){animation.cancel();motionAnimations.delete(animation);if(elementMotion.get(target)===animation)elementMotion.delete(target);}
+  }
+}
+function updateMotionPreference(){
+  if(motionAllowed())return;
+  stopInterfaceMotion();
+  // An explicit smooth scroll is not stopped by changing the CSS media query.
+  window.scrollTo({left:scrollX,top:scrollY,behavior:'instant'});
+  document.querySelectorAll('.reader-scroll,.conversation-thread,.course-outline ol').forEach(element=>element.scrollTo({left:element.scrollLeft,top:element.scrollTop,behavior:'instant'}));
+}
+motionPreference.addEventListener('change',updateMotionPreference);
+motionContrast.addEventListener('change',updateMotionPreference);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopInterfaceMotion();});
+function scrollInterface(element,options={}){element?.scrollIntoView({...options,behavior:motionAllowed()?'smooth':'instant'});}
 function animateInterface(element,frames,options={}){
-  if(!element?.isConnected||!element.animate||!motionAllowed())return;
-  const animation=element.animate(frames,{duration:360,easing:'cubic-bezier(.2,.7,.2,1)',...options});
+  if(!element)return;
+  const previous=elementMotion.get(element);
+  if(previous){
+    const style=getComputedStyle(element),first={...frames[0]};
+    for(const property of ['opacity','transform'])if(property in first)first[property]=style[property];
+    frames=[first,...frames.slice(1)];previous.cancel();motionAnimations.delete(previous);
+  }
+  if(!element.isConnected||!element.animate||!motionAllowed()){elementMotion.delete(element);return;}
+  const style=getComputedStyle(document.documentElement);
+  const animation=element.animate(frames,{duration:parseFloat(style.getPropertyValue('--motion-normal'))||220,easing:style.getPropertyValue('--motion-ease').trim()||'cubic-bezier(.2,.7,.2,1)',fill:'backwards',...options});
+  elementMotion.set(element,animation);
   motionAnimations.add(animation);
-  const release=()=>motionAnimations.delete(animation);
+  const release=()=>{motionAnimations.delete(animation);if(elementMotion.get(element)===animation)elementMotion.delete(element);};
   animation.finished.then(release,release);
   animation.addEventListener('finish',release,{once:true});animation.addEventListener('cancel',release,{once:true});
   return animation;
 }
-function revealInterface(elements){
-  [...elements].filter(Boolean).slice(0,8).forEach((element,index)=>animateInterface(element,[{opacity:.4,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{delay:index*35}));
+function revealInterface(elements,{direction=0,stagger=true}={}){
+  const distance=innerWidth<=760?4:8;
+  [...elements].filter(Boolean).slice(0,8).forEach((element,index)=>animateInterface(element,[{opacity:.76,transform:direction?`translateX(${Math.sign(direction)*distance}px)`:`translateY(${distance}px)`},{opacity:1,transform:'translate(0, 0)'}],{delay:stagger?Math.min(index*24,96):0}));
+}
+function emphasizeReference(element){
+  if(!element||!motionAllowed())return;
+  const color=elementMotion.has(element)?getComputedStyle(element).backgroundColor:'#d6e9df';
+  stopInterfaceMotion(element);
+  animateInterface(element,[{backgroundColor:color},{backgroundColor:getComputedStyle(element).backgroundColor}],{duration:480});
 }
 function workspaceEmblem(){
   return `<span class="workspace-emblem" aria-hidden="true"><span class="emblem-orbit"></span><span class="emblem-tile emblem-source">${icon('source')}</span><span class="emblem-tile emblem-book">${icon('book')}</span><span class="emblem-spark">${icon('spark')}</span></span>`;
 }
 function captureWorkspaceMotion(){
-  const progress=$('.route-progress progress');
-  return {key:$('#main').dataset.motionView,project:$('#main').dataset.motionProject,tab:$('#main').dataset.motionTab,marker:$('.workspace-tab-marker')?.getBoundingClientRect(),ratio:progress?progress.value/progress.max:null,lastAnswer:$('.conversation-turn:last-child')?.id};
+  const progress=$('.route-progress progress'),fill=$('.route-progress-fill');
+  let ratio=progress?progress.value/progress.max:null;
+  if(fill&&elementMotion.has(fill))ratio=new DOMMatrixReadOnly(getComputedStyle(fill).transform).a;
+  return {key:$('#main').dataset.motionView,project:$('#main').dataset.motionProject,tab:$('#main').dataset.motionTab,step:$('.course-step[aria-current="step"]')?.dataset.step,marker:$('.workspace-tab-marker')?.getBoundingClientRect(),ratio};
 }
 function animateWorkspace(previous,p){
   const main=$('#main'),key=JSON.stringify([p.id,state.tab,state.tab==='route'?state.selectedStep:null]);
   main.dataset.motionView=key;main.dataset.motionProject=p.id;main.dataset.motionTab=state.tab;
   const changedProject=previous.project!==p.id;
   if(changedProject)revealInterface([$('.project-head'),$('.workspace-tabs'),$('#project-content')]);
-  else if(previous.key!==key)revealInterface([$('#project-content')]);
+  else if(previous.tab!==state.tab){const tabs=['route','files','journal','assessment'];revealInterface([$('#project-content')],{direction:tabs.indexOf(state.tab)-tabs.indexOf(previous.tab)});}
+  else if(previous.key!==key){
+    const direction=p.guide.steps.findIndex(s=>s.id===state.selectedStep)-p.guide.steps.findIndex(s=>s.id===previous.step);
+    revealInterface([$('.task-focus'),$('.task-support'),$('.study-tools')],{direction});
+  }
   const marker=$('.workspace-tab-marker');
   if(!changedProject&&previous.tab!==state.tab&&previous.marker&&marker){
     const current=marker.getBoundingClientRect();
@@ -58,22 +95,20 @@ function animateWorkspace(previous,p){
   }
   const progress=$('.route-progress progress'),fill=$('.route-progress-fill');
   if(!changedProject&&progress&&previous.ratio!==null&&previous.ratio!==progress.value/progress.max){
-    animateInterface(fill,[{transform:`scaleX(${previous.ratio})`},{transform:`scaleX(${progress.value/progress.max})`}],{duration:650});
-    animateInterface($('.route-progress strong'),[{transform:'scale(1)'},{transform:'scale(1.1)',offset:.4},{transform:'scale(1)'}],{duration:440});
+    animateInterface(fill,[{transform:`scaleX(${previous.ratio})`},{transform:`scaleX(${progress.value/progress.max})`}],{duration:360});
+    animateInterface($('.route-progress strong'),[{opacity:.65},{opacity:1}],{duration:220});
   }
-  const answer=$('.conversation-turn:last-child');
-  if(previous.key===key&&state.studyTool==='help'&&answer&&answer.id!==previous.lastAnswer)revealInterface([answer.querySelector('.chat-answer')]);
 }
 function importIllustration(){
   return `<div class="source-visual">
     <div class="source-art" aria-hidden="true"><div class="art-scene">
       <div class="art-glow"></div><div class="art-ground"></div>
-      <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+      <svg class="art-path" viewBox="0 0 420 330" fill="none"><path d="M43 256H86a25 25 0 0 0 25-25V126a32 32 0 0 1 32-32h156a33 33 0 0 0 33-33V42" stroke="currentColor" stroke-width="2" stroke-dasharray="4 7"/><circle cx="43" cy="256" r="6" fill="currentColor"/><circle cx="332" cy="42" r="6" fill="currentColor"/></svg>
       <span class="art-spark spark-one">${icon('spark')}</span><span class="art-spark spark-two">${icon('spark')}</span>
       <div class="source-sheet sheet-back"><div class="sheet-top">${icon('source')}<span>源码</span><span class="sheet-status"></span></div><div class="code-bars"><i></i><i></i><i></i><i></i><i></i></div><div class="code-caption">read · explore · understand</div></div>
       <div class="source-sheet sheet-front"><div class="sheet-top">${icon('book')}<span>README.md</span><b>↗</b></div><div class="sheet-title"></div><div class="paper-lines"><i></i><i></i><i></i></div><div class="paper-code"><i></i><i></i><i></i></div><div class="paper-footer"><span></span><span></span><span></span></div></div>
-      <div class="art-note note-route">${icon('route')}<span>学习路线</span><span class="note-dots"><i></i><i></i><i></i></span></div>
-      <div class="art-note note-source"><span class="note-check">${icon('check')}</span><span>从原文开始</span></div>
+      <div class="art-note note-route">${icon('route')}<span>你的学习路线</span><span class="note-dots"><i></i><i></i><i></i></span></div>
+      <div class="art-note note-source"><span class="note-check">${icon('book')}</span><span>每一步，都有原文相伴</span></div>
     </div></div>
     <div class="art-footer"><p class="art-caption"><span class="caption-line"></span>文档与源码，始终在手边。</p></div>
   </div>`;
@@ -85,9 +120,10 @@ function home(){
   state.file=null;state.importMode='github';
   $('#main').innerHTML=`<div class="hero">
     <section class="hero-copy">
-      <div class="entry-label"><span></span>学习空间</div>
-      <h1>开始一个<br><span>新的学习项目。</span></h1>
-      <p class="lead">从源码出发，找到你的下一步。</p>
+      <div class="entry-label"><span></span>源途 · 开源项目学习工作台</div>
+      <h1>读懂开源项目，<br><span>走好每一步。</span></h1>
+      <p class="lead">从读懂源码，到动手完成。</p>
+      <ol class="learning-path" aria-label="学习流程"><li><span>01</span>找到起点</li><li><span>02</span>对照原文</li><li><span>03</span>动手实践</li></ol>
       ${importIllustration()}
     </section>
     <section class="import-card" aria-labelledby="import-heading">
@@ -104,7 +140,7 @@ function home(){
 
 async function projects(){
   const {projects}=await api('/api/projects');
-  $('#main').innerHTML=`<div class="page-head collection-head"><div><div class="entry-label"><span></span>我的空间</div><h1>学习项目 <span class="collection-count">${projects.length}</span></h1></div><div class="collection-actions">${workspaceEmblem()}<a href="#/new" class="button primary">导入项目 ${icon('arrow')}</a></div></div>${projects.length?`<div class="project-grid">${projects.map(p=>`<a class="project-card ${p.status==='failed'?'project-failed':''}" href="#/project/${p.id}"><div class="project-card-top"><span class="project-symbol">${icon('files')}</span><span class="pill ${p.status==='failed'?'warn':p.mode==='ai'?'':'local'}">${p.status==='failed'?'导入失败':p.status==='ready'?(p.mode==='ai'?'AI 路线':'基础路线'):'处理中'}</span></div><h3>${esc(p.name)}</h3><p>${esc(p.goal)}</p><div class="card-bottom"><span>${(p.completed_steps||[]).length} / ${p.step_count} 步</span><span>${p.status==='failed'?'查看详情':'继续学习'} ${icon('arrow')}</span></div></a>`).join('')}</div>`:`<div class="empty"><span class="empty-symbol">${icon('files')}</span><h2>还没有学习项目</h2><p>导入 GitHub 仓库或源码 ZIP。</p><a class="button primary" href="#/new">导入项目 ${icon('arrow')}</a></div>`}`;
+  $('#main').innerHTML=`<div class="page-head collection-head"><div><div class="entry-label"><span></span>源途 · 我的学习旅程</div><h1>学习项目 <span class="collection-count">${projects.length}</span></h1></div><div class="collection-actions">${workspaceEmblem()}<a href="#/new" class="button primary">导入项目 ${icon('arrow')}</a></div></div>${projects.length?`<div class="project-grid">${projects.map(p=>`<a class="project-card ${p.status==='failed'?'project-failed':''}" href="#/project/${p.id}"><div class="project-card-top"><span class="project-symbol">${icon('files')}</span><span class="pill ${p.status==='failed'?'warn':p.mode==='ai'?'':'local'}">${p.status==='failed'?'导入失败':p.status==='ready'?(p.mode==='ai'?'AI 路线':'基础路线'):'处理中'}</span></div><h3>${esc(p.name)}</h3><p>${esc(p.goal)}</p><div class="card-bottom"><span>${(p.completed_steps||[]).length} / ${p.step_count} 步</span><span>${p.status==='failed'?'查看详情':'继续学习'} ${icon('arrow')}</span></div></a>`).join('')}</div>`:`<div class="empty"><span class="empty-symbol">${icon('route')}</span><h2>从第一个项目开始</h2><p>导入 GitHub 仓库或源码 ZIP，找到你的学习起点。</p><a class="button primary" href="#/new">导入项目 ${icon('arrow')}</a></div>`}`;
   revealInterface([$('.collection-head'),...document.querySelectorAll('.project-card'),$('.empty')]);
 }
 
@@ -147,6 +183,7 @@ function renderReader(){renderStudyReader();}
 
 function projectView(p){
   const previousMotion=captureWorkspaceMotion();
+  stopInterfaceMotion($('#main'));
   const readerScroll=$('#source-reader .reader-scroll')?.scrollTop??null;
   if(state.project&&state.studyProject!==p.id&&(state.project.id!==p.id||state.project.guide?.mode!==p.guide?.mode)){
     state.selectedStep=null;state.reader=null;++state.sourceRequest;
@@ -195,7 +232,8 @@ async function openProject(id){
 }
 
 async function navigate(){stopInterfaceMotion();delete $('#main').dataset.motionView;delete $('#main').dataset.motionProject;delete $('#main').dataset.motionTab;document.querySelectorAll('.topbar nav a').forEach(a=>{const current=a.hash===(location.hash.startsWith('#/project/')?'#/projects':location.hash||'#/new');if(current)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});clearTimeout(state.timer);void flushStudyNote();clearTimeout(state.helpPoll);state.study=null;state.studyProject=null;state.helpPending=null;state.restoreReader=null;state.selection=null;state.project=null;state.tab='route';state.selectedStep=null;state.reader=null;state.focus=false;++state.sourceRequest;$('#main').classList.remove('learning-main');const route=location.hash||'#/new';try{if(route.startsWith('#/project/'))await openProject(route.slice(10));else if(route==='#/projects')await projects();else home();}catch(e){$('#main').innerHTML=`<div class="empty"><h2>暂时无法打开</h2><p>${esc(e.message)}</p><a href="#/projects" class="button">返回我的项目</a></div>`;}window.scrollTo(0,0);}
-function openDialog(title,html){$('#dialog-title').textContent=title;$('#dialog-body').innerHTML=html;if(!$('#detail-dialog').open){$('#detail-dialog').showModal();revealInterface([$('#detail-dialog')]);}}
+function openDialog(title,html){$('#dialog-title').textContent=title;$('#dialog-body').innerHTML=html;const dialog=$('#detail-dialog');if(!dialog.open){dialog.showModal();animateInterface(dialog,[{opacity:.6,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}]);}}
+$('#detail-dialog').addEventListener('close',()=>stopInterfaceMotion($('#detail-dialog')));
 async function preview(){openDialog('AI 将使用哪些内容？','<p class="muted">正在读取发送内容…</p>');const {payload,preview}=await api(`/api/projects/${state.project.id}/preview`);$('#dialog-body').innerHTML=`<p class="tiny muted">点击 AI 生成或重试按钮后，将向 ${esc(providerName(preview.provider))} 发送以下内容。请确认这些片段适合发送。</p><div class="checkpoint"><strong>你的目标</strong>${esc(payload.learner.goal)} · ${esc(payload.learner.level)}</div>${payload.evidence.map(e=>`<section class="preview-item"><h3>${esc(e.path)}:${e.start_line}–${e.end_line}</h3><pre>${esc(e.text)}</pre></section>`).join('')}`;}
 function selectFile(file){if(!file)return;if(!file.name.toLowerCase().endsWith('.zip')||file.size>20000000){toast('请选择不超过 20 MB 的 ZIP 项目文件。');return;}state.file=file;$('#file-name').textContent=file.name;}
 document.addEventListener('submit',async e=>{if(e.target.id!=='import-form')return;e.preventDefault();if(state.busy)return;const goal=$('#goal').value.trim(),level=$('input[name=level]:checked').value,auto_ai=Boolean($('#auto-ai')?.checked);state.busy=true;$('#import-submit').disabled=true;$('#form-error').textContent='';try{let result;if(state.importMode==='zip'){if(!state.file)throw Error('请先选择项目 ZIP。');const query=new URLSearchParams({name:state.file.name.replace(/\.zip$/i,''),goal,level,auto_ai:String(auto_ai)});result=await api('/api/projects/upload?'+query,{method:'POST',headers:{'Content-Type':'application/zip'},body:state.file});}else{result=await api('/api/projects',{method:'POST',json:{repository:$('#repository').value.trim(),ref:$('#ref').value.trim()||null,goal,level,auto_ai}});}location.hash='#/project/'+result.id;}catch(error){$('#form-error').textContent=error.message;}finally{state.busy=false;if($('#import-submit'))$('#import-submit').disabled=false;}});
@@ -205,4 +243,4 @@ document.addEventListener('change',e=>{if(e.target.id==='zip-file')selectFile(e.
 document.addEventListener('keydown',e=>{if(e.target.id==='dropzone'&&(e.key==='Enter'||e.key===' ')){e.preventDefault();$('#zip-file').click();}});
 for(const event of ['dragover','dragleave','drop'])document.addEventListener(event,e=>{const zone=e.target.closest('#dropzone');if(!zone)return;e.preventDefault();zone.classList.toggle('dragging',event==='dragover');if(event==='drop')selectFile(e.dataTransfer.files[0]);});
 window.addEventListener('hashchange',()=>{if(state.config)void navigate();});
-window.addEventListener('DOMContentLoaded',()=>api('/api/config').then(config=>{state.config=config;return navigate();}).catch(()=>{$('#main').innerHTML='<div class="empty"><h2>学习服务尚未连接</h2><p>请保持本机 ExampleProof 服务运行，然后刷新此页面。</p></div>';}));
+window.addEventListener('DOMContentLoaded',()=>api('/api/config').then(config=>{state.config=config;return navigate();}).catch(()=>{$('#main').innerHTML='<div class="empty"><h2>学习服务尚未连接</h2><p>请保持本机源途 RepoPath 服务运行，然后刷新此页面。</p></div>';}));

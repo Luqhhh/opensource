@@ -1,5 +1,14 @@
 # 开源及第三方资源使用清单
 
+## 2026-10-25 源途 · RepoPath 品牌更新
+
+- **品牌与界面资源：** 新的路径与节点标识、导入页学习路线图形由项目内联 SVG、HTML 与 CSS 实现，随自主代码采用 MIT。使用已有系统字体，没有新增第三方图标、图片、字体、前端库或网络资源。
+- **材料图示与截图：** `docs/submission/figures/repopath-architecture.svg` 与 `repopath-workflow.svg` 为本项目自主图形源文件，对应 PNG 为其渲染产物。`repopath-home.png` 来自关闭 AI 的本机应用导入页；`repopath-workspace.png` 来自合成浏览器夹具，使用合成项目。两者均无真实模型调用，不属于独立评测或用户研究。图示与截图随自主材料采用 MIT；旧图另行保留，没有复制新的第三方图像。
+- **开发验证工具：** 复用本机已有 [Playwright](https://github.com/microsoft/playwright) 1.64.1（Apache-2.0）及其缓存 Chromium 156.0.8078.4（revision 1248）完成浏览器交互检查与截图，仅用于开发，不随应用分发。构建复用已有 PyPA build 1.6.1，并在独立临时虚拟环境使用 setuptools 84.0.0（MIT，官方 PyPI wheel）；未增加应用运行依赖。
+- **学习空间动效：** 使用浏览器原生 Web Animations API、CSS 与系统动效偏好，实现任务切换、工具展开和定位反馈；没有新增运行依赖或外部素材。动效预览使用合成浏览器夹具，由上述 Playwright 及其已有缓存录屏工具（FFmpeg revision 1013）生成，仅展示交互，不属于真实模型结果或读者研究；录屏工具不随应用分发。
+- **运行与安装：** 分发包更名为 `aic-repopath`，新增 `repopath` 启动入口；保留内部 `exampleproof` 模块及旧命令、数据目录、配置和环境变量。没有新增 Python 运行依赖、基础模型或数据集。
+- **历史材料：** 以下日期条目中的 ExampleProof、旧包名、资源来源、归属及验证记录按当时版本保留。新品牌文档不改写冻结证据、用户记录、原截图与录像，也不产生新的真实模型结果或学习效果结论。升级与品牌约定见[品牌说明](branding.md)。
+
 ## 2026-10-23 共享 AI 代理候选
 
 - **应用与本地验证：** 共享代理、HTTPS 客户端、SQLite 用量计数和合成检查由本项目实现，使用既有 Python 标准库，不新增 Python 运行依赖、模型或数据集。继续使用已有 DeepSeek HTTP 适配；本轮不调用真实模型。
