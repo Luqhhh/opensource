@@ -45,12 +45,41 @@ def _first(chunks, pattern, fallback=None):
     return next((c for c in chunks if re.search(pattern, c.title + '\n' + c.text, re.I)), fallback)
 
 
+PACKAGING_NAMES = {'pyproject.toml', 'setup.py', 'setup.cfg', 'package.json', 'go.mod'}
+
+
+def packaging_evidence(snapshot):
+    """环境类步骤优先引用打包元数据，而不是包入口文件的头部注释。"""
+    for group in (snapshot.chunks, snapshot.candidates):
+        for chunk in group:
+            if PurePosixPath(chunk.path).name in PACKAGING_NAMES:
+                return chunk
+    return None
+
+
+def environment_step(snapshot, install, root):
+    """决定'准备运行环境'这一步引用什么，以及如何措辞。
+
+    优先级：安装说明 > 打包元数据 > 显式说明缺少资料。
+    找不到安装文档时不再假装引用安装说明。
+    """
+    if install:
+        return ('打开安装说明，核对语言版本、依赖和运行位置；按原文完成准备。',
+                '确认原文要求的环境已准备好；这里尚未替你运行安装。', install)
+    packaging = packaging_evidence(snapshot)
+    if packaging:
+        return (f'项目未提供安装说明文档；语言版本与依赖要求见 {packaging.path}，按其中的声明准备环境后再继续。',
+                '能说出需要的语言版本和依赖，并确认本地环境已满足。', packaging)
+    return ('项目未提供安装说明或环境声明；先确认它是否需要单独安装、要在哪个目录运行。',
+            '能说清这个项目要不要安装、以及应该在哪个目录下运行。', root)
+
+
 def local_guide(snapshot, name, goal, level):
     docs = [c for c in snapshot.chunks if c.kind == 'document']
     docs.sort(key=lambda c: (0 if PurePosixPath(c.path).name.lower().startswith('readme') else 1, c.path, c.start_line))
     source = [c for c in snapshot.candidates if c.kind == 'source' and c.path.endswith(('.py', '.ts', '.js', '.go', '.rs', '.java'))]
     root = docs[0] if docs else (snapshot.chunks[0] if snapshot.chunks else None)
-    install = _first(docs, r'pip install|npm (?:install|i\b)|cargo (?:add|build)|安装|installation|getting started', root)
+    install = _first(docs, r'pip install|npm (?:install|i\b)|cargo (?:add|build)|安装|installation|getting started')
     usage = _first(docs, r'```(?:python|py|javascript|js|typescript)|>>> |\.\. code-block::|quick.?start|usage|使用', root)
     steps = []
     def step(title, action, checkpoint, chunk):
@@ -59,7 +88,8 @@ def local_guide(snapshot, name, goal, level):
                           'checkpoint': checkpoint, 'evidence': [reference(chunk)]})
     if level == 'beginner':
         step('先知道这个项目能做什么', '从项目介绍开始，找出它解决的问题，再对照你的学习目标。', '能用自己的话说出项目用途和本次想做出的结果。', root)
-    step('准备运行环境', '打开安装说明，核对语言版本、依赖和运行位置；按原文完成准备。', '确认原文要求的环境已准备好；这里尚未替你运行安装。', install)
+    env_action, env_checkpoint, env_chunk = environment_step(snapshot, install, root)
+    step('准备运行环境', env_action, env_checkpoint, env_chunk)
     step('从原文的最小用法开始', '先阅读下面链接的使用段落，再在自己的开发环境尝试最小示例。', '对照原文检查输出；遇到错误时先检查导入、配置和路径。', usage)
     if source:
         step('找到背后的实现入口', f'结合用法阅读 {source[0].path}，对照参数、返回值和默认行为。', '能把示例中的一个调用对应到实现位置。', source[0])
