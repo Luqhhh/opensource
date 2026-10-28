@@ -1,0 +1,96 @@
+{
+  "complete": true,
+  "groups": {
+    "semantic-v4": {
+      "case_runs": 18,
+      "confirmed_repairs": 15,
+      "healthy_preserved": 9,
+      "inference_requests": 33,
+      "input_tokens": 86167,
+      "output_tokens": 2537
+    },
+    "semantic-v5": {
+      "case_runs": 18,
+      "confirmed_repairs": 18,
+      "healthy_preserved": 9,
+      "inference_requests": 28,
+      "input_tokens": 71839,
+      "output_tokens": 2078
+    }
+  },
+  "cases": {
+    "tinydb/cases/purge_default.md#1": {
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      },
+      "semantic-v5": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "tinydb/cases/purge_named_table.md#1": {
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      },
+      "semantic-v5": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "more_itertools/cases/collate.md#1": {
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      },
+      "semantic-v5": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "more_itertools/cases/grouper.md#1": {
+      "semantic-v4": {
+        "17": false,
+        "29": false,
+        "43": false
+      },
+      "semantic-v5": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "markupsafe/cases/safe_string.md#1": {
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      },
+      "semantic-v5": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "markupsafe/cases/convert_contract.md#1": {
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      },
+      "semantic-v5": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    }
+  },
+  "scope": "Saved paired regression evidence recount; exact selected sources and raw-response proposal reconstruction; no inference or candidate execution."
+}

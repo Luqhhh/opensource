@@ -1,0 +1,133 @@
+{
+  "complete": true,
+  "groups": {
+    "semantic-v3": {
+      "case_runs": 18,
+      "confirmed_repairs": 2,
+      "healthy_preserved": 9,
+      "healthy_controls": 9,
+      "inference_requests": 52,
+      "attempt_statuses": {
+        "repair_failed": 9,
+        "repeated_candidate": 28,
+        "rejected": 13,
+        "verified_repair": 2
+      }
+    },
+    "semantic-v4": {
+      "case_runs": 18,
+      "confirmed_repairs": 15,
+      "healthy_preserved": 9,
+      "healthy_controls": 9,
+      "inference_requests": 31,
+      "attempt_statuses": {
+        "repair_failed": 7,
+        "verified_repair": 15,
+        "rejected": 3,
+        "repeated_candidate": 6
+      }
+    }
+  },
+  "cases": {
+    "tinydb/cases/purge_default.md#1": {
+      "semantic-v3": {
+        "17": false,
+        "29": false,
+        "43": false
+      },
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "tinydb/cases/purge_named_table.md#1": {
+      "semantic-v3": {
+        "17": false,
+        "29": false,
+        "43": false
+      },
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "more_itertools/cases/collate.md#1": {
+      "semantic-v3": {
+        "17": false,
+        "29": false,
+        "43": false
+      },
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "more_itertools/cases/grouper.md#1": {
+      "semantic-v3": {
+        "17": false,
+        "29": false,
+        "43": false
+      },
+      "semantic-v4": {
+        "17": false,
+        "29": false,
+        "43": false
+      }
+    },
+    "markupsafe/cases/safe_string.md#1": {
+      "semantic-v3": {
+        "17": true,
+        "29": false,
+        "43": true
+      },
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    },
+    "markupsafe/cases/convert_contract.md#1": {
+      "semantic-v3": {
+        "17": false,
+        "29": false,
+        "43": false
+      },
+      "semantic-v4": {
+        "17": true,
+        "29": true,
+        "43": true
+      }
+    }
+  },
+  "model_files": [
+    {
+      "digest": "sha256:152cb442202b836b5415fe4397169982b74dc3bdbb06b9777a126e0161c740da",
+      "measured_sha256": "152cb442202b836b5415fe4397169982b74dc3bdbb06b9777a126e0161c740da",
+      "size": 487
+    },
+    {
+      "digest": "sha256:29d8c98fa6b098e200069bfb88b9508dc3e85586d20cba59f8dda9a808165104",
+      "measured_sha256": "29d8c98fa6b098e200069bfb88b9508dc3e85586d20cba59f8dda9a808165104",
+      "size": 986048576
+    },
+    {
+      "digest": "sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e",
+      "measured_sha256": "66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e",
+      "size": 68
+    },
+    {
+      "digest": "sha256:1e65450c30670713aa47fe23e8b9662bdf4065e81cc8e3cbfaa98924fcc0d320",
+      "measured_sha256": "1e65450c30670713aa47fe23e8b9662bdf4065e81cc8e3cbfaa98924fcc0d320",
+      "size": 1615
+    },
+    {
+      "digest": "sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "measured_sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "size": 11343
+    }
+  ],
+  "scope": "Recounted saved live 1.5B development-regression reports; no new inference or candidate execution."
+}

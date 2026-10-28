@@ -1,0 +1,121 @@
+{
+  "round1": {
+    "complete": false,
+    "groups": {
+      "semantic-v2": {
+        "completed_cells": 8,
+        "case_runs": 16,
+        "confirmed_repairs": 3,
+        "repair_rate": null,
+        "healthy_preserved": 8,
+        "inference_requests": 41,
+        "input_tokens": null,
+        "output_tokens": null,
+        "inference_duration_seconds": 229.7932
+      },
+      "semantic-v3": {
+        "completed_cells": 8,
+        "case_runs": 16,
+        "confirmed_repairs": 6,
+        "repair_rate": null,
+        "healthy_preserved": 8,
+        "inference_requests": 43,
+        "input_tokens": 110451,
+        "output_tokens": 12381,
+        "inference_duration_seconds": 98.3541
+      }
+    },
+    "error": {
+      "type": "ValueError",
+      "message": "Comparison stopped because execution or model evidence is incomplete"
+    },
+    "retained_method": false
+  },
+  "round2": {
+    "complete": true,
+    "groups": {
+      "semantic-v2": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 2,
+        "repair_rate": 0.1111111111111111,
+        "healthy_preserved": 9,
+        "inference_requests": 42,
+        "input_tokens": 116582,
+        "output_tokens": 6304,
+        "inference_duration_seconds": 64.0898
+      },
+      "semantic-v3": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 2,
+        "repair_rate": 0.1111111111111111,
+        "healthy_preserved": 9,
+        "inference_requests": 45,
+        "input_tokens": 115411,
+        "output_tokens": 6159,
+        "inference_duration_seconds": 55.5366
+      }
+    },
+    "error": null,
+    "retained_method": false
+  },
+  "round3": {
+    "complete": true,
+    "groups": {
+      "semantic-v2": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 2,
+        "repair_rate": 0.1111111111111111,
+        "healthy_preserved": 9,
+        "inference_requests": 42,
+        "input_tokens": 116582,
+        "output_tokens": 6304,
+        "inference_duration_seconds": 68.11789999999999
+      },
+      "semantic-v3": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 3,
+        "repair_rate": 0.16666666666666666,
+        "healthy_preserved": 9,
+        "inference_requests": 52,
+        "input_tokens": 141794,
+        "output_tokens": 7593,
+        "inference_duration_seconds": 70.9607
+      }
+    },
+    "error": null,
+    "retained_method": true
+  },
+  "round4": {
+    "complete": true,
+    "groups": {
+      "semantic-v2": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 3,
+        "repair_rate": 0.16666666666666666,
+        "healthy_preserved": 9,
+        "inference_requests": 39,
+        "input_tokens": 106066,
+        "output_tokens": 5825,
+        "inference_duration_seconds": 63.9913
+      },
+      "semantic-v3": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 1,
+        "repair_rate": 0.05555555555555555,
+        "healthy_preserved": 9,
+        "inference_requests": 52,
+        "input_tokens": 139409,
+        "output_tokens": 7760,
+        "inference_duration_seconds": 73.9283
+      }
+    },
+    "error": null,
+    "retained_method": false
+  }
+}

@@ -6,7 +6,8 @@ import sys
 
 from . import __version__
 from .pipeline import exit_code, read_project, run_project
-from .providers import DeepSeekProvider, FileProvider, OllamaProvider, SemanticOllamaProvider
+from .providers import (AdaptiveOllamaProvider, DeepSeekProvider, EditOllamaProvider,
+                        FileProvider, OllamaProvider, SemanticOllamaProvider, SignatureOllamaProvider)
 from .report import LABELS, write_report
 from .runner import environment_report
 
@@ -161,8 +162,8 @@ def _main(argv=None, *, prog="exampleproof"):
             group.add_argument("--model", help="模型名；Ollama 必填，DeepSeek 默认 deepseek-flash")
             command.add_argument("--provider", choices=("ollama", "deepseek"), default="ollama")
             command.add_argument("--endpoint", help="模型 API 地址；默认使用所选服务地址")
-            command.add_argument("--repair-policy", choices=("legacy", "semantic-v2"), default="legacy",
-                                 help="模型修复策略；semantic-v2 使用 6000 字符源码检索和分类反馈（默认 legacy）")
+            command.add_argument("--repair-policy", choices=("legacy", "semantic-v2", "semantic-v3", "semantic-v4", "semantic-v5"), default="legacy",
+                                 help="模型修复策略；v3–v5 仅支持 Ollama，v5 增加参数迁移（默认 legacy）")
             command.add_argument("--model-timeout", type=positive_seconds, default=60,
                                  help="Ollama 连接/读取空闲超时秒数（默认 60），冷启动模型可调高")
             command.add_argument("--max-attempts", type=int, choices=range(1, 6), default=1,
@@ -327,13 +328,18 @@ def _main(argv=None, *, prog="exampleproof"):
                 raise ValueError("--provider/--endpoint cannot be combined with candidate replay")
             if not args.proposals and not args.model and args.provider == "ollama":
                 raise ValueError("Select --model, --proposals or --provider deepseek")
+            if args.provider == "deepseek" and args.repair_policy not in {"legacy", "semantic-v2"}:
+                raise ValueError("semantic-v3/v4/v5 currently require --provider ollama")
         def create_provider():
             if args.proposals:
                 return FileProvider(args.proposals)
             if args.provider == "deepseek":
                 return DeepSeekProvider(args.model or "deepseek-flash", args.endpoint or "https://api.deepseek.com",
                                         timeout=args.model_timeout, semantic=args.repair_policy == "semantic-v2")
-            model_provider = SemanticOllamaProvider if args.repair_policy == "semantic-v2" else OllamaProvider
+            model_provider = {"legacy": OllamaProvider, "semantic-v2": SemanticOllamaProvider,
+                              "semantic-v3": AdaptiveOllamaProvider,
+                              "semantic-v4": EditOllamaProvider,
+                              "semantic-v5": SignatureOllamaProvider}[args.repair_policy]
             return model_provider(args.model, args.endpoint or "http://127.0.0.1:11434", timeout=args.model_timeout)
         if args.command == "scan":
             _, _, _, examples = read_project(args.project)

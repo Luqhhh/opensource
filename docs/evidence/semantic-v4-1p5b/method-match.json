@@ -1,0 +1,26 @@
+{
+  "matches_round2": true,
+  "files": {
+    "benchmark.py": "32cf82372de807f0400196fa707370fc52f236808f22508b4d05fc7a45d4a86a",
+    "cli.py": "90188e1798a21782e126b793a216d47a35ee8dcb79e10d79c4dd39f5573d0390",
+    "config.py": "c2f14045b5b0945630c4069eab422c865e5f4d4252f064478951c2465f942acb",
+    "context.py": "11090cfe3c0a6e335e522de327a3c0afad28a65d3c480a3559af49fe4ca5e2b8",
+    "extract.py": "a6316427bd6a5da1d55f7e2f318628ba1c8eca0e3c6aa46f7f42320b4325082a",
+    "guard.py": "288c927abaaee19c73388e8c9d7209d621c12b9f240bfa656458528716b35508",
+    "models.py": "25c41ba0b1e5fb4a012e047d39796ac6f11fff3d704603ed3a9cc363a7840933",
+    "pipeline.py": "82b86eefb394d342bd2aefd880ba4e0a5d00fae5fad1f4bb504b9b7c6927b40a",
+    "providers.py": "1862532a2a414214be98b59863ea1f6ce53b8b9fbc0c1a57794a653ac70365fd",
+    "report.py": "37622e015e20af289435b15a3f1602f7f8cce4004d29875c83f71f2a0657b8c4",
+    "runner.py": "f10aead707c58ce6aaa03ce7ae3225483766e76f019108d84f07f5dbdf895205",
+    "semantic_study.py": "83828e2ac4bfba7d7f24e98a760cdba2546cdf698cd4f0327aebff3e7a8e23f8",
+    "stdlib_index.py": "d1b4796ef066a0118608d69c9094e9fcf93418a5d92f953a8907d5919f5d3270",
+    "study.py": "5fee28eb9bea7e02993d7178268011dc91b0fc919d0187f12bfcb6dcd03f0c62",
+    "__init__.py": "5a082e1be487f26cbf73b491794261dd4f36fdec9a3d8b14421b48eb124e26a1",
+    "__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "licenses/Apache-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "licenses/CPython-3.10.12.txt": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+    "licenses/stdlib-attribution.txt": "97c6fc1b0a4cdea31154ccc6078a307c47e28eef36994cb8e13660c2a4c17e56",
+    "LICENSE": "5353e84fb737bcff3bc7e91dc8030127d1c77ee25f2831f290a7698700532cba",
+    "compare_repair_policies.py": "780a370e1371e859718cb76c4c46b09fabcfbd6b890874028c1a421e068af047"
+  }
+}

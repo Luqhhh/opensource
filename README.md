@@ -93,3 +93,25 @@ Python运行依赖为空，前端为本地HTML/CSS/JavaScript。Node仅用于开
 服务只监听本机，适合单用户，没有公网账号隔离。项目输入有文件数、体积和类型限制；复杂文档渲染与跨语言语义导航有限。运行检查不支持联网安装、编译扩展和长任务。
 
 工程测试、自动操作演示、实时模型调用和读者观察分别记录。历史原始记录保留原样；当前介绍以学习流程与用户体验为主。反馈使用 [Issues](https://github.com/Luqhhh/opensource/issues)，删除私人内容和凭据。开发约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+## 本地实验修复策略
+
+新增显式可选的实验策略 [semantic-v5](docs/semantic-v5.md)：AI 从真实源码的接口替换或完整参数方案中选择，工具保留原输入并复验。源码使用线索、名称和报错接收者用于候选排序；不把它们当作语义证明。最新配对开发回归中，补丁确认修复从 v4 的 **15/18** 提高到 v5 的 **18/18**，正常对照均 **9/9**，请求从 **33** 降至 **28**；18 次运行仅对应六个已观察缺陷，不能估计未见项目总体效果。[完整迭代与扩展项目重测](docs/evidence/semantic-v5-1p5b/README.md)。默认策略仍为 legacy，旧版 [v3](docs/semantic-v3.md)、[v4](docs/semantic-v4.md) 及其历史记录保留。
+
+历史 Mistune、Werkzeug 的四个扩展失败案例重测中，两组仍均为 **0/12**，正常对照均 **6/6**；多步骤版本迁移尚未改善。
+
+需要修复可复用函数或增加局部适配函数时，可显式选择 `semantic-v3`：
+
+```sh
+python3 -m exampleproof repair examples/tutorial \
+  --model YOUR_LOCAL_MODEL --repair-policy semantic-v3 \
+  --max-attempts 3 --model-timeout 180 --output artifacts/live-semantic-v3
+```
+
+该策略从公开上下文中识别 `callable named NAME` / `function called NAME` / `名为 NAME 的函数` 等明确要求，并在执行前检查名称是否保留。仅识别原示例已有绑定，不读取隐藏检查推导要求。允许最多四个简单适配函数，函数体限局部赋值及末尾一个 `return`，其余断言、危险引用和对象写入限制继续生效。默认 `legacy` 和已有 `semantic-v2` 的严格结构规则保持原样。
+
+新版默认温度 0.2、初始 seed 17、上下文上限 8192、每次生成上限 2048 token；后续 seed 随完整尝试次数递增。v3 使用源码 API 所属类提示、适配提示和 JSON Schema，总调用预算不变。请求仅保留最近两轮历史，完整记录仍写入报告；原样返回和仅改空白/注释的重复候选不会重复执行。具体模型效果以 [配对开发回归对比](docs/semantic-v3.md#实时对比入口) 的实际配置和已公开范围为准。
+
+需要源码候选约束和局部行修改时，将上述 `--repair-policy` 改为 `semantic-v4`，并使用新的输出目录。候选只是待验证建议，仍须通过原来的隔离执行与行为检查。[使用与验证](docs/semantic-v4.md)
+
+需要尝试参数顺序或仅限关键字参数迁移时，可选择 `--repair-policy semantic-v5`。原输入各使用一次且保持求值顺序，原断言和行为检查继续执行；动态或歧义签名回到原有修复路径。[v5 使用与限制](docs/semantic-v5.md)

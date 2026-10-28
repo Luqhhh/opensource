@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-19",
+  "base_commit": "2a4badf93ce1129ec1e4fe08ddd036be919e8a8b",
+  "tests": 279,
+  "exit_code": 0,
+  "skipped": 0,
+  "sandbox_enabled": true,
+  "python": "3.12.3",
+  "real_model_requests_in_tests": 0,
+  "scope": "Engineering tests with simulated inference and real isolated execution; not a live-model repair rate."
+}

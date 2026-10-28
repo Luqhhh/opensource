@@ -1,0 +1,60 @@
+{
+  "round1": {
+    "complete": true,
+    "groups": {
+      "semantic-v3": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 2,
+        "repair_rate": 0.1111111111111111,
+        "healthy_preserved": 9,
+        "inference_requests": 52,
+        "input_tokens": 141968,
+        "output_tokens": 7822,
+        "inference_duration_seconds": 78.1837
+      },
+      "semantic-v4": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 3,
+        "repair_rate": 0.16666666666666666,
+        "healthy_preserved": 9,
+        "inference_requests": 52,
+        "input_tokens": 134770,
+        "output_tokens": 5253,
+        "inference_duration_seconds": 50.3515
+      }
+    },
+    "error": null,
+    "retained_method": false
+  },
+  "round2": {
+    "complete": true,
+    "groups": {
+      "semantic-v3": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 2,
+        "repair_rate": 0.1111111111111111,
+        "healthy_preserved": 9,
+        "inference_requests": 52,
+        "input_tokens": 141968,
+        "output_tokens": 7822,
+        "inference_duration_seconds": 75.7805
+      },
+      "semantic-v4": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 15,
+        "repair_rate": 0.8333333333333334,
+        "healthy_preserved": 9,
+        "inference_requests": 31,
+        "input_tokens": 80757,
+        "output_tokens": 2258,
+        "inference_duration_seconds": 24.0369
+      }
+    },
+    "error": null,
+    "retained_method": true
+  }
+}

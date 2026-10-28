@@ -1,0 +1,754 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "split": "development_regression",
+  "independent_failure_cases": 4,
+  "groups": {
+    "semantic-v4": {
+      "completed_cells": 6,
+      "case_runs": 12,
+      "confirmed_repairs": 0,
+      "repair_rate": 0.0,
+      "healthy_preserved": 6,
+      "inference_requests": 36,
+      "input_tokens": 94120,
+      "output_tokens": 2750,
+      "inference_duration_seconds": 30.037399999999998
+    },
+    "semantic-v5": {
+      "completed_cells": 6,
+      "case_runs": 12,
+      "confirmed_repairs": 0,
+      "repair_rate": 0.0,
+      "healthy_preserved": 6,
+      "inference_requests": 36,
+      "input_tokens": 94801,
+      "output_tokens": 2892,
+      "inference_duration_seconds": 30.5198
+    }
+  },
+  "cells": [
+    {
+      "seed": 17,
+      "policy": "semantic-v4",
+      "project": "mistune",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/reusable_html.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/renderer_options.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/simple_html.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 16201,
+        "output_tokens": 477,
+        "inference_requests": 6,
+        "inference_duration_seconds": 5.7237,
+        "proposal_duration_seconds": 5.7237
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v5",
+      "project": "mistune",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/reusable_html.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/renderer_options.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/simple_html.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 16402,
+        "output_tokens": 525,
+        "inference_requests": 6,
+        "inference_duration_seconds": 5.8806,
+        "proposal_duration_seconds": 5.2108
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v4",
+      "project": "werkzeug",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/pop_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/peek_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/iri_to_uri.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 14739,
+        "output_tokens": 338,
+        "inference_requests": 6,
+        "inference_duration_seconds": 4.659,
+        "proposal_duration_seconds": 3.5802
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v5",
+      "project": "werkzeug",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/pop_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/peek_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/iri_to_uri.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 15280,
+        "output_tokens": 374,
+        "inference_requests": 6,
+        "inference_duration_seconds": 4.6096,
+        "proposal_duration_seconds": 4.6096
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v5",
+      "project": "mistune",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/reusable_html.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/renderer_options.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/simple_html.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 4,
+        "input_tokens": 16309,
+        "output_tokens": 576,
+        "inference_requests": 6,
+        "inference_duration_seconds": 5.5849,
+        "proposal_duration_seconds": 4.0134
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v4",
+      "project": "mistune",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/reusable_html.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/renderer_options.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/simple_html.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 16208,
+        "output_tokens": 530,
+        "inference_requests": 6,
+        "inference_duration_seconds": 5.1531,
+        "proposal_duration_seconds": 4.614
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v5",
+      "project": "werkzeug",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/pop_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/peek_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/iri_to_uri.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 15171,
+        "output_tokens": 411,
+        "inference_requests": 6,
+        "inference_duration_seconds": 4.5933,
+        "proposal_duration_seconds": 3.7481
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v4",
+      "project": "werkzeug",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/pop_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/peek_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/iri_to_uri.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 15061,
+        "output_tokens": 432,
+        "inference_requests": 6,
+        "inference_duration_seconds": 4.4403,
+        "proposal_duration_seconds": 4.4403
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v4",
+      "project": "mistune",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/reusable_html.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/renderer_options.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/simple_html.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 17068,
+        "output_tokens": 532,
+        "inference_requests": 6,
+        "inference_duration_seconds": 5.1377,
+        "proposal_duration_seconds": 5.1377
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v5",
+      "project": "mistune",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/reusable_html.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/renderer_options.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/simple_html.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 16385,
+        "output_tokens": 613,
+        "inference_requests": 6,
+        "inference_duration_seconds": 5.7625,
+        "proposal_duration_seconds": 5.0837
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v4",
+      "project": "werkzeug",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/pop_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/peek_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/iri_to_uri.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 14843,
+        "output_tokens": 441,
+        "inference_requests": 6,
+        "inference_duration_seconds": 4.9236,
+        "proposal_duration_seconds": 4.0778
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v5",
+      "project": "werkzeug",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/pop_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "candidate_format_error",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/peek_path_info.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/iri_to_uri.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 5,
+        "input_tokens": 15254,
+        "output_tokens": 393,
+        "inference_requests": 6,
+        "inference_duration_seconds": 4.0889,
+        "proposal_duration_seconds": 3.1735
+      }
+    }
+  ],
+  "error": null,
+  "scope": "Previously observed development/regression cases; repeated seeds are not independent defects. This combined policy comparison is not a new holdout or an isolated causal ablation."
+}

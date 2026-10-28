@@ -1,0 +1,1114 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "split": "development_regression",
+  "independent_failure_cases": 6,
+  "groups": {
+    "semantic-v2": {
+      "completed_cells": 9,
+      "case_runs": 18,
+      "confirmed_repairs": 2,
+      "repair_rate": 0.1111111111111111,
+      "healthy_preserved": 9,
+      "inference_requests": 42,
+      "input_tokens": 116582,
+      "output_tokens": 6304,
+      "inference_duration_seconds": 68.11789999999999
+    },
+    "semantic-v3": {
+      "completed_cells": 9,
+      "case_runs": 18,
+      "confirmed_repairs": 3,
+      "repair_rate": 0.16666666666666666,
+      "healthy_preserved": 9,
+      "inference_requests": 52,
+      "input_tokens": 141794,
+      "output_tokens": 7593,
+      "inference_duration_seconds": 70.9607
+    }
+  },
+  "cells": [
+    {
+      "seed": 17,
+      "policy": "semantic-v2",
+      "project": "tinydb",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 1,
+        "patch_confirmed_repairs": 1,
+        "repair_rate": 0.5,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/purge_default.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/purge_named_table.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "verified_repair",
+            "patched_status": "checked",
+            "attempts": 1
+          },
+          {
+            "id": "cases/healthy_query.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 3,
+        "proposals": 3,
+        "input_tokens": 8117,
+        "output_tokens": 465,
+        "inference_requests": 3,
+        "inference_duration_seconds": 13.5849,
+        "proposal_duration_seconds": 13.5849
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v3",
+      "project": "tinydb",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/purge_default.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/purge_named_table.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_query.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 16784,
+        "output_tokens": 1063,
+        "inference_requests": 6,
+        "inference_duration_seconds": 9.2434,
+        "proposal_duration_seconds": 9.2434
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v2",
+      "project": "more_itertools",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/collate.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/grouper.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_chunked.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 15122,
+        "output_tokens": 715,
+        "inference_requests": 5,
+        "inference_duration_seconds": 6.5728,
+        "proposal_duration_seconds": 6.5728
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v3",
+      "project": "more_itertools",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/collate.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/grouper.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_chunked.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 17622,
+        "output_tokens": 810,
+        "inference_requests": 6,
+        "inference_duration_seconds": 7.2341,
+        "proposal_duration_seconds": 7.2341
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v2",
+      "project": "markupsafe",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/safe_string.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/convert_contract.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/optional_values.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 12566,
+        "output_tokens": 894,
+        "inference_requests": 5,
+        "inference_duration_seconds": 7.5614,
+        "proposal_duration_seconds": 7.5614
+      }
+    },
+    {
+      "seed": 17,
+      "policy": "semantic-v3",
+      "project": "markupsafe",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 1,
+        "patch_confirmed_repairs": 1,
+        "repair_rate": 0.5,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/safe_string.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "verified_repair",
+            "patched_status": "checked",
+            "attempts": 2
+          },
+          {
+            "id": "cases/convert_contract.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/optional_values.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 11994,
+        "output_tokens": 551,
+        "inference_requests": 5,
+        "inference_duration_seconds": 5.8528,
+        "proposal_duration_seconds": 5.8528
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v3",
+      "project": "tinydb",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/purge_default.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/purge_named_table.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_query.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 16639,
+        "output_tokens": 911,
+        "inference_requests": 6,
+        "inference_duration_seconds": 8.4794,
+        "proposal_duration_seconds": 8.4794
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v2",
+      "project": "tinydb",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/purge_default.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/purge_named_table.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_query.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 17435,
+        "output_tokens": 1152,
+        "inference_requests": 6,
+        "inference_duration_seconds": 10.6309,
+        "proposal_duration_seconds": 10.6309
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v3",
+      "project": "more_itertools",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/collate.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/grouper.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_chunked.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 17568,
+        "output_tokens": 756,
+        "inference_requests": 6,
+        "inference_duration_seconds": 7.2145,
+        "proposal_duration_seconds": 7.2145
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v2",
+      "project": "more_itertools",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/collate.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/grouper.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_chunked.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 15449,
+        "output_tokens": 709,
+        "inference_requests": 5,
+        "inference_duration_seconds": 6.8961,
+        "proposal_duration_seconds": 6.8961
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v3",
+      "project": "markupsafe",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 1,
+        "patch_confirmed_repairs": 1,
+        "repair_rate": 0.5,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/safe_string.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "verified_repair",
+            "patched_status": "checked",
+            "attempts": 3
+          },
+          {
+            "id": "cases/convert_contract.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/optional_values.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 14472,
+        "output_tokens": 762,
+        "inference_requests": 6,
+        "inference_duration_seconds": 7.1794,
+        "proposal_duration_seconds": 7.1794
+      }
+    },
+    {
+      "seed": 29,
+      "policy": "semantic-v2",
+      "project": "markupsafe",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/safe_string.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/convert_contract.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/optional_values.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 12326,
+        "output_tokens": 625,
+        "inference_requests": 5,
+        "inference_duration_seconds": 5.8507,
+        "proposal_duration_seconds": 5.8507
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v2",
+      "project": "tinydb",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 1,
+        "patch_confirmed_repairs": 1,
+        "repair_rate": 0.5,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/purge_default.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/purge_named_table.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "verified_repair",
+            "patched_status": "checked",
+            "attempts": 2
+          },
+          {
+            "id": "cases/healthy_query.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 4,
+        "proposals": 4,
+        "input_tokens": 11138,
+        "output_tokens": 650,
+        "inference_requests": 4,
+        "inference_duration_seconds": 6.3443,
+        "proposal_duration_seconds": 6.3443
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v3",
+      "project": "tinydb",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/purge_default.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/purge_named_table.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_query.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 17015,
+        "output_tokens": 1294,
+        "inference_requests": 6,
+        "inference_duration_seconds": 11.9853,
+        "proposal_duration_seconds": 11.9853
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v2",
+      "project": "more_itertools",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/collate.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/grouper.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_chunked.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 15299,
+        "output_tokens": 578,
+        "inference_requests": 5,
+        "inference_duration_seconds": 5.8791,
+        "proposal_duration_seconds": 5.8791
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v3",
+      "project": "more_itertools",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/collate.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/grouper.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "rejected",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/healthy_chunked.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 6,
+        "proposals": 6,
+        "input_tokens": 17655,
+        "output_tokens": 840,
+        "inference_requests": 6,
+        "inference_duration_seconds": 8.0523,
+        "proposal_duration_seconds": 8.0523
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v2",
+      "project": "markupsafe",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 0,
+        "patch_confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/safe_string.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/convert_contract.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 2
+          },
+          {
+            "id": "cases/optional_values.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 4,
+        "proposals": 4,
+        "input_tokens": 9130,
+        "output_tokens": 516,
+        "inference_requests": 4,
+        "inference_duration_seconds": 4.7977,
+        "proposal_duration_seconds": 4.7977
+      }
+    },
+    {
+      "seed": 43,
+      "policy": "semantic-v3",
+      "project": "markupsafe",
+      "exit_code": 1,
+      "metrics": {
+        "baseline_valid": true,
+        "total": 3,
+        "expected_failures": 2,
+        "evaluation_complete": true,
+        "infrastructure_errors": [],
+        "detected_failures": 2,
+        "healthy_controls": 1,
+        "healthy_false_alarms": 0,
+        "verified_repairs": 1,
+        "patch_confirmed_repairs": 1,
+        "repair_rate": 0.5,
+        "healthy_preserved": 1,
+        "all_passed": false,
+        "cases": [
+          {
+            "id": "cases/safe_string.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "verified_repair",
+            "patched_status": "checked",
+            "attempts": 2
+          },
+          {
+            "id": "cases/convert_contract.md#1",
+            "expected_before": "failed",
+            "baseline_status": "failed",
+            "baseline_matches": true,
+            "repair_status": "repair_failed",
+            "patched_status": "failed",
+            "attempts": 3
+          },
+          {
+            "id": "cases/optional_values.md#1",
+            "expected_before": "checked",
+            "baseline_status": "checked",
+            "baseline_matches": true,
+            "repair_status": "checked",
+            "patched_status": "checked",
+            "attempts": 0
+          }
+        ]
+      },
+      "repair": {
+        "max_attempts": 3,
+        "attempts": 5,
+        "proposals": 5,
+        "input_tokens": 12045,
+        "output_tokens": 606,
+        "inference_requests": 5,
+        "inference_duration_seconds": 5.7195,
+        "proposal_duration_seconds": 5.7195
+      }
+    }
+  ],
+  "error": null,
+  "scope": "Previously observed development/regression cases; repeated seeds are not independent defects. This combined policy comparison is not a new holdout or an isolated causal ablation."
+}

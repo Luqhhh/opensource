@@ -202,6 +202,19 @@
 
 ## AI参与和审核记录
 
+2026-10-17 起：AI 辅助分析已有失败记录，新增 semantic-v3 的公开可复用名称预检、受限局部适配函数、公开异常引导检索、API 所属类提示和结构重复处理；另新增开发回归对比脚本和自动化回归。未增加 Python 运行依赖，未读取隐藏检查生成约束，未改动第三方源码、固定索引、旧检查或旧实验记录。首次工程验证时本机没有模型服务；后续已准备并校验本地 1.5B 模型，完成四轮实测/中止记录和结果复算，详见 [1.5B 开发记录](evidence/semantic-v3-1p5b/README.md)。退步的分阶段方案已撤回；2026-10-18 继续新增独立的 semantic-v4 源码候选约束、局部修改协议及相应模拟推理/真实隔离回归，沿用原模型和检索资源。完成 [v4 两轮开发对比](evidence/semantic-v4-1p5b/README.md)，保留第二轮实现：261 项工程测试通过，配对开发回归为 v4 15/18、v3 2/18，正常对照均 9/9；全部属于观察过开发案例后的调优，没有新的留出结论。团队人工审核尚未完成。
+
+本轮后续增加 JSON Schema 回答约束（依据 [Ollama generate 接口](https://docs.ollama.com/api/generate)和[结构化输出说明](https://docs.ollama.com/capabilities/structured-outputs)）、对比进度和许可证归档。仅实现协议字段与校验逻辑，没有复制上游示例实现或增加 SDK 依赖。
+
+### 23. Qwen2.5-Coder-1.5B-Instruct 与本轮本地环境准备
+
+2026-10-19 继续复用同一模型和运行环境，新增 semantic-v5 的源码签名参数方案、求值顺序保护、静态使用线索及接口排序。没有新增第三方模型、数据或 Python 运行依赖。279 项工程回归通过；前两轮开发实测均未提升，第三轮开发回归 v5 为 18/18、v4 为 15/18，正常对照均 9/9。每轮同时重测历史 Mistune/Werkzeug，完整失败和局限见 [v5 迭代记录](evidence/semantic-v5-1p5b/README.md)；全部是见过案例后的调优，没有新的留出结论。AI 辅助实现、运行与记录整理，团队人工审核尚未完成。
+
+- **版本/来源：** [原模型](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct)、[模型许可](https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct/blob/main/LICENSE)；Ollama [qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b)，1.54B、Q4_K_M，准备时 manifest SHA-256 为 `d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668`。该模型与历史 7B 模型不同。
+- **许可/使用方式：** Apache-2.0；用于本轮小模型开发回归比较，没有训练、微调或修改权重，不能将其归为团队自主模型。再分发须保留适用许可、归属与 NOTICE，标记修改；生成候选仍需团队审核。权重及下载断点存于忽略的 `artifacts/local-runtime/`，不随源码提交。
+- **环境准备：** 官方 [Ollama v0.40.5](https://github.com/ollama/ollama/releases/tag/v0.40.5)，[MIT 许可](https://github.com/ollama/ollama/blob/v0.40.5/LICENSE)。Linux amd64 官方包已校验 SHA-256 为 `dc5eabc292f9949546c90a97c820f924b035e05243b0de13c7f366182562169c`；捆绑库分别遵守包内许可，不以 Ollama MIT 覆盖全部组件。未安装系统服务，实测临时进程在结束后关闭；环境准备脚本不属于作品自动修复逻辑。
+- **证据边界：** 下载、哈希校验和工程测试均不算真实模型调用；仅以完成的请求/响应及原检查复验记录报告修复效果。本轮对比属于开发回归，不能替代新的留出实验，也不能与历史 7B 成绩直接比较。生成候选的团队人工与权利审核待完成。
+
 2026-10-13：AI辅助选题、规则解读、代码与测试、文档及回放候选；后续辅助多轮修复、证据保存、执行完整性与提示词优化。本轮另辅助自动benchmark流程、兼容性案例、误修复对照和参赛材料/PDF构建，随后采集三个真实上游项目的历史文档、核对许可、机械提取版本迁移案例并完成冻结对照。27 个实验单元、92 次真实请求及失败记录见 [实测证据](evidence/real-projects-20261013/README.md)。提交和证据说明实际变化，自动测试不能替代团队人工审核。
 
 `proposals.json`与`proposals.multiround.json`是已保存候选；后者有刻意失败的第一轮，只验证下一轮流程，不产生模型调用。真实Ollama调用保存在 `docs/evidence/ollama-20261013/` 和 `docs/evidence/compatibility-20261013/`，包含放弃与检查失败，候选未人工改写。

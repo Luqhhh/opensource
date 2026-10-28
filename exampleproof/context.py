@@ -7,6 +7,7 @@ other library replaces it. Every returned value is an unchanged source slice.
 import ast
 from collections import Counter
 import keyword
+import json
 import math
 import re
 
@@ -410,3 +411,360 @@ def source_context(example, before, sources, limit=6000, *, cache=None):
     standard_options = {"index": cache.standard_terms()} if cache is not None else {}
     return {**_project_context(example, before, sources, project_limit, **project_options),
             **_stdlib_context(example, before, limit - project_limit, **standard_options)}
+
+
+def merge_source_contexts(groups, *, limit=6000):
+    """Merge ranked exact slices without duplicate lines or exceeding the budget."""
+    if type(limit) is not int or limit < 0:
+        raise ValueError("source context limit must be a nonnegative integer")
+    result, selected, used = {}, set(), 0
+    for group in groups:
+        for label, text in group.items():
+            filename, positions = label.rsplit(":", 1)
+            start, end = map(int, positions.split("-"))
+            lines = text.splitlines(keepends=True)
+            if len(lines) != end - start + 1:
+                raise ValueError("Source context labels must match the original source lines")
+            cursor = 0
+            while cursor < len(lines):
+                if (filename, start + cursor) in selected:
+                    cursor += 1
+                    continue
+                first = cursor
+                while cursor < len(lines) and (filename, start + cursor) not in selected:
+                    cursor += 1
+                new_label = f"{filename}:{start + first}-{start + cursor - 1}"
+                excerpt = "".join(lines[first:cursor])
+                cost = len(new_label) + len(excerpt)
+                if cost + used <= limit:
+                    result[new_label] = excerpt
+                    selected.update((filename, start + index) for index in range(first, cursor))
+                    used += cost
+    return result
+
+
+def source_api_headers(context, units, *, limit=1200):
+    """Label API owners using only complete headers in the selected excerpts."""
+    result = {}
+    for label in context:
+        filename, span = label.rsplit(":", 1)
+        start, end = map(int, span.split("-"))
+        for unit in units:
+            node = unit["node"]
+            if unit["file"] != filename or unit["kind"] != "function" or unit["name"].startswith("_"):
+                continue
+            header_end = max(node.lineno, node.body[0].lineno - 1)
+            if not start <= node.lineno <= header_end <= end:
+                continue
+            signature = "".join(unit["lines"][node.lineno - 1:header_end])
+            supplied = context[label].splitlines(keepends=True)
+            if "".join(supplied[node.lineno - start:header_end - start + 1]) != signature:
+                continue
+            key = f"{filename}:{node.lineno}-{header_end}"
+            value = {"qualified_name": ".".join(part for part in (unit["owner"], unit["name"]) if part),
+                     "signature": signature}
+            candidate = {**result, key: value}
+            if len(json.dumps(candidate, ensure_ascii=False)) <= limit:
+                result = candidate
+    return result
+
+
+def _accepts_calls(node, calls, *, bound=False):
+    """Conservative static argument binding; unknown *args/**kwargs stay eligible."""
+    positional = [*node.args.posonlyargs, *node.args.args]
+    if bound:
+        positional = positional[1:]
+    names = [arg.arg for arg in positional]
+    required = set(names[:max(0, len(positional) - len(node.args.defaults))])
+    keyword_only = {arg.arg for arg in node.args.kwonlyargs}
+    required_keywords = {arg.arg for arg, default in zip(node.args.kwonlyargs, node.args.kw_defaults) if default is None}
+    positional_only = {arg.arg for arg in node.args.posonlyargs}
+    for call in calls:
+        if any(isinstance(arg, ast.Starred) for arg in call.args) or any(arg.arg is None for arg in call.keywords):
+            continue
+        count, keys = len(call.args), {arg.arg for arg in call.keywords}
+        if (count > len(names) and node.args.vararg is None
+                or keys & positional_only and node.args.kwarg is None
+                or keys & (set(names[:count]) - positional_only)
+                or keys - set(names) - keyword_only and node.args.kwarg is None
+                or required - set(names[:count]) - (keys - positional_only)
+                or required_keywords - keys):
+            return False
+    return True
+
+
+def _public_import_path(filename, name, sources):
+    """Resolve explicit top-level reexports without importing a project."""
+    module = filename.removesuffix(".py").replace("/", ".").removesuffix(".__init__")
+    if filename.startswith("stdlib/") and filename not in sources:
+        return module.removeprefix("stdlib."), name
+    paths = {(module, name)}
+    for source_file, text in sorted(sources.items()):
+        try:
+            tree = ast.parse(text)
+        except (SyntaxError, ValueError):
+            continue
+        public_module = source_file.removesuffix(".py").replace("/", ".").removesuffix(".__init__")
+        package = public_module.split(".") if source_file.endswith("/__init__.py") else public_module.split(".")[:-1]
+        pending = list(tree.body)
+        while pending:
+            item = pending.pop(0)
+            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                continue
+            if isinstance(item, ast.ImportFrom):
+                if item.level:
+                    if item.level > len(package):
+                        continue
+                    imported = ".".join(package[:len(package) - item.level + 1] + (item.module or "").split("."))
+                else:
+                    imported = item.module
+                for alias in item.names:
+                    exposed = alias.asname or alias.name
+                    if imported == module and alias.name == name and not exposed.startswith("_"):
+                        paths.add((public_module, exposed))
+            else:
+                # Follow module-level try/if bodies; never enter function/class scopes.
+                for field in ("body", "orelse", "finalbody", "handlers"):
+                    pending.extend(getattr(item, field, ()))
+    public = [path for path in paths if all(part.isidentifier() and not part.startswith("_") for part in path[0].split("."))]
+    return min(public, key=lambda path: (len(path[0].split(".")), path)) if public else None
+
+
+def source_repair_choices(example, before, sources, context, units, *, limit=1200):
+    """Offer source-derived renames with compatible calls, never evaluator answers.
+
+    Only observed missing imports/names/attributes trigger this finite search.
+    Candidates remain unverified until the unchanged guard and sandbox accept
+    them. Source excerpts and public argument shapes are the only API evidence.
+    """
+    from .guard import validate_candidate
+    from .providers import apply_line_edits, validate_public_bindings
+
+    error = execution_feedback(before)["error"].splitlines()
+    error = error[-1] if error else ""
+    imported = re.fullmatch(r"ImportError: cannot import name ['\"](\w+)['\"] from ['\"]([^'\"]+)['\"].*", error)
+    undefined = re.fullmatch(r"NameError: name ['\"](\w+)['\"] is not defined.*", error)
+    attribute = re.fullmatch(r"AttributeError: ['\"]([^'\"]+)['\"] object has no attribute ['\"](\w+)['\"].*", error)
+    if not (imported or undefined or attribute):
+        return []
+    missing = imported[1] if imported else undefined[1] if undefined else attribute[2]
+    try:
+        tree = ast.parse(example.code)
+    except (SyntaxError, ValueError, RecursionError):
+        return []
+    lines = example.code.split("\n")
+    targets = [node for node in ast.walk(tree) if isinstance(node, ast.Attribute) and node.attr == missing]
+    import_node = next((node for node in tree.body if isinstance(node, ast.ImportFrom) and node.level == 0
+                        and imported and node.module == imported[2]
+                        and any(alias.name == missing for alias in node.names)), None)
+    if imported and (import_node is None or import_node.lineno != import_node.end_lineno):
+        return []
+    bound_names = {missing}
+    if import_node:
+        bound_names = {alias.asname or alias.name for alias in import_node.names if alias.name == missing}
+    for item in tree.body:
+        if isinstance(item, ast.Assign) and (isinstance(item.value, ast.Name) and item.value.id in bound_names
+                or isinstance(item.value, ast.Attribute) and item.value in targets):
+            bound_names.update(target.id for target in item.targets if isinstance(target, ast.Name))
+    calls = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
+             and (isinstance(node.func, ast.Name) and node.func.id in bound_names or node.func in targets)]
+    roots = _query(example, before)[3]
+    headers = source_api_headers(context, units, limit=100_000)
+    available = [(key, header["qualified_name"], next(unit["node"] for unit in units
+                  if unit["file"] == key.rsplit(":", 1)[0] and unit["kind"] == "function"
+                  and unit["node"].lineno == int(key.rsplit(":", 1)[1].split("-")[0])))
+                 for key, header in headers.items()]
+    if not attribute:
+        # Include only static stdlib signatures actually present in this request.
+        for filename, start, end, name, text in STDLIB_INDEX:
+            for label, excerpt in context.items():
+                source_file, span = label.rsplit(":", 1)
+                first, last = map(int, span.split("-"))
+                if source_file != filename or not first <= start <= last:
+                    continue
+                node = ast.parse(text).body[0]
+                count = max(1, node.body[0].lineno - 1)
+                signature = "".join(text.splitlines(keepends=True)[:count])
+                if start + count - 1 <= last and signature == "".join(excerpt.splitlines(keepends=True)[start - first:start - first + count]):
+                    available.append((f"{filename}:{start}-{start + count - 1}", name, node))
+    choices, seen = [], set()
+    for location, qualified, node in available:
+        owner, _, name = qualified.rpartition(".")
+        if attribute and (owner not in roots or not targets or any(target.lineno != target.end_lineno for target in targets)):
+            continue
+        if not attribute and owner:
+            continue
+        decorators = {getattr(decorator, "id", getattr(decorator, "attr", "")) for decorator in node.decorator_list}
+        if decorators - {"staticmethod", "classmethod"}:
+            continue
+        if not _accepts_calls(node, calls, bound=bool(owner) and "staticmethod" not in decorators):
+            continue
+        replacements = {}
+        if attribute:
+            for number in {target.lineno for target in targets}:
+                text = lines[number - 1].encode("utf-8")
+                for target in sorted((target for target in targets if target.lineno == number), key=lambda target: -target.end_col_offset):
+                    end = target.end_col_offset
+                    text = text[:end - len(missing.encode("utf-8"))] + name.encode("utf-8") + text[end:]
+                replacements[number] = text.decode("utf-8").removesuffix("\r")
+            api = qualified
+        else:
+            path = _public_import_path(location.rsplit(":", 1)[0], name, sources)
+            if path is None:
+                continue
+            module, exported = path
+            api = f"{module}.{exported}"
+            if import_node:
+                remaining = [alias for alias in import_node.names if alias.name != missing]
+                replacement = ast.unparse(ast.ImportFrom(module=import_node.module, names=remaining, level=0)) + "\n" if remaining else ""
+                replacement += "\n".join(f"from {module} import {exported}" + (f" as {bound}" if bound != exported else "") for bound in sorted(bound_names & {alias.asname or alias.name for alias in import_node.names}))
+                replacements[import_node.lineno] = replacement
+            else:
+                replacements[1] = f"from {module} import {exported}" + (f" as {missing}" if missing != exported else "") + "\n" + lines[0].removesuffix("\r")
+        edit = {"edits": [{"line": number, "replacement": text} for number, text in sorted(replacements.items())], "rationale": ""}
+        try:
+            code = apply_line_edits(example.code, edit)["code"]
+        except ValueError:
+            continue
+        if (code in seen or validate_candidate(example.code, code, allow_helpers=True)
+                or validate_public_bindings(example, code)):
+            continue
+        choice = {"id": len(choices) + 1, "api": api, "source": location, "edit": edit}
+        if len(json.dumps([*choices, choice], ensure_ascii=False)) <= limit:
+            choices.append(choice)
+            seen.add(code)
+        if len(choices) >= 8:
+            break
+    return choices
+
+
+def _parameter_usage_hints(node, parameters):
+    """Static usage clues for ranking only; names can be rebound by a project."""
+    hints = {}
+
+    def add(name, kind, line, value=None):
+        if name not in parameters:
+            return
+        hint = hints.setdefault(name, {})
+        entries = hint.setdefault(kind, {} if value is not None else [])
+        if value is not None:
+            if len(entries) < 5:
+                entries[value] = line
+        elif line not in entries and len(entries) < 3:
+            entries.append(line)
+
+    for item in ast.walk(node):
+        if isinstance(item, ast.Call) and isinstance(item.func, ast.Name):
+            if item.func.id in {"iter", "len"} and item.args and isinstance(item.args[0], ast.Name):
+                add(item.args[0].id, "iterable", item.lineno)
+            elif item.func.id == "range":
+                for argument in item.args:
+                    if isinstance(argument, ast.Name):
+                        add(argument.id, "integer_index", item.lineno)
+        elif isinstance(item, ast.BinOp) and isinstance(item.op, ast.Mult):
+            for sequence, count in ((item.left, item.right), (item.right, item.left)):
+                if (isinstance(count, ast.Name) and (isinstance(sequence, (ast.List, ast.Tuple))
+                        or isinstance(sequence, ast.Constant) and isinstance(sequence.value, (str, bytes)))):
+                    add(count.id, "integer_index", item.lineno)
+        elif (isinstance(item, ast.Compare) and isinstance(item.left, ast.Name) and len(item.ops) == 1
+              and isinstance(item.ops[0], ast.Eq) and isinstance(item.comparators[0], ast.Constant)
+              and isinstance(item.comparators[0].value, str) and len(item.comparators[0].value) <= 40):
+            add(item.left.id, "branch_values", item.lineno, item.comparators[0].value)
+    # A single equality is a special case, not useful enum-like evidence.
+    for hint in hints.values():
+        if len(hint.get("branch_values", {})) < 2:
+            hint.pop("branch_values", None)
+    return {name: hint for name, hint in hints.items() if hint}
+
+
+def call_repair_context(example, before, context, units, *, limit=1200):
+    """Describe one observed failing invocation using selected real signatures.
+
+    This is a proposal scope, not a diagnosis of all TypeErrors. Unknown
+    receivers, ambiguous source definitions and unpacked inputs stay outside
+    this constrained mode. No project import or expression is evaluated.
+    """
+    if before.returncode != 21:
+        return None
+    error = execution_feedback(before)["error"]
+    if not any(line.startswith("TypeError:") for line in error.splitlines()):
+        return None
+    locations = re.findall(r'File [\'"]/work/example\.py[\'"], line (\d+)', error)
+    if not locations:
+        return None
+    line = int(locations[-1])
+    try:
+        tree = ast.parse(example.code)
+    except (SyntaxError, ValueError, RecursionError):
+        return None
+    aliases = {alias.asname or alias.name: (node.module, alias.name)
+               for node in tree.body if isinstance(node, ast.ImportFrom) and node.level == 0
+               for alias in node.names if alias.name != "*"}
+    modules = {alias.asname or alias.name.split(".")[0]: alias.name for node in tree.body
+               if isinstance(node, ast.Import) for alias in node.names}
+    roots = _query(example, before)[3]
+    protected = {id(node) for assertion in ast.walk(tree) if isinstance(assertion, ast.Assert)
+                 for node in ast.walk(assertion)}
+    headers = source_api_headers(context, units, limit=100_000)
+    selected = {(key.rsplit(":", 1)[0], int(key.rsplit(":", 1)[1].split("-")[0])): key for key in headers}
+    candidates = []
+    for call in ast.walk(tree):
+        if (not isinstance(call, ast.Call) or id(call) in protected
+                or not call.lineno <= line <= call.end_lineno
+                or any(isinstance(arg, ast.Starred) for arg in call.args)
+                or any(arg.arg is None for arg in call.keywords)):
+            continue
+        name, namespace, bound = "", None, False
+        if isinstance(call.func, ast.Name):
+            namespace, name = aliases.get(call.func.id, (None, call.func.id))
+        elif isinstance(call.func, ast.Attribute) and isinstance(call.func.value, ast.Name):
+            name = call.func.attr
+            namespace = modules.get(call.func.value.id)
+            bound = namespace is None
+        else:
+            continue
+        matches = []
+        for unit in units:
+            node = unit["node"]
+            if (unit["kind"] != "function" or not isinstance(node, ast.FunctionDef)
+                    or unit["name"] != name or (unit["file"], node.lineno) not in selected
+                    or bool(unit["owner"]) != bound or bound and unit["owner"] not in roots
+                    or namespace and unit["file"].split("/")[0].removesuffix(".py") != namespace.split(".")[0]):
+                continue
+            decorators = {getattr(item, "id", getattr(item, "attr", "")) for item in node.decorator_list}
+            if decorators - {"staticmethod", "classmethod"} or node.args.vararg or node.args.kwarg:
+                continue
+            positional = [*node.args.posonlyargs, *node.args.args]
+            defaults = {arg.arg: default for arg, default in zip(positional[-len(node.args.defaults):], node.args.defaults)} if node.args.defaults else {}
+            if bound and "staticmethod" not in decorators:
+                positional = positional[1:]
+            parameters = []
+            for parameter in positional:
+                item = {"name": parameter.arg, "kind": "positional_only" if parameter in node.args.posonlyargs else "keyword"}
+                if parameter.arg in defaults:
+                    item["default"] = ast.unparse(defaults[parameter.arg])
+                else:
+                    item["required"] = True
+                parameters.append(item)
+            for parameter, default in zip(node.args.kwonlyargs, node.args.kw_defaults):
+                parameters.append({"name": parameter.arg, "kind": "keyword_only",
+                                   **({"required": True} if default is None else {"default": ast.unparse(default)})})
+            arguments = [{"id": index, "expression": ast.get_source_segment(example.code, argument)}
+                         for index, argument in enumerate([*call.args, *[keyword.value for keyword in call.keywords]], 1)]
+            if (not arguments or len(arguments) > 8 or len(arguments) > len(parameters)
+                    or len(arguments) < sum(item.get("required", False) for item in parameters)
+                    or len(arguments) == 1 and _accepts_calls(node, [call], bound=bound and "staticmethod" not in decorators)):
+                continue
+            evidence = {"function": ast.get_source_segment(example.code, call.func),
+                        "source": selected[(unit["file"], node.lineno)],
+                        "span": [call.lineno, call.col_offset, call.end_lineno, call.end_col_offset],
+                        "parameters": parameters, "arguments": arguments,
+                        "original_binding_valid": _accepts_calls(node, [call], bound=bound and "staticmethod" not in decorators)}
+            hints = _parameter_usage_hints(node, {parameter["name"] for parameter in parameters})
+            if hints and len(json.dumps({**evidence, "usage_hints": hints}, ensure_ascii=False)) <= limit:
+                evidence["usage_hints"] = hints
+            if len(json.dumps(evidence, ensure_ascii=False)) <= limit:
+                matches.append(evidence)
+        if len(matches) == 1:
+            candidates.append(matches[0])
+    return candidates[0] if len(candidates) == 1 else None

@@ -1,0 +1,182 @@
+{
+  "development-r1": {
+    "complete": true,
+    "groups": {
+      "semantic-v4": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 15,
+        "repair_rate": 0.8333333333333334,
+        "healthy_preserved": 9,
+        "inference_requests": 33,
+        "input_tokens": 86119,
+        "output_tokens": 2526,
+        "inference_duration_seconds": 35.2119
+      },
+      "semantic-v5": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 14,
+        "repair_rate": 0.7777777777777778,
+        "healthy_preserved": 9,
+        "inference_requests": 34,
+        "input_tokens": 83829,
+        "output_tokens": 2876,
+        "inference_duration_seconds": 32.3365
+      }
+    },
+    "error": null,
+    "retained_method": false,
+    "scope": "Observed development regression"
+  },
+  "expanded-r1": {
+    "complete": true,
+    "groups": {
+      "semantic-v4": {
+        "completed_cells": 6,
+        "case_runs": 12,
+        "confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 6,
+        "inference_requests": 36,
+        "input_tokens": 93944,
+        "output_tokens": 3154,
+        "inference_duration_seconds": 31.665
+      },
+      "semantic-v5": {
+        "completed_cells": 6,
+        "case_runs": 12,
+        "confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 6,
+        "inference_requests": 36,
+        "input_tokens": 93787,
+        "output_tokens": 3297,
+        "inference_duration_seconds": 31.803399999999996
+      }
+    },
+    "error": null,
+    "retained_method": false,
+    "scope": "Historical project regression retest; not a new holdout"
+  },
+  "development-r2": {
+    "complete": true,
+    "groups": {
+      "semantic-v4": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 15,
+        "repair_rate": 0.8333333333333334,
+        "healthy_preserved": 9,
+        "inference_requests": 33,
+        "input_tokens": 86167,
+        "output_tokens": 2537,
+        "inference_duration_seconds": 38.5315
+      },
+      "semantic-v5": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 14,
+        "repair_rate": 0.7777777777777778,
+        "healthy_preserved": 9,
+        "inference_requests": 32,
+        "input_tokens": 82196,
+        "output_tokens": 2415,
+        "inference_duration_seconds": 26.6236
+      }
+    },
+    "error": null,
+    "retained_method": false,
+    "scope": "Observed development regression"
+  },
+  "expanded-r2": {
+    "complete": true,
+    "groups": {
+      "semantic-v4": {
+        "completed_cells": 6,
+        "case_runs": 12,
+        "confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 6,
+        "inference_requests": 36,
+        "input_tokens": 94120,
+        "output_tokens": 2750,
+        "inference_duration_seconds": 30.3277
+      },
+      "semantic-v5": {
+        "completed_cells": 6,
+        "case_runs": 12,
+        "confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 6,
+        "inference_requests": 36,
+        "input_tokens": 95380,
+        "output_tokens": 3353,
+        "inference_duration_seconds": 34.1064
+      }
+    },
+    "error": null,
+    "retained_method": false,
+    "scope": "Historical project regression retest; not a new holdout"
+  },
+  "development-r3": {
+    "complete": true,
+    "groups": {
+      "semantic-v4": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 15,
+        "repair_rate": 0.8333333333333334,
+        "healthy_preserved": 9,
+        "inference_requests": 33,
+        "input_tokens": 86167,
+        "output_tokens": 2537,
+        "inference_duration_seconds": 35.8994
+      },
+      "semantic-v5": {
+        "completed_cells": 9,
+        "case_runs": 18,
+        "confirmed_repairs": 18,
+        "repair_rate": 1.0,
+        "healthy_preserved": 9,
+        "inference_requests": 28,
+        "input_tokens": 71839,
+        "output_tokens": 2078,
+        "inference_duration_seconds": 23.0818
+      }
+    },
+    "error": null,
+    "retained_method": true,
+    "scope": "Observed development regression"
+  },
+  "expanded-r3": {
+    "complete": true,
+    "groups": {
+      "semantic-v4": {
+        "completed_cells": 6,
+        "case_runs": 12,
+        "confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 6,
+        "inference_requests": 36,
+        "input_tokens": 94120,
+        "output_tokens": 2750,
+        "inference_duration_seconds": 30.037399999999998
+      },
+      "semantic-v5": {
+        "completed_cells": 6,
+        "case_runs": 12,
+        "confirmed_repairs": 0,
+        "repair_rate": 0.0,
+        "healthy_preserved": 6,
+        "inference_requests": 36,
+        "input_tokens": 94801,
+        "output_tokens": 2892,
+        "inference_duration_seconds": 30.5198
+      }
+    },
+    "error": null,
+    "retained_method": true,
+    "scope": "Historical project regression retest; not a new holdout"
+  }
+}

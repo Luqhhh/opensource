@@ -76,16 +76,20 @@ def evaluate_example(example, spec, sources, runner, provider=None, max_attempts
                 break
             attempt.proposal = proposal
             normalized = proposal.code.replace("\r\n", "\n")
+            candidate_key = provider.candidate_key(normalized) if hasattr(provider, "candidate_key") else normalized
             if not normalized.strip():
                 attempt.status, attempt.rejection = "declined", proposal.rationale
-            elif normalized in seen:
+            elif candidate_key in seen:
                 # The previous attempt already records its rejection or execution.
                 # Keep that outcome and avoid paying for the same sandbox run.
                 attempt.status = "repeated_candidate"
                 attempt.rejection = "Provider repeated an earlier candidate; execution was not repeated"
             else:
-                seen.add(normalized)
-                attempt.rejection = validate_candidate(example.code, proposal.code)
+                seen.add(candidate_key)
+                guard_options = {"allow_helpers": True} if getattr(provider, "allow_helpers", False) else {}
+                attempt.rejection = validate_candidate(example.code, proposal.code, **guard_options)
+                if not attempt.rejection and hasattr(provider, "validate_proposal"):
+                    attempt.rejection = provider.validate_proposal(example, proposal.code)
                 attempt.diff = unified_diff(
                     example.code.splitlines(keepends=True), proposal.code.splitlines(keepends=True),
                     fromfile=f"original/{example.id}", tofile=f"candidate/{example.id}",
@@ -110,7 +114,9 @@ def evaluate_example(example, spec, sources, runner, provider=None, max_attempts
                       "attempt": number, "status": attempt.status})
         if attempt.status == "repeated_candidate":
             result.stop_reason = "repeated_candidate"
-            break
+            if getattr(provider, "stop_on_repeat", True):
+                break
+            continue
         result.status = attempt.status
         result.proposal, result.after = attempt.proposal, attempt.after
         result.rejection, result.diff = attempt.rejection, attempt.diff
