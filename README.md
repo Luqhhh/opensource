@@ -12,8 +12,33 @@
 
 ## 快速开始
 
-需要Python 3.10+。Windows可将 `python3` 换成 `python`：
+需要 Python 3.10+。**运行环境为 macOS / Linux / WSL**：项目读取文件时使用 O_NOFOLLOW 等 POSIX 语义，Windows 原生环境无法启动，请在 WSL 中运行。
 
+### 最短复现（不安装依赖）
+
+`sh
+git clone https://github.com/Luqhhh/opensource.git
+cd opensource
+python3 -m repopath learn --provider none
+`
+
+打开 <http://127.0.0.1:8765/>，导入一个项目 ZIP 或公开仓库地址，写一句具体目标即可。核心服务只用 Python 标准库，无需 pip install、无需模型、无需联网。
+
+跑一遍回归测试：
+
+`sh
+python3 -m unittest discover -s tests -v
+`
+
+复核本报告的实验记录（只校验哈希与已存结果，不调用模型、不执行归档代码）：
+
+`sh
+python3 docs/evidence/semantic-v5-1p5b/verify_evidence.py
+`
+
+### 安装为命令
+
+需要Python 3.10+：
 ```sh
 git clone https://github.com/Luqhhh/opensource.git
 cd opensource
